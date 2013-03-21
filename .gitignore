@@ -1,0 +1,10 @@
+# IDEA
+.idea
+
+# Mac
+.DS_Store
+
+# NODE
+node_modules
+dist
+tmp

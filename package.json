@@ -1,0 +1,36 @@
+{
+	"name": "goat",
+	"title": "-=GOAT=-",
+	"description": "just a goat",
+	"version": "0.0.2",
+	"homepage": "http://mabp.kiev.ua/",
+	"author": {
+		"name": "CTAPbIu_MABP",
+        "email": "ctapbiumabp@gmail.com",
+        "url": "http://mabp.kiev.ua/"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/CTAPbIu_MABP/goat.git"
+	},
+	"bugs": {
+		"url": "https://github.com/CTAPbIuMABP/goat/issues"
+	},
+	"license": {
+        "type": "MIT",
+        "url": "https://github.com/CTAPbIuMABP/goat/blob/master/MIT-LICENSE.txt"
+    },
+	"dependencies": {},
+	"devDependencies": {
+		"grunt": "0.4.1",
+		"grunt-contrib-jshint": "0.3.0",
+		"grunt-contrib-uglify": "0.2.0",
+		"grunt-contrib-qunit": "0.2.0",
+		"grunt-contrib-watch": "0.1.4",
+		"grunt-compare-size": "~0.4.0",
+		"grunt-update-submodules": "0.2.0",
+
+		"phantomjs": "1.8.1-1"
+	},
+	"keywords": []
+}
