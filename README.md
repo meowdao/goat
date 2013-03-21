@@ -42,7 +42,7 @@ LICENSES
 
 LIBS
 ====
-* jQuery [site](http://jquery.com/) [Git](https://github.com/jquery/jquery)
-* jQuery UI [site](http://jqueryui.com/) [Git](https://github.com/jquery/jquery-ui)
-* jQuery Mobile [site](http://jquerymobile.com/) [Git](https://github.com/jquery/jquery-mobile)
-* QUnit [site](http://qunitjs.com/) [Git](https://github.com/jquery/qunit)
+* jQuery [site](http://jquery.com/) [git](https://github.com/jquery/jquery)
+* jQuery UI [site](http://jqueryui.com/) [git](https://github.com/jquery/jquery-ui)
+* jQuery Mobile [site](http://jquerymobile.com/) [git](https://github.com/jquery/jquery-mobile)
+* QUnit [site](http://qunitjs.com/) [git](https://github.com/jquery/qunit)
