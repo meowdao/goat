@@ -1,0 +1,40 @@
+html, body {
+    width: 100%;
+    height: 100%;
+}
+html {
+    font-size: 62.5%; // 1em = 10px
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -ms-text-size-adjust: 100%;
+}
+body {
+    color: #333;
+    font-family: "Open Sans", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-size: 1.2em;
+    font-weight: 300;
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    position: relative;
+}
+
+.hidden {
+    display: none;
+}
+
+.ib {
+    display: inline-block;
+    zoom: 1; *display: inline; /* IE < 8: fake inline-block */
+    letter-spacing: normal;
+    word-spacing: normal;
+    vertical-align: top;
+}
+
+.c {
+    letter-spacing: -0.31em; /* webkit: collapse white-space between units */
+    *letter-spacing: normal; /* reset IE < 8 */
+    word-spacing: -0.43em; /* IE < 8 && gecko: collapse white-space between units */
+}
+
+

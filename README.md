@@ -2,6 +2,20 @@ GOAT
 ====
 :)
 
+To make the first build run:
+
+```bash
+    npm install -g grunt-cli
+    npm install
+
+    git submodules update --init --recursive
+    cd vendor/jquery
+    npm install
+    cd ../../
+
+    grunt build:jquery
+```
+
 GIT
 ===
 * [Git help](https://help.github.com/)

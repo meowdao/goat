@@ -1,6 +1,6 @@
 [submodule "test/qunit"]
 	path = test/qunit
 	url = git://github.com/jquery/qunit.git
-[submodule "src/jquery"]
-    path = src/jquery
-    url = git://github.com/jquery/jquery.git
+[submodule "vendor/jquery"]
+	path = vendor/jquery
+	url = git://github.com/jquery/jquery.git

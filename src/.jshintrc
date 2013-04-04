@@ -1,25 +1,26 @@
 {
 	"curly": true,
-	"expr": true,
-	"newcap": false,
+	"eqeqeq": true,
+	"immed": true,
+	"latedef": true,
+	"newcap": true,
+	"noarg": true,
+	"noempty": true,
 	"quotmark": "double",
-	"regexdash": true,
-	"trailing": true,
 	"undef": true,
 	"unused": true,
-	"maxerr": 100,
+	"strict": true,
 
+	"boss": true,
 	"eqnull": true,
-	"evil": true,
 	"sub": true,
 
 	"browser": true,
-	"wsh": true,
 
-	"predef": [
-		"jQuery",
-		"define",
-		"module",
-		"console"
-	]
+	"onevar": true,
+	"node": true,
+
+	"globals": {
+		"jQuery": false
+	}
 }
