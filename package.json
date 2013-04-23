@@ -39,7 +39,6 @@
 
 	},
 	"scripts": {
-		"postinstall": "grunt travis",
 		"test": "grunt test"
 	},
 	"keywords": []
