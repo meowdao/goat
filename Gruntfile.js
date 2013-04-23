@@ -37,6 +37,7 @@ module.exports = function(grunt) {
 					beautify: {
 						ascii_only: true
 					},
+					preserveComments: "some",
 					banner: "/*! <%= pkg.title %> \n @DATE: <%= grunt.template.today('yyyy-mm-dd') %> \n @VERSION: <%= pkg.version %> \n @AUTHOR: <%= pkg.author.name %> (<%= pkg.author.email %>) \n @LICENCE: <%= pkg.license.type %> \n */\n"
 				},
 				files: {
@@ -189,6 +190,7 @@ module.exports = function(grunt) {
 
 	// Default task(s).
 	grunt.registerTask("default", ["update_submodules", "build", "jshint", "uglify", "sass", "copy", "compare_size"]);
+	grunt.registerTask("travis", ["build", "jshint", "uglify", "sass", "compare_size"]);
 	grunt.registerTask("test", ["update_submodules", "qunit"]);
 
 };
