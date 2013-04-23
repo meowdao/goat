@@ -39,6 +39,7 @@
 
 	},
 	"scripts": {
+		"beforeinstall": "npm install -g grunt-cli",
 		"postinstall": "grunt travis",
 		"test": "grunt test"
 	},
