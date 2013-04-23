@@ -4,8 +4,6 @@ node_js:
 before_script:
   - npm install -g grunt-cli
   - bundle install
-script:
-  - grunt travis
 git:
     depth: 30
 
