@@ -39,7 +39,7 @@
 
 	},
 	"scripts": {
-		"postinstall": "grunt update_submodules build",
+		"postinstall": "grunt travis",
 		"test": "grunt test"
 	},
 	"keywords": []
