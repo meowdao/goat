@@ -5,17 +5,17 @@ GOAT
 To make the first build run:
 
 ```bash
-    bundle install
+bundle install
 
-    npm install -g grunt-cli
-    npm install
+npm install -g grunt-cli
+npm install
 
-    git submodules update --init --recursive
-    cd vendor/jquery
-    npm install
-    cd ../../
+git submodules update --init --recursive
+cd vendor/jquery
+npm install
+cd ../../
 
-    grunt build:jquery
+grunt build:jquery
 ```
 
 GIT
@@ -40,6 +40,11 @@ GRUNT
 * [qunit](https://github.com/gruntjs/grunt-contrib-qunit)
 * [compare size](https://github.com/rwldrn/grunt-compare-size)
 * [update submodules](https://github.com/jaubourg/grunt-update-submodules)
+
+TRAVIS CI
+=========
+[docs](http://about.travis-ci.org/docs/)
+[git](https://github.com/travis-ci)
 
 CONFIGS
 =======
