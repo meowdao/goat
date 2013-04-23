@@ -43,8 +43,8 @@ GRUNT
 
 TRAVIS CI
 =========
-[docs](http://about.travis-ci.org/docs/)
-[git](https://github.com/travis-ci)
+* [docs](http://about.travis-ci.org/docs/)
+* [git](https://github.com/travis-ci)
 
 CONFIGS
 =======
