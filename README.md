@@ -67,3 +67,4 @@ LIBS
 * jQuery UI [site](http://jqueryui.com/) [git](https://github.com/jquery/jquery-ui)
 * jQuery Mobile [site](http://jquerymobile.com/) [git](https://github.com/jquery/jquery-mobile)
 * QUnit [site](http://qunitjs.com/) [git](https://github.com/jquery/qunit)
+* Globalize [site](http://wiki.jqueryui.com/w/page/39118647/Globalize) [git](https://github.com/jquery/globalize)
