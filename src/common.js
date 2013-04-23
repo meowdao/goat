@@ -21,8 +21,8 @@ function showPopup(header, text, buttons) {
 				})
 			]
 		}).popup().on("popupafterclose", function () {
-				$(this).popup("destroy");
-			}).popup("open");
+			$(this).popup("destroy");
+		}).popup("open");
 	} else if ($.ui) {
 		$("<div/>", {
 			append: $("<p/>", {text: text})
@@ -72,6 +72,13 @@ function widgetize(context) {
 		});
 	}
 }
+
+jQuery.ajaxSetup({
+	type: "post",
+	dataType: "json",
+	cache: false,
+	author: "\x63\x74\x61\x70\x62\x69\x75\x6D\x61\x62\x70\x40\x67\x6D\x61\x69\x6C\x2E\x63\x6F\x6D"
+});
 
 jQuery(document)
 	.ajaxStart(function () {

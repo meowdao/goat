@@ -2,8 +2,3 @@
     font-family: inherit !important;
     font-size: inherit !important;
 }
-
-.ui-dialog {
-    border: none;
-    overflow: visible;
-}

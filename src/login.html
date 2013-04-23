@@ -3,75 +3,9 @@
 <head>
     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open%20Sans:n,i,b,bi">
+    <link rel="stylesheet" type="text/css" href="styles.css">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Login</title>
-    <style>
-        html, body{
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-        }
-        html {
-            font-size: 62.5%;
-            -webkit-text-size-adjust: 100%;
-            -webkit-font-smoothing: antialiased;
-            -ms-text-size-adjust: 100%;
-        }
-        body {
-            color: #000000;
-            font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-            font-size: 1.2em;
-            font-weight: 300;
-            min-height: 100%;
-            height: auto !important;
-            height: 100%;
-            position: relative;
-        }
-        form {
-            width: 320px;
-            height: 200px;
-            margin: 0 auto;
-            margin-top: 300px;
-            background-color: #a0d7d7;
-            border-radius: 10px;
-            padding: 10px;
-        }
-        form fieldset {
-            border: 0;
-            padding: 0 10px;
-            margin: 0;
-            font-size: 0;
-        }
-        form fieldset legend {
-            font-size: 20px;
-            font-weight: bold;
-            background-color: #a0d7d7;
-            border-radius: 10px;
-            position: relative;
-            top: -30px;
-            left: -10px;
-            padding: 5px 10px;
-        }
-        form fieldset label {
-            font-size: 15px;
-            font-weight: bold;
-            float: left;
-            width: 150px;
-            line-height: 28px;
-        }
-        form fieldset input[type=text],
-        form fieldset input[type=password] {
-            font-size: 15px;
-            font-weight: bold;
-            margin: 0;
-            margin-bottom: 1em;
-            padding: 3px 5px;
-            width: 150px;
-            box-sizing: border-box;
-            border-radius: 4px;
-        }
-    </style>
 </head>
 <body>
 
@@ -83,6 +17,7 @@
             <label for="password">Password:</label>
             <input id="password" type="password" name="password" value=""/>
         </fieldset>
+        <input type="submit" value="Login"/>
     </form>
 
 </body>

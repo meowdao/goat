@@ -5,6 +5,8 @@ GOAT
 To make the first build run:
 
 ```bash
+    bundle install
+
     npm install -g grunt-cli
     npm install
 

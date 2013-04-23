@@ -3,7 +3,7 @@ html, body {
     height: 100%;
 }
 html {
-    font-size: 62.5%; // 1em = 10px
+    font-size: 62.5%; /* 1em = 10px */
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     -ms-text-size-adjust: 100%;

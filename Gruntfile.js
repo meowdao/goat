@@ -47,22 +47,26 @@ module.exports = function(grunt) {
 		sass: {
 			dist: {
 				options: {
+					bundleExec: true,
 					style: "compressed"
 				},
 				files: {
 					"dist/styles.min.css": [
-						"src/styles.scss"
+						"src/styles.scss",
+						"src/login.scss"
 					]
 				}
 			},
 			dev: {
 				options: {
-					style: "expanded",
-					lineNumbers: true
+					lineNumbers: true,
+					bundleExec: true,
+					style: "expanded"
 				},
 				files: {
 					"dist/styles.css": [
-						"src/styles.scss"
+						"src/styles.scss",
+						"src/login.scss"
 					]
 				}
 			}

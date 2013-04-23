@@ -2,13 +2,13 @@ Globalize.getObject = function (parts, create, obj) {
 
 	var key = parts, p;
 
-	if (typeof parts === 'string') {
-		parts = parts.split('.');
+	if (typeof parts === "string") {
+		parts = parts.split(".");
 	} else {
 		key = parts.join(".");
 	}
 
-	if (typeof create !== 'boolean') {
+	if (create !== true || create !== false) {
 		obj = create;
 		create = undefined;
 	}
@@ -51,7 +51,7 @@ Translator.prototype = {
 				$.ajax({
 					async: false,
 					url: "/javascript/cultures/globalize.culture." + e + ".js",
-					dataType: 'script'
+					dataType: "script"
 				});
 			});
 		}
@@ -88,22 +88,18 @@ Translator.prototype = {
 	},
 
 	fixCSS: function () {
-		var css, lang, html;
-
-		if (localStorage.getItem("supportRTL") === "true") {
-			css = $("[href$=rtl\\.css]");
-			lang = $("[href$=lang\\.css]");
+		var rtl = $("[href$=rtl\\.css]"),
+			lang = $("[href$=lang\\.css]"),
 			html = $("html");
-			this.fixCSS = function () {
-				html.attr({lang: this.lang});
-				css.prop("disabled", !Globalize.culture().isRTL);
-				lang.prop("disabled", true).prop("disabled", false); // reload
-			};
-			this.fixCSS();
-		} else {
-			this.fixCSS = function () {
-				// FIXME
-			};
-		}
+
+		this.fixCSS = function () {
+			html.attr({lang: this.lang});
+			lang.prop("disabled", true).prop("disabled", false); // reload
+			if (localStorage.getItem("supportRTL") === "true") {
+				rtl.prop("disabled", !Globalize.culture().isRTL);
+			}
+		};
+
+		this.fixCSS();
 	}
 };
