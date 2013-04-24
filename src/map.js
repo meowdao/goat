@@ -1,0 +1,60 @@
+google.maps.event.addDomListener(window, "load", function () {
+
+	"use strict";
+
+	var map, watchId, job;
+
+	function geo_success(position) {
+		map.setCenter(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+	}
+
+	function geo_error(error) {
+		showError(window.i18n.resolveKey("geo.error." + error.code));
+		navigator.geolocation.clearWatch(watchId);
+	}
+
+	map = new google.maps.Map(document.getElementById("map"), {
+		zoom: 5,
+		center: new google.maps.LatLng(0, 0),
+		mapTypeId: google.maps.MapTypeId.ROADMAP
+	});
+
+	job = new google.maps.Marker({
+		icon: new google.maps.MarkerImage(
+			"markers/pin.png",
+			new google.maps.Size(26,38),
+			new google.maps.Point(0,0),
+			new google.maps.Point(13,38)
+		),
+		shadow: new google.maps.MarkerImage(
+			"markers/pin-shadow.png",
+			new google.maps.Size(48,38),
+			new google.maps.Point(0,0),
+			new google.maps.Point(13,38)
+		),
+		shape: {
+			coord: [17,0,19,1,20,2,22,3,23,4,23,5,24,6,24,7,25,8,25,9,25,10,25,11,25,12,25,13,25,14,25,15,25,16,25,
+				17,24,18,24,19,24,20,23,21,23,22,22,23,22,24,21,25,21,26,20,27,19,28,19,29,18,30,17,31,17,32,16,33,
+				15,34,15,35,14,36,13,37,12,37,11,36,10,35,10,34,9,33,8,32,8,31,7,30,6,29,6,28,5,27,5,26,4,25,3,24,
+				3,23,2,22,2,21,1,20,1,19,1,18,0,17,0,16,0,15,0,14,0,13,0,12,0,11,0,10,0,9,0,8,1,7,1,6,2,5,3,4,4,3,
+				5,2,6,1,8,0,17,0],
+			type: "poly"
+		},
+		position: new google.maps.LatLng(0, 0),
+		map: map
+	});
+
+	if (!!navigator.geolocation) {
+		watchId = navigator.geolocation.watchPosition(geo_success, geo_error, {
+			enableHighAccuracy: true,
+			maximumAge: 30000,
+			timeout: 5000
+		});
+	} else {
+		showError(window.i18n.resolveKey("geo.unavailable"));
+	}
+
+
+
+});
+

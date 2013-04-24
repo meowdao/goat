@@ -21,6 +21,10 @@
 	"node": true,
 
 	"globals": {
-		"jQuery": true
+		"jQuery": true,
+		"Globalize": true,
+		"Translator": true,
+		"google": true,
+		"showError": true
 	}
 }

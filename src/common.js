@@ -1,47 +1,44 @@
-var i18n = new Translator();
+"use strict";
+
+var i18n = window.i18n = new Translator();
 
 function showPopup(header, text, buttons) {
-	"use strict";
-	var $ = jQuery;
-
-	if ($.mobile) {
-		$("<div/>", {
+	if (jQuery.mobile) {
+		jQuery("<div/>", {
 			"class": "dispatch-popup",
 			append: [
-				$("<h2/>", {text: header}),
-				$("<p/>", {text: text}),
-				$("<div/>", {
+				jQuery("<h2/>", {text: header}),
+				jQuery("<p/>", {text: text}),
+				jQuery("<div/>", {
 					"class": "ui-grid-" + ["0", "0", "a", "b", "c", "d", "e"][buttons.length],
-					append: $.map(buttons, function (button, index) {
-						return $("<div/>", {
+					append: jQuery.map(buttons, function (button, index) {
+						return jQuery("<div/>", {
 							"class": "ui-block-" + ["a", "b", "c", "d", "e"][index],
-							append: $("<a/>", button).button()
+							append: jQuery("<a/>", button).button()
 						});
 					})
 				})
 			]
 		}).popup().on("popupafterclose", function () {
-			$(this).popup("destroy");
+				jQuery(this).popup("destroy");
 		}).popup("open");
-	} else if ($.ui) {
-		$("<div/>", {
-			append: $("<p/>", {text: text})
+	} else if (jQuery.ui) {
+		jQuery("<div/>", {
+			append: jQuery("<p/>", {text: text})
 		}).dialog({
 				title: header,
 				autoOpen: true,
 				buttons: buttons,
 				close: function () {
-					$(this).dialog("destroy");
+					jQuery(this).dialog("destroy");
 				}
 			});
 	} else {
-		alert(text);
+		window.alert(text);
 	}
 }
 
 function showError(error) {
-	"use strict";
-
 	console.log(error);
 	showPopup(i18n.resolveKey("common.error"), error, [{
 		text: i18n.resolveKey("common.ok"),
@@ -56,7 +53,6 @@ function showError(error) {
 }
 
 function widgetize(context) {
-	"use strict";
 	context = context || document;
 	jQuery("input[type=submit], input[type=reset], input[type=button], button, a[data-role=button]", context).button();
 	jQuery("[data-role]", context).each(function () {
@@ -117,14 +113,46 @@ if (jQuery.ui) {
 	});
 }
 
+if (jQuery.mobile) {
+	// Turn off AJAX for local file browsing
+	if ( location.protocol.substr(0,4)  === "file" ||
+		location.protocol.substr(0,11) === "*-extension" ||
+		location.protocol.substr(0,6)  === "widget" ) {
+
+		// Start with links with only the trailing slash and that aren't external links
+		var fixLinks = function() {
+			jQuery("a[href$='/'], a[href='.'], a[href='..']").not("[rel='external']").each(function() {
+				this.href = jQuery(this).attr("href").replace(/\/$/, "") + "/index.html";
+			});
+		};
+
+		// fix the links for the initial page
+		jQuery(fixLinks);
+
+		// fix the links for subsequent ajax page loads
+		jQuery(document).bind("pagecreate", fixLinks );
+
+		// Check to see if ajax can be used. This does a quick ajax request and blocks the page until its done
+		jQuery.ajax({
+			url: ".",
+			async: false,
+			isLocal: true
+		}).error(function() {
+			// Ajax doesn't work so turn it off
+			jQuery(document).bind("mobileinit", function() {
+				jQuery.mobile.ajaxEnabled = false;
+			});
+		});
+	}
+}
+
 jQuery.noConflict();
 jQuery(function ($) {
-	"use strict";
-
 	if ($.ui) {
-		$.datepicker.setDefaults($.datepicker.regional['']);
+		$.datepicker.setDefaults($.datepicker.regional[""]);
 		widgetize();
 	}
 });
+
 
 

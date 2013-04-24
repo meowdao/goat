@@ -19,7 +19,12 @@ module.exports = function(grunt) {
 		},
 		jshint: {
 			dist: {
-				src: [ "dist/goat.js" ],
+				src: [
+					"dist/goat.js",
+					"src/map.js",
+					"src/common.js",
+					"src/translator.js"
+				],
 				options: {
 					jshintrc: "src/.jshintrc"
 				}
@@ -47,6 +52,27 @@ module.exports = function(grunt) {
 					banner: "/*! <%= pkg.title %> \n @DATE: <%= grunt.template.today('yyyy-mm-dd') %> \n @VERSION: <%= pkg.version %> \n @AUTHOR: <%= pkg.author.name %> (<%= pkg.author.email %>) \n @LICENCE: <%= pkg.license.type %> \n */\n"
 				},
 				files: {
+					"dist/goat.min.js": ["dist/goat.js"]
+				}
+			},
+			translator: {
+				options: {
+					beautify: {
+						ascii_only: true
+					}
+				},
+				files: {
+					// TODO langs in the loop
+					"dist/common.min.js": [
+						"vendor/globalize/dist/globalize.min.js",
+						"vendor/globalize/lib/cultures/globalize.culture.en-US.js",
+						"src/cultures/globalize.culture.en-US.js",
+						"vendor/globalize/lib/cultures/globalize.culture.ru-RU.js",
+						"src/cultures/globalize.culture.ru-RU.js",
+						"src/translator.js",
+						"src/common.js"
+					],
+					"dist/map.min.js": ["src/map.js"],
 					"dist/goat.min.js": ["dist/goat.js"]
 				}
 			}
@@ -103,24 +129,39 @@ module.exports = function(grunt) {
 						expand: true,
 						cwd: "src/",
 						src: [
-							"login.html"
+							"*/**",
+							"login.html",
+							"map.html"
+						],
+						dest: "dist/"
+					}
+				]
+			},
+			jquery: {
+				files: [
+					{
+						expand: true,
+						cwd: "vendor/jquery/dist/",
+						src: [
+							"jquery.min.js"
 						],
 						dest: "dist/"
 					}
 				]
 			}
+			// TODO Globalize
 		},
 		compare_size: {
 			files: [
-				"dist/goat.js",
+				"dist/common.min.js",
+				"dist/map.min.js",
 				"dist/goat.min.js",
-				"dist/styles.css",
 				"dist/styles.min.css"
 			],
 			options: {
 				compress: {
-					gz: function( contents ) {
-						return gzip.zip( contents, {} ).length;
+					gz: function(contents) {
+						return gzip.zip(contents, {}).length;
 					}
 				},
 				cache: "dist/.sizecache.json"
@@ -151,37 +192,37 @@ module.exports = function(grunt) {
 			var compiled = "",
 				config =  grunt.config("build");
 
-			grunt.util._.values(config).forEach(function( subtask ) {
+			grunt.util._.values(config).forEach(function(subtask) {
 				compiled = "";
-				subtask.src.forEach(function( filepath ) {
-					compiled += grunt.file.read( filepath ) + grunt.util.linefeed;
+				subtask.src.forEach(function(filepath) {
+					compiled += grunt.file.read(filepath) + grunt.util.linefeed;
 				});
 				compiled = compiled
-					.replace( /@([A-Z\.]+)/g, function ($0, $1) {
+					.replace(/@([A-Z\.]+)/g, function ($0, $1) {
 						if ($1 === "DATE") {
 							// YYYY-MM-DD
 							return (new Date()).toISOString().replace(/T.*/, "");
 						} else {
-							return grunt.config( "pkg." + $1.toLowerCase() );
+							return grunt.config("pkg." + $1.toLowerCase());
 						}
 					});
-				grunt.file.write( subtask.dest, compiled );
-				grunt.log.ok( "File written to " + subtask.dest );
+				grunt.file.write(subtask.dest, compiled);
+				grunt.log.ok("File written to " + subtask.dest);
 			});
 		}
 
 		if (grunt.task.current.args.indexOf("jquery") > -1) { // ! this.args doesn't work
 			tasks.push(function(callback){
-				grunt.log.writeln( "Rebuilding jQuery...");
+				grunt.log.writeln("Rebuilding jQuery...");
 				child_process.exec("cd vendor/jquery && grunt custom:-deprecated,-event-alias,-sizzle", function (error, stdout, stderr) {
 					var log = "log/build.std";
 					if (stdout.length > 0) {
 						//grunt.log.writeln(stdout);
-						grunt.file.write( log + "out.log", stdout );
+						grunt.file.write(log + "out.log", stdout);
 					}
 					if (stderr.length > 0) {
 						//grunt.log.error(stderr);
-						grunt.file.write( log + "err.log", stderr );
+						grunt.file.write(log + "err.log", stderr);
 					}
 					callback(error);
 				});
@@ -197,6 +238,6 @@ module.exports = function(grunt) {
 	// Default task(s).
 	grunt.registerTask("default", ["update_submodules", "build", "jshint", "uglify", "sass", "copy", "compare_size"]);
 	grunt.registerTask("travis", ["build", "jshint", "uglify", "sass", "compare_size"]);
-	grunt.registerTask("test", ["update_submodules", "qunit"]);
+	grunt.registerTask("test", ["qunit"]);
 
 };

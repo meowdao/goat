@@ -15,19 +15,19 @@
 
 	var Globalize = window.Globalize;
 
-	Globalize.cultures["en-US"] = jQuery.extend(true, Globalize.cultures["en-US"], {
+	Globalize.cultures["ru-RU"] = jQuery.extend(true, Globalize.cultures["ru-RU"], {
 		messages: {
 			common: {
-				ok: "Ok",
-				error: "Error",
-				loading: "Loading..."
+				ok: "Да",
+				error: "Ошибка",
+				loading: "Закгрузка..."
 			},
 			geo: {
-				unavailable: "Geolocation not supported",
+				unavailable: "Геолокация недоступна",
 				error: {
-					1: "Permission denied",
-					2: "Position unavailable",
-					3: "Request timeout"
+					1: "Доступ запрещен",
+					2: "Координвты недоступны",
+					3: "Превышен интервал ожидания"
 				}
 			}
 		}
