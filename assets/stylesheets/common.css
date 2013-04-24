@@ -13,10 +13,11 @@ body {
     font-family: "Open Sans", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-size: 1.2em;
     font-weight: 300;
-    min-height: 100%;
-    height: auto !important;
-    height: 100%;
     position: relative;
+}
+
+img {
+    -ms-interpolation-mode: bicubic;
 }
 
 .hidden {

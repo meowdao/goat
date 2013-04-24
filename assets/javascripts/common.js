@@ -152,6 +152,10 @@ jQuery(function ($) {
 		$.datepicker.setDefaults($.datepicker.regional[""]);
 		widgetize();
 	}
+
+	$("a[data-submit='true']").on("click", function () {
+		$(this).closest("form").submit();
+	});
 });
 
 

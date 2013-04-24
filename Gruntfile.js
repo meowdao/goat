@@ -1,4 +1,4 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
 	"use strict";
 
@@ -11,9 +11,9 @@ module.exports = function(grunt) {
 			dist: {
 				dest: "dist/goat.js",
 				src: [
-					"src/intro.js",
-					"src/core.js",
-					"src/outro.js"
+					"assets/javascripts/intro.js",
+					"assets/javascripts/core.js",
+					"assets/javascripts/outro.js"
 				]
 			}
 		},
@@ -21,12 +21,12 @@ module.exports = function(grunt) {
 			dist: {
 				src: [
 					"dist/goat.js",
-					"src/map.js",
-					"src/common.js",
-					"src/translator.js"
+					"assets/javascripts/map.js",
+					"assets/javascripts/common.js",
+					"assets/javascripts/translator.js"
 				],
 				options: {
-					jshintrc: "src/.jshintrc"
+					jshintrc: "assets/javascripts/.jshintrc"
 				}
 			},
 			grunt: {
@@ -52,28 +52,11 @@ module.exports = function(grunt) {
 					banner: "/*! <%= pkg.title %> \n @DATE: <%= grunt.template.today('yyyy-mm-dd') %> \n @VERSION: <%= pkg.version %> \n @AUTHOR: <%= pkg.author.name %> (<%= pkg.author.email %>) \n @LICENCE: <%= pkg.license.type %> \n */\n"
 				},
 				files: {
-					"dist/goat.min.js": ["dist/goat.js"]
-				}
-			},
-			translator: {
-				options: {
-					beautify: {
-						ascii_only: true
-					}
-				},
-				files: {
-					// TODO langs in the loop
-					"dist/common.min.js": [
-						"vendor/globalize/dist/globalize.min.js",
-						"vendor/globalize/lib/cultures/globalize.culture.en-US.js",
-						"src/cultures/globalize.culture.en-US.js",
-						"vendor/globalize/lib/cultures/globalize.culture.ru-RU.js",
-						"src/cultures/globalize.culture.ru-RU.js",
-						"src/translator.js",
-						"src/common.js"
-					],
-					"dist/map.min.js": ["src/map.js"],
-					"dist/goat.min.js": ["dist/goat.js"]
+					"dist/goat.min.js": ["dist/goat.js"],
+					"dist/translator.min.js": ["assets/javascripts/translator.js"],
+					"dist/map.min.js": ["assets/javascripts/map.js"],
+					"dist/common.min.js": ["assets/javascripts/common.js"],
+					"dist/myControl.min.js": ["assets/javascripts/myControl.js"]
 				}
 			}
 		},
@@ -85,8 +68,9 @@ module.exports = function(grunt) {
 				},
 				files: {
 					"dist/styles.min.css": [
-						"src/styles.scss",
-						"src/login.scss"
+						"assets/stylesheets/reset.css",
+						"assets/stylesheets/styles.scss",
+						"assets/stylesheets/login.scss"
 					]
 				}
 			},
@@ -98,15 +82,16 @@ module.exports = function(grunt) {
 				},
 				files: {
 					"dist/styles.css": [
-						"src/styles.scss",
-						"src/login.scss"
+						"assets/stylesheets/reset.css",
+						"assets/stylesheets/styles.scss",
+						"assets/stylesheets/login.scss"
 					]
 				}
 			}
 		},
 		watch: {
 			style: {
-				files: ["src/*.scss"],
+				files: ["assets/stylesheets/*.scss"],
 				tasks: ["sass"],
 				options: {
 					nospawn: true,
@@ -114,7 +99,7 @@ module.exports = function(grunt) {
 				}
 			},
 			script: {
-				files: ["src/*.js"],
+				files: ["assets/javascripts/*.js"],
 				tasks: ["build", "jshint"],
 				options: {
 					nospawn: true,
@@ -123,15 +108,26 @@ module.exports = function(grunt) {
 			}
 		},
 		copy: {
-			dist: {
+			images: {
 				files: [
 					{
 						expand: true,
-						cwd: "src/",
+						cwd: "assets/images",
 						src: [
-							"*/**",
-							"login.html",
-							"map.html"
+							"*",
+							"*/**"
+						],
+						dest: "dist/"
+					}
+				]
+			},
+			views: {
+				files: [
+					{
+						expand: true,
+						cwd: "views/",
+						src: [
+							"*.html"
 						],
 						dest: "dist/"
 					}
@@ -148,19 +144,46 @@ module.exports = function(grunt) {
 						dest: "dist/"
 					}
 				]
+			},
+			globalize: {
+				files: [
+					{
+						expand: true,
+						cwd: "vendor/globalize/dist/",
+						src: [
+							"globalize.min.js"
+						],
+						dest: "dist/"
+					},
+					{
+						expand: true,
+						cwd: "vendor/globalize/lib/cultures/",
+						src: [
+							"globalize.culture.en-US.js",
+							"globalize.culture.ru-RU.js"
+						],
+						dest: "dist/cultures/"
+					},
+					{
+						expand: true,
+						cwd: "assets/javascripts/cultures",
+						src: [
+							"*.js"
+						],
+						dest: "dist/cultures/"
+					}
+				]
 			}
-			// TODO Globalize
 		},
 		compare_size: {
 			files: [
-				"dist/common.min.js",
 				"dist/map.min.js",
 				"dist/goat.min.js",
 				"dist/styles.min.css"
 			],
 			options: {
 				compress: {
-					gz: function(contents) {
+					gz: function (contents) {
 						return gzip.zip(contents, {}).length;
 					}
 				},
@@ -190,11 +213,11 @@ module.exports = function(grunt) {
 
 		function assemble() {
 			var compiled = "",
-				config =  grunt.config("build");
+				config = grunt.config("build");
 
-			grunt.util._.values(config).forEach(function(subtask) {
+			grunt.util._.values(config).forEach(function (subtask) {
 				compiled = "";
-				subtask.src.forEach(function(filepath) {
+				subtask.src.forEach(function (filepath) {
 					compiled += grunt.file.read(filepath) + grunt.util.linefeed;
 				});
 				compiled = compiled
@@ -212,7 +235,7 @@ module.exports = function(grunt) {
 		}
 
 		if (grunt.task.current.args.indexOf("jquery") > -1) { // ! this.args doesn't work
-			tasks.push(function(callback){
+			tasks.push(function (callback) {
 				grunt.log.writeln("Rebuilding jQuery...");
 				child_process.exec("cd vendor/jquery && grunt custom:-deprecated,-event-alias,-sizzle", function (error, stdout, stderr) {
 					var log = "log/build.std";
@@ -229,7 +252,7 @@ module.exports = function(grunt) {
 			});
 		}
 
-		grunt.util.async.parallel(tasks, function(error) {
+		grunt.util.async.parallel(tasks, function (error) {
 			assemble();
 			done(error);
 		});

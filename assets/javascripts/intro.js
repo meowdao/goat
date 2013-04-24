@@ -1,4 +1,4 @@
-/*!
+/*
  * @TITLE JavaScript Library v@VERSION
  * @HOMEPAGE
  *

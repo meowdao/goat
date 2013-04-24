@@ -4,11 +4,11 @@ google.maps.event.addDomListener(window, "load", function () {
 
 	var map, watchId, job;
 
-	function geo_success(position) {
+	function geoSuccess(position) {
 		map.setCenter(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
 	}
 
-	function geo_error(error) {
+	function geoError(error) {
 		showError(window.i18n.resolveKey("geo.error." + error.code));
 		navigator.geolocation.clearWatch(watchId);
 	}
@@ -45,7 +45,7 @@ google.maps.event.addDomListener(window, "load", function () {
 	});
 
 	if (!!navigator.geolocation) {
-		watchId = navigator.geolocation.watchPosition(geo_success, geo_error, {
+		watchId = navigator.geolocation.watchPosition(geoSuccess, geoError, {
 			enableHighAccuracy: true,
 			maximumAge: 30000,
 			timeout: 5000

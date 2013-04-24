@@ -46,3 +46,20 @@ a:focus {
     text-decoration: none;
     outline: none;
 }
+
+input,
+textarea,
+select {
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+}
+
+fieldset{
+    border: 0;
+}
+
+legend {
+    color: #000; /*because legend doesn't inherit in IE */
+}
+

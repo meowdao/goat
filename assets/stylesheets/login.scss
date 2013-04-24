@@ -1,3 +1,7 @@
+body {
+  font-family: "Open Sans";
+}
+
 form {
   width: 320px;
   height: 200px;
@@ -38,9 +42,20 @@ form {
       width: 150px;
       box-sizing: border-box;
       border-radius: 4px;
+      background-color: #ffffff;
+      border: 1px solid #222;
     }
-    input[type=submit] {
-
-    }
+  }
+  input[type=submit] {
+    font-size: 15px;
+    font-weight: bold;
+    box-sizing: border-box;
+    border-radius: 4px;
+    width: 150px;
+    float: right;
+    background-color: #ffffff;
+    border: 1px solid #222;
+    padding: 3px 5px;
+    margin: 0 10px;
   }
 }
