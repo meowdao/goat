@@ -1,5 +1,6 @@
+"use strict";
+
 jQuery(function($){
-	"use strict";
 
 	console.log($);
 	// do nothing

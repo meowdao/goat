@@ -11,7 +11,7 @@ module.exports = function (config, app) {
     app.set("views", config.templatesPath);
     app.engine("html", cons.underscore);
 
-    var maxAge = 86400000; //one day
+    var maxAge = 8.64e7; //one day
     if (process.env.NODE_ENV === "development") {
         maxAge = 0;
     }
