@@ -20,19 +20,19 @@ function showPopup(header, text, buttons) {
 				})
 			]
 		}).popup().on("popupafterclose", function () {
-				jQuery(this).popup("destroy");
+			jQuery(this).popup("destroy");
 		}).popup("open");
 	} else if (jQuery.ui) {
 		jQuery("<div/>", {
 			append: jQuery("<p/>", {text: text})
 		}).dialog({
-				title: header,
-				autoOpen: true,
-				buttons: buttons,
-				close: function () {
-					jQuery(this).dialog("destroy");
-				}
-			});
+			title: header,
+			autoOpen: true,
+			buttons: buttons,
+			close: function () {
+				jQuery(this).dialog("destroy");
+			}
+		});
 	} else {
 		window.alert(text);
 	}
@@ -89,12 +89,12 @@ jQuery(document)
 		}
 	})
 	.ajaxError(function (event, XMLHttpRequest, ajaxOptions, thrownError) {
-		console.log(document.location.protocol + "//" + document.location.host + "/" + ajaxOptions.url + "?" + (ajaxOptions.data || ""));
-		console.log(thrownError);
+		console.info(document.location.protocol + "//" + document.location.host + "/" + ajaxOptions.url + "?" + (ajaxOptions.data || ""));
+		console.error(thrownError);
 		showError(thrownError);
 	})
 	.ajaxSuccess(function (event, XMLHttpRequest, ajaxOptions) {
-		console.log(document.location.protocol + "//" + document.location.host + "/" + ajaxOptions.url + "?" + (ajaxOptions.data || ""));
+		console.info(document.location.protocol + "//" + document.location.host + "/" + ajaxOptions.url + "?" + (ajaxOptions.data || ""));
 	})
 	.ajaxComplete(function () {
 		jQuery(this).css({cursor: "auto"});
@@ -153,9 +153,11 @@ jQuery(function ($) {
 		widgetize();
 	}
 
-	$("a[data-submit='true']").on("click", function () {
-		$(this).closest("form").submit();
-	});
+	if ($.mobile) {
+		$("a[data-submit='true']").on("click", function () {
+			$(this).closest("form").submit();
+		});
+	}
 });
 
 

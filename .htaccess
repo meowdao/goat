@@ -1,0 +1,20 @@
+# DirectoryIndex index.php index.html index.htm
+
+Options +FollowSymLinks -Indexes -MultiViews
+
+AddDefaultCharset UTF-8
+
+AddType application/x-javascript .js
+
+<IfModule mod_rewrite.c>
+	RewriteEngine on
+	RewriteBase /
+
+	RewriteCond %{SCRIPT_FILENAME} !-f
+	RewriteRule ^(.*[^/])$ /$1/ [R=301,L]
+
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule . /index.html [L]
+</IfModule>
+

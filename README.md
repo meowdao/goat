@@ -1,5 +1,7 @@
 GOAT
 ====
+[![Build Status](https://travis-ci.org/CTAPbIuMABP/goat.png?branch=master)](https://travis-ci.org/CTAPbIuMABP/goat)
+
 :)
 
 To make the first build run:

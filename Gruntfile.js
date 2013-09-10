@@ -21,9 +21,10 @@ module.exports = function (grunt) {
 			dist: {
 				src: [
 					"dist/goat.js",
-					"assets/javascripts/map.js",
-					"assets/javascripts/common.js",
-					"assets/javascripts/translator.js"
+					"assets/javascripts/*.js",
+					"controllers/*",
+					"models/*",
+					"routes/*"
 				],
 				options: {
 					jshintrc: "assets/javascripts/.jshintrc"
@@ -54,9 +55,7 @@ module.exports = function (grunt) {
 				files: {
 					"dist/goat.min.js": ["dist/goat.js"],
 					"dist/translator.min.js": ["assets/javascripts/translator.js"],
-					"dist/map.min.js": ["assets/javascripts/map.js"],
-					"dist/common.min.js": ["assets/javascripts/common.js"],
-					"dist/myControl.min.js": ["assets/javascripts/myControl.js"]
+					"dist/common.min.js": ["assets/javascripts/common.js"]
 				}
 			}
 		},
@@ -127,7 +126,8 @@ module.exports = function (grunt) {
 						expand: true,
 						cwd: "views/",
 						src: [
-							"*.html"
+							"*",
+							"*/**"
 						],
 						dest: "dist/"
 					}
@@ -177,7 +177,6 @@ module.exports = function (grunt) {
 		},
 		compare_size: {
 			files: [
-				"dist/map.min.js",
 				"dist/goat.min.js",
 				"dist/styles.min.css"
 			],
