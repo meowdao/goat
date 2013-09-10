@@ -1,3 +1,5 @@
+"use strict";
+
 (function (callback) {
 	if (!(
 		window.jQuery &&     // does site already have jQuery

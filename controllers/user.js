@@ -1,7 +1,6 @@
 "use strict";
 
-var helper = require("../utils/helper.js"),
-	controller = require("../utils/controller.js"),
+var controller = require("../utils/controller.js"),
     mongoose = require("mongoose"),
     User = mongoose.model("User"),
 	_ = require("underscore");
