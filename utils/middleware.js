@@ -2,10 +2,11 @@
 
 var _ = require("underscore");
 
-exports.require = function (required) {
+exports.requiresParams = function (required) {
     return function (request, response, next) {
+        var query = request.method === "POST" || request.method === "PUT" ? request.body : request.query;
         var check = _.every(required, function (e) {
-            return !!request.query[e];
+            return !!query[e];
         });
         if (check) {
             return next();
@@ -13,5 +14,4 @@ exports.require = function (required) {
             return next(new Error("Required parameter not found!"));
         }
     }
-
 };

@@ -1,0 +1,21 @@
+{
+  "name": "vendors",
+  "version": "0.0.1",
+  "homepage": "http://mabp.kiev.ua/",
+  "authors": [
+    "CTAPbIu_MABP <ctapbiumabp@gmail.com>"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "vendors",
+    "test"
+  ],
+  "dependencies": {
+    "jquery": "~2.0.0",
+    "jquery-ui": "~1.10.0",
+    "qunit": "~1.12.0",
+    "globalize": "0.1.1"
+  }
+}
+

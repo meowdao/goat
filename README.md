@@ -9,15 +9,9 @@ To make the first build run:
 ```bash
 bundle install
 
-npm install -g grunt-cli
+npm install -g grunt-cli bower
 npm install
-
-git submodules update --init --recursive
-cd vendor/jquery
-npm install
-cd ../../
-
-grunt build:jquery
+bower install
 ```
 
 GIT

@@ -11,7 +11,7 @@ module.exports = function (config, app) {
     app.set("views", config.templatesPath);
     app.engine("html", cons.underscore);
 
-    var maxAge = 8.64e7; //one day
+    var maxAge = 864e5; //one day
     if (process.env.NODE_ENV === "development") {
         maxAge = 0;
     }
@@ -26,7 +26,7 @@ module.exports = function (config, app) {
         cookie: {
             //domain : ".mydomain.com",
             //path: "/",
-            maxAge: 31536000000, // 1 year
+            maxAge: 31536e6, // 1 year
             httpOnly: true,
             secure: false
         },
@@ -34,7 +34,7 @@ module.exports = function (config, app) {
         store: new mongoStore({
             url: config.mongoUrl,
             collection: "sessions",
-            interval: 120000  // 2 hours
+            interval: 12e4  // 2 hours
         })
     }));
     app.use(express.bodyParser());
@@ -52,5 +52,12 @@ module.exports = function (config, app) {
             dumpExceptions: true,
             showStack: true
         }));
+    } else {
+        /* jshint unused: false */
+        // next is needed by express
+        app.use(function (error, request, response, next) {
+            response.render("500.html", {status: 500, error: error, url: request.url});
+        });
+        /* jshint unused: true */
     }
 };

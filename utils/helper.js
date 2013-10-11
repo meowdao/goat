@@ -4,7 +4,8 @@ var Q = require("q");
 
 exports.simpleJSONWrapper = function (method) {
     return function (request, response) {
-        method(Object.keys(request.query).length === 0 ? (Object.keys(request.body).length === 0 ? request.params : request.body) : request.query, {}, request)
+        var params = ["limit", "skip", "sort"];
+        method(Object.keys(request.query).length === 0 ? (Object.keys(request.body).length === 0 ? request.params : request.body) : _.omit(request.query, params), _.pick(request.query, params), request)
             .then(function (result) {
                 response.json(result);
             })
@@ -63,6 +64,7 @@ exports.complicatedHTMLWrapper = function (method) {
 exports.simpleCallback = function (deferred) {
     return function (error, result) {
         if (error) {
+            console.error(error);
             deferred.reject(error);
         } else {
             deferred.resolve(result);
@@ -70,25 +72,13 @@ exports.simpleCallback = function (deferred) {
     };
 };
 
-exports.simpleDeferred = function (query) {
-    var deferred = Q.defer();
+exports.simpleDeferred = function (query, params, defaults) {
+    var deferred = Q.defer(),
+        options = _.extend({lean:true}, defaults, params);
+    Object.keys(options).forEach(function (method) {
+        query[method](options[method]);
+    });
     query.exec(this.simpleCallback(deferred));
-    return deferred.promise;
-};
-
-exports.simpleDelete = function (model, query) {
-	return this.simpleDeferred(model.remove(query));
-};
-
-exports.simpleInsert = function (model, query) {
-    var deferred = Q.defer();
-    model.create(query, this.simpleCallback(deferred));
-    return deferred.promise;
-};
-
-exports.simpleUpsert = function (model, query, params) {
-    var deferred = Q.defer();
-    model.update(query, params, {upsert: true, strict: true}, this.simpleCallback(deferred));
     return deferred.promise;
 };
 
@@ -100,24 +90,49 @@ exports.errors = function (errors) {
 
 exports.roughSizeOfObject = function (object) {
 
-	var objectList = [],
-		stack = [ object ],
-		bytes = 0;
+    var objectList = [],
+        stack = [ object ],
+        bytes = 0;
 
-	while (stack.length) {
-		var value = stack.pop();
-		if (typeof value === "boolean") {
-			bytes += 4;
-		} else if (typeof value === "string") {
-			bytes += value.length * 2;
-		} else if (typeof value === "number") {
-			bytes += 8;
-		} else if (typeof value === "object" && objectList.indexOf(value) === -1) {
-			objectList.push(value);
-			for (var i in value) {
-				stack.push(value[ i ]);
-			}
-		}
-	}
-	return bytes;
+    while (stack.length) {
+        var value = stack.pop();
+        if (typeof value === "boolean") {
+            bytes += 4;
+        } else if (typeof value === "string") {
+            bytes += value.length * 2;
+        } else if (typeof value === "number") {
+            bytes += 8;
+        } else if (typeof value === "object" && objectList.indexOf(value) === -1) {
+            objectList.push(value);
+            for (var i in value) {
+                stack.push(value[ i ]);
+            }
+        }
+    }
+    return bytes;
+};
+
+
+exports.getObject = function (parts, create, obj) {
+
+    if (typeof parts === "string") {
+        parts = parts.split(".");
+    }
+
+    if (typeof create !== "boolean") {
+        obj = create;
+        create = undefined;
+    }
+
+    var p;
+
+    while (obj && parts.length) {
+        p = parts.shift();
+        if (obj[p] === undefined && create) {
+            obj[p] = {};
+        }
+        obj = obj[p];
+    }
+
+    return obj;
 };

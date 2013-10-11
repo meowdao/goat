@@ -5,6 +5,10 @@ var controller = require("../utils/controller.js"),
     User = mongoose.model("User"),
 	_ = require("underscore");
 
+var defaults = {
+
+};
+
 var methods = {
     profile: function user_profile (query) {
         return {
@@ -13,4 +17,4 @@ var methods = {
     }
 };
 
-module.exports = _.extend(controller(User), methods);
+module.exports = _.extend(controller(User, defaults), methods);

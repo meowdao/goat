@@ -137,7 +137,7 @@ module.exports = function (grunt) {
 				files: [
 					{
 						expand: true,
-						cwd: "vendor/jquery/dist/",
+						cwd: "vendors/jquery/",
 						src: [
 							"jquery.min.js"
 						],
@@ -149,7 +149,7 @@ module.exports = function (grunt) {
 				files: [
 					{
 						expand: true,
-						cwd: "vendor/globalize/dist/",
+						cwd: "vendors/globalize/lib/",
 						src: [
 							"globalize.min.js"
 						],
@@ -157,7 +157,7 @@ module.exports = function (grunt) {
 					},
 					{
 						expand: true,
-						cwd: "vendor/globalize/lib/cultures/",
+						cwd: "vendors/globalize/lib/cultures/",
 						src: [
 							"globalize.culture.en-US.js",
 							"globalize.culture.ru-RU.js"
@@ -202,8 +202,6 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks("grunt-contrib-copy");
 	grunt.loadNpmTasks("grunt-contrib-qunit");
 	grunt.loadNpmTasks("grunt-compare-size");
-	grunt.loadNpmTasks("grunt-update-submodules");
-
 
 	grunt.registerTask("build", "Build goat.js", function () {
 		var tasks = [],
@@ -258,7 +256,7 @@ module.exports = function (grunt) {
 	});
 
 	// Default task(s).
-	grunt.registerTask("default", ["update_submodules", "build", "jshint", "uglify", "sass", "copy", "compare_size"]);
+	grunt.registerTask("default", ["build", "jshint", "uglify", "sass", "copy", "compare_size"]);
 	grunt.registerTask("travis", ["build", "jshint", "uglify", "sass", "compare_size"]);
 	grunt.registerTask("test", ["qunit"]);
 

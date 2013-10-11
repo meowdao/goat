@@ -1,6 +1,7 @@
 "use strict";
 
-var requirejs = require("requirejs"),
+var helper = require("../utils/helper.js"),
+    requirejs = require("requirejs"),
 	_ = require("underscore");
 
 module.exports = function (app, pkg, env) {
@@ -12,37 +13,13 @@ module.exports = function (app, pkg, env) {
 		next();
 	});
 
-	function getObject(parts, create, obj) {
-
-		if (typeof parts === "string") {
-			parts = parts.split(".");
-		}
-
-		if (typeof create !== "boolean") {
-			obj = create;
-			create = undefined;
-		}
-
-		var p;
-
-		while (obj && parts.length) {
-			p = parts.shift();
-			if (obj[p] === undefined && create) {
-				obj[p] = {};
-			}
-			obj = obj[p];
-		}
-
-		return obj;
-	}
-
 	/**
 	 * Allow underscore use of partials
 	 */
 	var underscorePartials = (function () {
 		var partials = {};
 
-		var mixin = {
+        return {
 			declare: function (name, template) {
 				partials[name] = _.template(template);
 			},
@@ -50,7 +27,7 @@ module.exports = function (app, pkg, env) {
 				return partials[name](data);
 			},
 			config: function (name) {
-				return getObject(name, pkg);
+				return helper.getObject(name, pkg);
 			},
 			request: function (name) {
 				return sharedRequest[name];
@@ -59,8 +36,6 @@ module.exports = function (app, pkg, env) {
 				return env;
 			}
 		};
-
-		return mixin;
 
 	})();
 

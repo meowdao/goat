@@ -7,7 +7,7 @@ module.exports = function (app) {
         middleware = require("../utils/middleware.js");
 
     // JSON
-    app.get("/user/getById", middleware.require(["id"]), helper.simpleJSONWrapper(controller.getById));
+    app.get("/user/getById", middleware.requiresParams(["id"]), helper.simpleJSONWrapper(controller.getById));
     app.get("/user/getWithQuery", helper.simpleJSONWrapper(controller.getWithQuery));
 
     // HTML
