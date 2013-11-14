@@ -62,15 +62,13 @@ module.exports = function (grunt) {
 		sass: {
 			dist: {
 				options: {
+                    //sourcemap: true
 					bundleExec: true,
 					style: "compressed"
 				},
 				files: {
-					"dist/styles.min.css": [
-						"assets/stylesheets/reset.css",
-						"assets/stylesheets/styles.scss",
-						"assets/stylesheets/login.scss"
-					]
+					"dist/styles.min.css": "assets/stylesheets/styles.scss",
+                    "dist/form.min.css":"assets/stylesheets/form.scss"
 				}
 			},
 			dev: {
@@ -80,11 +78,8 @@ module.exports = function (grunt) {
 					style: "expanded"
 				},
 				files: {
-					"dist/styles.css": [
-						"assets/stylesheets/reset.css",
-						"assets/stylesheets/styles.scss",
-						"assets/stylesheets/login.scss"
-					]
+                    "dist/stylesheet/styles.min.css": "assets/stylesheets/styles.scss",
+                    "dist/stylesheet/form.min.css":"assets/stylesheets/form.scss"
 				}
 			}
 		},
@@ -118,6 +113,18 @@ module.exports = function (grunt) {
 						],
 						dest: "dist/"
 					}
+				]
+			},
+			css: {
+				files: [
+                    {
+                        expand: true,
+                        cwd: "assets/stylesheet/",
+                        src: [
+                            "reset.css"
+                        ],
+                        dest: "dist/stylesheet/"
+                    }
 				]
 			},
 			views: {

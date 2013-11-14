@@ -1,0 +1,15 @@
+<%= _.partial("head", {}) %>
+<%= _.partial("header") %>
+
+<article>
+	<form action="/user/login" autocomplete="off">
+		<fieldset>
+			<legend>Login</legend>
+			<input id="email" type="text" name="email" value="" placeholder="Email"/>
+			<input id="password" type="password" name="password" value="" placeholder="Password"/>
+			<input type="submit" value="Login"/>
+		</fieldset>
+	</form>
+</article>
+
+<%= _.partial("footer") %>

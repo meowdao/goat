@@ -1,6 +1,8 @@
 language: node_js
 node_js:
     - "0.10"
+services:
+  - mongodb
 before_script:
   - npm install -g grunt-cli bower
   - bundle install
@@ -8,7 +10,6 @@ before_script:
   - bower install
 script:
   - grunt travis
-git:
-    depth: 30
+
 
 

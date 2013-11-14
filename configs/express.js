@@ -16,7 +16,7 @@ module.exports = function (config, app) {
         maxAge = 0;
     }
 
-    app.use(express.static("assets", {maxAge: maxAge}));
+    app.use(express.static("dist", {maxAge: maxAge}));
 
     app.use(express.compress());
     app.use(express.logger("dev")); // "default", "short", "tiny", "dev"

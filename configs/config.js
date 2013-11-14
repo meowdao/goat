@@ -8,7 +8,17 @@ var templatesPath = path.join(rootPath, "views");
 module.exports = {
     development: {
         port: 8888,
-        mongoUrl: "mongodb://localhost:27017/goat",
-        templatesPath: templatesPath
+        mongoUrl: "",
+        templatesPath: templatesPath,
+        facebook: {
+            clientID: "",
+            clientSecret: "",
+            callbackURL: ""
+        },
+        google: {
+            clientID: "",
+            clientSecret: "",
+            callbackURL: ""
+        }
     }
 };
