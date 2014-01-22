@@ -2,18 +2,11 @@
 
 var helper = require("../utils/helper.js"),
     requirejs = require("requirejs"),
-	_ = require("underscore");
+    _ = require("underscore");
 
 module.exports = function (app, pkg, env) {
 
-	var sharedRequest;
-
-	app.use(function (request, responce, next) {
-		sharedRequest = request;
-		next();
-	});
-
-	_.mixin((function () {
+    _.mixin((function () {
         var partials = {};
 
         return {
@@ -25,9 +18,6 @@ module.exports = function (app, pkg, env) {
             },
             config: function (name) {
                 return helper.getObject(name, pkg);
-            },
-            request: function (name) {
-                return sharedRequest[name];
             },
             getEnv: function () {
                 return env;
