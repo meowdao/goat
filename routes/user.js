@@ -31,10 +31,7 @@ module.exports = function (app, passport) {
             failureRedirect: "/user/login"
         }));
 
-    app.get("/auth/facebook/callback",
-        passport.authenticate("facebook", {
-            failureRedirect: "/user/login"
-        }), controller.authCallback);
+    app.get("/auth/facebook/callback", passport.authenticate("facebook"), helper.simpleHTMLWrapper(controller.authCallback));
 
     app.get("/auth/google",
         passport.authenticate("google", {
@@ -45,9 +42,7 @@ module.exports = function (app, passport) {
             ]
         }));
 
-    app.get("/auth/google/callback",
-        passport.authenticate("google", {
-            failureRedirect: "/user/login"
-        }), controller.authCallback);
+    app.get("/auth/google/callback", passport.authenticate("google"), helper.simpleHTMLWrapper(controller.authCallback));
+
 
 };

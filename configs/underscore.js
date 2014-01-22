@@ -13,50 +13,42 @@ module.exports = function (app, pkg, env) {
 		next();
 	});
 
-	/**
-	 * Allow underscore use of partials
-	 */
-	var underscorePartials = (function () {
-		var partials = {};
+	_.mixin((function () {
+        var partials = {};
 
         return {
-			declare: function (name, template) {
-				partials[name] = _.template(template);
-			},
-			partial: function (name, data) {
-				return partials[name](data);
-			},
-			config: function (name) {
-				return helper.getObject(name, pkg);
-			},
-			request: function (name) {
-				return sharedRequest[name];
-			},
-			getEnv: function () {
-				return env;
-			}
-		};
+            declare: function (name, template) {
+                partials[name] = _.template(template);
+            },
+            partial: function (name, data) {
+                return partials[name](data);
+            },
+            config: function (name) {
+                return helper.getObject(name, pkg);
+            },
+            request: function (name) {
+                return sharedRequest[name];
+            },
+            getEnv: function () {
+                return env;
+            }
+        };
 
-	})();
+    })());
 
-	_.mixin(underscorePartials);
+    requirejs.config({baseUrl: "utils/", nodeRequire: require});
 
-	/*
-	* Shared partials
-	*/
-	requirejs.config({baseUrl: "utils/", nodeRequire: require});
+    var partials = [
+        "head",
+        "header",
+        "footer"
+    ];
 
-	requirejs(["text!../views/partials/head.html"], function (html) {
-		_.declare("head", html);
-	});
-
-	requirejs(["text!../views/partials/header.html"], function (html) {
-		_.declare("header", html);
-	});
-
-	requirejs(["text!../views/partials/footer.html"], function (html) {
-		_.declare("footer", html);
-	});
+    _.forEach(partials, function (name) {
+        requirejs(["text!../views/partials/" + name + ".html"], function (html) {
+            _.declare(name, html);
+        });
+    });
 
 };
 

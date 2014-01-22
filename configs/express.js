@@ -2,6 +2,7 @@
 
 var express = require("express"),
     cons = require("consolidate"),
+    mongoose = require("mongoose"),
     mongoStore = require("connect-mongo")(express);
 
 module.exports = function (config, app) {
@@ -32,7 +33,7 @@ module.exports = function (config, app) {
         },
         // express/mongo session storage
         store: new mongoStore({
-            url: config.mongoUrl,
+            db: mongoose.connection.db,
             collection: "sessions",
             interval: 12e4  // 2 hours
         })
@@ -56,7 +57,11 @@ module.exports = function (config, app) {
         /* jshint unused: false */
         // next is needed by express
         app.use(function (error, request, response, next) {
-            response.render("500.html", {status: 500, error: error, url: request.url});
+            if (error.name === "ValidationError") { // mongoose error
+                response.render("409.html", {status: 409, error: error});
+            } else {
+                response.render("500.html", {status: 500, error: error, url: request.url});
+            }
         });
         /* jshint unused: true */
     }

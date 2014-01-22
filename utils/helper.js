@@ -1,6 +1,7 @@
 "use strict";
 
-var Q = require("q");
+var Q = require("q"),
+    _ = require("underscore");
 
 exports.simpleJSONWrapper = function (method) {
     return function (request, response) {
@@ -61,27 +62,6 @@ exports.complicatedHTMLWrapper = function (method) {
     };
 };
 
-exports.simpleCallback = function (deferred) {
-    return function (error, result) {
-        if (error) {
-            console.error(error);
-            deferred.reject(error);
-        } else {
-            deferred.resolve(result);
-        }
-    };
-};
-
-exports.simpleDeferred = function (query, params, defaults) {
-    var deferred = Q.defer(),
-        options = _.extend({lean:true}, defaults, params);
-    Object.keys(options).forEach(function (method) {
-        query[method](options[method]);
-    });
-    query.exec(this.simpleCallback(deferred));
-    return deferred.promise;
-};
-
 exports.errors = function (errors) {
     return Object.keys(errors).map(function (key) {
         return errors[key].type;
@@ -92,10 +72,11 @@ exports.roughSizeOfObject = function (object) {
 
     var objectList = [],
         stack = [ object ],
-        bytes = 0;
+        bytes = 0,
+        value;
 
     while (stack.length) {
-        var value = stack.pop();
+        value = stack.pop();
         if (typeof value === "boolean") {
             bytes += 4;
         } else if (typeof value === "string") {

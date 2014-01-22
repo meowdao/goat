@@ -13,7 +13,16 @@ var User = new Schema({
     role: { type: String, enum: ["user", "admin"] },
 
     hashed_password: {type: String, select: false},
-    salt: {type: String, select: false}
+    salt: {type: String, select: false},
+
+    date: {
+        _id: false,
+        created: {type: Date, default: Date.now}
+    },
+
+    facebook: {type: Schema.Types.Mixed, select: false},
+    google: {type: Schema.Types.Mixed, select: false}
+
 }, { collection: "test_user", versionKey: false});
 
 User

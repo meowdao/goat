@@ -28,13 +28,14 @@ module.exports = function (config, passport) {
             usernameField: "email",
             passwordField: "password"
         },
-        function (user_name, password, callback) {
+        function (email, password, callback) {
             userController.getOne({email: email}, {select: "+salt +hashed_password", lean:false})
                 .then(function (user) {
                     if (!user || !user.authenticate(password)) {
                         callback(null, false, { message: "Invalid user name or password" });
+                    } else {
+                        callback(null, user);
                     }
-                    callback(null, user);
                 })
                 .fail(function (error) {
                     callback(error, null);
