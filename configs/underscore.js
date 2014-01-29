@@ -10,11 +10,14 @@ module.exports = function (app, pkg, env) {
         var partials = {};
 
         return {
-            declare: function (name, template) {
-                partials[name] = _.template(template);
+            declare: function (group, name, template) {
+                if (!partials[group]) {
+                    partials[group] = {};
+                }
+                partials[group][name] = _.template(template);
             },
-            partial: function (name, data) {
-                return partials[name](data);
+            partial: function (group, name, data) {
+                return partials[group][name] && partials[group][name](data) || "";
             },
             config: function (name) {
                 return helper.getObject(name, pkg);
@@ -28,15 +31,24 @@ module.exports = function (app, pkg, env) {
 
     requirejs.config({baseUrl: "utils/", nodeRequire: require});
 
-    var partials = [
-        "head",
-        "header",
-        "footer"
-    ];
+    var partials = {
+        html: [
+            "head",
+            "header",
+            "footer"
+        ],
+        email: [
+            "footer",
+            "head",
+            "header"
+        ]
+    };
 
-    _.forEach(partials, function (name) {
-        requirejs(["text!../views/partials/" + name + ".html"], function (html) {
-            _.declare(name, html);
+    _.forEach(partials, function (names, group) {
+        _.forEach(names, function (name) {
+            requirejs(["text!../views/partials/" + group + "/" + name + ".html"], function (html) {
+                _.declare(group, name, html);
+            });
         });
     });
 

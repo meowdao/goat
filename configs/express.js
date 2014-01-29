@@ -1,16 +1,17 @@
 "use strict";
 
 var express = require("express"),
-    cons = require("consolidate"),
+    consolidate = require("consolidate"),
     mongoose = require("mongoose"),
     mongoStore = require("connect-mongo")(express);
 
-module.exports = function (config, app) {
+module.exports = function (config, app, passport) {
 
     app.set("port", process.env.PORT || config.port);
     app.set("view engine", "html");
     app.set("views", config.templatesPath);
-    app.engine("html", cons.underscore);
+    app.set("jsonp callback", true);
+    app.engine("html", consolidate.underscore);
 
     var maxAge = 864e5; //one day
     if (process.env.NODE_ENV === "development") {
@@ -40,12 +41,16 @@ module.exports = function (config, app) {
     }));
     app.use(express.bodyParser());
     app.use(express.favicon());
-    //app.use(express.methodOverride());
+    app.use(express.methodOverride());
+
+    app.use(passport.initialize());
+    app.use(passport.session());
 
     app.use(app.router);
 
     app.use(function (request, response) {
-        response.render("404.html", { status: 404, url: request.url });
+        response.status(404);
+        response.render("404.html", {url: request.url});
     });
 
     if (process.env.NODE_ENV === "development") {
@@ -58,8 +63,10 @@ module.exports = function (config, app) {
         // next is needed by express
         app.use(function (error, request, response, next) {
             if (error.name === "ValidationError") { // mongoose error
+                response.status(409);
                 response.render("409.html", {status: 409, error: error});
             } else {
+                response.status(500);
                 response.render("500.html", {status: 500, error: error, url: request.url});
             }
         });

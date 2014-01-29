@@ -1,0 +1,20 @@
+<%= _.partial("html", "head") %>
+<%= _.partial("html", "header") %>
+
+<article class="user">
+
+	<% _.each(messages, function(message){ %>
+	<div class="message"><%= message %></div>
+	<% }); %>
+
+	<form action="/user/change" method="post">
+		<input type="password" name="password" placeholder="Enter Password" autofocus/>
+		<input type="password" name="confirm" placeholder="Confirm Password"/>
+		<input type="hidden" name="hash" value="<%= hash %>"/>
+		<input type="submit" value="Change"/>
+	</form>
+</article>
+
+<%= _.partial("html", "footer") %>
+
+

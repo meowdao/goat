@@ -6,13 +6,52 @@ var regexp = require("../utils/regexp.js"),
     Schema = mongoose.Schema,
     crypto = require("crypto");
 
-var User = new Schema({
-    email: {type: String, unique: true, match: regexp.email},
-    first_name: String,
-    last_name: String,
-    role: { type: String, enum: ["user", "admin"] },
+// last is first
+var password_validator = [
+    {
+        validator: function () {
+            return this._password === this._confirm;
+        },
+        msg: "Passwords doesn't much"
+    },
+    {
+        validator: function () {
+            return regexp.numbers.test(this._password);
+        },
+        msg: "Passwords should contains numbers"
+    },
+    {
+        validator: function () {
+            return regexp.upper.test(this._password);
+        },
+        msg: "Passwords should contains upper case letters"
+    },
+    {
+        validator: function () {
+            return regexp.lower.test(this._password);
+        },
+        msg: "Passwords should contains lower case letters"
+    },
+    {
+        validator: function () {
+            return !!this._password;
+        },
+        msg: "Password cannot be blank"
+    }
+];
 
-    hashed_password: {type: String, select: false},
+var User = new Schema({
+    avatar: {type: Schema.Types.ObjectId, ref: "Avatar"},
+
+    email: {type: String, unique: true, required: "Email cannot be blank", match: [regexp.email, "Email is invalid"]},
+    email_verified: {type: Boolean, default: false},
+
+    first_name: {type: String, required: "First name cannot be blank"},
+    last_name: {type: String, required: "Last name cannot be blank"},
+
+    role: { type: String, default: "user", enum: ["user", "admin"] },
+
+    hashed_password: {type: String, select: false, validate: password_validator},
     salt: {type: String, select: false},
 
     date: {
@@ -24,6 +63,13 @@ var User = new Schema({
     google: {type: Schema.Types.Mixed, select: false}
 
 }, { collection: "test_user", versionKey: false});
+
+
+User
+    .virtual("full_name")
+    .get(function () {
+        return this.first_name + " " + this.last_name;
+    });
 
 User
     .virtual("password")
@@ -44,26 +90,6 @@ User
     .get(function () {
         return this._confirm;
     });
-
-User.path("email").validate(function (email) {
-    return regexp.email.test(email);
-}, "Email is invalid");
-
-User.path("hashed_password").validate(function () {
-    return regexp.lower.test(this._password);
-}, "Passwords should contains lower case letters");
-
-User.path("hashed_password").validate(function () {
-    return regexp.upper.test(this._password);
-}, "Passwords should contains upper case letters");
-
-User.path("hashed_password").validate(function () {
-    return regexp.numbers.test(this._password);
-}, "Passwords should contains numbers");
-
-User.path("hashed_password").validate(function () {
-    return this._password === this._confirm;
-}, "Passwords doesn't much");
 
 User.methods = {
 
@@ -100,4 +126,4 @@ User.index({
     }
 });
 
-mongoose.model("User", User);
+module.exports = User;

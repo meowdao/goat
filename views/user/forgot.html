@@ -1,0 +1,17 @@
+<%= _.partial("html", "head") %>
+<%= _.partial("html", "header") %>
+
+<article class="user">
+
+	<% _.each(messages, function(message){ %>
+	<div class="message"><%= message %></div>
+	<% }); %>
+
+    <form action="/user/forgot" method="post">
+        <input type="text" name="email" value="" placeholder="Email" autofocus />
+        <input type="submit" value="remind">
+    </form>
+</article>
+
+<%= _.partial("html", "footer") %>
+

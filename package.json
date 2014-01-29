@@ -2,7 +2,7 @@
 	"name": "goat",
 	"title": "-=GOAT=-",
 	"description": "just a goat",
-	"version": "0.0.4",
+	"version": "0.0.5",
 	"homepage": "http://mabp.kiev.ua/",
 	"author": {
 		"name": "CTAPbIu_MABP",
@@ -35,7 +35,11 @@
         "passport": "0.1.17",
         "passport-local": "0.1.6",
         "passport-facebook": "0.1.5",
-        "passport-google-oauth": "0.1.5"
+        "passport-google-oauth": "0.1.5",
+
+        "nodemailer": "0.6.0",
+        "styliner": "0.8.8",
+        "cssmin": "0.4.1"
 	},
 	"devDependencies": {
 		"grunt": "0.4.2",

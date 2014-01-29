@@ -15,3 +15,23 @@ exports.requiresParams = function (required) {
         }
     };
 };
+
+exports.requiresLogin = function (request, response, next) {
+    if (!request.isAuthenticated()) {
+        request.session.originalUrl = request.originalUrl;
+        return response.redirect("/user/login");
+    }
+    return next();
+};
+
+exports.requiresRole = function (required) {
+    return function (request, response, next) {
+        exports.requiresLogin(request, response, function () {
+            if (_.contains(required, request.user.role)) {
+                return next();
+            } else {
+                return next(new Error("Access denied"));
+            }
+        });
+    };
+};

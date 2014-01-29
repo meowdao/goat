@@ -1,0 +1,16 @@
+/* header, footer & common */
+table {
+  border-spacing: 0px;
+}
+
+td {
+  padding: 0px;
+}
+
+img {
+  display: block;
+}
+
+.full {
+  width: 600px;
+}

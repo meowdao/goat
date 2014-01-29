@@ -1,0 +1,14 @@
+<%= _.partial("html", "head") %>
+<%= _.partial("html", "header") %>
+
+<article  class="user">
+
+	<% _.each(messages, function(message){ %>
+	<div class="message"><%= message %></div>
+	<% }); %>
+
+	<%= JSON.stringify(user) %>
+
+</article>
+
+<%= _.partial("html", "footer") %>

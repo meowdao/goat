@@ -39,9 +39,25 @@ module.exports = function (config) {
 
     mongoose.connect(config.mongoUrl, {server: {auto_reconnect: true}});
 
-
-	// mongoose.connection.db.adminCommand({setParameter: 1, textSearchEnabled: true});
+    function toTitleCase (str) {
+        return str.replace(/(^|_)(\w)/g, function (all, $1, $2) {
+            return $2.toUpperCase();
+        });
+    }
 
     // Models
-    require("../models/user.js");
-};
+    var models = [
+        "avatar",
+        "hash",
+        "opt_out",
+        "user"
+    ];
+
+    models.forEach(function (model) {
+        mongoose.model(toTitleCase(model), require("../models/" + model + ".js"));
+    });
+
+    return mongoose;
+
+}
+;

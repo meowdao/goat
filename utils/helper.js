@@ -6,13 +6,38 @@ var Q = require("q"),
 exports.simpleJSONWrapper = function (method) {
     return function (request, response) {
         var params = ["limit", "skip", "sort"];
-        method(Object.keys(request.query).length === 0 ? (Object.keys(request.body).length === 0 ? request.params : request.body) : _.omit(request.query, params), _.pick(request.query, params), request)
+        // TODO drop _
+        method(Object.keys(request.query).length === 0 ? (Object.keys(request.body).length === 0 ? _.extend({}, request.params) : request.body) : _.omit(request.query, params), _.pick(request.query, params), request)
             .then(function (result) {
                 response.json(result);
             })
             .fail(function (error) {
                 console.error(error);
-                response.send(500, error);
+                if (error.name === "ValidationError") {
+                    response.send(409, error);
+                } else {
+                    response.send(500, error);
+                }
+            })
+            .done();
+    };
+};
+
+exports.simpleRedirect = function (method) {
+    return function (request, response, next) {
+        method(request, response, next)
+            .then(function (result) {
+                module.exports.messages(request, result.messages);
+                response.redirect(result.url || "/notification");
+            })
+            .fail(function (error) {
+                if (error.errors) { // mongoose validation error
+                    module.exports.messages(request, module.exports.errors(error.errors));
+                    response.redirect(request.url);
+                } else {
+                    module.exports.messages(request, error);
+                    response.redirect("/error");
+                }
             })
             .done();
     };
@@ -25,16 +50,18 @@ exports.simpleHTMLWrapper = function (method) {
         Q.all(keys.map(function (key) {
                 return result[key];
             }))
-            .spread(function () {
-                var params = {}, args = arguments;
-                keys.map(function (element, index) {
-                    params[element] = args[index];
+            .then(function (results) {
+                var params = {};
+                keys.forEach(function (element, index) {
+                    params[element] = results[index];
                 });
+                params.messages = request.session.messages || [];
+                delete request.session.messages;
                 response.render(method.name.replace("_", "/") + ".html", params);
             })
             .fail(function (error) {
                 console.error(error);
-                next(new Error(error));
+                next(error);
             })
             .done();
     };
@@ -47,16 +74,18 @@ exports.complicatedHTMLWrapper = function (method) {
         Q.allSettled(keys.map(function (key) {
                 return result[key];
             }))
-            .spread(function () {
-                var params = {}, args = arguments;
-                keys.map(function (element, index) {
-                    params[element] = args[index].state === "fulfilled" ? args[index].value : new Error(args[index].reason);
+            .then(function (results) {
+                var params = {};
+                keys.forEach(function (element, index) {
+                    params[element] = results[index].state === "fulfilled" ? results[index].value : new Error(results[index].reason);
                 });
+                params.messages = request.session.messages || [];
+                delete request.session.messages;
                 response.render(method.name.replace("_", "/") + ".html", params);
             })
             .fail(function (error) {
                 console.error(error);
-                next(new Error(error));
+                next(error);
             })
             .done();
     };
@@ -64,7 +93,13 @@ exports.complicatedHTMLWrapper = function (method) {
 
 exports.errors = function (errors) {
     return Object.keys(errors).map(function (key) {
-        return errors[key].type;
+        return errors[key].message;
+    });
+};
+
+exports.messages = function (request, messages) {
+    request.session.messages = [].concat(request.session.messages, messages).filter(function (e) {
+        return e;
     });
 };
 
@@ -72,11 +107,10 @@ exports.roughSizeOfObject = function (object) {
 
     var objectList = [],
         stack = [ object ],
-        bytes = 0,
-        value;
+        bytes = 0;
 
     while (stack.length) {
-        value = stack.pop();
+        var value = stack.pop();
         if (typeof value === "boolean") {
             bytes += 4;
         } else if (typeof value === "string") {
@@ -85,7 +119,9 @@ exports.roughSizeOfObject = function (object) {
             bytes += 8;
         } else if (typeof value === "object" && objectList.indexOf(value) === -1) {
             objectList.push(value);
-            stack = stack.concat(value);
+            for (var i in value) {
+                stack.push(value[ i ]);
+            }
         }
     }
     return bytes;

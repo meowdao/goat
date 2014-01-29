@@ -1,7 +1,12 @@
-<%= _.partial("head", {}) %>
-<%= _.partial("header") %>
+<%= _.partial("html", "head") %>
+<%= _.partial("html", "header") %>
 
-<article>
+<article  class="user">
+
+	<% _.each(messages, function(message){ %>
+	<div class="message"><%= message %></div>
+	<% }); %>
+
 	<form action="/user/login" autocomplete="off">
 		<fieldset>
 			<legend>Login</legend>
@@ -12,4 +17,4 @@
 	</form>
 </article>
 
-<%= _.partial("footer") %>
+<%= _.partial("html", "footer") %>

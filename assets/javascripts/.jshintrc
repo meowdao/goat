@@ -17,7 +17,7 @@
 
 	"browser": true,
 
-	"onevar": true,
+	"onevar": false,
 	"node": true,
 
 	"globals": {

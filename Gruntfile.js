@@ -21,19 +21,10 @@ module.exports = function (grunt) {
             dist: {
                 src: [
                     "dist/goat.js",
-                    "assets/javascripts/*.js",
-                    "controllers/*",
-                    "models/*",
-                    "routes/*"
+                    "assets/javascripts/*.js"
                 ],
                 options: {
                     jshintrc: "assets/javascripts/.jshintrc"
-                }
-            },
-            grunt: {
-                src: [ "Gruntfile.js" ],
-                options: {
-                    jshintrc: ".jshintrc"
                 }
             },
             test: {
@@ -44,6 +35,7 @@ module.exports = function (grunt) {
             },
             other: {
                 src: [
+                    "Gruntfile.js",
                     "configs/*",
                     "controllers/*",
                     "models/*",
@@ -51,7 +43,7 @@ module.exports = function (grunt) {
                     "!utils/text.js"
                 ],
                 options: {
-                    jshintrc: "test/.jshintrc"
+                    jshintrc: ".jshintrc"
                 }
             }
         },
@@ -79,8 +71,9 @@ module.exports = function (grunt) {
                     style: "compressed"
                 },
                 files: {
-                    "dist/styles.min.css": "assets/stylesheets/styles.scss",
-                    "dist/form.min.css": "assets/stylesheets/form.scss"
+                    "dist/stylesheet/styles.min.css": "assets/stylesheets/styles.scss",
+                    "dist/stylesheet/form.min.css": "assets/stylesheets/form.scss",
+                    "dist/stylesheet/reset.min.css": "assets/stylesheets/reset.css"
                 }
             },
             dev: {
@@ -91,7 +84,8 @@ module.exports = function (grunt) {
                 },
                 files: {
                     "dist/stylesheet/styles.min.css": "assets/stylesheets/styles.scss",
-                    "dist/stylesheet/form.min.css": "assets/stylesheets/form.scss"
+                    "dist/stylesheet/form.min.css": "assets/stylesheets/form.scss",
+                    "dist/stylesheet/reset.min.css": "assets/stylesheets/reset.css"
                 }
             }
         },
@@ -136,19 +130,6 @@ module.exports = function (grunt) {
                             "reset.css"
                         ],
                         dest: "dist/stylesheet/"
-                    }
-                ]
-            },
-            views: {
-                files: [
-                    {
-                        expand: true,
-                        cwd: "views/",
-                        src: [
-                            "*",
-                            "*/**"
-                        ],
-                        dest: "dist/"
                     }
                 ]
             },
