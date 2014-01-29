@@ -7,10 +7,9 @@
 	<div class="message"><%= message %></div>
 	<% }); %>
 
-	<form action="/user/change" method="post">
+	<form action="/user/change/<%= hash %>" method="post">
 		<input type="password" name="password" placeholder="Enter Password" autofocus/>
 		<input type="password" name="confirm" placeholder="Confirm Password"/>
-		<input type="hidden" name="hash" value="<%= hash %>"/>
 		<input type="submit" value="Change"/>
 	</form>
 </article>

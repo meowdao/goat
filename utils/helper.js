@@ -31,13 +31,35 @@ exports.simpleRedirect = function (method) {
                 response.redirect(result.url || "/notification");
             })
             .fail(function (error) {
-                if (error.errors) { // mongoose validation error
-                    module.exports.messages(request, module.exports.errors(error.errors));
-                    response.redirect(request.url);
+                console.log(error);
+                module.exports.messages(request, [error instanceof Error ? error.toString() : error]);
+                response.redirect(error.name === "ValidationError" ? request.url : "/error");
+                /*
+                if (error instanceof Error) { // mongoose validation error
+                    switch (error.name) {
+                        case "ValidationError":
+                            module.exports.messages(request, Object.keys(error.errors).map(function (key) {
+                                return error.errors[key].message;
+                            }));
+                            response.redirect(request.url);
+                            break;
+                        case "CastError" :
+                            module.exports.messages(request, ["Value '" + error.value + "' is inaccessible."]);
+                            response.redirect("/error");
+                            break;
+                        case "MongoError" :
+                            module.exports.messages(request, ["User with this email already exists."]);
+                            response.redirect("/error");
+                            break;
+                        default :
+                            module.exports.messages(request, ["An error has occurred."]);
+                            response.redirect("/error");
+                    }
                 } else {
                     module.exports.messages(request, error);
                     response.redirect("/error");
                 }
+                */
             })
             .done();
     };
@@ -89,12 +111,6 @@ exports.complicatedHTMLWrapper = function (method) {
             })
             .done();
     };
-};
-
-exports.errors = function (errors) {
-    return Object.keys(errors).map(function (key) {
-        return errors[key].message;
-    });
 };
 
 exports.messages = function (request, messages) {

@@ -7,20 +7,12 @@ var controller = require("../utils/controller.js"),
 
 var methods = {
     getByIdAndDate: function (query) {
-        var date = new Date();
-        date.setDate(date.getDate() - 1);
-
-        var clean = {
-            _id: query.hash,
-            date_created: {"$gte": date}
-        };
-        // TODO getById
-        return module.exports.getOne(clean)
+        return module.exports.getById(query)
             .then(function (hash) {
-                if (!hash) {
-                    throw {
-                        messages: ["Link is expired."]
-                    };
+                var date = new Date();
+                date.setDate(date.getDate() - 1);
+                if (!hash || hash.date.created < date) {
+                    throw "Link is expired.";
                 }
                 return hash;
             });

@@ -17,6 +17,9 @@ module.exports = function (model, defaults) {
         getById: function (query, params) {
             return enchant(model.findById(query[model.modelName.toLowerCase()]), params);
         },
+        getByIdAndRemove: function (query, params) {
+            return enchant(model.findByIdAndRemove(query[model.modelName.toLowerCase()]), params); // options: sort, select
+        },
         getWithQuery: function (query, params) {
             return enchant(model.find.apply(model, [].concat(query || {})), params);
         },

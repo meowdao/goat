@@ -21,7 +21,7 @@ module.exports = function (app, passport) {
     app.post("/user/forgot", helper.simpleRedirect(controller.postForgot));
 
     app.get("/user/change/:hash", helper.simpleHTMLWrapper(controller.getChange));
-    app.post("/user/change", helper.simpleRedirect(controller.postChange));
+    app.post("/user/change/:hash", helper.simpleRedirect(controller.postChange));
 
     app.get("/user/logout", controller.logout);
 

@@ -90,15 +90,18 @@ var methods = {
         };
     },
     postChange: function (request) {
-        return hashController.getByIdAndDate(request.body)
+        return hashController.getByIdAndDate(request.params)
             .then(function (hash) {
-                module.exports.getById(hash, {lean: false})
+                return module.exports.getById(hash, {lean: false})
                     .then(function (user) {
                         user.password = request.body.password;
                         user.confirm = request.body.confirm;
                         return module.exports.save(user)
-                            .thenResolve({
-                                messages: ["Now you can login with your new password"]
+                            .then(function () {
+                                return hashController.getByIdAndRemove(request.params)
+                                    .thenResolve({
+                                        messages: ["Now you can login with your new password"]
+                                    });
                             });
                     });
             });
@@ -124,8 +127,11 @@ var methods = {
                     .then(function (user) {
                         user.email_verified = true;
                         return module.exports.save(user)
-                            .thenResolve({
-                                messages: ["Email is verified"]
+                            .then(function () {
+                                return hashController.getByIdAndRemove(request.params)
+                                    .thenResolve({
+                                        messages: ["Email is verified"]
+                                    });
                             });
                     });
             });
