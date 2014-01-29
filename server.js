@@ -16,6 +16,7 @@ require("./configs/underscore.js")(app, pkg, env);
 
 // routes
 require("./routes/index.js")(app);
+require("./routes/message.js")(app);
 require("./routes/opt_out.js")(app);
 require("./routes/user.js")(app);
 require("./routes/user.abstract.js")(app, passport);

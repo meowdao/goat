@@ -1,0 +1,15 @@
+<%= _.partial("html", "head") %>
+<%= _.partial("html", "header") %>
+
+
+<article class="message">
+	<div class="wrapper">
+
+		<% _.each(messages, function(message){ %>
+		<div class="message"><%= message %></div>
+		<% }); %>
+
+	</div>
+</article>
+
+<%= _.partial("html", "footer") %>
