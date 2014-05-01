@@ -158,6 +158,8 @@ jQuery(function ($) {
 			$(this).closest("form").submit();
 		});
 	}
+
+    i18n.translate(jQuery("body"));
 });
 
 

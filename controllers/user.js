@@ -1,7 +1,7 @@
 "use strict";
 
 var controller = require("./user.abstract.js"),
-    _ = require("underscore");
+    _ = require("lodash");
 
 var methods = {
     profile: function user_profile(request) {

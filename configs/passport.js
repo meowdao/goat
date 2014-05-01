@@ -13,7 +13,7 @@ module.exports = function (config, passport) {
     });
 
     passport.deserializeUser(function (id, callback) {
-        userController.getOne({_id: id}, {lean: false})
+        userController.findOne({_id: id}, {lean: false})
             .then(function (user) {
                 callback(null, user);
             })
@@ -29,7 +29,7 @@ module.exports = function (config, passport) {
             passwordField: "password"
         },
         function (email, password, callback) {
-            userController.getOne({email: email}, {select: "+salt +hashed_password", lean:false})
+            userController.findOne({email: email}, {select: "+salt +hashed_password", lean:false})
                 .then(function (user) {
                     if (!user || !user.authenticate(password)) {
                         callback(null, false, { message: "Invalid user name or password" });
@@ -46,7 +46,7 @@ module.exports = function (config, passport) {
 
     passport.use(new FacebookStrategy(config.facebook,
         function (accessToken, refreshToken, profile, callback) {
-            userController.getOne({"facebook.id": profile.id}, {lean: false})
+            userController.findOne({"facebook.id": profile.id}, {lean: false})
                 .then(function (user) {
                     if (!user) {
                         userController.insert({
@@ -75,7 +75,7 @@ module.exports = function (config, passport) {
 
     passport.use(new GoogleStrategy(config.google,
         function (accessToken, refreshToken, profile, callback) {
-            userController.getOne({"google.id": profile.id}, {lean: false})
+            userController.findOne({"google.id": profile.id}, {lean: false})
                 .then(function (user) {
                     if (!user) {
                         userController.insert({

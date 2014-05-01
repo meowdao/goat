@@ -1,7 +1,7 @@
 "use strict";
 
 var Q = require("q"),
-    _ = require("underscore");
+    _ = require("lodash");
 
 module.exports = function (model, defaults) {
 
@@ -14,19 +14,19 @@ module.exports = function (model, defaults) {
     }
 
     return {
-        getById: function (query, params) {
+        findById: function (query, params) {
             return enchant(model.findById(query[model.modelName.toLowerCase()]), params);
         },
-        getByIdAndRemove: function (query, params) {
+        findByIdAndRemove: function (query, params) {
             return enchant(model.findByIdAndRemove(query[model.modelName.toLowerCase()]), params); // options: sort, select
         },
-        getWithQuery: function (query, params) {
+        find: function (query, params) {
             return enchant(model.find.apply(model, [].concat(query || {})), params);
         },
-        getOne: function (query, params) {
+        findOne: function (query, params) {
             return enchant(model.findOne(query), params);
         },
-        getCount: function (query) {
+        count: function (query) {
             return Q.nbind(model.count, model)(query);
         },
         create: function (query) {
@@ -36,21 +36,15 @@ module.exports = function (model, defaults) {
             return Q.nbind(model.create, model)(query);
         },
         update: function (query, params) {
-            return Q.nbind(model.update, model)(query, params, {strict: true, multi: true})
-                .then(function (result) {
-                    return result[0];
-                });
+            return Q.nbind(model.update, model)(query, params, {strict: true, multi: true}).get(0);
         },
         upsert: function (query, params) {
-            return Q.nbind(model.update, model)(query, params, {strict: true, upsert: true})
-                .then(function (result) {
-                    return result[0];
-                });
+            return Q.nbind(model.update, model)(query, params, {strict: true, upsert: true}).get(0);
         },
         distinct: function (query, params) {
             return Q.nbind(model.distinct, model)(params.field, query);
         },
-        delete: function (query) {
+        remove: function (query) {
             return Q.nbind(model.remove, model)(query);
         },
         search: function (query) {
@@ -63,6 +57,12 @@ module.exports = function (model, defaults) {
         },
         save: function (model) {
             return Q.nbind(model.save, model)();
+        },
+        aggregate: function (query) {
+            return Q.nbind(model.aggregate, model)(query);
+        },
+        mapReduce: function (query) {
+            return Q.nbind(model.mapReduce, model)(query);
         }
     };
 };

@@ -5,7 +5,7 @@ var controller = require("../utils/controller.js"),
     mongoose = require("mongoose"),
     User = mongoose.model("User"),
     Q = require("q"),
-    _ = require("underscore"),
+    _ = require("lodash"),
     hashController = require("./hash.js");
 
 var defaults = {
@@ -42,22 +42,21 @@ var methods = {
     postSignUp: function (request) {
         return module.exports.create(request.body, {}, request)
             .then(function (user) {
-                var deferred = Q.defer();
                 // manually login the user once successfully signed up
-                request.logIn(user, deferred.makeNodeResolver());
-
-                return deferred.promise
-                    .then(function () {
-                        module.exports.sendEmailVerification({}, {}, request).done();
-                        return {
-                            url: "/user/profile",
-                            messages: ["Verification email was sent to " + request.user.email]
-                        };
-                    });
+                return Q.nbind(request.logIn, request)(user)
+                    .thenResolve(request)
+                    .then(module.exports.loginCallback);
             })
             .fail(function (error) {
                 request.session.user = request.body;
                 throw error; // fail->fail chaining
+            });
+    },
+    loginCallback: function (request) {
+        module.exports.sendEmailVerification({}, {}, request)
+            .then(function (result) {
+                result.url = "/user/profile";
+                return result;
             });
     },
 
@@ -66,13 +65,13 @@ var methods = {
     },
     postForgot: function (request) {
         var clean = _.pick(request.body, ["email"]);
-        return module.exports.getOne(clean)
+        return module.exports.findOne(clean)
             .then(function (user) {
                 if (user) {
                     hashController.create({user: user._id})
                         .then(function (hash) {
                             mail.sendMail({
-                                subject: "MathGames Password Reset Instructions",
+                                subject: "G.O.A.T Password Reset Instructions",
                                 template: "remind"
                             }, {hash: hash}, {user: user});
                         })
@@ -92,13 +91,13 @@ var methods = {
     postChange: function (request) {
         return hashController.getByIdAndDate(request.params)
             .then(function (hash) {
-                return module.exports.getById(hash, {lean: false})
+                return module.exports.findById(hash, {lean: false})
                     .then(function (user) {
                         user.password = request.body.password;
                         user.confirm = request.body.confirm;
                         return module.exports.save(user)
                             .then(function () {
-                                return hashController.getByIdAndRemove(request.params)
+                                return hashController.findByIdAndRemove(request.params)
                                     .thenResolve({
                                         messages: ["Now you can login with your new password"]
                                     });
@@ -111,7 +110,7 @@ var methods = {
         return hashController.create({user: request.user._id})
             .then(function (hash) {
                 return mail.sendMail({
-                    subject: "MathGames Email Verification",
+                    subject: "G.O.A.T Email Verification",
                     template: "verify"
                 }, {hash: hash}, request)
                     .thenResolve({
@@ -123,12 +122,12 @@ var methods = {
     verify: function (request) {
         return hashController.getByIdAndDate(request.params)
             .then(function (hash) {
-                return module.exports.getById(hash, {lean: false})
+                return module.exports.findById(hash, {lean: false})
                     .then(function (user) {
                         user.email_verified = true;
                         return module.exports.save(user)
                             .then(function () {
-                                return hashController.getByIdAndRemove(request.params)
+                                return hashController.findByIdAndRemove(request.params)
                                     .thenResolve({
                                         messages: ["Email is verified"]
                                     });

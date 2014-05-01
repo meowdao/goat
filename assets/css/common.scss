@@ -25,7 +25,8 @@ body {
 
 .ib {
   display: inline-block;
-  zoom: 1; *display: inline; /* IE < 8: fake inline-block */
+  zoom: 1;
+  *display: inline; /* IE < 8: fake inline-block */
   letter-spacing: normal;
   word-spacing: normal;
   vertical-align: top;
@@ -37,10 +38,33 @@ body {
   word-spacing: -0.43em; /* IE < 8 && gecko: collapse white-space between units */
 }
 
-
-
-
 .wrapper {
   margin: 0 auto;
   width: 960px;
+}
+
+header {
+  background-color: #2a3940;
+  font-size: 24px;
+  line-height: 50px;
+  color: #ffffff;
+  font-weight: bold;
+  position: relative;
+}
+
+article {
+  background-color: #ffffff;
+  min-height:100%;
+  height: auto;
+  margin: -50px 0;
+  .wrapper {
+    padding: 50px 0;
+  }
+}
+
+footer {
+  background-color: #2a3940;
+  line-height: 50px;
+  position: relative;
+  color: #ffffff;
 }

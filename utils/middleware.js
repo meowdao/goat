@@ -1,6 +1,6 @@
 "use strict";
 
-var _ = require("underscore");
+var _ = require("lodash");
 
 exports.requiresParams = function (required) {
     return function (request, response, next) {
@@ -8,11 +8,25 @@ exports.requiresParams = function (required) {
             check = _.every(required, function (e) {
                 return !!query[e];
             });
-        if (check) {
-            return next();
-        } else {
-            return next(new Error("Required parameter not found!"));
+        if (!check) {
+            var error = new Error("Required parameter not found");
+            error.status = 400;
+            return next(error);
         }
+        return next();
+    };
+};
+
+exports.requiresRole = function (required) {
+    return function (request, response, next) {
+        exports.requiresLogin(request, response, function () {
+            if (!_.contains(required, request.user.role)) {
+                var error = new Error("Access denied");
+                error.status = 403;
+                return next(error);
+            }
+            return next();
+        });
     };
 };
 
@@ -22,16 +36,4 @@ exports.requiresLogin = function (request, response, next) {
         return response.redirect("/user/login");
     }
     return next();
-};
-
-exports.requiresRole = function (required) {
-    return function (request, response, next) {
-        exports.requiresLogin(request, response, function () {
-            if (_.contains(required, request.user.role)) {
-                return next();
-            } else {
-                return next(new Error("Access denied"));
-            }
-        });
-    };
 };

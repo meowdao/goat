@@ -3,11 +3,11 @@
 var controller = require("../utils/controller.js"),
     mongoose = require("mongoose"),
     Hash = mongoose.model("Hash"),
-    _ = require("underscore");
+    _ = require("lodash");
 
 var methods = {
     getByIdAndDate: function (query) {
-        return module.exports.getById(query)
+        return module.exports.findById(query)
             .then(function (hash) {
                 var date = new Date();
                 date.setDate(date.getDate() - 1);

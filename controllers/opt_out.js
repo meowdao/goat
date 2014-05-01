@@ -3,7 +3,8 @@
 var controller = require("../utils/controller.js"),
     mongoose = require("mongoose"),
     OptOut = mongoose.model("OptOut"),
-    _ = require("underscore");
+    Q = require("q"),
+    _ = require("lodash");
 
 var methods = {
     getNotifications: function (query, params, request) {
@@ -12,7 +13,7 @@ var methods = {
             admin: {},
             user: {}
         };
-        return module.exports.distinct({user: request.user}, {field: "type"})
+        return module.exports.distinct({user: request.user._id}, {field: "type"})
             .then(function (checked) {
                 return {
                     types: types[request.user.role],
@@ -21,14 +22,14 @@ var methods = {
             });
     },
     postNotifications: function (query, params, request) {
-        return module.exports.delete({user: request.user})
+        return module.exports.remove({user: request.user._id})
             .then(function () {
                 return query.types ? module.exports.create(_.map(query.types, function (type) {
                     return {
                         type: type,
                         user: request.user
                     };
-                })) : [];
+                })) : Q([]);
             });
     }
 };

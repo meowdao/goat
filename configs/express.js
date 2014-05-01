@@ -1,30 +1,43 @@
 "use strict";
 
-var express = require("express"),
-    consolidate = require("consolidate"),
+var hbs = require("express-hbs"),
     mongoose = require("mongoose"),
-    mongoStore = require("connect-mongo")(express);
+    logger = require("morgan"),
+    session = require("express-session"),
+    favicon = require("static-favicon"),
+    serveStatic = require("serve-static"),
+    cookieParser = require("cookie-parser"),
+    bodyParser = require("body-parser"),
+    compress = require("compression"),
+    errorHandler = require("errorhandler"),
+    methodOverride = require("method-override"),
+    mongoStore = require("connect-mongo")({session: session});
 
 module.exports = function (config, app, passport) {
 
     app.set("port", process.env.PORT || config.port);
-    app.set("view engine", "html");
-    app.set("views", config.templatesPath);
     app.set("jsonp callback", true);
-    app.engine("html", consolidate.underscore);
+    app.engine("hbs", hbs.express3({
+        layoutsDir: config.path.site,
+        partialsDir: config.path.site + "/partials",
+        defaultLayout: config.path.site + "/layout.hbs"
+    }));
+    app.set("view engine", "hbs");
+    app.set("views", config.path.site);
 
     var maxAge = 864e5; //one day
     if (process.env.NODE_ENV === "development") {
         maxAge = 0;
     }
 
-    app.use(express.static("dist", {maxAge: maxAge}));
+    app.use(serveStatic("dist", {maxAge: maxAge}));
 
-    app.use(express.compress());
-    app.use(express.logger("dev")); // "default", "short", "tiny", "dev"
-    app.use(express.cookieParser("keyboardcat"));
-    app.use(express.session({
+    app.use(compress());
+    app.use(logger("dev")); // "default", "short", "tiny", "dev"
+    app.use(cookieParser("keyboardcat"));
+    app.use(session({
         secret: "keyboardcat",
+        key: "sid",
         cookie: {
             //domain : ".mydomain.com",
             //path: "/",
@@ -39,22 +52,37 @@ module.exports = function (config, app, passport) {
             interval: 12e4  // 2 hours
         })
     }));
-    app.use(express.bodyParser());
-    app.use(express.favicon());
-    app.use(express.methodOverride());
+    app.use(bodyParser());
+    app.use(favicon(config.path.root + "/dist/img/favicon.ico"));
+    app.use(methodOverride());
 
     app.use(passport.initialize());
     app.use(passport.session());
 
-    app.use(app.router);
+    /*
+    app.use(function (request, response, next) {
+        if (request.isAuthenticated() && request.headers["x-forwarded-proto"] !== "https") {
+            return response.redirect("https://" + request.headers.host + request.path);
+        } else {
+            return next();
+        }
+    });
+    */
 
-    app.use(function (request, response) {
-        response.status(404);
-        response.render("404.html", {url: request.url});
+    require("../routes/index.js")(app);
+    require("../routes/message.js")(app);
+    require("../routes/opt_out.js")(app);
+    require("../routes/user.js")(app);
+    require("../routes/user.abstract.js")(app, passport);
+
+    app.use(function (request, response, next) {
+        var error = new Error();
+        error.status = 404;
+        next(error);
     });
 
     if (process.env.NODE_ENV === "development") {
-        app.use(express.errorHandler({
+        app.use(errorHandler({
             dumpExceptions: true,
             showStack: true
         }));
@@ -62,13 +90,21 @@ module.exports = function (config, app, passport) {
         /* jshint unused: false */
         // next is needed by express
         app.use(function (error, request, response, next) {
-            if (error.name === "ValidationError") { // mongoose error
-                response.status(409);
-                response.render("409.html", {status: 409, error: error});
-            } else {
-                response.status(500);
-                response.render("500.html", {status: 500, error: error, url: request.url});
+            console.error(error);
+            error.status = error.status || 500;
+            if (error.name === "ValidationError") {
+                error.status = 409;
             }
+            response.status(error.status);
+            response.render("error.hbs", {error: error, url: request.url}, function (error, string) {
+                if (error) {
+                    console.error(error);
+                    response.send(500, "oops :(");
+                } else {
+                    response.send(string);
+                }
+            });
+
         });
         /* jshint unused: true */
     }

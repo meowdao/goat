@@ -9,22 +9,24 @@ module.exports = function (grunt) {
         pkg: grunt.file.readJSON("package.json"),
         build: {
             dist: {
-                dest: "dist/goat.js",
+                dest: "dist/js/goat.js",
                 src: [
-                    "assets/javascripts/intro.js",
-                    "assets/javascripts/core.js",
-                    "assets/javascripts/outro.js"
+                    "assets/js/intro.js",
+                    "assets/js/core.js",
+                    "assets/js/outro.js"
                 ]
             }
         },
         jshint: {
             dist: {
                 src: [
-                    "dist/goat.js",
-                    "assets/javascripts/*.js"
+                    "dist/assets/goat.js",
+                    "assets/js/*.js",
+                    "!assets/js/intro.js",
+                    "!assets/js/outro.js"
                 ],
                 options: {
-                    jshintrc: "assets/javascripts/.jshintrc"
+                    jshintrc: "assets/js/.jshintrc"
                 }
             },
             test: {
@@ -39,9 +41,7 @@ module.exports = function (grunt) {
                     "configs/*",
                     "controllers/*",
                     "models/*",
-                    "utils/*",
-                    "!utils/text.js"
-                ],
+                    "utils/*"                ],
                 options: {
                     jshintrc: ".jshintrc"
                 }
@@ -57,9 +57,9 @@ module.exports = function (grunt) {
                     banner: "/*! <%= pkg.title %> \n @DATE: <%= grunt.template.today('yyyy-mm-dd') %> \n @VERSION: <%= pkg.version %> \n @AUTHOR: <%= pkg.author.name %> (<%= pkg.author.email %>) \n @LICENCE: <%= pkg.license.type %> \n */\n"
                 },
                 files: {
-                    "dist/goat.min.js": ["dist/goat.js"],
-                    "dist/translator.min.js": ["assets/javascripts/translator.js"],
-                    "dist/common.min.js": ["assets/javascripts/common.js"]
+                    "dist/js/goat.min.js": ["dist/js/goat.js"],
+                    "dist/js/translator.min.js": ["assets/js/translator.js"],
+                    "dist/js/common.min.js": ["assets/js/common.js"]
                 }
             }
         },
@@ -71,9 +71,10 @@ module.exports = function (grunt) {
                     style: "compressed"
                 },
                 files: {
-                    "dist/stylesheet/styles.min.css": "assets/stylesheets/styles.scss",
-                    "dist/stylesheet/form.min.css": "assets/stylesheets/form.scss",
-                    "dist/stylesheet/reset.min.css": "assets/stylesheets/reset.css"
+                    "dist/css/common.min.css": "assets/css/common.scss",
+                    "dist/css/styles.min.css": "assets/css/styles.scss",
+                    "dist/css/form.min.css": "assets/css/form.scss",
+                    "dist/css/normalize.min.css": "vendors/normalize.css/normalize.css"
                 }
             },
             dev: {
@@ -83,15 +84,16 @@ module.exports = function (grunt) {
                     style: "expanded"
                 },
                 files: {
-                    "dist/stylesheet/styles.min.css": "assets/stylesheets/styles.scss",
-                    "dist/stylesheet/form.min.css": "assets/stylesheets/form.scss",
-                    "dist/stylesheet/reset.min.css": "assets/stylesheets/reset.css"
+                    "dist/css/common.min.css": "assets/css/common.scss",
+                    "dist/css/styles.min.css": "assets/css/styles.scss",
+                    "dist/css/form.min.css": "assets/css/form.scss",
+                    "dist/css/normalize.min.css": "vendors/normalize.css/normalize.css"
                 }
             }
         },
         watch: {
             style: {
-                files: ["assets/stylesheets/*.scss"],
+                files: ["assets/css/*.scss"],
                 tasks: ["sass"],
                 options: {
                     nospawn: true,
@@ -99,7 +101,7 @@ module.exports = function (grunt) {
                 }
             },
             script: {
-                files: ["assets/javascripts/*.js"],
+                files: ["assets/js/*.js"],
                 tasks: ["build", "jshint"],
                 options: {
                     nospawn: true,
@@ -112,12 +114,12 @@ module.exports = function (grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: "assets/images",
+                        cwd: "assets/img",
                         src: [
                             "*",
                             "*/**"
                         ],
-                        dest: "dist/"
+                        dest: "dist/img/"
                     }
                 ]
             },
@@ -125,11 +127,11 @@ module.exports = function (grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: "assets/stylesheet/",
+                        cwd: "assets/css/",
                         src: [
                             "reset.css"
                         ],
-                        dest: "dist/stylesheet/"
+                        dest: "dist/css/"
                     }
                 ]
             },
@@ -137,11 +139,41 @@ module.exports = function (grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: "vendors/jquery/",
+                        cwd: "vendors/jquery/dist/",
                         src: [
-                            "jquery.min.js"
+                            "jquery.min.js",
+                            "jquery.min.map"
                         ],
-                        dest: "dist/"
+                        dest: "dist/js/"
+                    }
+                ]
+            },
+            jqueryui: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: "vendors/jquery-ui/ui/minified/",
+                        src: [
+                            "jquery-ui.custom.min.js"
+                        ],
+                        dest: "dist/js/"
+                    },
+                    {
+                        expand: true,
+                        cwd: "vendors/jquery-ui/ui/minified/i18n/",
+                        src: [
+                            "jquery.ui.datepicker-ru.min.js"
+                        ],
+                        dest: "dist/js/cultures/"
+                    },
+                    {
+                        expand: true,
+                        cwd: "vendors/jquery-ui/themes/ui-lightness",
+                        src: [
+                            "jquery-ui.min.css",
+                            "*/**"
+                        ],
+                        dest: "dist/css/"
                     }
                 ]
             },
@@ -151,9 +183,9 @@ module.exports = function (grunt) {
                         expand: true,
                         cwd: "vendors/globalize/lib/",
                         src: [
-                            "globalize.min.js"
+                            "globalize.js"
                         ],
-                        dest: "dist/"
+                        dest: "dist/js/"
                     },
                     {
                         expand: true,
@@ -162,15 +194,15 @@ module.exports = function (grunt) {
                             "globalize.culture.en-US.js",
                             "globalize.culture.ru-RU.js"
                         ],
-                        dest: "dist/cultures/"
+                        dest: "dist/js/cultures/"
                     },
                     {
                         expand: true,
-                        cwd: "assets/javascripts/cultures",
+                        cwd: "assets/js/cultures",
                         src: [
                             "*.js"
                         ],
-                        dest: "dist/cultures/"
+                        dest: "dist/js/cultures/"
                     }
                 ]
             }
@@ -205,8 +237,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask("build", "Build goat.js", function () {
         var tasks = [],
-            done = this.async(),
-            child_process = require("child_process");
+            done = this.async();
 
         function assemble () {
             var compiled = "",
@@ -228,24 +259,6 @@ module.exports = function (grunt) {
                     });
                 grunt.file.write(subtask.dest, compiled);
                 grunt.log.ok("File written to " + subtask.dest);
-            });
-        }
-
-        if (grunt.task.current.args.indexOf("jquery") > -1) { // ! this.args doesn't work
-            tasks.push(function (callback) {
-                grunt.log.writeln("Rebuilding jQuery...");
-                child_process.exec("cd vendor/jquery && grunt custom:-deprecated,-event-alias,-sizzle", function (error, stdout, stderr) {
-                    var log = "log/build.std";
-                    if (stdout.length > 0) {
-                        //grunt.log.writeln(stdout);
-                        grunt.file.write(log + "out.log", stdout);
-                    }
-                    if (stderr.length > 0) {
-                        //grunt.log.error(stderr);
-                        grunt.file.write(log + "err.log", stderr);
-                    }
-                    callback(error);
-                });
             });
         }
 

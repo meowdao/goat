@@ -12,14 +12,7 @@ var env = process.env.NODE_ENV || "development",
 require("./configs/mongoose.js")(config);
 require("./configs/passport.js")(config, passport);
 require("./configs/express.js")(config, app, passport);
-require("./configs/underscore.js")(app, pkg, env);
-
-// routes
-require("./routes/index.js")(app);
-require("./routes/message.js")(app);
-require("./routes/opt_out.js")(app);
-require("./routes/user.js")(app);
-require("./routes/user.abstract.js")(app, passport);
+require("./configs/handlebars.js")(config);
 
 // starts the server
 http.createServer(app).listen(app.get("port"), function () {

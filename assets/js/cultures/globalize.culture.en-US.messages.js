@@ -29,7 +29,13 @@
 					2: "Position unavailable",
 					3: "Request timeout"
 				}
-			}
+			},
+            user: {
+                login:{
+                    email: "Email",
+                    password: "Password"
+                }
+            }
 		}
 	});
 
