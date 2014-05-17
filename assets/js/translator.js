@@ -1,80 +1,62 @@
-"use strict";
+define(function (require) {
+    "use strict";
 
-Globalize.getObject = function (parts, create, obj) {
+    var $ = require("jQuery");
+    var Globalize = require("Globalize");
+    require("Globalize/date");
+    require("Globalize/number");
+    require("Globalize/message");
 
-	var key = parts, p;
+    Globalize.load(require("json!cldr/main/en/ca-gregorian.json"));
+    Globalize.load(require("json!cldr/main/en/numbers.json"));
+    Globalize.load(require("json!cldr/supplemental/likelySubtags.json"));
+    Globalize.load(require("json!cldr/supplemental/timeData.json"));
+    Globalize.load(require("json!cldr/supplemental/weekData.json"));
 
-	if (typeof parts === "string") {
-		parts = parts.split(".");
-	} else {
-		key = parts.join(".");
-	}
+    // http://stackoverflow.com/questions/19621586/load-locale-file-dynamically-using-requirejs
+    Globalize.loadMessages("en-US", require("json!i18n/en-US.json"));
+    Globalize.loadMessages("ru-RU", require("json!i18n/ru-RU.json"));
 
-	if (typeof create !== "boolean") {
-		obj = create;
-		create = undefined;
-	}
+    var Translator = function () {
+        this.init.apply(this, arguments);
+    };
 
-	obj = obj || window;
+    Translator.prototype = {
 
-	while (obj && parts.length) {
-		p = parts.shift();
-		if (obj[p] === undefined && create) {
-			obj[p] = {};
-		}
-		obj = obj[p];
-	}
+        // TODO add cookies support
+        lang: localStorage.getItem("defaultLanguage") || "en-US",
 
-	return obj || "???" + key + "???";
-};
+        init: function (lang) {
 
-Globalize.localize = function (key, cultureSelector) {
-	return this.getObject(key, false, this.findClosestCulture(cultureSelector).messages) ||
-		this.getObject(key, false, this.cultures[Translator.lang].messages);
-};
+            if (["ru-RU", "en-US"].indexOf(lang) !== -1) {
+                this.lang = lang;
+            }
 
+            localStorage.setItem("defaultLanguage", this.lang);
+            Globalize.locale(this.lang);
+            this.fixCSS();
+        },
 
-var Translator = function () {
-	this.init.apply(this, arguments);
-};
+        translate: function (scope) {
+            var $scope = $(scope);
+            $scope.find("[data-translation]").each(function () {
+                var self = $(this);
+                self.text(Globalize.translate(self.data("translation")));
+            });
 
-Translator.prototype = {
+            $scope.find("[data-placeholder]").each(function () {
+                var self = $(this);
+                self.attr({placeholder: Globalize.translate(self.data("placeholder"))});
+            });
+            this.fixCSS();
+        },
 
-	// TODO add cookies support
-	lang: localStorage.getItem("defaultLanguage") || "en-US",
+        fixCSS: function () {
+            $("html").attr({lang: this.lang});
+            //$("[href$=lang\\.css]").prop("disabled", true).prop("disabled", false); // reload
+            //$("[href$=rtl\\.css]").prop("disabled", !Globalize.culture().isRTL);
+        }
+    };
 
-	init: function (lang) {
-
-		if (Object.keys(Globalize.cultures).indexOf(lang) !== -1) {
-			this.lang = lang;
-		}
-
-		localStorage.setItem("defaultLanguage", this.lang);
-		Globalize.culture(this.lang);
-		this.fixCSS();
-	},
-
-	translate: function (scope) {
-		var obj = this;
-		scope.find("[data-translation]").each(function () {
-			var self = jQuery(this);
-			self.text(obj.resolveKey(self.data("translation")));
-		});
-
-		scope.find("[data-placeholder]").each(function () {
-			var self = jQuery(this);
-			self.attr({placeholder: obj.resolveKey(self.data("placeholder"))});
-		});
-		this.fixCSS();
-	},
-
-	resolveKey: function (key, locale) {
-		return Globalize.localize(key, locale);
-	},
-
-	fixCSS: function () {
-		jQuery("html").attr({lang: this.lang});
-		jQuery("[href$=lang\\.css]").prop("disabled", true).prop("disabled", false); // reload
-		jQuery("[href$=rtl\\.css]").prop("disabled", !Globalize.culture().isRTL);
-	}
-};
+    return Translator;
+});

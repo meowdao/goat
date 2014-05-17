@@ -18,9 +18,8 @@ module.exports = function (config, app, passport) {
     app.set("port", process.env.PORT || config.port);
     app.set("jsonp callback", true);
     app.engine("hbs", hbs.express3({
-        layoutsDir: config.path.site,
-        partialsDir: config.path.site + "/partials",
-        defaultLayout: config.path.site + "/layout.hbs"
+        layoutsDir: config.path.site + "/layouts",
+        partialsDir: config.path.site + "/partials"
     }));
     app.set("view engine", "hbs");
     app.set("views", config.path.site);

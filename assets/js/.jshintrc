@@ -21,6 +21,7 @@
 	"node": true,
 
 	"globals": {
+        "define" : true,
 		"jQuery": true,
 		"Globalize": true,
 		"Translator": true,
