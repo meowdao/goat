@@ -20,6 +20,9 @@
         "requirejs": "2.1.8",
         "requirejs-plugins": "1.0.2",
         "requirejs-text": "2.0.12"
+    },
+    "resolutions": {
+        "underscore": "2.1.1"
     }
 }
 
