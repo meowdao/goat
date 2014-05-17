@@ -22,7 +22,7 @@
         "requirejs-text": "2.0.12"
     },
     "resolutions": {
-        "underscore": "2.1.1"
+        "jquery": "2.1.1"
     }
 }
 
