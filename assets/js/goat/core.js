@@ -4,7 +4,7 @@ define(function (require) {
     var module = require("./module");
 
     var GOAT = function () {
-        return this.init.apply(this, Array.prototype.slice.call(arguments));
+
     };
 
     GOAT.prototype = {
@@ -18,7 +18,7 @@ define(function (require) {
         }
     };
 
-    return GOAT;
+    return new GOAT();
 
 });
 

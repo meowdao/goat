@@ -16,7 +16,7 @@ require.config({
         text: "/vendors/requirejs-text/text",
 
         // your code
-        "GOAT": "/js/goat",
+        "goat": "/js/goat",
         "translator": "/js/translator",
 
         // 3rd party libs
@@ -34,14 +34,13 @@ require.config({
 });
 
 require([
-    "GOAT/core",
+    "goat/core",
     "jquery",
     "translator",
     "cldr/unresolved"
-], function (GOAT, $, i18n) {
+], function (goat, $, i18n) {
     "use strict";
 
-    var goat = new GOAT();
     goat.module.sayHello();
 
     $(function () {

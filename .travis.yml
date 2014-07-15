@@ -4,8 +4,7 @@ node_js:
 services:
   - mongodb
 before_install:
-  - npm install -g grunt-cli
-  - npm install -g bower
+  - npm install -g grunt-cli bower
 install:
   - bash install.sh
 script:
