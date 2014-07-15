@@ -1,0 +1,28 @@
+{
+    "en": {
+        "common": {
+            "ok": "Ok",
+            "error": "Error",
+            "loading": "Loading...",
+            "close": "Close"
+        },
+        "geo": {
+            "unavailable": "Geolocation not supported",
+            "error": {
+                "1": "Permission denied",
+                "2": "Position unavailable",
+                "3": "Request timeout"
+            }
+        },
+        "user": {
+            "login": {
+                "email": "Email",
+                "password": "Password"
+            }
+        },
+        "test": {
+            "hello_world": "Hello world!"
+        }
+    }
+}
+

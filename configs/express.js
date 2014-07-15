@@ -30,6 +30,7 @@ module.exports = function (config, app, passport) {
     }
 
     app.use(serveStatic("dist", {maxAge: maxAge}));
+    app.use(serveStatic("assets", {maxAge: maxAge}));
 
     app.use(compress());
     app.use(logger("dev")); // "default", "short", "tiny", "dev"

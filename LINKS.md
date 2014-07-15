@@ -48,3 +48,13 @@ LIBS
 * jQuery Mobile [site](http://jquerymobile.com/) [git](https://github.com/jquery/jquery-mobile)
 * QUnit [site](http://qunitjs.com/) [git](https://github.com/jquery/qunit)
 * Globalize [site](http://wiki.jqueryui.com/w/page/39118647/Globalize) [git](https://github.com/jquery/globalize)
+
+More Libs
+=========
+* [q](https://github.com/kriskowal/q)
+* [less](http://lesscss.org/)
+* [mongoose](http://mongoosejs.com/)
+* [passport](http://passportjs.org/)
+* [express](http://expressjs.com/)
+* [underscore](http://underscorejs.org/)
+* [backbonejs](http://backbonejs.org/)

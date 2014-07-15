@@ -34,36 +34,38 @@ module.exports = function (grunt) {
                 }
             }
         },
-        sass: {
-            dist: {
+        less: {
+            production: {
                 options: {
-                    //sourcemap: true
-                    bundleExec: true,
-                    style: "compressed"
+                    paths: ["assets/css"],
+                    compress: true
                 },
                 files: {
-                    "dist/css/common.min.css": "assets/css/common.scss",
-                    "dist/css/styles.min.css": "assets/css/styles.scss",
-                    "dist/css/form.min.css": "assets/css/form.scss"
+                    "dist/css/common.min.css": "assets/css/common.less",
+                    "dist/css/styles.min.css": "assets/css/styles.less",
+                    "dist/css/form.min.css": "assets/css/form.less",
+                    "dist/css/fonts.min.css": "assets/css/fonts.css",
+                    "dist/css/normalize.min.css": "dist/vendors/normalize.css/normalize.css"
                 }
             },
-            dev: {
+            development: {
                 options: {
-                    lineNumbers: true,
-                    bundleExec: true,
-                    style: "expanded"
+                    paths: ["assets/css"],
+                    compress: false
                 },
                 files: {
-                    "dist/css/common.min.css": "assets/css/common.scss",
-                    "dist/css/styles.min.css": "assets/css/styles.scss",
-                    "dist/css/form.min.css": "assets/css/form.scss"
+                    "dist/css/common.min.css": "assets/css/common.less",
+                    "dist/css/styles.min.css": "assets/css/styles.less",
+                    "dist/css/form.min.css": "assets/css/form.less",
+                    "dist/css/fonts.min.css": "assets/css/fonts.css",
+                    "dist/css/normalize.min.css": "dist/vendors/normalize.css/normalize.css"
                 }
             }
         },
         watch: {
             style: {
-                files: ["assets/css/*.scss"],
-                tasks: ["sass"],
+                files: ["assets/css/*.less"],
+                tasks: ["less"],
                 options: {
                     nospawn: true,
                     debounceDelay: 500
@@ -111,36 +113,31 @@ module.exports = function (grunt) {
             all: ["test/index.html"]
         },
         requirejs: {
-            compile: {
+            main: {
                 options: {
                     baseUrl: "assets/js",
-                    mainConfigFile: "assets/js/main.js",
                     name: "main",
                     out: "dist/js/main.min.js",
                     optimize: "uglify2",
                     preserveLicenseComments: false,
                     generateSourceMaps: true,
                     paths: {
+                        // libs
+                        "jquery": "empty:",
+                        "jquery-ui": "empty:",
+                        "globalize": "empty:",
+
                         // plugins
                         "json": "../../dist/vendors/requirejs-plugins/src/json",
                         "text": "../../dist/vendors/requirejs-text/text",
 
-                        // your code
-                        //"GOAT": "goat",
-                        //"Translator": "empty:"
-
-                        // 3rd party libs
-                        "jQuery": "empty:",
-                        "jQuery-UI": "empty:",
-                        "Globalize": "empty:",
-
                         // i18n
                         "cldr": "../../dist/vendors/cldrjs/dist/cldr"
                     },
-                    exclude: ["text","json","cldr"]
+                    exclude: ["text", "json", "cldr"]
                 }
             },
-            compileRequirejs: {
+            requirejs: {
                 options: {
                     name: "dist/vendors/requirejs/require",
                     out: "dist/vendors/requirejs/require.min.js"
@@ -151,7 +148,7 @@ module.exports = function (grunt) {
 
     // Load grunt tasks from NPM packages
     grunt.loadNpmTasks("grunt-contrib-jshint");
-    grunt.loadNpmTasks("grunt-contrib-sass");
+    grunt.loadNpmTasks("grunt-contrib-less");
     grunt.loadNpmTasks("grunt-contrib-watch");
     grunt.loadNpmTasks("grunt-contrib-copy");
     grunt.loadNpmTasks("grunt-contrib-qunit");
@@ -160,8 +157,8 @@ module.exports = function (grunt) {
 
 
     // Default task(s).
-    grunt.registerTask("default", ["requirejs", "jshint", "sass", "copy", "compare_size"]);
-    grunt.registerTask("travis", ["requirejs", "jshint", "sass", "compare_size"]);
+    grunt.registerTask("default", ["requirejs", "jshint", "less", "copy", "compare_size"]);
+    grunt.registerTask("travis", ["requirejs", "jshint", "less", "compare_size"]);
     grunt.registerTask("test", ["qunit"]);
 
 };

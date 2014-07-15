@@ -1,7 +1,7 @@
 define(function (require) {
     "use strict";
 
-    var module = require("goat/module.js");
+    var module = require("./module");
 
     var GOAT = function () {
         return this.init.apply(this, Array.prototype.slice.call(arguments));

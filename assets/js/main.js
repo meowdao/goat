@@ -1,22 +1,12 @@
 require.config({
-    baseUrl : "assets/js",
-
-    shim: {
-        "jQuery": {
-            exports: "jQuery"
-        },
-        "Globalize": {
-            exports: "Globalize",
-            deps: ["cldr"]
-        },
-        "Translator": {
-            deps: ["json", "text", "jQuery", "Globalize"]
-        }
-    },
-
     map: {
-        "Globalize": {
-            "globalize": "Globalize"
+        "jquery.config": {
+            "jquery": "jquery"
+        },
+        "*": {
+            "jquery": "jquery.config",
+            "jquery-ui/dialog": "jquery-ui/dialog.config",
+            "jquery-ui/datepicker": "jquery-ui/datepicker.config"
         }
     },
 
@@ -26,35 +16,36 @@ require.config({
         text: "/vendors/requirejs-text/text",
 
         // your code
-        "GOAT": "goat/core",
-        "Translator": "translator",
+        "GOAT": "/js/goat",
+        "translator": "/js/translator",
 
         // 3rd party libs
-        "jQuery": "/vendors/jquery/dist/jquery",
-        "jQuery-UI": "/vendors/jquery-ui/ui",
-        "Globalize": "/vendors/globalize/dist/globalize",
+        "jquery": "/vendors/jquery/dist/jquery",
+        "jquery.config": "/js/configs/jquery.config",
+        "jquery-ui": "/vendors/jquery-ui/ui",
+        "jquery-ui/dialog.config": "/js/configs/jquery-ui.dialog.config.js",
+        "jquery-ui/datepicker.config": "/js/configs/jquery-ui.datepicker.config.js",
+        "globalize": "/vendors/globalize/dist/globalize",
 
         // i18n
-        "cldr": "/vendors/cldrjs/dist/cldr",
-        "i18n": "i18n"
+        "cldr": "/vendors/cldrjs/dist/cldr"
 
     }
 });
 
 require([
-        "GOAT", "jQuery", "Translator"
-    ],
-    function (GOAT, jQuery, Translator) {
-        "use strict";
+    "GOAT/core",
+    "jquery",
+    "translator",
+    "cldr/unresolved"
+], function (GOAT, $, i18n) {
+    "use strict";
 
-        var goat = new GOAT();
-        goat.module.sayHello();
+    var goat = new GOAT();
+    goat.module.sayHello();
 
-        var i18n = new Translator();
-
-        jQuery.noConflict();
-        jQuery(function () {
-            i18n.translate("body");
-        });
-
+    $(function () {
+        i18n.translate("body");
     });
+
+});

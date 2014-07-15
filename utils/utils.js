@@ -1,5 +1,9 @@
 "use strict";
 
+exports.isType = function (variable, type) {
+    return Object.prototype.toString.call(variable) === "[object " + type + "]";
+};
+
 exports.roughSizeOfObject = function (object) {
 
     var objectList = [],

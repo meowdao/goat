@@ -1,37 +1,35 @@
-define(function (require) {
+define(["require", "jquery", "globalize"], function (require, $, globalize) {
     "use strict";
 
-    var Globalize = require("Globalize");
-
     function showPopup (header, text, buttons) {
-        if (jQuery.mobile) {
-            jQuery("<div/>", {
+        if ($.mobile) {
+            $("<div/>", {
                 "class": "dispatch-popup",
                 append: [
-                    jQuery("<h2/>", {text: header}),
-                    jQuery("<p/>", {text: text}),
-                    jQuery("<div/>", {
+                    $("<h2/>", {text: header}),
+                    $("<p/>", {text: text}),
+                    $("<div/>", {
                         "class": "ui-grid-" + ["0", "0", "a", "b", "c", "d", "e"][buttons.length],
-                        append: jQuery.map(buttons, function (button, index) {
-                            return jQuery("<div/>", {
+                        append: $.map(buttons, function (button, index) {
+                            return $("<div/>", {
                                 "class": "ui-block-" + ["a", "b", "c", "d", "e"][index],
-                                append: jQuery("<a/>", button).button()
+                                append: $("<a/>", button).button()
                             });
                         })
                     })
                 ]
             }).popup().on("popupafterclose", function () {
-                jQuery(this).popup("destroy");
+                $(this).popup("destroy");
             }).popup("open");
-        } else if (jQuery.ui) {
-            jQuery("<div/>", {
-                append: jQuery("<p/>", {text: text})
+        } else if ($.ui) {
+            $("<div/>", {
+                append: $("<p/>", {text: text})
             }).dialog({
                 title: header,
                 autoOpen: true,
                 buttons: buttons,
                 close: function () {
-                    jQuery(this).dialog("destroy");
+                    $(this).dialog("destroy");
                 }
             });
         } else {
@@ -41,14 +39,14 @@ define(function (require) {
 
     function showError (error) {
         console.log(error);
-        showPopup(Globalize.translate("common/error"), error, [
+        showPopup(globalize.translate("common/error"), error, [
             {
-                text: Globalize.translate("common/ok"),
+                text: globalize.translate("common/ok"),
                 click: function () {
-                    if (jQuery.mobile) {
-                        jQuery(this).closest(".ui-popup").popup("close");
-                    } else if (jQuery.ui) {
-                        jQuery(this).dialog("close");
+                    if ($.mobile) {
+                        $(this).closest(".ui-popup").popup("close");
+                    } else if ($.ui) {
+                        $(this).dialog("close");
                     }
                 }
             }
@@ -57,66 +55,22 @@ define(function (require) {
 
     function widgetize (context) {
         context = context || document;
-        jQuery("input[type=submit], input[type=reset], input[type=button], button, a[data-role=button]", context).button();
-        jQuery("[data-role]", context).each(function () {
-            var self = jQuery(this);
+        $("input[type=submit], input[type=reset], input[type=button], button, a[data-role=button]", context).button();
+        $("[data-role]", context).each(function () {
+            var self = $(this);
             self[self.data("role")](self.data("options"));
             self.removeAttr("data-role data-options");
         });
-        if (jQuery.ui.selectmenu) {
-            jQuery("select", context).each(function () {
-                var self = jQuery(this);
+        if ($.ui.selectmenu) {
+            $("select", context).each(function () {
+                var self = $(this);
                 self.selectmenu(self.data("options"));
                 self.removeAttr("data-role data-options");
             });
         }
     }
 
-    jQuery.ajaxSetup({
-        type: "post",
-        dataType: "json",
-        cache: false,
-        author: "\x63\x74\x61\x70\x62\x69\x75\x6D\x61\x62\x70\x40\x67\x6D\x61\x69\x6C\x2E\x63\x6F\x6D"
-    });
-
-    jQuery(document)
-        .ajaxStart(function () {
-            jQuery(this).css({cursor: "wait"});
-            if (jQuery.mobile) {
-                jQuery.mobile.loading("show", {
-                    text: Globalize.translate("common/loading"),
-                    textVisible: true,
-                    theme: "a",
-                    html: ""
-                });
-            }
-        })
-        .ajaxError(function (event, XMLHttpRequest, ajaxOptions, thrownError) {
-            console.info(document.location.protocol + "//" + document.location.host + "/" + ajaxOptions.url + "?" + (ajaxOptions.data || ""));
-            console.error(thrownError);
-            showError(thrownError);
-        })
-        .ajaxSuccess(function (event, XMLHttpRequest, ajaxOptions) {
-            console.info(document.location.protocol + "//" + document.location.host + "/" + ajaxOptions.url + "?" + (ajaxOptions.data || ""));
-        })
-        .ajaxComplete(function () {
-            jQuery(this).css({cursor: "auto"});
-            if (jQuery.mobile) {
-                jQuery.mobile.loading("hide");
-            }
-        });
-
-    if (jQuery.ui) {
-        jQuery.extend(jQuery.ui.dialog.prototype.options, {
-            modal: true,
-            resizable: false,
-            draggable: false,
-            autoOpen: false,
-            closeText: "Close"
-        });
-    }
-
-    if (jQuery.mobile) {
+    if ($.mobile) {
         // Turn off AJAX for local file browsing
         // https://github.com/jquery/jquery-mobile/blob/master/demos/_assets/js/jqm-demos.js
         if (location.protocol.substr(0, 4) === "file" ||
@@ -125,35 +79,37 @@ define(function (require) {
 
             // Start with links with only the trailing slash and that aren't external links
             var fixLinks = function () {
-                jQuery("a[href$='/'], a[href='.'], a[href='..']").not("[rel='external']").each(function () {
-                    this.href = jQuery(this).attr("href").replace(/\/$/, "") + "/index.html";
+                $("a[href$='/'], a[href='.'], a[href='..']").not("[rel='external']").each(function () {
+                    this.href = $(this).attr("href").replace(/\/$/, "") + "/index.html";
                 });
             };
 
             // fix the links for the initial page
-            jQuery(fixLinks);
+            $(fixLinks);
 
             // fix the links for subsequent ajax page loads
-            jQuery(document).bind("pagecreate", fixLinks);
+            $(document).bind("pagecreate", fixLinks);
 
             // Check to see if ajax can be used. This does a quick ajax request and blocks the page until its done
-            jQuery.ajax({
+            $.ajax({
                 url: ".",
                 async: false,
                 isLocal: true
             }).error(function () {
                 // Ajax doesn't work so turn it off
-                jQuery(document).bind("mobileinit", function () {
-                    jQuery.mobile.ajaxEnabled = false;
+                $(document).bind("mobileinit", function () {
+                    $.mobile.ajaxEnabled = false;
                 });
             });
         }
     }
 
-    jQuery.noConflict();
-    jQuery(function ($) {
+    $(function () {
+
+        // js hint
+        void showError;
+
         if ($.ui) {
-            $.datepicker.setDefaults($.datepicker.regional[""]);
             widgetize();
         }
 

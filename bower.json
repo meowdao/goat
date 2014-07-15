@@ -13,16 +13,13 @@
     ],
     "dependencies": {
         "jquery": "2.1.1",
-        "jquery-ui": "https://github.com/jquery/jquery-ui.git#1.11.0-beta.1",
+        "jquery-ui": "1.11.0",
         "qunit": "1.14.0",
-        "globalize": "1.0.0-alpha.2",
-        "normalize.css": "3.0.0",
+        "globalize": "1.0.0-alpha.4",
+        "normalize.css": "3.0.1",
         "requirejs": "2.1.8",
         "requirejs-plugins": "1.0.2",
         "requirejs-text": "2.0.12"
-    },
-    "resolutions": {
-        "jquery": "2.1.1"
     }
 }
 
