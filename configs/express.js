@@ -38,6 +38,8 @@ module.exports = function (config, app, passport) {
     app.use(session({
         secret: "keyboardcat",
         key: "sid",
+        resave: false,
+        saveUninitialized: true,
         cookie: {
             //domain : ".mydomain.com",
             //path: "/",
@@ -52,9 +54,10 @@ module.exports = function (config, app, passport) {
             interval: 12e4  // 2 hours
         })
     }));
-    app.use(bodyParser());
+    app.use(bodyParser.urlencoded({
+        extended:true
+    }));
     app.use(favicon(config.path.root + "/dist/img/favicon.ico"));
-    app.use(methodOverride());
 
     app.use(passport.initialize());
     app.use(passport.session());
