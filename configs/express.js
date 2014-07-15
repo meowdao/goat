@@ -10,7 +10,6 @@ var hbs = require("express-hbs"),
     bodyParser = require("body-parser"),
     compress = require("compression"),
     errorHandler = require("errorhandler"),
-    methodOverride = require("method-override"),
     mongoStore = require("connect-mongo")({session: session});
 
 module.exports = function (config, app, passport) {
