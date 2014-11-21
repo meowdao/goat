@@ -1,10 +1,10 @@
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/"
-  xmlns:moz="http://www.mozilla.org/2006/browser/search/">
-  <ShortName>NPM</ShortName>
-  <Description>Package Search</Description>
-  <Url type="text/html" method="get" template="https://npmjs.org/search?q={searchTerms}"/>
-  <InputEncoding>UTF-8</InputEncoding>
-  <Image height="16" width="16" type="image/vnd.microsoft.icon">
-    https://npmjs.org/favicon.ico
-  </Image>
+                       xmlns:moz="http://www.mozilla.org/2006/browser/search/">
+    <ShortName>G.O.A.T</ShortName>
+    <Description>Search</Description>
+    <Url type="text/html" method="get" template="http://localhost:8888/search?q={searchTerms}"/>
+    <InputEncoding>UTF-8</InputEncoding>
+    <Image height="16" width="16" type="image/vnd.microsoft.icon">
+        http://localhost:8888/img/favicon.ico
+    </Image>
 </OpenSearchDescription>

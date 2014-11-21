@@ -13,3 +13,5 @@ bower install
 
 node server
 ```
+
+Note: bower doesn't actually run `preinstall` and `postinstall` tasks if no one package was updated

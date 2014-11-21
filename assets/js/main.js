@@ -1,5 +1,5 @@
 require.config({
-    map: {
+    "map": {
         "jquery.config": {
             "jquery": "jquery"
         },
@@ -10,7 +10,7 @@ require.config({
         }
     },
 
-    paths: {
+    "paths": {
         // plugins
         json: "/vendors/requirejs-plugins/src/json",
         text: "/vendors/requirejs-text/text",
@@ -28,7 +28,8 @@ require.config({
         "globalize": "/vendors/globalize/dist/globalize",
 
         // i18n
-        "cldr": "/vendors/cldrjs/dist/cldr"
+        "cldr": "/vendors/cldrjs/dist/cldr",
+        "cldr-data": "/vendors/cldr-data"
 
     }
 });

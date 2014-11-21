@@ -1,4 +1,4 @@
-define(["require", "jquery", "globalize"], function (require, $, globalize) {
+define(["require", "jquery", "globalize", "jquery-ui/selectmenu", "jquery-ui/button"], function (require, $, globalize) {
     "use strict";
 
     function showPopup (header, text, buttons) {
@@ -56,18 +56,16 @@ define(["require", "jquery", "globalize"], function (require, $, globalize) {
     function widgetize (context) {
         context = context || document;
         $("input[type=submit], input[type=reset], input[type=button], button, a[data-role=button]", context).button();
-        $("[data-role]", context).each(function () {
+        /*$("[data-role]", context).each(function () {
             var self = $(this);
             self[self.data("role")](self.data("options"));
             self.removeAttr("data-role data-options");
+        });*/
+        $("select", context).each(function () {
+            var self = $(this);
+            self.selectmenu(self.data("options"));
+            self.removeAttr("data-role data-options");
         });
-        if ($.ui.selectmenu) {
-            $("select", context).each(function () {
-                var self = $(this);
-                self.selectmenu(self.data("options"));
-                self.removeAttr("data-role data-options");
-            });
-        }
     }
 
     if ($.mobile) {

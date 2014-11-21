@@ -1,14 +1,15 @@
 "use strict";
 
-var env = process.env.NODE_ENV || "development",
-    http = require("http"),
+process.env.NODE_ENV = process.env.NODE_ENV || "development";
+
+var http = require("http"),
     express = require("express"),
     passport = require("passport"),
     app = express(),
-	pkg = require("./package.json"),
-    config = require("./configs/config.js")[env];
+    config = require("./configs/config.js")[process.env.NODE_ENV];
 
 // configs
+require("./configs/q.js")();
 require("./configs/mongoose.js")(config);
 require("./configs/passport.js")(config, passport);
 require("./configs/express.js")(config, app, passport);

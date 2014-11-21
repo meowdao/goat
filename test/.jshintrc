@@ -38,6 +38,7 @@
 		"notDeepEqual": true,
 		"strictEqual": true,
 		"notStrictEqual": true,
-		"raises": true
+		"raises": true,
+        "suite": true
 	}
 }

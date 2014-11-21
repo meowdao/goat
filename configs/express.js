@@ -4,13 +4,14 @@ var hbs = require("express-hbs"),
     mongoose = require("mongoose"),
     logger = require("morgan"),
     session = require("express-session"),
-    favicon = require("static-favicon"),
+    favicon = require("serve-favicon"),
     serveStatic = require("serve-static"),
     cookieParser = require("cookie-parser"),
     bodyParser = require("body-parser"),
     compress = require("compression"),
-    errorHandler = require("errorhandler"),
-    mongoStore = require("connect-mongo")({session: session});
+    mongoStore = require("connect-mongo")({session: session}),
+    messager = require("../utils/messager.js"),
+    helper = require("../utils/helper.js");
 
 module.exports = function (config, app, passport) {
 
@@ -23,13 +24,15 @@ module.exports = function (config, app, passport) {
     app.set("view engine", "hbs");
     app.set("views", config.path.site);
 
-    var maxAge = 864e5; //one day
+    var maxAge = 864e5; // 1 day
     if (process.env.NODE_ENV === "development") {
         maxAge = 0;
     }
 
+    if (process.env.NODE_ENV === "development") {
+        app.use(serveStatic("assets", {maxAge: maxAge}));
+    }
     app.use(serveStatic("dist", {maxAge: maxAge}));
-    app.use(serveStatic("assets", {maxAge: maxAge}));
 
     app.use(compress());
     app.use(logger("dev")); // "default", "short", "tiny", "dev"
@@ -53,8 +56,9 @@ module.exports = function (config, app, passport) {
             interval: 12e4  // 2 hours
         })
     }));
+    app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({
-        extended:true
+        extended: true
     }));
     app.use(favicon(config.path.root + "/dist/img/favicon.ico"));
 
@@ -69,6 +73,15 @@ module.exports = function (config, app, passport) {
             return next();
         }
     });
+
+    app.use(function (request, response, next) {
+        if (request.method === "POST" || request.method === "PUT") {
+            request.body = _.omit(request.body, ["_"]);
+        } else {
+            request.query = _.omit(request.query, ["_"]);
+        }
+        return next();
+    });
     */
 
     require("../routes/index.js")(app);
@@ -78,36 +91,28 @@ module.exports = function (config, app, passport) {
     require("../routes/user.abstract.js")(app, passport);
 
     app.use(function (request, response, next) {
-        var error = new Error();
-        error.status = 404;
-        next(error);
+        next(messager.makeError("page-not-found", true));
     });
 
-    if (process.env.NODE_ENV === "development") {
-        app.use(errorHandler({
-            dumpExceptions: true,
-            showStack: true
-        }));
-    } else {
-        /* jshint unused: false */
-        // next is needed by express
-        app.use(function (error, request, response, next) {
-            console.error(error);
-            error.status = error.status || 500;
-            if (error.name === "ValidationError") {
-                error.status = 409;
-            }
-            response.status(error.status);
-            response.render("error.hbs", {error: error, url: request.url}, function (error, string) {
-                if (error) {
-                    console.error(error);
-                    response.send(500, "oops :(");
-                } else {
-                    response.send(string);
-                }
-            });
+    /* jshint unused: false */
+    // next is needed by express
+    app.use(function (error, request, response, next) {
+        helper.printStackTrace(error, true);
 
+        error.status = error.status || 500;
+        if (error.name === "ValidationError") {
+            error.status = 409;
+        }
+
+        response.render("error.hbs", {error: error, url: request.url}, function (error2, string) {
+            if (error2) {
+                helper.printStackTrace(error2, true);
+                response.status(500).send(messager.makeError("server-error", true));
+            } else {
+                response.status(error.status).send(string);
+            }
         });
-        /* jshint unused: true */
-    }
+
+    });
+    /* jshint unused: true */
 };

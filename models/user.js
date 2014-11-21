@@ -56,14 +56,14 @@ var User = new Schema({
 
     date: {
         _id: false,
-        created: {type: Date, default: Date.now}
+        created: {type: Date, default: Date.now},
+        updated: {type: Date, default: Date.now}
     },
 
     facebook: {type: Schema.Types.Mixed, select: false},
     google: {type: Schema.Types.Mixed, select: false}
 
 }, { collection: "test_user", versionKey: false});
-
 
 User
     .virtual("full_name")
@@ -89,6 +89,16 @@ User
     })
     .get(function () {
         return this._confirm;
+    });
+
+User
+    .pre("save", function (next) {
+        var now = new Date();
+        this.date.created = now;
+        if (!this.date.created) {
+            this.date.created = now;
+        }
+        next();
     });
 
 User.methods = {

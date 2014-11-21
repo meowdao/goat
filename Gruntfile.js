@@ -17,7 +17,10 @@ module.exports = function (grunt) {
                 }
             },
             test: {
-                src: [ "test/unit/*.js" ],
+                src: [
+                    "test/qunit/*.js",
+                    "test/mocha/*.js"
+                ],
                 options: {
                     jshintrc: "test/.jshintrc"
                 }
@@ -28,7 +31,8 @@ module.exports = function (grunt) {
                     "configs/*",
                     "controllers/*",
                     "models/*",
-                    "utils/*"                ],
+                    "utils/*"
+                ],
                 options: {
                     jshintrc: ".jshintrc"
                 }
@@ -97,8 +101,8 @@ module.exports = function (grunt) {
         },
         compare_size: {
             files: [
-                "dist/main.min.js",
-                "dist/styles.min.css"
+                "dist/js/main.min.js",
+                "dist/css/styles.min.css"
             ],
             options: {
                 compress: {
@@ -132,7 +136,8 @@ module.exports = function (grunt) {
                         "text": "../../dist/vendors/requirejs-text/text",
 
                         // i18n
-                        "cldr": "../../dist/vendors/cldrjs/dist/cldr"
+                        "cldr": "../../dist/vendors/cldrjs/dist/cldr",
+                        "cldr-data": "../../dist/vendors/cldr-data"
                     },
                     exclude: ["text", "json", "cldr"]
                 }
@@ -155,10 +160,10 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks("grunt-compare-size");
     grunt.loadNpmTasks("grunt-contrib-requirejs");
 
-
-    // Default task(s).
+    // Task
     grunt.registerTask("default", ["requirejs", "jshint", "less", "copy", "compare_size"]);
     grunt.registerTask("travis", ["requirejs", "jshint", "less", "compare_size"]);
+    grunt.registerTask("build", ["default"]);
     grunt.registerTask("test", ["qunit"]);
 
 };

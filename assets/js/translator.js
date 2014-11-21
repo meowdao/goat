@@ -1,23 +1,29 @@
-define(function (require) {
+define([
+    "jquery",
+    "globalize",
+
+    "json!cldr-data/main/en/ca-gregorian.json",
+    "json!cldr-data/main/en/numbers.json",
+    "json!cldr-data/supplemental/likelySubtags.json",
+    "json!cldr-data/supplemental/plurals.json",
+    "json!cldr-data/supplemental/timeData.json",
+    "json!cldr-data/supplemental/weekData.json",
+
+    "json!i18n/ru.json",
+    "json!i18n/en.json",
+
+    "cldr/unresolved",
+
+    "globalize/date",
+    "globalize/number",
+    "globalize/message"
+], function ($, globalize, enGregorian, enNumbers, likelySubtags, pluralsData, timeData, weekData, ru, en) {
     "use strict";
 
-    var $ = require("jquery");
-    var globalize = require("globalize");
+    globalize.load(enGregorian, enNumbers, likelySubtags, pluralsData, timeData, weekData);
 
-    require("cldr/unresolved");
-
-    require("globalize/date");
-    require("globalize/number");
-    require("globalize/message");
-
-    globalize.load(require("json!cldr/main/en/ca-gregorian.json"));
-    globalize.load(require("json!cldr/main/en/numbers.json"));
-    globalize.load(require("json!cldr/supplemental/likelySubtags.json"));
-    globalize.load(require("json!cldr/supplemental/timeData.json"));
-    globalize.load(require("json!cldr/supplemental/weekData.json"));
-
-    globalize.loadTranslations(require("json!i18n/en.json"));
-    globalize.loadTranslations(require("json!i18n/ru.json"));
+    globalize.loadTranslations(ru);
+    globalize.loadTranslations(en);
 
     var Translator = function () {
         this.setLang.apply(this, arguments);

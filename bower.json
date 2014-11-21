@@ -1,6 +1,5 @@
 {
     "name": "vendors",
-    "version": "0.0.1",
     "homepage": "http://mabp.kiev.ua/",
     "authors": [
         "CTAPbIu_MABP <ctapbiumabp@gmail.com>"
@@ -13,11 +12,13 @@
     ],
     "dependencies": {
         "jquery": "2.1.1",
-        "jquery-ui": "1.11.0",
+        "jquery-ui": "1.11.2",
         "qunit": "1.14.0",
-        "globalize": "1.0.0-alpha.4",
-        "normalize.css": "3.0.1",
-        "requirejs": "2.1.8",
+        "globalize": "1.0.0-alpha.10",
+        "cldrjs": "0.3.9",
+        "cldr-data": ">=25",
+        "normalize.css": "3.0.2",
+        "requirejs": "2.1.15",
         "requirejs-plugins": "1.0.2",
         "requirejs-text": "2.0.12"
     }

@@ -3,7 +3,6 @@
 var controller = require("../utils/controller.js"),
     mongoose = require("mongoose"),
     OptOut = mongoose.model("OptOut"),
-    Q = require("q"),
     _ = require("lodash");
 
 var methods = {
@@ -29,7 +28,7 @@ var methods = {
                         type: type,
                         user: request.user
                     };
-                })) : Q([]);
+                })) : [];
             });
     }
 };
