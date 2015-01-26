@@ -9,8 +9,9 @@ var hbs = require("express-hbs"),
     cookieParser = require("cookie-parser"),
     bodyParser = require("body-parser"),
     compress = require("compression"),
-    mongoStore = require("connect-mongo")({session: session}),
+    mongoStore = require("connect-mongo")(session),
     messager = require("../utils/messager.js"),
+    utils = require("../utils/utils.js"),
     helper = require("../utils/helper.js");
 
 module.exports = function (config, app, passport) {
@@ -18,11 +19,11 @@ module.exports = function (config, app, passport) {
     app.set("port", process.env.PORT || config.port);
     app.set("jsonp callback", true);
     app.engine("hbs", hbs.express3({
-        layoutsDir: config.path.site + "/layouts",
-        partialsDir: config.path.site + "/partials"
+        layoutsDir: utils.getPath("views","site", "layouts"),
+        partialsDir: utils.getPath("views" ,"site", "partials")
     }));
     app.set("view engine", "hbs");
-    app.set("views", config.path.site);
+    app.set("views", utils.getPath("views", "site"));
 
     var maxAge = 864e5; // 1 day
     if (process.env.NODE_ENV === "development") {
@@ -51,16 +52,14 @@ module.exports = function (config, app, passport) {
         },
         // express/mongo session storage
         store: new mongoStore({
-            db: mongoose.connection.db,
-            collection: "sessions",
-            interval: 12e4  // 2 hours
+            mongooseConnection: mongoose.connection
         })
     }));
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({
         extended: true
     }));
-    app.use(favicon(config.path.root + "/dist/img/favicon.ico"));
+    app.use(favicon(utils.getPath("/dist/img/favicon.ico")));
 
     app.use(passport.initialize());
     app.use(passport.session());
@@ -83,6 +82,22 @@ module.exports = function (config, app, passport) {
         return next();
     });
     */
+
+    app.all("*", function (request, response, next) {
+        if (!request.get("Origin")) {
+            return next();
+        }
+
+        response.set("Access-Control-Allow-Origin", "*");
+        response.set("Access-Control-Allow-Methods", "GET");
+        response.set("Access-Control-Allow-Headers", "X-Requested-With,Content-Type");
+
+        if (request.method = "OPTIONS") {
+            return response.status(200).end();
+        }
+
+        return next();
+    });
 
     require("../routes/index.js")(app);
     require("../routes/message.js")(app);

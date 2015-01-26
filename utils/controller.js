@@ -48,7 +48,7 @@ module.exports = function (model, defaults) {
             return Q.nbind(model.remove, model)(query);
         },
         search: function (query) {
-            return Q.nbind(model.textSearch, model)(query.q);
+            return this.find({$text: {$search: query.q}});
         },
         populate: function (list, path) {
             return Q.nbind(model.populate, model)(list, [

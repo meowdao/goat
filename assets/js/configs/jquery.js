@@ -14,15 +14,6 @@ define(["jquery", "globalize"], function ($, globalize) {
     $(document)
         .ajaxStart(function () {
             $(this).css({cursor: "wait"});
-            // TODO move to mobile config
-            if ($.mobile) {
-                $.mobile.loading("show", {
-                    text: globalize.translate("common/loading"),
-                    textVisible: true,
-                    theme: "a",
-                    html: ""
-                });
-            }
         })
         .ajaxError(function (event, XMLHttpRequest, ajaxOptions, thrownError) {
             console.info(document.location.protocol + "//" + document.location.host + "/" + ajaxOptions.url + "?" + (ajaxOptions.data || ""));
@@ -34,11 +25,7 @@ define(["jquery", "globalize"], function ($, globalize) {
         })
         .ajaxComplete(function () {
             $(this).css({cursor: "auto"});
-            // TODO move to mobile config
-            if ($.mobile) {
-                $.mobile.loading("hide");
-            }
         });
-    
+
     return $.noConflict(true);
 });

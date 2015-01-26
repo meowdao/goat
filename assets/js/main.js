@@ -21,10 +21,10 @@ require.config({
 
         // 3rd party libs
         "jquery": "/vendors/jquery/dist/jquery",
-        "jquery.config": "/js/configs/jquery.config",
+        "jquery.config": "/js/configs/jquery",
         "jquery-ui": "/vendors/jquery-ui/ui",
-        "jquery-ui/dialog.config": "/js/configs/jquery-ui.dialog.config.js",
-        "jquery-ui/datepicker.config": "/js/configs/jquery-ui.datepicker.config.js",
+        "jquery-ui/dialog.config": "/js/configs/jquery-ui.dialog.js",
+        "jquery-ui/datepicker.config": "/js/configs/jquery-ui.datepicker.js",
         "globalize": "/vendors/globalize/dist/globalize",
 
         // i18n

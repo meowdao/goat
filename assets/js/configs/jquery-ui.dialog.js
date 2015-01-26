@@ -1,7 +1,7 @@
-define(["jquery","jquery-ui/dialog","globalize"], function ($, dialog,globalize) {
+define(["jquery", "jquery-ui/dialog", "globalize"], function ($, dialog, globalize) {
     "use strict";
 
-    $.extend(dialog.prototype.options, {
+    $.extend($.ui.dialog.prototype.options, {
         modal: true,
         resizable: false,
         draggable: false,

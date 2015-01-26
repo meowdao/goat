@@ -10,9 +10,7 @@ module.exports = {
         port: 8888,
         mongoUrl: "",
         smtp: {
-            secureConnection: true,
-            host: "",
-            port: 465,
+            service: "",
             auth: {
                 user: "",
                 pass: ""

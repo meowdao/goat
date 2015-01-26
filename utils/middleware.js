@@ -1,6 +1,7 @@
 "use strict";
 
-var _ = require("lodash");
+var _ = require("lodash"),
+    messager = require("../utils/messager.js");
 
 module.exports = {
     requiresParams: function (required) {
@@ -10,9 +11,7 @@ module.exports = {
                     return !!query[e];
                 });
             if (!check) {
-                var error = new Error("Required parameter not found");
-                error.status = 400;
-                return next(error);
+                return next(messager.makeError("no-param", true));
             }
             return next();
         };
@@ -22,9 +21,7 @@ module.exports = {
         return function (request, response, next) {
             exports.requiresLogin(request, response, function () {
                 if (!_.contains(required, request.user.role)) {
-                    var error = new Error("Access denied");
-                    error.status = 403;
-                    return next(error);
+                    return next(messager.makeError("access-denied", true));
                 }
                 return next();
             });

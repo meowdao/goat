@@ -68,39 +68,7 @@ define(["require", "jquery", "globalize", "jquery-ui/selectmenu", "jquery-ui/but
         });
     }
 
-    if ($.mobile) {
-        // Turn off AJAX for local file browsing
-        // https://github.com/jquery/jquery-mobile/blob/master/demos/_assets/js/jqm-demos.js
-        if (location.protocol.substr(0, 4) === "file" ||
-            location.protocol.substr(0, 11) === "*-extension" ||
-            location.protocol.substr(0, 6) === "widget") {
 
-            // Start with links with only the trailing slash and that aren't external links
-            var fixLinks = function () {
-                $("a[href$='/'], a[href='.'], a[href='..']").not("[rel='external']").each(function () {
-                    this.href = $(this).attr("href").replace(/\/$/, "") + "/index.html";
-                });
-            };
-
-            // fix the links for the initial page
-            $(fixLinks);
-
-            // fix the links for subsequent ajax page loads
-            $(document).bind("pagecreate", fixLinks);
-
-            // Check to see if ajax can be used. This does a quick ajax request and blocks the page until its done
-            $.ajax({
-                url: ".",
-                async: false,
-                isLocal: true
-            }).error(function () {
-                // Ajax doesn't work so turn it off
-                $(document).bind("mobileinit", function () {
-                    $.mobile.ajaxEnabled = false;
-                });
-            });
-        }
-    }
 
     $(function () {
 

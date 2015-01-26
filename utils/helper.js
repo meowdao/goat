@@ -1,15 +1,26 @@
 "use strict";
 
-var Q = require("q"),
-    _ = require("lodash");
+var Q = require("q");
 
 module.exports = {
 
+	filter: function (obj, keys, filter) {
+		var result = {};
+		Object.keys(obj || {}).forEach(function (key) {
+			if (!!~keys.indexOf(key) === filter) {
+				result[key] = obj[key];
+			}
+		});
+		return result;
+	},
+
     simpleJSONWrapper: function (method) {
+		var params = ["limit", "skip", "sort"];
         return function (request, response) {
-            var params = ["limit", "skip", "sort"];
-            // TODO drop _
-            method(Object.keys(request.query).length === 0 ? (Object.keys(request.body).length === 0 ? _.extend({}, request.params) : request.body) : _.omit(request.query, params), _.pick(request.query, params), request)
+			var key = ["query", "body", "params"].filter(function (key) { // TODO replace with find (ECMAScript6)
+				return Object.keys(request[key]).length
+			})[0];
+			method(module.exports.filter(request[key], params, false), module.exports.filter(request[key], params, true), request)
                 .then(function (result) {
                     response.header("Access-Control-Allow-Origin", "*"); // TODO move to express config
                     response.json(result);
@@ -18,9 +29,9 @@ module.exports = {
                 .fail(function (error) {
                     // error instanceof mongoose.Error.ValidationError
                     if (error.name === "ValidationError") {
-                        response.status(200).send({error: 409, message: module.exports.errors(error.errors)});
+						response.status(200).send({error: 409, errors: module.exports.errors(error.errors)});
                     } else {
-                        response.status(200).send({error: error.status, message: error.message});
+						response.status(200).send({error: error.status, errors: [error.message]});
                     }
                 })
                 .done();
@@ -31,17 +42,17 @@ module.exports = {
         return function (request, response, next) {
             method(request, response, next)
                 .then(function (result) {
-                    module.exports.messages(request, result.messages);
+					module.exports.messages(request, "messages", result.messages);
                     response.redirect(result.url || "/notification");
                 })
                 .fail(module.exports.printStackTrace)
                 .fail(function (error) {
                     // error instanceof mongoose.Error.ValidationError
                     if (error.name === "ValidationError") {
-                        module.exports.messages(request, module.exports.errors(error.errors));
+						module.exports.messages(request, "errors", module.exports.errors(error.errors));
                         response.redirect(request.url);
                     } else {
-                        module.exports.messages(request, error);
+						module.exports.messages(request, "errors", error.message);
                         response.redirect("/error");
                     }
                 })
@@ -61,8 +72,12 @@ module.exports = {
                     keys.forEach(function (element, index) {
                         params[element] = results[index];
                     });
-                    params.messages = request.session.messages || [];
-                    delete request.session.messages;
+					["messages", "errors", "notifications"].forEach(function (field) {
+						params[field] = request.session[field] || [];
+						delete request.session[field];
+					});
+					params.user = request.user;
+					params.id = method.name;
                     response.render(method.name.replace("_", "/") + ".hbs", params);
                 })
                 .fail(next) // see config/express.js
@@ -125,10 +140,11 @@ module.exports = {
      * Puts messages into session
      *
      * @param request
-     * @param messages
+	 * @param field
+	 * @param array
      */
-    messages: function (request, messages) {
-        request.session.messages = [].concat(request.session.messages, messages).filter(function (e) {
+	messages: function (request, field, array) {
+		request.session[field] = [].concat(request.session[field], array).filter(function (e) {
             return e;
         });
     }

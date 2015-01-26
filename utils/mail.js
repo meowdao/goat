@@ -5,10 +5,10 @@ var nodemailer = require("nodemailer"),
     Styliner = require("styliner"),
     Q = require("q"),
     _ = require("lodash"),
+    utils = require("../utils/utils.js"),
     optOutController = require("../controllers/opt_out.js"),
-    env = process.env.NODE_ENV || "development",
-    config = require("../configs/config.js")[env],
-    transport = nodemailer.createTransport("SMTP", config.smtp);
+    config = require("../configs/config.js")[process.env.NODE_ENV],
+    transport = nodemailer.createTransport(config.smtp);
 
 var methods = {
     /**
@@ -29,10 +29,14 @@ var methods = {
                         compact: true
                     });
 
-                    return Q.denodeify(hbs.create().express3({}))(config.path.email + "/" + query.template + ".hbs",
+                    return Q.denodeify(hbs.express3({
+                        partialsDir: utils.getPath("views", "email", "partials"),
+                        layoutsDir: utils.getPath("views", "email", "layouts"),
+                        extname: ".hbs"
+                    }))(utils.getPath("views", "email", query.template + ".hbs"),
                         _.extend(
-                            {settings: {views: config.path.email}},
-                            {user: request.user, serverHost: config.mail.serverHost},
+                            {settings: {views: utils.getPath("views", "email")}}, // required
+                            {user: request.user, type: query.template},
                             params
                         ))
                         .then(function (html) {
@@ -44,7 +48,7 @@ var methods = {
                                         subject: query.subject,
                                         html: inlinedHtml
                                     };
-                                    return Q.nfcall(transport.sendMail, clean);
+                                    return Q.nfcall(transport.sendMail.bind(transport), clean);
                                 });
                         });
                 }

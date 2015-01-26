@@ -2,7 +2,6 @@
 
 var regexp = require("../utils/regexp.js"),
     mongoose = require("mongoose"),
-    search = require("mongoose-text-search"),
     Schema = mongoose.Schema,
     crypto = require("crypto");
 
@@ -126,7 +125,6 @@ User.methods = {
     }
 };
 
-User.plugin(search);
 User.index({
     name: "text"
 }, {

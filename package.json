@@ -23,28 +23,23 @@
     },
     "dependencies": {
         "lodash": "2.4.1",
-        "q": "1.1.1",
-
+        "q": "1.1.2",
         "express": "4.10.2",
         "express-hbs": "0.7.11",
-        "express-session": "1.9.1",
-        "serve-static": "1.7.1",
-        "compression": "1.2.0",
-        "body-parser": "1.9.2",
-        "morgan": "1.5.0",
-        "serve-favicon": "2.1.7",
-        "cookie-parser" : "1.3.3",
-
-        "mongodb": "1.4.22",
-        "connect-mongo": "0.4.1",
-        "mongoose": "3.8.19",
-        "mongoose-text-search": "0.0.2",
-
+        "express-session": "1.10.1",
+        "serve-static": "1.8.1",
+        "compression": "1.3.0",
+        "body-parser": "1.10.2",
+        "morgan": "1.5.1",
+        "serve-favicon": "2.2.0",
+        "cookie-parser": "1.3.3",
+        "mongodb": "1.4.29",
+        "connect-mongo": "0.7.0",
+        "mongoose": "3.8.22",
         "passport": "0.1.17",
         "passport-local": "0.1.6",
         "passport-facebook": "0.1.5",
         "passport-google-oauth": "0.1.5",
-
         "nodemailer": "1.3.0",
         "styliner": "0.8.9",
         "cssmin": "0.4.2"
@@ -52,7 +47,7 @@
     "devDependencies": {
         "grunt": "0.4.5",
         "grunt-contrib-requirejs": "0.4.4",
-        "grunt-contrib-jshint": "0.10.0",
+        "grunt-contrib-jshint": "0.11.0",
         "grunt-contrib-less": "0.12.0",
         "grunt-contrib-qunit": "0.5.2",
         "grunt-contrib-watch": "0.6.1",

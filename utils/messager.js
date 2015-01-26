@@ -13,6 +13,14 @@ module.exports = {
         "expired-key": {
             message: "Link is expired.",
             status: 200
+        },
+        "no-param": {
+            message: "Required parameter not found",
+            status: 400
+        },
+        "access-denied": {
+            message: "Access denied",
+            status: 403
         }
     },
     makeError: function (key, stop) {
