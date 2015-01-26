@@ -7,7 +7,7 @@ module.exports = {
 	filter: function (obj, keys, filter) {
 		var result = {};
 		Object.keys(obj || {}).forEach(function (key) {
-			if (!!~keys.indexOf(key) === filter) {
+			if ((keys.indexOf(key) === -1) !== filter) {
 				result[key] = obj[key];
 			}
 		});
@@ -18,7 +18,7 @@ module.exports = {
 		var params = ["limit", "skip", "sort"];
         return function (request, response) {
 			var key = ["query", "body", "params"].filter(function (key) { // TODO replace with find (ECMAScript6)
-				return Object.keys(request[key]).length
+				return Object.keys(request[key]).length;
 			})[0];
 			method(module.exports.filter(request[key], params, false), module.exports.filter(request[key], params, true), request)
                 .then(function (result) {
