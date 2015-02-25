@@ -22,7 +22,6 @@ module.exports = {
 			})[0];
 			method(module.exports.filter(request[key], params, false), module.exports.filter(request[key], params, true), request)
                 .then(function (result) {
-                    response.header("Access-Control-Allow-Origin", "*"); // TODO move to express config
                     response.json(result);
                 })
                 .fail(module.exports.printStackTrace)
@@ -68,7 +67,10 @@ module.exports = {
                 return result[key];
             }))
                 .then(function (results) {
-                    var params = {};
+					var params = {
+						id: method.name,
+						self: request.user
+					};
                     keys.forEach(function (element, index) {
                         params[element] = results[index];
                     });
@@ -76,8 +78,6 @@ module.exports = {
 						params[field] = request.session[field] || [];
 						delete request.session[field];
 					});
-					params.user = request.user;
-					params.id = method.name;
                     response.render(method.name.replace("_", "/") + ".hbs", params);
                 })
                 .fail(next) // see config/express.js

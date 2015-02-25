@@ -89,15 +89,15 @@ var methods = {
         };
     },
     postChange: function (request) {
-        return hashController.getByIdAndDate(request.params)
+        return hashController.getByIdAndDate(request.params.hash)
             .then(function (hash) {
-                return module.exports.findById(hash, {lean: false})
+                return module.exports.findById(hash.user, {lean: false})
                     .then(function (user) {
                         user.password = request.body.password;
                         user.confirm = request.body.confirm;
                         return module.exports.save(user)
                             .then(function () {
-                                return hashController.findByIdAndRemove(request.params)
+                                return hashController.findByIdAndRemove(request.params.hash)
                                     .thenResolve({
                                         messages: ["Now you can login with your new password"]
                                     });
@@ -120,14 +120,14 @@ var methods = {
     },
 
     verify: function (request) {
-        return hashController.getByIdAndDate(request.params)
+        return hashController.getByIdAndDate(request.params.hash)
             .then(function (hash) {
-                return module.exports.findById(hash, {lean: false})
+                return module.exports.findById(hash.user, {lean: false})
                     .then(function (user) {
                         user.email_verified = true;
                         return module.exports.save(user)
                             .then(function () {
-                                return hashController.findByIdAndRemove(request.params)
+                                return hashController.findByIdAndRemove(request.params.hash)
                                     .thenResolve({
                                         messages: ["Email is verified"]
                                     });

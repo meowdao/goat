@@ -10,14 +10,11 @@ var hbs = require("express-hbs"),
     bodyParser = require("body-parser"),
     compress = require("compression"),
     mongoStore = require("connect-mongo")(session),
-    messager = require("../utils/messager.js"),
-    utils = require("../utils/utils.js"),
-    helper = require("../utils/helper.js");
+    utils = require("../utils/utils.js");
 
 module.exports = function (config, app, passport) {
 
     app.set("port", process.env.PORT || config.port);
-    app.set("jsonp callback", true);
     app.engine("hbs", hbs.express3({
         layoutsDir: utils.getPath("views","site", "layouts"),
         partialsDir: utils.getPath("views" ,"site", "partials")
@@ -64,70 +61,8 @@ module.exports = function (config, app, passport) {
     app.use(passport.initialize());
     app.use(passport.session());
 
-    /*
-    app.use(function (request, response, next) {
-        if (request.isAuthenticated() && request.headers["x-forwarded-proto"] !== "https") {
-            return response.redirect("https://" + request.headers.host + request.path);
-        } else {
-            return next();
-        }
-    });
 
-    app.use(function (request, response, next) {
-        if (request.method === "POST" || request.method === "PUT") {
-            request.body = _.omit(request.body, ["_"]);
-        } else {
-            request.query = _.omit(request.query, ["_"]);
-        }
-        return next();
-    });
-    */
 
-    app.all("*", function (request, response, next) {
-        if (!request.get("Origin")) {
-            return next();
-        }
+    require("./routes.js")(app, passport);
 
-        response.set("Access-Control-Allow-Origin", "*");
-        response.set("Access-Control-Allow-Methods", "GET");
-        response.set("Access-Control-Allow-Headers", "X-Requested-With,Content-Type");
-
-        if (request.method = "OPTIONS") {
-            return response.status(200).end();
-        }
-
-        return next();
-    });
-
-    require("../routes/index.js")(app);
-    require("../routes/message.js")(app);
-    require("../routes/opt_out.js")(app);
-    require("../routes/user.js")(app);
-    require("../routes/user.abstract.js")(app, passport);
-
-    app.use(function (request, response, next) {
-        next(messager.makeError("page-not-found", true));
-    });
-
-    /* jshint unused: false */
-    // next is needed by express
-    app.use(function (error, request, response, next) {
-        helper.printStackTrace(error, true);
-
-        error.status = error.status || 500;
-        if (error.name === "ValidationError") {
-            error.status = 409;
-        }
-
-        response.render("error.hbs", {error: error, url: request.url}, function (error2, string) {
-            if (error2) {
-                helper.printStackTrace(error2, true);
-                response.status(500).send(messager.makeError("server-error", true));
-            } else {
-                response.status(error.status).send(string);
-            }
-        });
-
-    });
-    /* jshint unused: true */
 };

@@ -1,7 +1,7 @@
 "use strict";
 
 var methods = {
-    show: function message (request) {
+    show: function error (request) {
         return {
             type: request.params.type
         };

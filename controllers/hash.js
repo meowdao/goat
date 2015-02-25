@@ -7,12 +7,15 @@ var controller = require("../utils/controller.js"),
     _ = require("lodash");
 
 var methods = {
-    getByIdAndDate: function (query) {
-        return module.exports.findById(query)
+    getByIdAndDate: function (id) {
+        var date = new Date();
+        date.setDate(date.getDate() - 1);
+        return module.exports.findOne({
+            _id: id,
+            "date.created": {$gte: date}
+        })
             .then(function (hash) {
-                var date = new Date();
-                date.setDate(date.getDate() - 1);
-                messager.makeError("expired-key", hash && hash.date.created >= date);
+                messager.makeError("expired-key", hash);
                 return hash;
             });
     }

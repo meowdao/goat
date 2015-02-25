@@ -5,64 +5,66 @@ var Q = require("q"),
 
 module.exports = function (model, defaults) {
 
-    function enchant (query, params) {
-        var options = _.extend({lean: true}, defaults, params);
+    function enchant (query, options) {
+        options = _.extend({lean: true}, defaults, options);
         Object.keys(options).forEach(function (method) {
             query[method](options[method]);
         });
         return Q.nbind(query.exec, query)();
     }
 
-    return {
-        findById: function (query, params) {
-            return enchant(model.findById(query[model.modelName.toLowerCase()]), params);
+    var controller = {
+        findById: function (id, options) {
+            return enchant(model.findById(id), options);
         },
-        findByIdAndRemove: function (query, params) {
-            return enchant(model.findByIdAndRemove(query[model.modelName.toLowerCase()]), params); // options: sort, select
+        find: function (query, options) {
+            return enchant(model.find.apply(model, [].concat(query || {})), options);
         },
-        find: function (query, params) {
-            return enchant(model.find.apply(model, [].concat(query || {})), params);
+        findOne: function (query, options) {
+            return enchant(model.findOne(query), options);
         },
-        findOne: function (query, params) {
-            return enchant(model.findOne(query), params);
+
+        update: function (query, update) {
+            return Q.nbind(model.update, model)(query, update, {strict: true, multi: true}).get(0);
         },
-        count: function (query) {
-            return Q.nbind(model.count, model)(query);
-        },
-        create: function (query) {
-            return this.insert(query);
-        },
-        insert: function (query) {
-            return Q.nbind(model.create, model)(query);
-        },
-        update: function (query, params) {
-            return Q.nbind(model.update, model)(query, params, {strict: true, multi: true}).get(0);
-        },
-        upsert: function (query, params) {
-            return Q.nbind(model.update, model)(query, params, {strict: true, upsert: true}).get(0);
-        },
-        distinct: function (query, params) {
-            return Q.nbind(model.distinct, model)(params.field, query);
-        },
-        remove: function (query) {
-            return Q.nbind(model.remove, model)(query);
-        },
-        search: function (query) {
-            return this.find({$text: {$search: query.q}});
-        },
-        populate: function (list, path) {
-            return Q.nbind(model.populate, model)(list, [
-                {path: path}
-            ]);
+        upsert: function (query, update) {
+            return Q.nbind(model.update, model)(query, update, {strict: true, upsert: true}).get(0);
         },
         save: function (model) {
-            return Q.nbind(model.save, model)();
+            return Q.nbind(model.save, model)().get(0);
         },
-        aggregate: function (query) {
-            return Q.nbind(model.aggregate, model)(query);
+
+        populate: function (list, path, options) {
+            return Q.nbind(model.populate, model)(list, [
+                {path: path, options: options || {}}
+            ]);
         },
-        mapReduce: function (query) {
-            return Q.nbind(model.mapReduce, model)(query);
+
+        insert: function (query) {
+            return this.create(query);
+        },
+
+        search: function (text) {
+            return this.find({$text: {$search: text}});
         }
     };
+
+    _.each([
+        "count",
+        "distinct",
+        "remove",
+        "create",
+        "aggregate",
+        "mapReduce",
+        "findByIdAndRemove", // options: sort, select
+        "findByIdAndUpdate", // options: new, upsert, sort, select
+        "findOneAndRemove",
+        "findOneAndUpdate"
+    ], function (name) {
+        controller[name] = function(){
+            return Q.nfapply(model[name].bind(model), Array.prototype.slice.call(arguments));
+        };
+    });
+
+    return controller;
 };

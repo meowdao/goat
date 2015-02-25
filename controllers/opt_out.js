@@ -12,7 +12,7 @@ var methods = {
             admin: {},
             user: {}
         };
-        return module.exports.distinct({user: request.user._id}, {field: "type"})
+        return module.exports.distinct("type", {user: request.user._id})
             .then(function (checked) {
                 return {
                     types: types[request.user.role],

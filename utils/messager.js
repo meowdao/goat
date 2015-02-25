@@ -21,6 +21,10 @@ module.exports = {
         "access-denied": {
             message: "Access denied",
             status: 403
+        },
+        "optout": {
+            message: "User is opted out from this type of email",
+            status: 0
         }
     },
     makeError: function (key, stop) {
