@@ -29,10 +29,10 @@ module.exports = function (config, passport) {
             passwordField: "password"
         },
         function (email, password, callback) {
-            userController.findOne({email: email}, {select: "+salt +hashed_password", lean:false})
+            userController.findOne({email: email}, {select: "+salt +hashed_password", lean: false})
                 .then(function (user) {
                     if (!user || !user.authenticate(password)) {
-                        callback(null, false, { message: "Invalid user name or password" });
+                        callback(null, false, {message: "Invalid user name or password"});
                     } else {
                         callback(null, user);
                     }
