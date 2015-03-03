@@ -16,8 +16,8 @@ module.exports = function (config, app, passport) {
 
     app.set("port", process.env.PORT || config.port);
     app.engine("hbs", hbs.express3({
-        layoutsDir: utils.getPath("views","site", "layouts"),
-        partialsDir: utils.getPath("views" ,"site", "partials")
+        layoutsDir: utils.getPath("views", "site", "layouts"),
+        partialsDir: utils.getPath("views", "site", "partials")
     }));
     app.set("view engine", "hbs");
     app.set("views", utils.getPath("views", "site"));
@@ -60,8 +60,6 @@ module.exports = function (config, app, passport) {
 
     app.use(passport.initialize());
     app.use(passport.session());
-
-
 
     require("./routes.js")(app, passport);
 

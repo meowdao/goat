@@ -1,10 +1,10 @@
 "use strict";
 
 var methods = {
-    show: function error (request) {
-        return {
+    show: function message (request) {
+        return Q({
             type: request.params.type
-        };
+        });
     }
 };
 

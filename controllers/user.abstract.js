@@ -2,6 +2,7 @@
 
 var controller = require("../utils/controller.js"),
     mail = require("../utils/mail.js"),
+    messager = require("../utils/messager.js"),
     mongoose = require("mongoose"),
     User = mongoose.model("User"),
     Q = require("q"),
@@ -14,7 +15,7 @@ var defaults = {
 
 var methods = {
     authCallback: function user_authCallback () {
-        return {};
+        return Q({});
     },
 
     getLogin: function user_login (request) {
@@ -22,7 +23,7 @@ var methods = {
             request.session.originalUrl = request.headers.referer;
         }
         delete request.session.logout;
-        return {};
+        return Q({});
     },
     postLogin: function (request) {
         var originalUrl = request.session.originalUrl;
@@ -35,9 +36,9 @@ var methods = {
     getSignUp: function user_signup (request) {
         var user = request.session.user || new User();
         delete request.session.user;
-        return {
+        return Q({
             user: user
-        };
+        });
     },
     postSignUp: function (request) {
         return module.exports.create(request.body, {}, request)
@@ -61,32 +62,30 @@ var methods = {
     },
 
     getForgot: function user_forgot () {
-        return {};
+        return Q({});
     },
     postForgot: function (request) {
         var clean = _.pick(request.body, ["email"]);
         return module.exports.findOne(clean)
+            .then(messager.checkModel("user-not-found"))
             .then(function (user) {
-                if (user) {
-                    hashController.create({user: user._id})
-                        .then(function (hash) {
-                            mail.sendMail({
-                                subject: "G.O.A.T Password Reset Instructions",
-                                template: "remind"
-                            }, {hash: hash}, {user: user});
-                        })
-                        .done();
-                }
-                return {
-                    messages: ["Email was sent"]
-                };
+                return hashController.create({user: user._id})
+                    .then(function (hash) {
+                        mail.sendMail({
+                            subject: "G.O.A.T Password Reset Instructions",
+                            template: "remind"
+                        }, {hash: hash}, {user: user});
+                    })
+                    .thenResolve({
+                        messages: ["Email was sent"]
+                    });
             });
     },
 
     getChange: function user_change (request) {
-        return {
+        return Q({
             hash: request.params.hash
-        };
+        });
     },
     postChange: function (request) {
         return hashController.getByIdAndDate(request.params.hash)

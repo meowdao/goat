@@ -5,9 +5,9 @@ var controller = require("./user.abstract.js"),
 
 var methods = {
     profile: function user_profile(request) {
-        return {
+        return Q({
             user: request.user
-        };
+        });
     }
 };
 

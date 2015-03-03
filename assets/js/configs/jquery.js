@@ -1,4 +1,4 @@
-define(["jquery", "globalize"], function ($, globalize) {
+define(["jquery"], function ($) {
     "use strict";
 
     $.ajaxSetup({

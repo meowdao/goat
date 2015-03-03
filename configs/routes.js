@@ -5,12 +5,7 @@ var helper = require("../utils/helper.js"),
 
 module.exports = function (app, passport) {
 
-    app.use(function (request, response, next) {
-        response.set("Access-Control-Allow-Origin", "*");
-        response.set("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE");
-        response.set("Access-Control-Allow-Headers", "Origin,Accept-Charset,Content-Type");
-        return next();
-    });
+
 
     app.use(function (request, response, next) {
         if (request.method === "OPTIONS") {
@@ -39,32 +34,32 @@ module.exports = function (app, passport) {
     */
 
     /*
-    app.all("*", function (request, response, next) {
-        if (!request.get("Origin")) {
-            return next();
-        }
-
+    app.use(function (request, response, next) {
         response.set("Access-Control-Allow-Origin", "*");
-        response.set("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
-        response.set("Access-Control-Allow-Headers", "X-Requested-With,Content-Type");
-
-        if (request.method = "OPTIONS") {
-            return response.status(200).end();
-        }
-
+        response.set("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE");
+        response.set("Access-Control-Allow-Headers", "Origin,Accept-Charset,Content-Type");
         return next();
     });
 
     app.use(function (request, response, next) {
-        return next(messager.makeError("no-origin", request.get("Origin")));
+        if (!request.get("Origin")){
+            return next(messager.makeError("no-origin"));
+        }
+        return next();
     });
 
     app.use(function (request, response, next) {
-        return next(messager.makeError("not-acceptable", response.get("Accept-Charset").toLowerCase() === "utf-8"));
+        if (response.get("Accept-Charset").toLowerCase() !== "utf-8") {
+            return next(messager.makeError("not-acceptable"));
+        }
+        return next();
     });
 
     app.use(function (request, response, next) {
-        return next(messager.makeError("content-type", response.get("Content-Type").toLowerCase() === "json"));
+        if (response.get("Content-Type").toLowerCase() !== "json"){
+            return next(messager.makeError("content-type"));
+        }
+        return next();
     });
     */
 
@@ -76,7 +71,7 @@ module.exports = function (app, passport) {
 
 
     app.use(function (request, response, next) {
-        next(messager.makeError("page-not-found", true));
+        next(messager.makeError("page-not-found"));
     });
 
     /* jshint unused: false */
@@ -93,8 +88,6 @@ module.exports = function (app, passport) {
     */
     /* jshint unused: true */
 
-    /* jshint unused: false */
-    // next is needed by express
     app.use(function (error, request, response, next) {
         helper.printStackTrace(error, true);
 
@@ -102,19 +95,26 @@ module.exports = function (app, passport) {
             error.status = 409;
         }
 
-        if (!error.status){
-            error = messager.makeError("server-error", true);
+        if (!error.status) {
+            error = messager.makeError("server-error", request.user);
         }
 
-        response.render("error.hbs", {errors: [error.message], url: request.url}, function (error2, string) {
-            if (error2) {
-                helper.printStackTrace(error2, true);
-                response.status(500).send(messager.makeError("server-error", true));
-            } else {
-                response.status(error.status).send(string);
-            }
-        });
+        response.status(error.status);
 
+        helper.simpleHTMLWrapper(function message(request) {
+            helper.messages(request, "errors", error.message);
+            return Q({
+                back: request.headers.referer
+            });
+        })(request, response, next);
+
+    });
+
+    /* jshint unused: false */
+    // next is needed by express
+    app.use(function (error, request, response, next) {
+        helper.printStackTrace(error, true);
+        response.status(500).send(messager.makeError("server-error", request.user));
     });
     /* jshint unused: true */
 

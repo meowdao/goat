@@ -12,9 +12,8 @@ module.exports = function () {
     }
 
     Q.superAll = function (obj) {
-        var keys = _.keys(obj);
         return Q.spread(_.values(obj), function () {
-            return _.zipObject(keys, arguments);
+            return _.zipObject(_.keys(obj), arguments);
         });
     };
 

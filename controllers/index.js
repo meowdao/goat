@@ -2,7 +2,7 @@
 
 var methods = {
     index: function index () {
-        return {};
+        return Q({});
     }
 };
 

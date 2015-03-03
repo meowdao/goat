@@ -14,10 +14,7 @@ var methods = {
             _id: id,
             "date.created": {$gte: date}
         })
-            .then(function (hash) {
-                messager.makeError("expired-key", hash);
-                return hash;
-            });
+            .then(messager.checkModel("expired-key"));
     }
 };
 

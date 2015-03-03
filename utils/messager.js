@@ -6,6 +6,10 @@ module.exports = {
             message: "Page Not Found",
             status: 404
         },
+        "user-not-found": {
+            message: "User Not Found",
+            status: 404
+        },
         "server-error": {
             message: "Internal Server Error",
             status: 500
@@ -27,15 +31,19 @@ module.exports = {
             status: 0
         }
     },
-    makeError: function (key, stop) {
+    makeError: function (key) {
         var error = new Error();
-        for (var i in this.messages[key]) {
-            error[i] = this.messages[key][i];
-        }
-        if (!stop) {
-            throw error;
-        } else {
-            return error;
+        error.message = this.messages[key].message;
+        error.status = this.messages[key].status;
+        return error;
+    },
+    checkModel: function (key, user) {
+        return function (model) {
+            if (!model) {
+                throw module.exports.makeError(key, user);
+            } else {
+                return model;
+            }
         }
     }
 };

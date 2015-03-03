@@ -7,8 +7,8 @@ module.exports = function (model, defaults) {
 
     function enchant (query, options) {
         options = _.extend({lean: true}, defaults, options);
-        Object.keys(options).forEach(function (method) {
-            query[method](options[method]);
+        _.each(options, function(params, method){
+            query[method](params);
         });
         return Q.nbind(query.exec, query)();
     }
