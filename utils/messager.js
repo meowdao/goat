@@ -44,7 +44,7 @@ module.exports = {
             } else {
                 return model;
             }
-        }
+        };
     }
 };
 

@@ -1,11 +1,10 @@
 "use strict";
 
 var helper = require("../utils/helper.js"),
-    messager = require("../utils/messager.js");
+    messager = require("../utils/messager.js"),
+    Q = require("q");
 
 module.exports = function (app, passport) {
-
-
 
     app.use(function (request, response, next) {
         if (request.method === "OPTIONS") {
@@ -69,7 +68,6 @@ module.exports = function (app, passport) {
     require("../routes/user.js")(app);
     require("../routes/user.abstract.js")(app, passport);
 
-
     app.use(function (request, response, next) {
         next(messager.makeError("page-not-found"));
     });
@@ -101,7 +99,7 @@ module.exports = function (app, passport) {
 
         response.status(error.status);
 
-        helper.simpleHTMLWrapper(function message(request) {
+        helper.simpleHTMLWrapper(function message (request) {
             helper.messages(request, "errors", error.message);
             return Q({
                 back: request.headers.referer
