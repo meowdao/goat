@@ -22,7 +22,9 @@ var methods = {
     sendMail: function (query, params, request) {
         return optOutController.findOne({user: request.user._id, type: query.template})
             .then(function (optout) {
-                messager.makeError("optout", !optout);
+                messager.checkModel("optout")(!optout);
+            })
+            .then(function () {
                 return Q.denodeify(hbs.express3({
                     partialsDir: utils.getPath("views", "email", "partials"),
                     layoutsDir: utils.getPath("views", "email", "layouts"),

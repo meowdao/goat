@@ -6,9 +6,11 @@ var _ = require("lodash"),
 exports.requiresParams = function (required) {
     return function (request, response, next) {
         var query = request.method === "POST" || request.method === "PUT" ? request.body : request.query;
-        messager.makeError("no-param", _.every(required, function (e) {
-            return !!query[e];
-        }));
+        if (!_.every(required, function (e) {
+                return !!query[e];
+            })) {
+            return next(messager.makeError("no-param"));
+        }
         return next();
     };
 };
@@ -16,8 +18,9 @@ exports.requiresParams = function (required) {
 exports.requiresRole = function (required, self) {
     return function (request, response, next) {
         exports.requiresLogin(request, response, function () {
-            messager.makeError("access-denied", _.contains(required, request.user.role) ||
-            (self && request.user._id.toString() === request.params.id));
+            if (!_.contains(required, request.user.role) || !(self && request.user._id.toString() === request.params.id)) {
+                return next(messager.makeError("access-denied"));
+            }
             return next();
         });
     };

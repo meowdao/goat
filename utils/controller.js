@@ -7,7 +7,7 @@ module.exports = function (model, defaults) {
 
     function enchant (query, options) {
         options = _.extend({lean: true}, defaults, options);
-        _.each(options, function(params, method){
+        _.each(options, function (params, method) {
             query[method](params);
         });
         return Q.nbind(query.exec, query)();
@@ -61,7 +61,7 @@ module.exports = function (model, defaults) {
         "findOneAndRemove",
         "findOneAndUpdate"
     ], function (name) {
-        controller[name] = function(){
+        controller[name] = function () {
             return Q.nfapply(model[name].bind(model), Array.prototype.slice.call(arguments));
         };
     });

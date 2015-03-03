@@ -27,17 +27,17 @@ module.exports = {
         return function (request, response, next) {
             method(request, response, next)
                 .then(function (result) {
-					module.exports.messages(request, "messages", result.messages);
+                    module.exports.messages(request, "messages", result.messages);
                     response.redirect(result.url || "/notification");
                 })
                 .fail(module.exports.printStackTrace)
                 .fail(function (error) {
                     // error instanceof mongoose.Error.ValidationError
                     if (error.name === "ValidationError") {
-						module.exports.messages(request, "errors", _.pluck(error.errors, "message"));
+                        module.exports.messages(request, "errors", _.pluck(error.errors, "message"));
                         response.redirect(request.url);
                     } else {
-						module.exports.messages(request, "errors", error.message);
+                        module.exports.messages(request, "errors", error.message);
                         response.redirect("/error");
                     }
                 })
@@ -83,11 +83,11 @@ module.exports = {
      * Puts messages into session
      *
      * @param request
-	 * @param field
-	 * @param array
+     * @param field
+     * @param array
      */
-	messages: function (request, field, array) {
-		request.session[field] = [].concat(request.session[field], array).filter(function (e) {
+    messages: function (request, field, array) {
+        request.session[field] = [].concat(request.session[field], array).filter(function (e) {
             return e;
         });
     }
