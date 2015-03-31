@@ -1,9 +1,8 @@
 "use strict";
 
-var regexp = require("../utils/regexp.js"),
-    mongoose = require("mongoose"),
-    Schema = mongoose.Schema,
-    crypto = require("crypto");
+import crypto from "crypto";
+import {Schema} from "mongoose";
+import regexp from "../utils/regexp.js";
 
 // last is first
 var password_validator = [

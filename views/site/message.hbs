@@ -1,2 +1,29 @@
 {{!< layout}}
 
+{{!< layout}}
+
+{{#ifCond type "===" "error"}}
+    <div class="page-header">
+        <h1>{{lang.message.error.title}}</h1>
+    </div>
+
+    <p>
+        Error Text
+    </p>
+{{else ifCond type "===" "notification"}}
+    <div class="page-header">
+        <h1>{{lang.message.notifications.title}}</h1>
+    </div>
+
+    <p>
+        Notification Text
+    </p>
+{{else ifCond type "===" "message"}}
+    <div class="page-header">
+        <h1>{{lang.message.message.title}}</h1>
+    </div>
+
+    <p>
+        Message Text
+    </p>
+{{/ifCond}}

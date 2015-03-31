@@ -1,16 +1,18 @@
 "use strict";
 
-var controller = require("../utils/controller.js"),
-    messager = require("../utils/messager.js"),
-    mongoose = require("mongoose"),
-    Hash = mongoose.model("Hash"),
-    _ = require("lodash");
+import _ from "lodash";
+import mongoose from "mongoose";
+
+import AbstractController from "../utils/controller.js";
+import messager from "../utils/messager.js";
+
+var Controller = new AbstractController(mongoose.model("Hash"));
 
 var methods = {
     getByIdAndDate: function (id) {
         var date = new Date();
         date.setDate(date.getDate() - 1);
-        return module.exports.findOne({
+        return Controller.findOne({
             _id: id,
             "date.created": {$gte: date}
         })
@@ -18,5 +20,5 @@ var methods = {
     }
 };
 
-module.exports = _.extend(controller(Hash), methods);
+export default _.extend(Controller, methods);
 

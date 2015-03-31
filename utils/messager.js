@@ -1,40 +1,22 @@
 "use strict";
 
-module.exports = {
-    messages: {
-        "page-not-found": {
-            message: "Page Not Found",
-            status: 404
-        },
-        "user-not-found": {
-            message: "User Not Found",
-            status: 404
-        },
-        "server-error": {
-            message: "Internal Server Error",
-            status: 500
-        },
-        "expired-key": {
-            message: "Link is expired.",
-            status: 200
-        },
-        "no-param": {
-            message: "Required parameter not found",
-            status: 400
-        },
-        "access-denied": {
-            message: "Access denied",
-            status: 403
-        },
-        "optout": {
-            message: "User is opted out from this type of email",
-            status: 0
-        }
-    },
-    makeError: function (key) {
+import lang from "./lang.js";
+
+var statuses = {
+    "expired-key": 200,
+    "no-param": 400,
+    "no-origin": 403,
+    "access-denied": 403,
+    "page-not-found": 404,
+    "user-not-found": 404,
+    "server-error": 500
+};
+
+export default {
+    makeError: function (key, user) {
         var error = new Error();
-        error.message = this.messages[key].message;
-        error.status = this.messages[key].status;
+        error.message = lang.translate("error/server/" + key, user);
+        error.status = statuses[key] || 500;
         return error;
     },
     checkModel: function (key, user) {

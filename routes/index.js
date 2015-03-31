@@ -1,11 +1,10 @@
 "use strict";
 
-module.exports = function (app) {
+import helper from "../utils/helper.js";
+import Controller from "../controllers/index.js";
 
-    var controller = require("../controllers/index.js"),
-        helper = require("../utils/helper.js");
+export default function (app) {
 
-    // HTML
-    app.get("/", helper.simpleHTMLWrapper(controller.index));
+    app.get("/", helper.simpleHTMLWrapper(Controller.index));
 
 };

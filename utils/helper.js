@@ -1,14 +1,13 @@
 "use strict";
 
-var _ = require("lodash");
+import _ from "lodash";
+import lang from "../utils/lang.js";
 
 module.exports = {
 
     simpleJSONWrapper: function (method) {
-        var params = ["limit", "skip", "sort"];
-        return function (request, response) {
-            var query = Object.keys(request.query).length === 0 ? (Object.keys(request.body).length === 0 ? request.params : request.body) : request.query;
-            method(_.omit(query, params), _.pick(query, params), request)
+        return function (request, response, next) {
+            method(request, response, next)
                 .then(response.json)
                 .fail(module.exports.printStackTrace)
                 .fail(function (error) {
@@ -52,7 +51,8 @@ module.exports = {
                     _.extend(results, {
                         id: method.name,
                         url: request.url,
-                        self: request.user
+                        self: request.user,
+                        lang: lang.getLanguage(request.user)
                     });
                     ["messages", "errors", "notifications"].forEach(function (field) {
                         results[field] = request.session[field] || [];

@@ -1,12 +1,11 @@
 "use strict";
 
-module.exports = function (app) {
+import helper from "../utils/helper.js";
+import middleware from "../utils/middleware.js";
+import Controller from "../controllers/user.abstract.js";
 
-    var controller = require("../controllers/user.js"),
-        helper = require("../utils/helper.js"),
-        middleware = require("../utils/middleware.js");
+export default function (app) {
 
-    // HTML
-    app.get("/user/profile", [middleware.requiresLogin], helper.simpleHTMLWrapper(controller.profile));
+    app.get("/user/profile", [middleware.requiresLogin], helper.simpleHTMLWrapper(Controller.profile));
 
-};
+}

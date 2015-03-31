@@ -1,8 +1,9 @@
 "use strict";
 
-var controller = require("./user.abstract.js"),
-    _ = require("lodash"),
-    Q = require("q");
+import Q from "q";
+import _ from "lodash";
+
+import UserAbstractController from "./user.abstract.js";
 
 var methods = {
     profile: function user_profile(request) {
@@ -12,4 +13,4 @@ var methods = {
     }
 };
 
-module.exports = _.extend(controller, methods);
+export default _.extend(UserAbstractController, methods);

@@ -1,12 +1,14 @@
 "use strict";
 
-var controller = require("../utils/controller.js"),
-    mongoose = require("mongoose"),
-    OptOut = mongoose.model("OptOut"),
-    _ = require("lodash");
+import _ from "lodash";
+import mongoose from "mongoose";
+
+import AbstractController from "../utils/controller.js";
+
+var Controller = new AbstractController(mongoose.model("OptOut"));
 
 var methods = {
-    getNotifications: function (query, params, request) {
+    getNotifications: function (request) {
         var types = {
             // key should be same as template name
             admin: {},
@@ -20,7 +22,8 @@ var methods = {
                 };
             });
     },
-    postNotifications: function (query, params, request) {
+    postNotifications: function (request) {
+        var query = request.body;
         return module.exports.remove({user: request.user._id})
             .then(function () {
                 return query.types ? module.exports.create(_.map(query.types, function (type) {
@@ -33,4 +36,4 @@ var methods = {
     }
 };
 
-module.exports = _.extend(controller(OptOut), methods);
+export default _.extend(Controller, methods);

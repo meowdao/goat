@@ -1,32 +1,34 @@
 "use strict";
 
-module.exports = function (app, passport) {
+import passport from "passport";
 
-    var controller = require("../controllers/user.abstract.js"),
-        helper = require("../utils/helper.js"),
-        middleware = require("../utils/middleware.js");
+import helper from "../utils/helper.js";
+import middleware from "../utils/middleware.js";
+import Controller from "../controllers/user.abstract.js";
 
+export default function (app) {
+    
     // user routes
-    app.get("/user/login", helper.simpleHTMLWrapper(controller.getLogin));
+    app.get("/user/login", helper.simpleHTMLWrapper(Controller.getLogin));
     app.post("/user/login",
         passport.authenticate("local", {
             failureRedirect: "/user/login",
             failureMessage: true
-        }), helper.simpleRedirect(controller.postLogin));
+        }), helper.simpleRedirect(Controller.postLogin));
 
-    app.get("/user/signup", helper.simpleHTMLWrapper(controller.getSignUp));
-    app.post("/user/signup", helper.simpleRedirect(controller.postSignUp));
+    app.get("/user/signup", helper.simpleHTMLWrapper(Controller.getSignUp));
+    app.post("/user/signup", helper.simpleRedirect(Controller.postSignUp));
 
-    app.get("/user/forgot", helper.simpleHTMLWrapper(controller.getForgot));
-    app.post("/user/forgot", helper.simpleRedirect(controller.postForgot));
+    app.get("/user/forgot", helper.simpleHTMLWrapper(Controller.getForgot));
+    app.post("/user/forgot", helper.simpleRedirect(Controller.postForgot));
 
-    app.get("/user/change/:hash", helper.simpleHTMLWrapper(controller.getChange));
-    app.post("/user/change/:hash", helper.simpleRedirect(controller.postChange));
+    app.get("/user/change/:hash", helper.simpleHTMLWrapper(Controller.getChange));
+    app.post("/user/change/:hash", helper.simpleRedirect(Controller.postChange));
 
-    app.get("/user/logout", controller.logout);
+    app.get("/user/logout", Controller.logout);
 
-    app.post("/user/sendEmailVerification", [middleware.requiresLogin], helper.simpleJSONWrapper(controller.sendEmailVerification));
-    app.get("/user/verify/:hash", helper.simpleRedirect(controller.verify));
+    app.post("/user/sendEmailVerification", [middleware.requiresLogin], helper.simpleJSONWrapper(Controller.sendEmailVerification));
+    app.get("/user/verify/:hash", helper.simpleRedirect(Controller.verify));
 
     app.get("/auth/facebook",
         passport.authenticate("facebook", {
@@ -35,7 +37,7 @@ module.exports = function (app, passport) {
             failureRedirect: "/user/login"
         }));
 
-    app.get("/auth/facebook/callback", passport.authenticate("facebook"), helper.simpleHTMLWrapper(controller.authCallback));
+    app.get("/auth/facebook/callback", passport.authenticate("facebook"), helper.simpleHTMLWrapper(Controller.authCallback));
 
     app.get("/auth/google",
         passport.authenticate("google", {
@@ -46,6 +48,6 @@ module.exports = function (app, passport) {
             ]
         }));
 
-    app.get("/auth/google/callback", passport.authenticate("google"), helper.simpleHTMLWrapper(controller.authCallback));
+    app.get("/auth/google/callback", passport.authenticate("google"), helper.simpleHTMLWrapper(Controller.authCallback));
 
 };

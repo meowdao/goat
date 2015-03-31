@@ -1,21 +1,25 @@
 "use strict";
 
-var controller = require("../utils/controller.js"),
-    mail = require("../utils/mail.js"),
-    messager = require("../utils/messager.js"),
-    mongoose = require("mongoose"),
-    User = mongoose.model("User"),
-    Q = require("q"),
-    _ = require("lodash"),
-    hashController = require("./hash.js");
+import Q from "q";
+import _ from "lodash";
+import mongoose from "mongoose";
 
-var defaults = {
+import mail from "../utils/mail.js";
+import messager from "../utils/messager.js";
+import AbstractController from "../utils/controller.js";
+import HashController from "./hash.js";
+
+var Controller = new AbstractController(mongoose.model("User"), {
     populate: "avatar" // entity
-};
+});
 
 var methods = {
-    authCallback: function user_authCallback () {
-        return Q({});
+    authCallback: function user_authCallback (request) {
+        var originalUrl = request.session.originalUrl;
+        delete request.session.originalUrl;
+        return Q({
+            redirect: originalUrl || "/user/profile"
+        });
     },
 
     getLogin: function user_login (request) {
@@ -34,19 +38,19 @@ var methods = {
     },
 
     getSignUp: function user_signup (request) {
-        var user = request.session.user || new User();
+        var user = request.session.user || new (mongoose.model("User"))();
         delete request.session.user;
         return Q({
             user: user
         });
     },
     postSignUp: function (request) {
-        return module.exports.create(request.body, {}, request)
+        return Controller.create(request.body, {}, request)
             .then(function (user) {
                 // manually login the user once successfully signed up
                 return Q.nbind(request.logIn, request)(user)
                     .thenResolve(request)
-                    .then(module.exports.loginCallback);
+                    .then(Controller.loginCallback);
             })
             .fail(function (error) {
                 request.session.user = request.body;
@@ -54,7 +58,7 @@ var methods = {
             });
     },
     loginCallback: function (request) {
-        module.exports.sendEmailVerification({}, {}, request)
+        Controller.sendEmailVerification({}, {}, request)
             .then(function (result) {
                 result.url = "/user/profile";
                 return result;
@@ -66,10 +70,10 @@ var methods = {
     },
     postForgot: function (request) {
         var clean = _.pick(request.body, ["email"]);
-        return module.exports.findOne(clean)
+        return Controller.findOne(clean)
             .then(messager.checkModel("user-not-found"))
             .then(function (user) {
-                return hashController.create({user: user._id})
+                return HashController.create({user: user._id})
                     .then(function (hash) {
                         mail.sendMail({
                             subject: "G.O.A.T Password Reset Instructions",
@@ -88,15 +92,15 @@ var methods = {
         });
     },
     postChange: function (request) {
-        return hashController.getByIdAndDate(request.params.hash)
+        return HashController.getByIdAndDate(request.params.hash)
             .then(function (hash) {
-                return module.exports.findById(hash.user, {lean: false})
+                return Controller.findById(hash.user, {lean: false})
                     .then(function (user) {
                         user.password = request.body.password;
                         user.confirm = request.body.confirm;
-                        return module.exports.save(user)
+                        return Controller.save(user)
                             .then(function () {
-                                return hashController.findByIdAndRemove(request.params.hash)
+                                return HashController.findByIdAndRemove(request.params.hash)
                                     .thenResolve({
                                         messages: ["Now you can login with your new password"]
                                     });
@@ -105,8 +109,8 @@ var methods = {
             });
     },
 
-    sendEmailVerification: function (query, params, request) {
-        return hashController.create({user: request.user._id})
+    sendEmailVerification: function (request) {
+        return HashController.create({user: request.user._id})
             .then(function (hash) {
                 return mail.sendMail({
                     subject: "G.O.A.T Email Verification",
@@ -119,14 +123,14 @@ var methods = {
     },
 
     verify: function (request) {
-        return hashController.getByIdAndDate(request.params.hash)
+        return HashController.getByIdAndDate(request.params.hash)
             .then(function (hash) {
-                return module.exports.findById(hash.user, {lean: false})
+                return Controller.findById(hash.user, {lean: false})
                     .then(function (user) {
                         user.email_verified = true;
-                        return module.exports.save(user)
+                        return Controller.save(user)
                             .then(function () {
-                                return hashController.findByIdAndRemove(request.params.hash)
+                                return HashController.findByIdAndRemove(request.params.hash)
                                     .thenResolve({
                                         messages: ["Email is verified"]
                                     });
@@ -143,5 +147,5 @@ var methods = {
     }
 };
 
-module.exports = _.extend(controller(User, defaults), methods);
+export default _.extend(Controller, methods);
 

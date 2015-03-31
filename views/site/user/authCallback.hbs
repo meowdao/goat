@@ -1,8 +1,12 @@
 <html>
 <head>
     <script>
-        window.opener.location = "/";
-        window.close();
+        if (window.opener) {
+            window.opener.location = "{{redirect}}";
+            window.close();
+        } else {
+            window.location = "{{redirect}}";
+        }
     </script>
 </head>
 <body></body>

@@ -1,26 +1,24 @@
 {
+    "esnext": true,
 	"curly": true,
 	"eqeqeq": true,
-	"immed": true,
 	"latedef": true,
 	"newcap": false,
 	"noarg": true,
 	"noempty": true,
-	"quotmark": true,
+	"quotmark": "double",
 	"undef": true,
 	"unused": true,
 	"strict": true,
 
 	"boss": true,
 	"eqnull": true,
-	"sub": true,
 
-	"browser": true,
+	"browser": false,
 
-	"onevar": false,
 	"node": true,
 
 	"globals": {
-		"jQuery": true
+
 	}
 }

@@ -1,29 +1,55 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-	<meta name="description" content="description">
-	<meta name="keywords" content="keywords">
-	<meta name="robots" content="all"/>
-	<title>title</title>
-	<link href="http://fonts.googleapis.com/css?family=Open%20Sans:n,i,b,bi" rel="stylesheet" type="text/css">
-	<link href="/vendors/normalize.css/normalize.css" rel="stylesheet" type="text/css">
-	<link href="/css/common.min.css" rel="stylesheet" type="text/css">
-	<link href="/css/styles.min.css" rel="stylesheet" type="text/css">
-	<link href="/css/form.min.css" rel="stylesheet" type="text/css">
-	<script src="/vendors/requirejs/require.min.js" data-main="/js/main.js" ></script>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="description" content="description">
+    <meta name="keywords" content="keywords">
+    <meta name="robots" content="all"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>{{lang.common.title}}</title>
+    <link href="/css/styles.min.css" rel="stylesheet" type="text/css">
+    <script src="/vendors/requirejs/require.min.js" data-main="/js/main.js"></script>
 </head>
 
-<body class="">
+<body class="{{id}}">
 
-<header>
-	<div class="wrapper">
-		G.O.A.T
-	</div>
-</header>
+<nav class="navbar navbar-inverse">
+    <div class="container">
+
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">{{lang.common.title}}</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+			{{#if self}}
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{self.name}} <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="/user/profile">{{lang.header.profile}}</a></li>
+                            <li role="presentation" class="divider"></li>
+                            <li><a href="/user/logout">{{lang.header.logout}}</a></li>
+                        </ul>
+                    </li>
+                </ul>
+			{{else}}
+                <p class="navbar-text navbar-right">
+                    <a href="/user/login" class="navbar-link">{{lang.header.login}}</a>
+                </p>
+			{{/if}}
+        </div>
+    </div>
+</nav>
 
 <article>
-	<div class="wrapper">
+	<div class="container">
 
         {{> _message}}
 
@@ -31,11 +57,17 @@
 	</div>
 </article>
 
-<footer>
-	<div class="wrapper">
-		(c) copyright
-	</div>
-</footer>
+<nav class="navbar navbar-inverse navbar-fixed-bottom">
+    <div class="container">
+        <ul class="nav navbar-nav">
+            <li><a href="/contact-us">{{lang.header.contact}}</a></li>
+            <li><a href="/terms-and-conditions">{{lang.header.terms}}</a></li>
+        </ul>
+        <p class="navbar-text navbar-right collapse navbar-collapse">
+            &copy; CTAPbIu_MABP
+        </p>
+    </div>
+</nav>
 
 </body>
 </html>

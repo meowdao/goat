@@ -1,6 +1,6 @@
 "use strict";
 
-var Q = require("q");
+import Q from "q";
 
 var methods = {
     show: function message (request) {
@@ -10,5 +10,5 @@ var methods = {
     }
 };
 
-module.exports = methods;
+export default methods;
 

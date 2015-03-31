@@ -1,13 +1,57 @@
 {{!< layout}}
 
-<form action="/user/signup" autocomplete="off" method="post">
-	<fieldset>
-		<legend>Sign Up</legend>
-		<input type="text" name="first_name" value="" placeholder="First name" autofocus/>
-		<input type="text" name="last_name" value="" placeholder="Last name"/>
-		<input type="email" name="email" value="" placeholder="Email"/>
-		<input type="password" name="password" value="" placeholder="Enter password"/>
-		<input type="password" name="confirm" value="" placeholder="Confirm password"/>
-		<input type="submit" value="Sign Up"/>
-	</fieldset>
-</form>
+<div class="page-header">
+    <h1>{{lang.user.signup.title}}</h1>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">{{lang.user.signup.panel}}</h3>
+    </div>
+    <div class="panel-body">
+        <form class="form-horizontal" action="/user/signup" method="POST" autocomplete="off">
+
+            <div class="form-group">
+                <label for="first_name" class="col-sm-2 control-label">{{lang.user.signup.first_name}}</label>
+
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="first_name" id="first_name" placeholder="{{lang.common.placeholder}}" value=""/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="last_name" class="col-sm-2 control-label">{{lang.user.signup.last_name}}</label>
+
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="last_name" id="last_name" placeholder="{{lang.common.placeholder}}" value=""/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email" class="col-sm-2 control-label">{{lang.user.signup.email}}</label>
+
+                <div class="col-sm-10">
+                    <input type="email" class="form-control" name="email" id="email" placeholder="{{lang.common.placeholder}}" value=""/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-2 control-label">{{lang.user.signup.password}}</label>
+
+                <div class="col-sm-10">
+                    <input type="password" class="form-control" name="name" id="password" placeholder="{{lang.common.placeholder}}" value=""/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="confirm" class="col-sm-2 control-label">{{lang.user.signup.confirm}}</label>
+
+                <div class="col-sm-10">
+                    <input type="password" class="form-control" name="confirm" id="confirm" placeholder="{{lang.common.placeholder}}" value=""/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-default">{{lang.user.signup.register}}</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

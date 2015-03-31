@@ -1,7 +1,3 @@
 {
-    "directory": "dist/vendors",
-    "scripts": {
-        "preinstall": "npm install cldr-data-downloader",
-        "postinstall": "node ./node_modules/cldr-data-downloader/bin/download.js -i dist/vendors/cldr-data/index.json -o dist/vendors/cldr-data/"
-    }
+    "directory": "dist/vendors"
 }

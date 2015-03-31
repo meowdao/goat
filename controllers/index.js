@@ -1,6 +1,6 @@
 "use strict";
 
-var Q = require("q");
+import Q from "q";
 
 var methods = {
     index: function index () {
@@ -8,4 +8,4 @@ var methods = {
     }
 };
 
-module.exports = methods;
+export default methods;

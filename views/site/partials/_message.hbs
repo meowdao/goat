@@ -1,7 +1,11 @@
 {{#each messages}}
-	<div class="message">{{this}}</div>
+    <div class="alert alert-success" role="alert">{{this}}</div>
+{{/each}}
+
+{{#each notifications}}
+    <div class="alert alert-warning" role="alert">{{this}}</div>
 {{/each}}
 
 {{#each errors}}
-	<div class="error">{{this}}</div>
+    <div class="alert alert-danger" role="alert">{{this}}</div>
 {{/each}}

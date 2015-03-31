@@ -1,12 +1,12 @@
 "use strict";
 
-module.exports = function (app) {
+import helper from "../utils/helper.js";
+import middleware from "../utils/middleware.js";
+import Controller from "../controllers/opt_out.js";
 
-    var controller = require("../controllers/opt_out.js"),
-        helper = require("../utils/helper.js"),
-        middleware = require("../utils/middleware.js");
+export default function (app) {
 
-    app.get("/optout/notifications", [middleware.requiresLogin], helper.simpleJSONWrapper(controller.getNotifications));
-    app.post("/optout/notifications", [middleware.requiresLogin], helper.simpleJSONWrapper(controller.postNotifications));
+    app.get("/optout/notifications", [middleware.requiresLogin], helper.simpleJSONWrapper(Controller.getNotifications));
+    app.post("/optout/notifications", [middleware.requiresLogin], helper.simpleJSONWrapper(Controller.postNotifications));
 
 };

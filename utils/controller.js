@@ -1,9 +1,9 @@
 "use strict";
 
-var Q = require("q"),
-    _ = require("lodash");
+import Q from "q";
+import _ from "lodash";
 
-module.exports = function (model, defaults) {
+export default function AbstractController (model, defaults) {
 
     function enchant (query, options) {
         options = _.extend({lean: true}, defaults, options);
@@ -67,4 +67,4 @@ module.exports = function (model, defaults) {
     });
 
     return controller;
-};
+}

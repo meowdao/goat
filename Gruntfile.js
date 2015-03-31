@@ -6,7 +6,6 @@ module.exports = function (grunt) {
 
     // Project configuration.
     grunt.initConfig({
-        pkg: grunt.file.readJSON("package.json"),
         jshint: {
             dist: {
                 src: [
@@ -45,11 +44,7 @@ module.exports = function (grunt) {
                     compress: true
                 },
                 files: {
-                    "dist/css/common.min.css": "assets/css/common.less",
-                    "dist/css/styles.min.css": "assets/css/styles.less",
-                    "dist/css/form.min.css": "assets/css/form.less",
-                    "dist/css/fonts.min.css": "assets/css/fonts.css",
-                    "dist/css/normalize.min.css": "dist/vendors/normalize.css/normalize.css"
+                    "dist/css/styles.min.css": "assets/css/styles.less"
                 }
             },
             development: {
@@ -58,11 +53,7 @@ module.exports = function (grunt) {
                     compress: false
                 },
                 files: {
-                    "dist/css/common.min.css": "assets/css/common.less",
-                    "dist/css/styles.min.css": "assets/css/styles.less",
-                    "dist/css/form.min.css": "assets/css/form.less",
-                    "dist/css/fonts.min.css": "assets/css/fonts.css",
-                    "dist/css/normalize.min.css": "dist/vendors/normalize.css/normalize.css"
+                    "dist/css/styles.min.css": "assets/css/styles.less"
                 }
             }
         },
@@ -129,17 +120,13 @@ module.exports = function (grunt) {
                         // libs
                         "jquery": "empty:",
                         "jquery-ui": "empty:",
-                        "globalize": "empty:",
+                        "bootstrap": "empty:",
 
                         // plugins
                         "json": "../../dist/vendors/requirejs-plugins/src/json",
-                        "text": "../../dist/vendors/requirejs-text/text",
-
-                        // i18n
-                        "cldr": "../../dist/vendors/cldrjs/dist/cldr",
-                        "cldr-data": "../../dist/vendors/cldr-data"
+                        "text": "../../dist/vendors/requirejs-text/text"
                     },
-                    exclude: ["text", "json", "cldr"]
+                    exclude: ["text", "json"]
                 }
             },
             requirejs: {

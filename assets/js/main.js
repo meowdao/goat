@@ -10,6 +10,13 @@ require.config({
         }
     },
 
+
+    "shim": {
+        "bootstrap": {
+            deps: ["jquery"]
+        }
+    },
+
     "paths": {
         // plugins
         json: "/vendors/requirejs-plugins/src/json",
@@ -17,7 +24,6 @@ require.config({
 
         // your code
         "goat": "/js/goat",
-        "translator": "/js/translator",
 
         // 3rd party libs
         "jquery": "/vendors/jquery/dist/jquery",
@@ -25,27 +31,18 @@ require.config({
         "jquery-ui": "/vendors/jquery-ui/ui",
         "jquery-ui/dialog.config": "/js/configs/jquery-ui.dialog.js",
         "jquery-ui/datepicker.config": "/js/configs/jquery-ui.datepicker.js",
-        "globalize": "/vendors/globalize/dist/globalize",
 
-        // i18n
-        "cldr": "/vendors/cldrjs/dist/cldr",
-        "cldr-data": "/vendors/cldr-data"
+        "bootstrap": "/vendors/bootstrap/dist/js/bootstrap"
 
     }
 });
 
 require([
     "goat/core",
-    "jquery",
-    "translator",
-    "cldr/unresolved"
-], function (goat, $, i18n) {
+    "bootstrap"
+], function (goat) {
     "use strict";
 
     goat.module.sayHello();
-
-    $(function () {
-        i18n.translate("body");
-    });
 
 });

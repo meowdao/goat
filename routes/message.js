@@ -1,11 +1,11 @@
 "use strict";
 
-module.exports = function (app) {
+import helper from "../utils/helper.js";
+import Controller from "../controllers/message.js";
 
-    var controller = require("../controllers/message.js"),
-        helper = require("../utils/helper.js");
+export default function (app) {
 
-    app.get("/:type(message|notification|error)", helper.simpleHTMLWrapper(controller.show));
+    app.get("/:type(message|notification|error)", helper.simpleHTMLWrapper(Controller.show));
 
 };
 

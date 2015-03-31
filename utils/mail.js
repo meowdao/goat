@@ -1,26 +1,28 @@
 "use strict";
 
-var nodemailer = require("nodemailer"),
-    hbs = require("express-hbs"),
-    Styliner = require("styliner"),
-    Q = require("q"),
-    _ = require("lodash"),
-    utils = require("../utils/utils.js"),
-    messager = require("../utils/messager.js"),
-    optOutController = require("../controllers/opt_out.js"),
-    config = require("../configs/config.js")[process.env.NODE_ENV],
+import nodemailer from "nodemailer";
+import hbs from "express-hbs";
+import Styliner from "Styliner";
+import Q from "q";
+import _ from "lodash";
+import utils from "../utils/utils.js";
+import messager from "../utils/messager.js";
+import OptOutController from "../controllers/opt_out.js";
+import configs from "../configs/config.js";
+
+var config = configs[process.env.NODE_ENV],
     transport = nodemailer.createTransport(config.smtp);
 
-var methods = {
+export default {
     /**
      *
      * @param query {Object} {template: String, subject: String}
      * @param params {Object}
      * @param request {Object} {user: UserModel}
-     * @returns {promise}
+     * @returns {Promise}
      */
     sendMail: function (query, params, request) {
-        return optOutController.findOne({user: request.user._id, type: query.template})
+        return OptOutController.findOne({user: request.user._id, type: query.template})
             .then(function (optout) {
                 messager.checkModel("optout")(!optout);
             })
@@ -54,5 +56,3 @@ var methods = {
             });
     }
 };
-
-module.exports = methods;

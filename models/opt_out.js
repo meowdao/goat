@@ -1,7 +1,6 @@
 "use strict";
 
-var mongoose = require("mongoose"),
-    Schema = mongoose.Schema;
+import {Schema} from "mongoose";
 
 var OptOut = new Schema({
     user: {type: Schema.Types.ObjectId, ref: "User"},
