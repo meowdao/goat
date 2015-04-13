@@ -26,6 +26,7 @@ module.exports = function (grunt) {
                     "Gruntfile.js",
                     "configs/*",
                     "controllers/*",
+                    "!controllers/user.abstract.js",
                     "models/*",
                     "utils/*",
                     "!utils/mail.js"
