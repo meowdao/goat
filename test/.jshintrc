@@ -1,44 +1,23 @@
 {
+	"esnext": true,
 	"curly": true,
 	"eqeqeq": true,
-	"immed": true,
 	"latedef": true,
 	"newcap": true,
 	"noarg": true,
-	"noempty": true,
-	"quotmark": "double",
 	"undef": true,
 	"unused": true,
 	"strict": true,
-
 	"boss": true,
-	"eqnull": true,
-	"sub": true,
-
-	"browser": true,
-
-	"onevar": true,
 	"node": true,
+	"browser": false,
+	"quotmark": "double",
 
 	"globals": {
-		"jQuery": true,
-		"QUnit": true,
-		"module": true,
 		"asyncTest": true,
 		"test": true,
-		"expect": true,
-		"start": true,
-		"stop": true,
-		"ok": true,
-		"equal": true,
-		"notEqual": true,
-		"propEqual": true,
-		"notPropEqual": true,
-		"deepEqual": true,
-		"notDeepEqual": true,
-		"strictEqual": true,
-		"notStrictEqual": true,
-		"raises": true,
-        "suite": true
+		"suite": true,
+		"suiteSetup": true,
+		"suiteTeardown": true
 	}
 }

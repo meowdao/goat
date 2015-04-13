@@ -38,10 +38,6 @@ var options = {
 	}*/
 };
 
-if (db.readyState) {
-	return mongoose;
-}
-
 // events: close, connected, connecting, disconnected, disconnecting, error, fullsetup, open, reconnected
 
 db.on("close", function () {
@@ -89,16 +85,14 @@ function toTitleCase(str) {
 }
 
 // Models
-var models = [
+[
 	"avatar",
 	"hash",
 	"opt_out",
 	"user"
-];
-
-models.forEach(function (model) {
-	mongoose.model(toTitleCase(model), require("../models/" + model + ".js"));
-});
+].forEach(model => {
+		mongoose.model(toTitleCase(model), require("../models/" + model + ".js"));
+	});
 
 export default mongoose;
 

@@ -1,38 +1,25 @@
 "use strict";
 
-var path = require("path");
+import path from "path";
 
-var rootPath = path.normalize(__dirname + "/..");
-var templatesPath = path.join(rootPath, "views");
-
-module.exports = {
+export default {
     development: {
-        port: 8888,
-        mongoUrl: "",
-        smtp: {
-            service: "",
-            auth: {
-                user: "",
-                pass: ""
+        mongoUrl: "mongodb://localhost/goat",
+        passport: {
+            local: {
+                usernameField: "email",
+                passwordField: "password"
+            },
+            facebook: {
+                clientID: "",
+                clientSecret: "",
+                callbackURL: ""
+            },
+            google: {
+                clientID: "",
+                clientSecret: "",
+                callbackURL: ""
             }
-        },
-        mail: {
-            serverHost: "",
-            general: {
-                from: "",
-                to: ""
-            }
-        },
-        templatesPath: templatesPath,
-        facebook: {
-            clientID: "",
-            clientSecret: "",
-            callbackURL: ""
-        },
-        google: {
-            clientID: "",
-            clientSecret: "",
-            callbackURL: ""
         }
     }
-};
+}

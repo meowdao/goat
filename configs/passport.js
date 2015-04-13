@@ -8,6 +8,7 @@ import UserController from "../controllers/user.js";
 import configs from "./config.js";
 
 var config = configs[process.env.NODE_ENV];
+var userController = new UserController();
 
 // http://passportjs.org/guide/profile/
 
@@ -16,11 +17,11 @@ passport.serializeUser(function (user, callback) {
 });
 
 passport.deserializeUser(function (id, callback) {
-	UserController.findOne({_id: id}, {lean: false})
-		.then(function (user) {
+	userController.findOne({_id: id}, {lean: false})
+		.then((user) => {
 			callback(null, user);
 		})
-		.fail(function (error) {
+		.fail((error)=> {
 			callback(error, null);
 		})
 		.done();
@@ -29,18 +30,19 @@ passport.deserializeUser(function (id, callback) {
 // use local strategy
 passport.use(new LocalStrategy(config.passport.local,
 	function (email, password, callback) {
-		UserController.findOne({email: email}, {
-			select: "+salt +hashed_password",
-			lean: false
-		})
-			.then(function (user) {
-				if (!user || !user.authenticate(password)) {
-					callback(null, false, {message: "Invalid user name or password"});
+		userController.findOne({email: email}, {lean: false})
+			.then((user) => {
+				if (user) {
+					if (user.verifyPassword(password)) {
+						callback(null, user);
+					} else {
+						callback(null, false, {message: "incorrect-password"});
+					}
 				} else {
-					callback(null, user);
+					callback(null, false, {message: "incorrect-name"});
 				}
 			})
-			.fail(function (error) {
+			.fail((error) => {
 				callback(error, null);
 			})
 			.done();
@@ -50,19 +52,19 @@ passport.use(new LocalStrategy(config.passport.local,
 /*
 passport.use(new FacebookStrategy(config.passport.facebook,
 	function (accessToken, refreshToken, profile, callback) {
-		UserController.findOne({"facebook.id": profile.id}, {lean: false})
-			.then(function (user) {
+		userController.findOne({"facebook.id": profile.id}, {lean: false})
+			.then((user) => {
 				if (!user) {
-					UserController.insert({
+					userController.create({
 						first_name: profile.name.givenName,
 						last_name: profile.name.familyName,
 						email: profile.emails[0].value,
 						facebook: profile._json
 					})
-						.then(function (user) {
+						.then((user) => {
 							callback(null, user);
 						})
-						.fail(function (error) {
+						.fail((error) => {
 							callback(error, null);
 						})
 						.done();
@@ -70,7 +72,7 @@ passport.use(new FacebookStrategy(config.passport.facebook,
 					callback(null, user);
 				}
 			})
-			.fail(function (error) {
+			.fail((error) => {
 				callback(error, null);
 			})
 			.done();
@@ -79,19 +81,19 @@ passport.use(new FacebookStrategy(config.passport.facebook,
 
 passport.use(new GoogleStrategy(config.passport.google,
 	function (accessToken, refreshToken, profile, callback) {
-		UserController.findOne({"google.id": profile.id}, {lean: false})
-			.then(function (user) {
+		userController.findOne({"google.id": profile.id}, {lean: false})
+			.then((user) => {
 				if (!user) {
-					UserController.insert({
+					userController.create({
 						first_name: profile.name.givenName,
 						last_name: profile.name.familyName,
 						email: profile.emails[0].value,
 						google: profile._json
 					})
-						.then(function (user) {
+						.then((user) => {
 							callback(null, user);
 						})
-						.fail(function (error) {
+						.fail((error) => {
 							callback(error, null);
 						})
 						.done();
@@ -99,7 +101,7 @@ passport.use(new GoogleStrategy(config.passport.google,
 					callback(null, user);
 				}
 			})
-			.fail(function (error) {
+			.fail((error) => {
 				callback(error, null);
 			})
 			.done();

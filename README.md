@@ -7,11 +7,9 @@ GOAT
 To make the first build run:
 
 ```bash
-npm install -g grunt-cli bower
+npm install -g grunt-cli nodemon
 npm install
-bower install
 
-node server
+npm run dev
 ```
 
-Note: bower doesn't actually run `preinstall` and `postinstall` tasks if no one package was updated

@@ -9,5 +9,3 @@ configs/config.js
 
 # NODE
 node_modules
-dist
-tmp

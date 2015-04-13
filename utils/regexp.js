@@ -1,6 +1,6 @@
 "use strict";
 
-module.exports = {
+export default {
     lower: /[a-z]/,
     upper: /[A-Z]/,
     numbers: /[0-9]/,

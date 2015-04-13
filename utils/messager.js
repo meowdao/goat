@@ -13,20 +13,31 @@ var statuses = {
 };
 
 export default {
-    makeError: function (key, user) {
+    makeError (key, user) {
         var error = new Error();
         error.message = lang.translate("error/server/" + key, user);
         error.status = statuses[key] || 500;
         return error;
     },
-    checkModel: function (key, user) {
-        return function (model) {
+    checkModel (key, user) {
+        return (model) => {
             if (!model) {
-                throw module.exports.makeError(key, user);
+                throw this.makeError(key, user);
+            } else {
+                return model;
+            }
+        };
+    },
+    checkUser(key, user){
+        return (model) => {
+            if (user._id.toString() !== model.user._id.toString()) {
+                throw this.makeError(key, user);
             } else {
                 return model;
             }
         };
     }
 };
+
+
 

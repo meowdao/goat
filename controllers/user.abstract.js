@@ -3,149 +3,119 @@
 import Q from "q";
 import _ from "lodash";
 import mongoose from "mongoose";
+import passport from "passport";
 
 import mail from "../utils/mail.js";
 import messager from "../utils/messager.js";
 import AbstractController from "../utils/controller.js";
 import HashController from "./hash.js";
 
-var Controller = new AbstractController(mongoose.model("User"), {
-    populate: "avatar" // entity
-});
+import Remind from "../assets/js/components/email/remind.js";
+import Verify from "../assets/js/components/email/verify.js";
 
-var methods = {
-    authCallback: function user_authCallback (request) {
-        var originalUrl = request.session.originalUrl;
-        delete request.session.originalUrl;
-        return Q({
-            redirect: originalUrl || "/user/profile"
-        });
-    },
+export default class AbstractUserController extends AbstractController {
 
-    getLogin: function user_login (request) {
-        if (!request.session.logout && request.headers.referer && request.headers.referer.indexOf("/user/login") === -1) {
-            request.session.originalUrl = request.headers.referer;
-        }
-        delete request.session.logout;
-        return Q({});
-    },
-    postLogin: function (request) {
-        var originalUrl = request.session.originalUrl;
-        delete request.session.originalUrl;
-        return Q({
-            url: originalUrl || "/user/profile"
-        });
-    },
+	hashController = new HashController();
 
-    getSignUp: function user_signup (request) {
-        var user = request.session.user || new (mongoose.model("User"))();
-        delete request.session.user;
-        return Q({
-            user: user
-        });
-    },
-    postSignUp: function (request) {
-        return Controller.create(request.body, {}, request)
-            .then(function (user) {
-                // manually login the user once successfully signed up
-                return Q.nbind(request.logIn, request)(user)
-                    .thenResolve(request)
-                    .then(Controller.loginCallback);
-            })
-            .fail(function (error) {
-                request.session.user = request.body;
-                throw error; // fail->fail chaining
-            });
-    },
-    loginCallback: function (request) {
-        Controller.sendEmailVerification({}, {}, request)
-            .then(function (result) {
-                result.url = "/user/profile";
-                return result;
-            });
-    },
+	constructor() {
+		super(mongoose.model("User"), {
+			populate: "avatar" // entity
+		});
+	}
 
-    getForgot: function user_forgot () {
-        return Q({});
-    },
-    postForgot: function (request) {
-        var clean = _.pick(request.body, ["email"]);
-        return Controller.findOne(clean)
-            .then(messager.checkModel("user-not-found"))
-            .then(function (user) {
-                return HashController.create({user: user._id})
-                    .then(function (hash) {
-                        mail.sendMail({
-                            subject: "G.O.A.T Password Reset Instructions",
-                            template: "remind"
-                        }, {hash: hash}, {user: user});
-                    })
-                    .thenResolve({
-                        messages: ["Email was sent"]
-                    });
-            });
-    },
+	login(request, response) {
+		var defer = Q.defer();
 
-    getChange: function user_change (request) {
-        return Q({
-            hash: request.params.hash
-        });
-    },
-    postChange: function (request) {
-        return HashController.getByIdAndDate(request.params.hash)
-            .then(function (hash) {
-                return Controller.findById(hash.user, {lean: false})
-                    .then(function (user) {
-                        user.password = request.body.password;
-                        user.confirm = request.body.confirm;
-                        return Controller.save(user)
-                            .then(function () {
-                                return HashController.findByIdAndRemove(request.params.hash)
-                                    .thenResolve({
-                                        messages: ["Now you can login with your new password"]
-                                    });
-                            });
-                    });
-            });
-    },
+		passport.authenticate("local", {badRequestMessage: "missing-credentials"}, function (error, user, info) {
+			defer.makeNodeResolver()(error || info, user);
+		})(request, response);
 
-    sendEmailVerification: function (request) {
-        return HashController.create({user: request.user._id})
-            .then(function (hash) {
-                return mail.sendMail({
-                    subject: "G.O.A.T Email Verification",
-                    template: "verify"
-                }, {hash: hash}, request)
-                    .thenResolve({
-                        messages: ["Verification email was sent to " + request.user.email]
-                    });
-            });
-    },
+		return defer.promise;
+	}
 
-    verify: function (request) {
-        return HashController.getByIdAndDate(request.params.hash)
-            .then(function (hash) {
-                return Controller.findById(hash.user, {lean: false})
-                    .then(function (user) {
-                        user.email_verified = true;
-                        return Controller.save(user)
-                            .then(function () {
-                                return HashController.findByIdAndRemove(request.params.hash)
-                                    .thenResolve({
-                                        messages: ["Email is verified"]
-                                    });
-                            });
-                    });
-            });
-    },
+	signUp(request) {
+		return this.create(request.body)
+			.then((user) => {
+				return Q.nbind(request.logIn, request)(user)
+					.then(() => {
+						return this.sendEmailVerification(request);
+					});
+			});
+	}
 
-    logout: function (request, response) {
-        request.logout();
-        request.session.logout = true;
-        response.clearCookie();
-        response.redirect("user/login");
-    }
-};
+	forgot(request) {
+		var clean = _.pick(request.body, ["email"]);
+		return this.findOne(clean)
+			.then(messager.checkModel("user-not-found"))
+			.then((user) => {
+				return this.hashController.create({user: user._id})
+					.then((hash) => {
+						return mail.sendMail({user: user}, {
+							subject: "G.O.A.T Password Reset Instructions",
+							view: Remind,
+							hash: hash
+						});
+					})
+					.thenResolve({
+						messages: ["Email was sent"]
+					});
+			});
+	}
 
-export default _.extend(Controller, methods);
+	change(request) {
+		return this.hashController.getByIdAndDate(request.params.hash)
+			.then((hash) => {
+				return this.findById(hash.user, {lean: false})
+					.then((user) => {
+						user.password = request.body.password;
+						user.confirm = request.body.confirm;
+						return this.save(user)
+							.then(() => {
+								return this.hashController.findByIdAndRemove(request.params.hash)
+									.thenResolve({
+										messages: ["Now you can login with your new password"]
+									});
+							});
+					});
+			});
+	}
+
+	sendEmailVerification(request) {
+		return this.hashController.create({user: request.user._id})
+			.then((hash) => {
+				return mail.sendMail(request, {
+					subject: "G.O.A.T Email Verification",
+					view: Verify,
+					hash: hash
+				})
+					.thenResolve({
+						messages: ["Verification email was sent to " + request.user.email]
+					});
+			});
+	}
+
+	verify(request) {
+		return this.hashController.getByIdAndDate(request.params.hash)
+			.then((hash) => {
+				return this.findById(hash.user, {lean: false})
+					.then((user) => {
+						user.email_verified = true;
+						return this.save(user)
+							.then(() => {
+								return this.hashController.findByIdAndRemove(request.params.hash)
+									.thenResolve({
+										messages: ["Email is verified"]
+									});
+							});
+					});
+			});
+	}
+
+	logout(request, response) {
+		request.logout();
+		request.session.logout = true;
+		response.clearCookie();
+		response.redirect("user/login");
+	}
+}
 

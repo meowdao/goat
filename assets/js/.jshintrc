@@ -1,7 +1,6 @@
 {
 	"curly": true,
 	"eqeqeq": true,
-	"immed": true,
 	"latedef": true,
 	"newcap": true,
 	"noarg": true,
@@ -13,20 +12,10 @@
 
 	"boss": true,
 	"eqnull": true,
-	"sub": true,
 
 	"browser": true,
 
-	"onevar": false,
-	"node": true,
-
 	"globals": {
-        "define" : true,
-        "require" : true,
-		"jQuery": true,
-		"Globalize": true,
-		"Translator": true,
-		"google": true,
-		"showError": true
+
 	}
 }

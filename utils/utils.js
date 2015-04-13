@@ -1,8 +1,8 @@
 "use strict";
 
-var path = require("path");
+import path from "path";
 
-module.exports = {
+export default {
 
     getPath: function () {
         return path.join.apply(path, [path.normalize(__dirname + "/..")].concat([].slice.call(arguments)));
@@ -13,7 +13,7 @@ module.exports = {
     },
 
     getType: function (variable) {
-        return Object.prototype.toString.call(variable).match(/\s([^\]]+)/)[1];
+        return Object.prototype.toString.call(variable).match(/\s([^\]]+)/)[1]; // .slice(8, -1);
     },
 
     roughSizeOfObject: function (object) {
