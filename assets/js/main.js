@@ -3,7 +3,7 @@
 require("../css/styles.less");
 
 import debug from "debug";
-import React from "react"
+import React from "react";
 import $ from "./utils/jquery.js";
 
 import bootstrap from "bootstrap";

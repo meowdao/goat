@@ -2,7 +2,6 @@
 
 import _ from "lodash";
 import debug from "debug";
-import lang from "../utils/lang.js";
 import messager from "../utils/messager.js";
 
 var log = debug("server:helper");

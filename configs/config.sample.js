@@ -1,7 +1,5 @@
 "use strict";
 
-import path from "path";
-
 export default {
     development: {
         mongoUrl: "mongodb://localhost/goat",
@@ -22,4 +20,4 @@ export default {
             }
         }
     }
-}
+};

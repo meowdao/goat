@@ -7,7 +7,7 @@ module.exports = function (grunt) {
         jshint: {
             dist: {
                 src: [
-                    "assets/js/*.js"
+                    //"assets/js/*.js"
                 ],
                 options: {
                     jshintrc: "assets/js/.jshintrc"
@@ -15,8 +15,7 @@ module.exports = function (grunt) {
             },
             test: {
                 src: [
-                    "test/qunit/*.js",
-                    "test/mocha/*.js"
+                    "test/*.js"
                 ],
                 options: {
                     jshintrc: "test/.jshintrc"
@@ -28,7 +27,8 @@ module.exports = function (grunt) {
                     "configs/*",
                     "controllers/*",
                     "models/*",
-                    "utils/*"
+                    "utils/*",
+                    "!utils/mail.js"
                 ],
                 options: {
                     jshintrc: ".jshintrc"
@@ -39,7 +39,6 @@ module.exports = function (grunt) {
 
     // Load grunt tasks from NPM packages
     grunt.loadNpmTasks("grunt-contrib-jshint");
-    grunt.loadNpmTasks("grunt-contrib-qunit");
 
     // Task
     grunt.registerTask("default", ["jshint"]);

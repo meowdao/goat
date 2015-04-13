@@ -5,7 +5,7 @@ process.env.NODE_ENV = process.env.NODE_ENV || "development";
 import mongoose from "../configs/mongoose.js";
 import assert from "assert";
 import mail from "../utils/mail.js";
-import Test from "../assets/js/components/email/test.js"
+import Test from "../assets/js/components/email/test.js";
 
 void(mongoose);
 

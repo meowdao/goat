@@ -25,4 +25,4 @@ export default function (app) {
 		require(utils.getPath("routes", file))(app);
 	});
 
-};
+}

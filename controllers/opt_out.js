@@ -25,7 +25,7 @@ export default class OptOutController extends AbstractController {
 				return {
 					redirect: "/optout/notifications",
 					message: "Saved!"
-				}
+				};
 			});
 	}
 
