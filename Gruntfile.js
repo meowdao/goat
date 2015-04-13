@@ -43,7 +43,7 @@ module.exports = function (grunt) {
 
     // Task
     grunt.registerTask("default", ["jshint"]);
-    grunt.registerTask("travis", ["jshint", "qunit"]);
+    grunt.registerTask("travis", ["jshint"]);
     grunt.registerTask("build", ["default"]);
     grunt.registerTask("test", ["qunit"]);
 
