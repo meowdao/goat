@@ -6,7 +6,8 @@ import messager from "../utils/messager.js";
 import configs from "../configs/config.js";
 import React from "react";
 
-import Router from "react-router";
+import Router, {Route} from "react-router";
+import EML from "../assets/js/components/EML.js";
 import Article from "../assets/js/components/partials/article.js";
 import Remind from "../assets/js/components/email/remind.js";
 import Verify from "../assets/js/components/email/verify.js";
@@ -16,7 +17,7 @@ var config = configs[process.env.NODE_ENV],
 	transport = nodemailer.createTransport(config.smtp);
 
 const routes = (
-	<Route name="App" handler={GOAT} path="/">
+	<Route name="App" handler={EML} path="/">
 		<Route name="User" path="user" handler={Article}>
 			<Route name="Remind" path="remind" handler={Remind}/>
 			<Route name="Verify" path="verify" handler={Verify}/>

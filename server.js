@@ -43,13 +43,6 @@ webpackServer.listen(3001, "0.0.0.0", function (error) {
 	log(error || "Webpack server listening on port 3001");
 });
 
-app.use(csrf());
-app.use((request, response, next) => {
-	log("XSRF-TOKEN", request.csrfToken());
-	response.cookie("XSRF-TOKEN", request.csrfToken());
-	next();
-});
-
 app.get("/", function (request, response) {
 	const statsJsonPath = path.join(__dirname, "build", "_stats.json");
 	const webpackAssets = JSON.parse(webpackServer.middleware.fileSystem.readFileSync(statsJsonPath));
