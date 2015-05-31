@@ -5,11 +5,11 @@ node_js:
 services:
   - mongodb
 before_install:
-  - npm install -g grunt-cli mocha nodemon
+  - npm install -g mocha nodemon
 install:
   - npm install
 script:
-  - grunt travis
+  - npm run dev
 
 
 
