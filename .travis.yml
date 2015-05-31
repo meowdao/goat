@@ -9,7 +9,7 @@ before_install:
 install:
   - npm install
 script:
-  - npm run dev
+  - npm run build
 
 
 
