@@ -1,9 +1,8 @@
 "use strict";
 
-import debug from "debug";
 import messager from "../utils/messager.js";
+import helper from "../utils/helper.js";
 
-var log = debug("server:error");
 
 export default function (app) {
 
@@ -11,21 +10,6 @@ export default function (app) {
 		next(messager.makeError("page-not-found", true));
 	});
 
-	/* jshint unused: false */
-	// next is needed by express
-	app.use(function (error, request, response, next) {
-		log(error.stack || "No stack trace available :(");
-		log(error);
-
-		if (error.name === "ValidationError") {
-			error.status = 409;
-		}
-		if (!error.status) {
-			error = messager.makeError("server-error", request.user);
-		}
-		response.status(error.status).json(error);
-
-	});
-	/* jshint unused: true */
+	app.use(helper.sendError);
 
 }

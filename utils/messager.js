@@ -20,7 +20,7 @@ export default {
         return error;
     },
     checkModel (key, user) {
-        return (model) => {
+        return model => {
             if (!model) {
                 throw this.makeError(key, user);
             } else {
@@ -29,7 +29,7 @@ export default {
         };
     },
     checkUser(key, user){
-        return (model) => {
+        return model => {
             if (user._id.toString() !== model.user._id.toString()) {
                 throw this.makeError(key, user);
             } else {

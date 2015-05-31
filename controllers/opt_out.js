@@ -14,7 +14,7 @@ export default class OptOutController extends AbstractController {
 	change(request) {
 		return this.remove({user: request.user._id})
 			.then(() => {
-				return this.create(_.map(request.body.types, (type) => {
+				return this.create(_.map(request.body.types, type => {
 					return {
 						type: type,
 						user: request.user

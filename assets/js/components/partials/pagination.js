@@ -2,7 +2,7 @@
 
 import React from "react";
 
-export default class Breadcrumbs extends React.Component {
+export default class Pagination extends React.Component {
 	render() {
 		return (
 			<nav className="text-center">
@@ -12,7 +12,7 @@ export default class Breadcrumbs extends React.Component {
 							<span aria-hidden="true">&laquo;</span>
 						</a>
 					</li>
-					{this.props.pagination.pages.map((page) => {
+					{this.props.pagination.pages.map(page => {
 						return <li className="active"><a href="{page.url}">{page.text}</a></li>;
 					})}
 					<li>

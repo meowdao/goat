@@ -1,9 +1,12 @@
 "use strict";
 
 import $ from "jquery";
-import crypto from "crypto";
+import debug from "debug";
+import ServerActionCreators from "../actions/ServerActionCreators.js";
 
 window.jQuery = $;
+
+let log = debug("web:jquery");
 
 function readCookie(name) {
 	var match = document.cookie.match(new RegExp("(^|;\\s*)(" + name + ")=([^;]*)"));
@@ -21,18 +24,19 @@ $.ajaxSetup({
 });
 
 $(document)
-	.ajaxStart(function () {
-		$(this).css({cursor: "wait"});
+	.ajaxStart(() => {
+		$(document).css({cursor: "wait"});
 	})
-	.ajaxError(function (event, XMLHttpRequest, ajaxOptions, thrownError) {
-		console.info(document.location.protocol + "//" + document.location.host + "/" + ajaxOptions.url + "?" + (ajaxOptions.data || ""));
-		console.error(thrownError);
+	.ajaxError((event, XMLHttpRequest, ajaxOptions, thrownError) => {
+		log(document.location.protocol + "//" + document.location.host + "/" + ajaxOptions.url + "?" + (ajaxOptions.data || ""));
+		log(thrownError);
+		ServerActionCreators.error(XMLHttpRequest.responseJSON && XMLHttpRequest.responseJSON.errors || thrownError || "Unknown error!");
 	})
-	.ajaxSuccess(function (event, XMLHttpRequest, ajaxOptions) {
-		console.info(document.location.protocol + "//" + document.location.host + "/" + ajaxOptions.url + "?" + (ajaxOptions.data || ""));
+	.ajaxSuccess((event, XMLHttpRequest, ajaxOptions) => {
+		log(document.location.protocol + "//" + document.location.host + "/" + ajaxOptions.url + "?" + (ajaxOptions.data || ""));
 	})
-	.ajaxComplete(function () {
-		$(this).css({cursor: "auto"});
+	.ajaxComplete(() => {
+		$(document).css({cursor: "auto"});
 	});
 
-export default $
+export default $;

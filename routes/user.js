@@ -3,16 +3,28 @@
 import passport from "passport";
 import helper from "../utils/helper.js";
 import middleware from "../utils/middleware.js";
-import UserController from "../controllers/user.js";
 
-var userController = new UserController();
+
+const tpl = `
+<html>
+	<head>
+	    <script>
+	        window.opener.location = "/";
+	        window.close();
+	    </script>
+	</head>
+	<body></body>
+</html>
+`;
 
 export default function (app) {
+
+	let userController = new (require("../controllers/user.js"))();
 
 	// user routes
 	app.post("/user/login", helper.simpleJSONWrapper(userController.login.bind(userController)));
 
-	app.post("/user/signup", helper.simpleJSONWrapper(userController.signUp.bind(userController)));
+	app.post("/user/register", helper.simpleJSONWrapper(userController.register.bind(userController)));
 
 	app.post("/user/forgot", helper.simpleJSONWrapper(userController.forgot.bind(userController)));
 
@@ -30,7 +42,9 @@ export default function (app) {
 			failureRedirect: "/user/login"
 		}));
 
-	//app.get("/auth/facebook/callback", passport.authenticate("facebook"), helper.simpleHTMLWrapper(userController.callback.bind(userController)));
+	app.get("/auth/facebook/callback", passport.authenticate("facebook"), (request, response) => {
+		response.send(tpl);
+	});
 
 	app.get("/auth/google",
 		passport.authenticate("google", {
@@ -41,12 +55,8 @@ export default function (app) {
 			]
 		}));
 
-	//app.get("/auth/google/callback", passport.authenticate("google"), helper.simpleHTMLWrapper(userController.callback.bind(userController)));
-
-	app.get("/auth/xxx/callback", function (request) {
-		var originalUrl = request.session.originalUrl || "/user/profile";
-		delete request.session.originalUrl;
-		response.send(html(originalUrl));
+	app.get("/auth/google/callback", passport.authenticate("google"), (request, response) => {
+		response.send(tpl);
 	});
 
 	app.get("/user/sync", [middleware.requiresLogin], helper.simpleJSONWrapper(userController.sync.bind(userController)));

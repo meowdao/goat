@@ -1,43 +1,36 @@
 "use strict";
 
-import React from "react";
-import Verification from "./email/verification.js";
-import Empty from "./empty.js";
+import React, {PropTypes} from "react";
 
+import Empty from "./static/empty.js";
+import Verification from "./email/verification.js";
+
+const routes = {
+	empty: Empty,
+	verification: Verification
+};
 
 export default class EML extends React.Component {
 
 	static propTypes = {
-		//view: React.PropTypes.instanceOf(React.Component)
+		view: PropTypes.string
 	};
 
 	static defaultProps = {
-		view: Empty
-	};
-
-	state = {
-		view: this.props.view
+		view: "empty"
 	};
 
 	constructor(props) {
 		super(props);
-		this.state = {
-			view: this.props.view
-		};
-	}
-
-	componentWillReceiveProps (props) {
-		this.setState({
-			view: props.view
-		});
 	}
 
 	render() {
+		const view = routes[this.props.view];
 		return (
 			<html>
 			<head></head>
 			<body>
-			<this.state.view user={this.props.user}/>
+			<view {...this.props}/>
 			</body>
 			</html>
 		);

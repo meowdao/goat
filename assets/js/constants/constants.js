@@ -1,0 +1,14 @@
+"use strict";
+
+export const ActionTypes = {
+
+	UPDATE_USER_LIST: "UPDATE_USER_LIST",
+	ADMIN_LOGIN: "ADMIN_LOGIN",
+	ADMIN_LOGOUT: "ADMIN_LOGOUT",
+
+	ERROR: "ERROR",
+	MESSAGE: "MESSAGE",
+
+	TRANSITION: "TRANSITION"
+
+};

@@ -2,9 +2,12 @@
 
 import React from "react";
 import $ from "jquery";
+import Profile from "./profile.js"
 
-export default class Login extends React.Component {
+import Dispatcher from "../../utils/dispatcher.js";
+import {ActionTypes, MessageTypes} from "../../utils/constants.js";
 
+export default class SignUp extends React.Component {
 
 	static propTypes = {
 		email: React.PropTypes.string,
@@ -48,11 +51,18 @@ export default class Login extends React.Component {
 			lastName: this.state.lastName,
 			role: this.state.role
 		})
-			.then((response) => {
-				console.log(response);
+			.then(response => {
+				Dispatcher.dispatch({
+					actionType: ActionTypes.CHANGE_VIEW,
+					view: Profile
+				});
 			})
-			.fail((e) => {
-				console.log(e)
+			.fail(e => {
+				Dispatcher.dispatch({
+					actionType: ActionTypes.MESSAGE,
+					type: MessageTypes.ERROR,
+					messages:  e.responseJSON.errors
+				});
 			});
 	}
 
@@ -67,7 +77,7 @@ export default class Login extends React.Component {
 
 							<div className="col-sm-10">
 								<input type="text" className="form-control" name="email" id="email" placeholder="me@example.com"
-								       onChange={(e) => this.setState({email: e.target.value})}/>
+								       onChange={e => this.setState({email: e.target.value})}/>
 							</div>
 						</div>
 						<div className="form-group">
@@ -75,7 +85,7 @@ export default class Login extends React.Component {
 
 							<div className="col-sm-10">
 								<input type="password" className="form-control" name="password" id="password" placeholder="******"
-								       onChange={(e) => this.setState({password: e.target.value})}/>
+								       onChange={e => this.setState({password: e.target.value})}/>
 							</div>
 						</div>
 						<div className="form-group">
@@ -83,7 +93,7 @@ export default class Login extends React.Component {
 
 							<div className="col-sm-10">
 								<input type="password" className="form-control" name="confirm" id="confirm" placeholder="******"
-								       onChange={(e) => this.setState({confirm: e.target.value})}/>
+								       onChange={e => this.setState({confirm: e.target.value})}/>
 							</div>
 						</div>
 						<div className="form-group">
@@ -91,7 +101,7 @@ export default class Login extends React.Component {
 
 							<div className="col-sm-10">
 								<input type="text" className="form-control" name="name" id="name" placeholder="Fred"
-								       onChange={(e) => this.setState({firstName: e.target.value})}/>
+								       onChange={e => this.setState({firstName: e.target.value})}/>
 							</div>
 						</div>
 						<div className="form-group">
@@ -99,7 +109,7 @@ export default class Login extends React.Component {
 
 							<div className="col-sm-10">
 								<input type="text" className="form-control" name="name" id="name" placeholder="Flintstone"
-								       onChange={(e) => this.setState({lastName: e.target.value})}/>
+								       onChange={e => this.setState({lastName: e.target.value})}/>
 							</div>
 						</div>
 

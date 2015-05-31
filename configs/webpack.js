@@ -1,27 +1,33 @@
 "use strict";
 
-var os = require("os");
 var path = require("path");
 var webpack = require("webpack");
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
-var _ = require("lodash");
 var StatsPlugin = require("../utils/stats");
 
-var config = {
+module.exports = {
+	devtool: "eval",
 	entry: {
-		abl: ["./assets/js/main"]
+		abl: [
+			"webpack-dev-server/client?http://localhost:3001",
+			"webpack/hot/dev-server",
+			"./assets/js/main"
+		]
 	},
 	output: {
 		path: path.join(__dirname, "..", "build"),
 		filename: "[chunkhash].js",
 		chunkFilename: "[id].js",
-		publicPath: process.env.NODE_ENV === "production" ? "/build/" : "http://127.0.0.1:3001/build/"
+		publicPath: "http://localhost:3001/"
 	},
 	resolve: {
-		modulesDirectories: ["node_modules", "bower_components"],
+		modulesDirectories: ["node_modules"],
 		alias: {
 			components: path.join(__dirname, "..", "assets", "js", "components")
 		}
+	},
+	eslint: {
+		//configFile: ".eslintrc"
 	},
 	module: {
 		loaders: [
@@ -34,19 +40,19 @@ var config = {
 				loader: ExtractTextPlugin.extract("style-loader", "css-loader!less-loader")
 			},
 			{
-				test: /\.(ttf|woff|woff2|eot|svg|gif|png)(\?.+)?$/,
+				test: /\.(ttf|woff|woff2|eot|svg|gif|png|ico)(\?.+)?$/,
 				loader: "file-loader?name=[sha512:hash:base36:7].[ext]"
 			},
 			{
 				test: /\.js$/,
-				loaders: ["babel-loader?stage=0&optional=runtime"],
+				loaders: ["react-hot", "babel-loader?stage=0&optional=runtime", "eslint-loader"],
 				exclude: [/node_modules/, /bower_components/]
 			}
 		]
 	},
 	plugins: [
 		new webpack.DefinePlugin({
-			"process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV || "development")
+			"process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV)
 		}),
 		new ExtractTextPlugin("style.css", {
 			allChunks: true
@@ -54,35 +60,7 @@ var config = {
 		new webpack.optimize.OccurenceOrderPlugin(),
 		new webpack.optimize.DedupePlugin(),
 		new webpack.NoErrorsPlugin(),
-		new StatsPlugin()
+		new StatsPlugin(),
+		new webpack.HotModuleReplacementPlugin()
 	]
 };
-
-if (process.env.NODE_ENV === "production") {
-
-	config.devtool = "sourcemap";
-
-	config.plugins.unshift(
-		new webpack.optimize.UglifyJsPlugin({
-			comments: /a^/,
-			compress: {warnings: false}
-		})
-	);
-
-} else {
-
-	config.devtool = "eval";
-
-	_.find(config.module.loaders, function (loader) {
-		return loader.test.source === /\.js$/.source;
-	}).loaders.unshift("react-hot");
-
-	config.entry.abl.unshift(
-		"webpack-dev-server/client?http://" + os.hostname() + ":3001",
-		"webpack/hot/dev-server"
-	);
-
-	config.plugins.push(new webpack.HotModuleReplacementPlugin());
-}
-
-export default config;

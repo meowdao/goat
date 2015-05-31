@@ -1,38 +1,37 @@
 "use strict";
 
-import _ from "lodash";
 import debug from "debug";
 import messager from "../utils/messager.js";
 
-var log = debug("server:helper");
+let log = debug("log:helper");
 
 export default {
 
-	simpleJSONWrapper: function (method) {
-		return function (request, response, next) {
+	simpleJSONWrapper (method) {
+		return (request, response, next) => {
 			method(request, response, next)
 				.then(response.json.bind(response))
-				.fail((error) => {
-					log(error);
-					throw error;
-				})
-				.fail(function (error) {
-					// error instanceof mongoose.Error.ValidationError
-					if (error.name === "ValidationError") {
-						error = {
-							status: 409,
-							message: _.pluck(error.errors, "message")
-						};
-					}
-					if (!error.status) {
-						error = messager.makeError("server-error", request.user);
-					}
-					response.status(error.status).send({
-						error: error.status,
-						errors: [error.message]
-					});
+				.fail(error => {
+					this.sendError(error, request, response);
 				})
 				.done();
 		};
+	},
+
+	sendError(error, request, response, next){
+		log(error);
+		if (error.name === "ValidationError") {
+			error = {
+				status: 409,
+				message: Object.keys(error.errors).map(key => error.errors[key].message)
+			};
+		}
+		if (!error.status) {
+			error = messager.makeError("server-error", request.user);
+		}
+		response.status(error.status).send({
+			status: error.status,
+			errors: [].concat(error.message)
+		});
 	}
 };

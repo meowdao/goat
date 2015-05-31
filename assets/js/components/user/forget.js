@@ -33,13 +33,13 @@ export default class Change extends React.Component {
 				email: this.state.email
 			}
 		})
-			.then((response) => {
+			.then(response => {
 				Dispatcher.dispatch({
 					actionType: ActionTypes.UPDATE_USER,
 					user: response
 				});
 			})
-			.fail((e) => {
+			.fail(e => {
 				console.log(e)
 			});
 	}
@@ -58,7 +58,7 @@ export default class Change extends React.Component {
 
 							<div className="col-sm-10">
 								<input type="text" className="form-control" name="email" id="email" defaultValue="" placeholder="me@example.com"
-								       onChange={(e) => this.setState({email: e.target.value})}/>
+								       onChange={e => this.setState({email: e.target.value})}/>
 							</div>
 						</div>
 

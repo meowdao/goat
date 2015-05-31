@@ -38,13 +38,13 @@ export default class Change extends React.Component {
 				password: this.state.password
 			}
 		})
-			.then((response) => {
+			.then(response => {
 				Dispatcher.dispatch({
 					actionType: ActionTypes.UPDATE_USER,
 					user: response
 				});
 			})
-			.fail((e) => {
+			.fail(e => {
 				console.log(e)
 			});
 	}
@@ -63,7 +63,7 @@ export default class Change extends React.Component {
 
 							<div className="col-sm-10">
 								<input type="password" className="form-control" name="name" id="password" defaultValue="" placeholder="******"
-								       onChange={(e) => this.setState({password: e.target.value})}/>
+								       onChange={e => this.setState({password: e.target.value})}/>
 							</div>
 						</div>
 						<div className="form-group">
@@ -71,7 +71,7 @@ export default class Change extends React.Component {
 
 							<div className="col-sm-10">
 								<input type="password" className="form-control" name="confirm" id="confirm" defaultValue="" placeholder="******"
-								       onChange={(e) => this.setState({confirm: e.target.value})}/>
+								       onChange={e => this.setState({confirm: e.target.value})}/>
 							</div>
 						</div>
 

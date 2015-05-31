@@ -1,17 +1,23 @@
 "use strict";
 
-import React from "react";
-import Header from "./header.js";
-import Article from "./article.js";
-import Footer from "./footer.js";
+import React, {PropTypes} from "react";
+import Header from "./partials/header.js";
+import Footer from "./partials/footer.js";
+import {RouteHandler} from "react-router";
 
 
-export default class ABL extends React.Component {
+export default class GOAT extends React.Component {
+
+	static propTypes = {
+		params: PropTypes.object.isRequired,
+		query: PropTypes.object.isRequired
+	};
+
 	render() {
 		return (
 			<div>
-				<Header user={this.props.user}/>
-				<Article {...this.props}/>
+				<Header/>
+				<RouteHandler {...this.props}/>
 				<Footer/>
 			</div>
 		);

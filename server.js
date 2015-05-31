@@ -4,64 +4,59 @@ process.env.NODE_ENV = process.env.NODE_ENV || "development";
 process.env.PORT = process.env.PORT || 3000;
 
 import fs from "fs";
+import http from "http";
 import path from "path";
 import debug from "debug";
-
+import csrf from "csurf";
+import React from "react";
 import webpack from "webpack";
 import WebpackDevServer from "webpack-dev-server";
 
-import React from "react";
 import Html from "./assets/js/components/Html";
-import app from "./configs/express.js";
+import express from "./configs/express.js";
 
 
-var log = debug("server:webpack");
-
-const statsJsonPath = path.join(__dirname, "build", "_stats.json");
-
-function renderApp(request, webpackAssets) {
-    const html = React.renderToStaticMarkup(<Html webpackAssets={webpackAssets}/>);
-    request.send(`<!doctype html>\n${html}`);
+if (process.env.NODE_ENV !== "production") {
+	debug.enable("log:*");
+	debug.enable("controller:*");
+	debug.enable("web:*");
 }
 
-if (process.env.NODE_ENV === "production") {
+var log = debug("log:server");
+var app = express();
 
-    app.use("/build", express.static(path.join(__dirname, "build")));
+const webpackServer = new WebpackDevServer(webpack(require("./configs/webpack")), {
+	publicPath: "http://0.0.0.0:3001/",
+	watchDelay: 0,
+	hot: true,
+	stats: {
+		colors: true,
+		assets: true,
+		timings: true,
+		chunks: false,
+		chunkModules: false,
+		modules: false,
+		children: false
+	}
+});
 
-    app.get("/", function (request, response) {
-        renderApp(response, JSON.parse(fs.readFileSync(statsJsonPath)));
-    });
+webpackServer.listen(3001, "0.0.0.0", function (error) {
+	log(error || "Webpack server listening on port 3001");
+});
 
-} else {
+app.use(csrf());
+app.use((request, response, next) => {
+	log("XSRF-TOKEN", request.csrfToken());
+	response.cookie("XSRF-TOKEN", request.csrfToken());
+	next();
+});
 
-    const webpackServer = new WebpackDevServer(webpack(require("./configs/webpack")), {
-        publicPath: "http://0.0.0.0:3001/build/",
-        watchDelay: 0,
-        hot: true,
-        stats: {
-            colors: true,
-            assets: true,
-            timings: true,
-            chunks: false,
-            chunkModules: false,
-            modules: false,
-            children: false
-        }
-    });
-
-    webpackServer.listen(3001, "0.0.0.0", function (err, result) {
-        if (err) {
-            console.error(err.stack);
-        } else {
-            log("Webpack server listening on port 3001");
-        }
-    });
-
-    app.get("/", function (request, response) {
-        renderApp(response, JSON.parse(webpackServer.middleware.fileSystem.readFileSync(statsJsonPath)));
-    });
-
-}
+app.get("/", function (request, response) {
+	const statsJsonPath = path.join(__dirname, "build", "_stats.json");
+	const webpackAssets = JSON.parse(webpackServer.middleware.fileSystem.readFileSync(statsJsonPath));
+	const html = React.renderToStaticMarkup(<Html webpackAssets={webpackAssets}/>);
+	response.send(`<!doctype html>\n${html}`);
+});
 
 require("./configs/middleware.js")(app);
 require("./configs/routes.js")(app);
@@ -73,7 +68,4 @@ app.listen(process.env.PORT, function () {
 
 process.on("uncaughtException", function (exception) {
 	log(exception);
-	log(exception.stack);
 });
-
-

@@ -8,14 +8,11 @@ import passport from "passport";
 import mail from "../utils/mail.js";
 import messager from "../utils/messager.js";
 import AbstractController from "../utils/controller.js";
-import HashController from "./hash.js";
 
 import Remind from "../assets/js/components/email/remind.js";
 import Verify from "../assets/js/components/email/verify.js";
 
 export default class AbstractUserController extends AbstractController {
-
-	hashController = new HashController();
 
 	constructor() {
 		super(mongoose.model("User"), {
@@ -33,10 +30,10 @@ export default class AbstractUserController extends AbstractController {
 		return defer.promise;
 	}
 
-	signUp(request) {
+	register(request) {
 		return this.create(request.body)
-			.then((user) => {
-				return Q.nbind(request.logIn, request)(user)
+			.then(user => {
+				return Q.nbind(request.login, request)(user)
 					.then(() => {
 						return this.sendEmailVerification(request);
 					});
@@ -47,12 +44,13 @@ export default class AbstractUserController extends AbstractController {
 		var clean = _.pick(request.body, ["email"]);
 		return this.findOne(clean)
 			.then(messager.checkModel("user-not-found"))
-			.then((user) => {
-				return this.hashController.create({user: user._id})
-					.then((hash) => {
+			.then(user => {
+				let hashController = new (require("../controllers/hash.js"))();
+				return hashController.create({user: user._id})
+					.then(hash => {
 						return mail.sendMail({user: user}, {
 							subject: "G.O.A.T Password Reset Instructions",
-							view: Remind,
+							view: "/user/remind",
 							hash: hash
 						});
 					})
@@ -63,15 +61,16 @@ export default class AbstractUserController extends AbstractController {
 	}
 
 	change(request) {
-		return this.hashController.getByIdAndDate(request.params.hash)
-			.then((hash) => {
+		let hashController = new (require("../controllers/hash.js"))();
+		return hashController.getByIdAndDate(request.params.hash)
+			.then(hash => {
 				return this.findById(hash.user, {lean: false})
-					.then((user) => {
+					.then(user => {
 						user.password = request.body.password;
 						user.confirm = request.body.confirm;
 						return this.save(user)
 							.then(() => {
-								return this.hashController.findByIdAndRemove(request.params.hash)
+								return hashController.findByIdAndRemove(request.params.hash)
 									.thenResolve({
 										messages: ["Now you can login with your new password"]
 									});
@@ -81,8 +80,9 @@ export default class AbstractUserController extends AbstractController {
 	}
 
 	sendEmailVerification(request) {
-		return this.hashController.create({user: request.user._id})
-			.then((hash) => {
+		let hashController = new (require("../controllers/hash.js"))();
+		return hashController.create({user: request.user._id})
+			.then(hash => {
 				return mail.sendMail(request, {
 					subject: "G.O.A.T Email Verification",
 					view: Verify,
@@ -95,14 +95,15 @@ export default class AbstractUserController extends AbstractController {
 	}
 
 	verify(request) {
-		return this.hashController.getByIdAndDate(request.params.hash)
-			.then((hash) => {
+		let hashController = new (require("../controllers/hash.js"))();
+		return hashController.getByIdAndDate(request.params.hash)
+			.then(hash => {
 				return this.findById(hash.user, {lean: false})
-					.then((user) => {
+					.then(user => {
 						user.email_verified = true;
 						return this.save(user)
 							.then(() => {
-								return this.hashController.findByIdAndRemove(request.params.hash)
+								return hashController.findByIdAndRemove(request.params.hash)
 									.thenResolve({
 										messages: ["Email is verified"]
 									});

@@ -1,112 +1,117 @@
 "use strict";
 
+import debug from "debug";
 import passport from "passport";
 import {Strategy as LocalStrategy} from "passport-local";
 //import {Strategy as FacebookStrategy} from "passport-facebook";
 //import {OAuth2Strategy as GoogleStrategy} from "passport-google-oauth";
-import UserController from "../controllers/user.js";
 import configs from "./config.js";
 
-var config = configs[process.env.NODE_ENV];
-var userController = new UserController();
+const config = configs[process.env.NODE_ENV];
 
-// http://passportjs.org/guide/profile/
+export default function (app) {
 
-passport.serializeUser(function (user, callback) {
-	callback(null, user._id);
-});
+	let log = debug("log:passport");
 
-passport.deserializeUser(function (id, callback) {
-	userController.findOne({_id: id}, {lean: false})
-		.then((user) => {
-			callback(null, user);
-		})
-		.fail((error)=> {
-			callback(error, null);
-		})
-		.done();
-});
+	passport.serializeUser(function (user, callback) {
+		callback(null, user._id);
+	});
 
-// use local strategy
-passport.use(new LocalStrategy(config.passport.local,
-	function (email, password, callback) {
-		userController.findOne({email: email}, {lean: false})
-			.then((user) => {
-				if (user) {
-					if (user.verifyPassword(password)) {
-						callback(null, user);
+	passport.deserializeUser(function (id, callback) {
+		let userController = new (require("../controllers/user.js"))();
+		userController.findById(id, {lean: false})
+			.then(user => {
+				callback(null, user);
+			})
+			.fail(error => {
+				callback(error, null);
+			})
+			.done();
+	});
+
+	passport.use(new LocalStrategy(config.strategies.local,
+		function (email, password, callback) {
+			let userController = new (require("../controllers/user.js"))();
+			userController.findOne({email: email}, {lean: false})
+				.then(user => {
+					if (user) {
+						if (user.verifyPassword(password)) {
+							callback(null, user);
+						} else {
+							callback(null, false, {message: "incorrect-password"});
+						}
 					} else {
-						callback(null, false, {message: "incorrect-password"});
+						callback(null, false, {message: "incorrect-name"});
 					}
-				} else {
-					callback(null, false, {message: "incorrect-name"});
-				}
-			})
-			.fail((error) => {
-				callback(error, null);
-			})
-			.done();
-	}
-));
+				})
+				.fail(error => {
+					callback(error, null);
+				})
+				.done();
+		}
+	));
 
-/*
-passport.use(new FacebookStrategy(config.passport.facebook,
-	function (accessToken, refreshToken, profile, callback) {
-		userController.findOne({"facebook.id": profile.id}, {lean: false})
-			.then((user) => {
-				if (!user) {
-					userController.create({
-						first_name: profile.name.givenName,
-						last_name: profile.name.familyName,
-						email: profile.emails[0].value,
-						facebook: profile._json
-					})
-						.then((user) => {
-							callback(null, user);
+	/*
+	passport.use(new GoogleStrategy(config.strategies.google,
+		function (accessToken, refreshToken, profile, callback) {
+			let userController = new (require("../controllers/user.js"))();
+			userController.findOne({"google.id": profile.id}, {lean: false})
+				.then(user => {
+					if (!user) {
+						userController.create({
+							email: profile.emails[0].value,
+							google: profile._json
 						})
-						.fail((error) => {
-							callback(error, null);
-						})
-						.done();
-				} else {
-					callback(null, user);
-				}
-			})
-			.fail((error) => {
-				callback(error, null);
-			})
-			.done();
-	}
-));
+							.then(user => {
+								callback(null, user);
+							})
+							.fail(error => {
+								callback(error, null);
+							})
+							.done();
+					} else {
+						callback(null, user);
+					}
+				})
+				.fail(error => {
+					callback(error, null);
+				})
+				.done();
+		}
+	));
 
-passport.use(new GoogleStrategy(config.passport.google,
-	function (accessToken, refreshToken, profile, callback) {
-		userController.findOne({"google.id": profile.id}, {lean: false})
-			.then((user) => {
-				if (!user) {
-					userController.create({
-						first_name: profile.name.givenName,
-						last_name: profile.name.familyName,
-						email: profile.emails[0].value,
-						google: profile._json
-					})
-						.then((user) => {
-							callback(null, user);
+	passport.use(new FacebookStrategy(config.strategies.facebook,
+		function (accessToken, refreshToken, profile, callback) {
+			let userController = new (require("../controllers/user.js"))();
+			userController.findOne({"facebook.id": profile.id}, {lean: false})
+				.then(user => {
+					if (!user) {
+						userController.create({
+							first_name: profile.name.givenName,
+							last_name: profile.name.familyName,
+							email: profile.emails[0].value,
+							facebook: profile._json
 						})
-						.fail((error) => {
-							callback(error, null);
-						})
-						.done();
-				} else {
-					callback(null, user);
-				}
-			})
-			.fail((error) => {
-				callback(error, null);
-			})
-			.done();
-	}
-));
-*/
+							.then(user => {
+								callback(null, user);
+							})
+							.fail(error => {
+								callback(error, null);
+							})
+							.done();
+					} else {
+						callback(null, user);
+					}
+				})
+				.fail(error => {
+					callback(error, null);
+				})
+				.done();
+		}
+	));
+	*/
 
-export default passport;
+	app.use(passport.initialize());
+	app.use(passport.session());
+
+}

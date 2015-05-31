@@ -1,21 +1,18 @@
 "use strict";
 
-import React from "react";
-import $ from "jquery";
-
-import Dispatcher from "../../utils/dispatcher.js";
-import ActionTypes from "../../utils/constants.js";
+import React, {PropTypes} from "react";
+import UserActionCreator from "../../actions/UserActionCreators.js";
 
 export default class Login extends React.Component {
 
 	static propTypes = {
-		email: React.PropTypes.string,
-		password: React.PropTypes.string
+		email: PropTypes.string,
+		password: PropTypes.string
 	};
 
 	static defaultProps = {
 		email: "ctapbiumabp@gmail.com",
-		password: "123qweASD"
+		password: "123456"
 	};
 
 	state = {
@@ -29,45 +26,49 @@ export default class Login extends React.Component {
 
 	onSubmit(e) {
 		e.preventDefault();
-		$.ajax({
-			method: "POST",
-			url: "/user/login",
-			data: {
-				email: this.state.email,
-				password: this.state.password
+		UserActionCreator.login(this.state);
+	}
+
+	open(link) {
+		return e => {
+			e.preventDefault();
+			let
+				n = 600,
+				r = 400,
+				i = (window.innerHeight - r) / 2,
+				s = (window.innerWidth - n) / 2,
+				popup = window.open(link, "authorization", "height=" + r + ",width=" + n + ",top=" + i + ",left=" + s);
+			if (window.focus) {
+				popup.focus();
 			}
-		})
-			.then((response) => {
-				Dispatcher.dispatch({
-					actionType: ActionTypes.UPDATE_USER,
-					user: response
-				});
-			})
-			.fail((e) => {
-				console.log(e)
-			});
+		};
 	}
 
 	render() {
 		return (
 			<div className="panel panel-default">
 				<div className="panel-body">
+
+					<a href="#" onClick={this.open("/auth/google")}>google</a>
+
 					<form className="form-horizontal" onSubmit={this.onSubmit.bind(this)} autoComplete="off">
 
 						<div className="form-group">
 							<label htmlFor="email" className="col-sm-2 control-label">Email</label>
 
 							<div className="col-sm-10">
-								<input type="text" className="form-control" name="email" id="email" placeholder="me@example.com" defaultValue=""
-								       onChange={(e) => this.setState({email: e.target.value})}/>
+								<input type="text" className="form-control" name="email" id="email"
+									placeholder="me@example.com" defaultValue=""
+									onChange={e => this.setState({email: e.target.value})}/>
 							</div>
 						</div>
 						<div className="form-group">
 							<label htmlFor="password" className="col-sm-2 control-label">Password</label>
 
 							<div className="col-sm-10">
-								<input type="password" className="form-control" name="password" id="password" placeholder="******" defaultValue=""
-								       onChange={(e) => this.setState({password: e.target.value})}/>
+								<input type="password" className="form-control" name="password" id="password"
+									placeholder="******" defaultValue=""
+									onChange={e => this.setState({password: e.target.value})}/>
 							</div>
 						</div>
 

@@ -29,18 +29,11 @@ export default class AbstractController {
 		return this.constructor.enchant(this.model.findOne(query), options, this.defaults);
 	}
 
-	update(query, update) {
-		return Q.nbind(this.model.update, this.model)(query, update, {
+	update(query, update, options) {
+		return Q.nbind(this.model.update, this.model)(query, update, Object.assign({
 			strict: true,
 			multi: true
-		}).get(0);
-	}
-
-	upsert(query, update) {
-		return Q.nbind(this.model.update, this.model)(query, update, {
-			strict: true,
-			upsert: true
-		}).get(0);
+		}, options)).get(0);
 	}
 
 	populate(list, path, options) {
@@ -50,8 +43,8 @@ export default class AbstractController {
 		}]);
 	}
 
-	insert(query) {
-		return this.create(query);
+	insert(request) {
+		return this.create(request.method === "POST" || request.method === "PUT" ? request.body : request.query);
 	}
 
 	search(text) {
@@ -62,46 +55,22 @@ export default class AbstractController {
 		return Q.denodeify(model.save, model)().get(0);
 	}
 
-	// TODO: simplify this code
+};
 
-	count() {
-		return Q.nfapply(this.model.count.bind(this.model), Array.prototype.slice.call(arguments));
-	}
+[
+	"count",
+	"distinct",
+	"remove",
+	"create",
+	"aggregate",
+	"mapReduce",
+	"findByIdAndRemove",
+	"findByIdAndUpdate",
+	"findOneAndRemove",
+	"findOneAndUpdate"
+].forEach(name => {
+		AbstractController.prototype[name] = function () {
+			return Q.nfapply(this.model[name].bind(this.model), Array.prototype.slice.call(arguments));
+		};
+	});
 
-	distinct() {
-		return Q.nfapply(this.model.distinct.bind(this.model), Array.prototype.slice.call(arguments));
-	}
-
-	remove() {
-		return Q.nfapply(this.model.remove.bind(this.model), Array.prototype.slice.call(arguments));
-	}
-
-	create() {
-		return Q.nfapply(this.model.create.bind(this.model), Array.prototype.slice.call(arguments));
-	}
-
-	aggregate() {
-		return Q.nfapply(this.model.aggregate.bind(this.model), Array.prototype.slice.call(arguments));
-	}
-
-	mapReduce() {
-		return Q.nfapply(this.model.mapReduce.bind(this.model), Array.prototype.slice.call(arguments));
-	}
-
-	findByIdAndRemove() {
-		return Q.nfapply(this.model.findByIdAndRemove.bind(this.model), Array.prototype.slice.call(arguments));
-	}
-
-	findByIdAndUpdate() {
-		return Q.nfapply(this.model.findByIdAndUpdate.bind(this.model), Array.prototype.slice.call(arguments));
-	}
-
-	findOneAndRemove() {
-		return Q.nfapply(this.model.findOneAndRemove.bind(this.model), Array.prototype.slice.call(arguments));
-	}
-
-	findOneAndUpdate() {
-		return Q.nfapply(this.model.findOneAndUpdate.bind(this.model), Array.prototype.slice.call(arguments));
-	}
-
-}

@@ -4,25 +4,20 @@ require("../css/styles.less");
 
 import debug from "debug";
 import React from "react";
-import $ from "./utils/jquery.js";
 
-import bootstrap from "bootstrap";
-import GOAT from "./components/GOAT"
+import router from "./utils/router.js";
+import $ from "./utils/jquery.js";
 
 
 if (process.env.NODE_ENV !== "production") {
 	debug.enable("web:*");
 }
 
-$(window).on("beforeunload", function () {
-	window.scrollTo(0, 0);
-}, false);
+$(()=> {
+	router.run((Handler, state) => {
+		React.render(<Handler {...state}/>, document.body);
+	});
+});
 
-$(function () {
-	React.render(
-		<GOAT />,
-		document.getElementById("app")
-	);
-}, false);
 
 
