@@ -15,8 +15,7 @@ suite("mail", function () {
 	suite("#sendMail()", function () {
 		test("send mail", function (done) {
 			mail.sendMail({
-				view: Test,
-				subject: "Test"
+				view: "/test"
 			}, {}, {
 				user: {
 					email: "test@example.com",

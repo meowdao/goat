@@ -2,7 +2,7 @@
 
 import React from "react";
 
-export default class Verification extends React.Component {
+export default class Test extends React.Component {
 	render () {
 		return (
 			<div>

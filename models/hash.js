@@ -7,12 +7,10 @@ var Hash = new Schema({
 		type: Schema.Types.ObjectId,
 		ref: "User"
 	},
-	date: {
-		_id: false,
-		created: {
-			type: Date,
-			default: Date.now
-		}
+	created: {
+		type: Date,
+		default: Date.now,
+		expires: 3600
 	}
 }, {versionKey: false});
 

@@ -5,7 +5,7 @@ import path from "path";
 export default {
 
     getPath: function () {
-        return path.join.apply(path, [path.normalize(__dirname + "/..")].concat([].slice.call(arguments)));
+	    return path.join(__dirname, "..", ...Array.prototype.slice.call(arguments));
     },
 
     isType: function (variable, type) {

@@ -17,5 +17,12 @@ export default  {
 		"mongo": {
 			"E11000": "Duplicate key error"
 		}
+	},
+	email: {
+		subject: {
+			"/test": "Test",
+			"/user/remind": "G.O.A.T Password Reset Instructions",
+			"/user/verify": "G.O.A.T Email Verification"
+		}
 	}
 };

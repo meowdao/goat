@@ -32,7 +32,7 @@ export default function (app) {
 
 	app.get("/user/logout", userController.logout.bind(userController));
 
-	app.post("/user/sendEmailVerification", [middleware.requiresLogin], helper.simpleJSONWrapper(userController.sendEmailVerification.bind(userController)));
+	app.post("/user/sendEmailVerification", [middleware.requiresLogin()], helper.simpleJSONWrapper(userController.sendEmailVerification.bind(userController)));
 	app.get("/user/verify/:hash", helper.simpleJSONWrapper(userController.verify.bind(userController)));
 
 	app.get("/auth/facebook",
@@ -59,6 +59,6 @@ export default function (app) {
 		response.send(tpl);
 	});
 
-	app.get("/user/sync", [middleware.requiresLogin], helper.simpleJSONWrapper(userController.sync.bind(userController)));
+	app.get("/user/sync", [middleware.requiresLogin()], helper.simpleJSONWrapper(userController.sync.bind(userController)));
 
 }

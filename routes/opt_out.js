@@ -8,6 +8,6 @@ export default function (app) {
 
 	let optoutController = new (require("../controllers/opt_out.js"))();
 
-    app.post("/optout/notifications", [middleware.requiresLogin], helper.simpleJSONWrapper(optoutController.change.bind(optoutController)));
+    app.post("/optout/notifications", [middleware.requiresLogin()], helper.simpleJSONWrapper(optoutController.change.bind(optoutController)));
 
 };

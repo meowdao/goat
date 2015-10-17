@@ -3,6 +3,7 @@
 import Q from "q";
 import nodemailer from "nodemailer";
 import messager from "../utils/messager.js";
+import lang from "../utils/lang.js";
 import configs from "../configs/config.js";
 import React from "react";
 
@@ -11,13 +12,16 @@ import EML from "../assets/js/components/EML.js";
 import Article from "../assets/js/components/partials/article.js";
 import Remind from "../assets/js/components/email/remind.js";
 import Verify from "../assets/js/components/email/verify.js";
+import Test from "../assets/js/components/email/test.js";
 
 
-var config = configs[process.env.NODE_ENV],
-	transport = nodemailer.createTransport(config.smtp);
+const config = configs[process.env.NODE_ENV];
+
+let transport = nodemailer.createTransport(config.smtp);
 
 const routes = (
 	<Route name="App" handler={EML} path="/">
+		<Route name="Test" path="test" handler={Test}/>
 		<Route name="User" path="user" handler={Article}>
 			<Route name="Remind" path="remind" handler={Remind}/>
 			<Route name="Verify" path="verify" handler={Verify}/>
@@ -35,22 +39,22 @@ function renderToString(data) {
 
 export default {
 
-	sendMail (request, data) {
+	sendMail (data) {
 		let OptOutController = new (require("../controllers/opt_out.js"))();
 		return OptOutController.findOne({
-			user: request.user._id,
+			user: data.user._id,
 			type: data.view.constructor.name
 		})
 			.then(optout => {
-				messager.checkModel("optout")(!optout);
+				return messager.checkModel("optout")(!optout);
 			})
 			.then(() => {
 				return renderToString(data)
 					.then(html => {
 						return Q.nfcall(transport.sendMail.bind(transport), {
 							from: "G.O.A.T. <ctapbiumabp@gmail.com>",
-							to: request.user.email,
-							subject: data.subject,
+							to: data.user.email,
+							subject: lang.translate("email/subject/" + data.url, data.user),
 							html: html
 						});
 					});

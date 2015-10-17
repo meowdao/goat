@@ -48,34 +48,32 @@ export default class AbstractUserController extends AbstractController {
 				let hashController = new (require("../controllers/hash.js"))();
 				return hashController.create({user: user._id})
 					.then(hash => {
-						return mail.sendMail({user: user}, {
-							subject: "G.O.A.T Password Reset Instructions",
+						return mail.sendMail({
 							view: "/user/remind",
+							user: user,
 							hash: hash
 						});
-					})
-					.thenResolve({
-						messages: ["Email was sent"]
 					});
+			})
+			.thenResolve({
+				messages: ["Email was sent"]
 			});
 	}
 
 	change(request) {
 		let hashController = new (require("../controllers/hash.js"))();
-		return hashController.getByIdAndDate(request.params.hash)
+		return hashController.findByIdAndRemove(request.params.hash)
+			.then(messager.checkModel("expired-key"))
 			.then(hash => {
 				return this.findById(hash.user, {lean: false})
 					.then(user => {
 						user.password = request.body.password;
 						user.confirm = request.body.confirm;
-						return this.save(user)
-							.then(() => {
-								return hashController.findByIdAndRemove(request.params.hash)
-									.thenResolve({
-										messages: ["Now you can login with your new password"]
-									});
-							});
+						return this.save(user);
 					});
+			})
+			.thenResolve({
+				messages: ["Now you can login with your new password"]
 			});
 	}
 
@@ -83,32 +81,29 @@ export default class AbstractUserController extends AbstractController {
 		let hashController = new (require("../controllers/hash.js"))();
 		return hashController.create({user: request.user._id})
 			.then(hash => {
-				return mail.sendMail(request, {
-					subject: "G.O.A.T Email Verification",
-					view: Verify,
-					hash: hash
-				})
-					.thenResolve({
-						messages: ["Verification email was sent to " + request.user.email]
-					});
+				return mail.sendMail({
+					view: "/user/verify",
+					hash: hash,
+					user: request.user
+				});
+			})
+			.thenResolve({
+				messages: ["Verification email was sent to " + request.user.email]
 			});
 	}
 
 	verify(request) {
 		let hashController = new (require("../controllers/hash.js"))();
-		return hashController.getByIdAndDate(request.params.hash)
+		return hashController.findByIdAndRemove(request.params.hash)
 			.then(hash => {
 				return this.findById(hash.user, {lean: false})
 					.then(user => {
 						user.email_verified = true;
-						return this.save(user)
-							.then(() => {
-								return hashController.findByIdAndRemove(request.params.hash)
-									.thenResolve({
-										messages: ["Email is verified"]
-									});
-							});
+						return this.save(user);
 					});
+			})
+			.thenResolve({
+				messages: ["Email is verified"]
 			});
 	}
 
