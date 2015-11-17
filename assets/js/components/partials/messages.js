@@ -4,7 +4,7 @@ import React, {PropTypes} from "react";
 import {Alert} from "react-bootstrap";
 import MessageStore from "../../stores/MessageStore.js";
 
-export default class Message extends React.Component {
+class Message extends React.Component {
 
 	static propTypes = {
 		messages: PropTypes.array
@@ -56,3 +56,4 @@ export default class Message extends React.Component {
 	}
 }
 
+export default Message;

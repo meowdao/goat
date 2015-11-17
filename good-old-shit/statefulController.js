@@ -4,7 +4,7 @@ import _ from "lodash";
 import messenger from "../utils/messenger.js";
 import AbstractController from "./abstractController.js";
 
-export default class StatefulController extends AbstractController {
+class StatefulController extends AbstractController {
 
 	static param = "_id";
 
@@ -58,3 +58,5 @@ export default class StatefulController extends AbstractController {
 	}
 
 }
+
+export default StatefulController;

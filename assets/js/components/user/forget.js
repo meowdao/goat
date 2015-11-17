@@ -6,7 +6,7 @@ import $ from "jquery";
 import Dispatcher from "../../utils/dispatcher.js";
 import ActionTypes from "../../utils/constants.js";
 
-export default class Change extends React.Component {
+class Forgot extends React.Component {
 
 	static propTypes = {
 		email: React.PropTypes.string
@@ -73,3 +73,5 @@ export default class Change extends React.Component {
 		);
 	}
 }
+
+export default Forgot;

@@ -19,7 +19,7 @@ import Test from "../assets/js/components/email/test.js";
 
 import EmailStore from "../assets/js/stores/EmailStore.js";
 
-let log = debug("controller:mail");
+import OptOutController from "../controllers/opt_out.js";
 
 const routes = (
 	<Route component={EML} path="/">
@@ -32,7 +32,7 @@ const routes = (
 );
 
 
-export default class MailController extends AbstractController {
+class MailController extends AbstractController {
 
 	static statuses = {
 		cancelled: "cancelled",
@@ -47,8 +47,8 @@ export default class MailController extends AbstractController {
 	};
 
 	composeMail(view, address, user, data) {
-		let OptOutController = new (require("../controllers/opt_out.js"))();
-		return OptOutController.findOne({
+		let optOutController = new OptOutController();
+		return optOutController.findOne({
 			user: user._id,
 			type: view
 		})
@@ -86,3 +86,5 @@ export default class MailController extends AbstractController {
 	}
 
 }
+
+export default MailController;

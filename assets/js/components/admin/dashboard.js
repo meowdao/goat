@@ -4,7 +4,7 @@ import React from "react";
 import {Link} from "react-router";
 import AdminStore from "../../stores/AdminStore.js";
 
-export default class Dashboard extends React.Component {
+class Dashboard extends React.Component {
 
 	static displayName = "Dashboard";
 
@@ -26,3 +26,5 @@ export default class Dashboard extends React.Component {
 		);
 	}
 }
+
+export default Dashboard;

@@ -20,7 +20,7 @@
 import React from "react/addons";
 import classnames from "classnames";
 
-export default class FormInputList extends React.Component {
+class FormInputList extends React.Component {
 
 	onChange(){
 		const list = React.findDOMNode(this.refs.list);
@@ -66,3 +66,5 @@ FormInputList.defaultProps = {
 	defaultValue: "",
 	type: "checkbox"
 };
+
+export default FormInputList;

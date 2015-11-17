@@ -7,7 +7,7 @@ import Profile from "./profile.js"
 import Dispatcher from "../../utils/dispatcher.js";
 import {ActionTypes, MessageTypes} from "../../utils/constants.js";
 
-export default class SignUp extends React.Component {
+class SignUp extends React.Component {
 
 	static propTypes = {
 		email: React.PropTypes.string,
@@ -126,3 +126,4 @@ export default class SignUp extends React.Component {
 
 }
 
+export default SignUp;

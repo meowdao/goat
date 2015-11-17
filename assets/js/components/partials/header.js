@@ -4,10 +4,10 @@ import React from "react";
 import {Link} from "react-router";
 import AdminStore from "../../stores/AdminStore.js";
 import UserActionCreators from "../../actions/UserActionCreators.js";
-import {CollapsibleNav, Navbar, NavBrand, Nav, NavItem, DropdownButton, MenuItem} from "react-bootstrap";
+import {CollapsibleNav, Navbar, NavbarBrand, Nav, NavItem, DropdownButton, MenuItem} from "react-bootstrap";
 import {LinkContainer} from "react-router-bootstrap";
 
-export default class Header extends React.Component {
+class Header extends React.Component {
 
 	state = {
 		user: null
@@ -42,7 +42,7 @@ export default class Header extends React.Component {
 
 	renderMenu() {
 		return (
-			<Nav navbar right>
+			<Nav navbar pullRight>
 				<DropdownButton title={this.state.user.email} id="dropdown">
 					{/* https://github.com/react-bootstrap/react-router-bootstrap/issues/24 */}
 					<LinkContainer to="/dashboard">
@@ -57,7 +57,7 @@ export default class Header extends React.Component {
 
 	renderLoginButton() {
 		return (
-			<Nav navbar right>
+			<Nav navbar pullRight>
 				<LinkContainer to="/user/login">
 					<NavItem>Login</NavItem>
 				</LinkContainer>
@@ -70,14 +70,18 @@ export default class Header extends React.Component {
 
 	render() {
 		return (
-			<Navbar inverse={true} toggleNavKey={1}>
-				<NavBrand>
-					<Link to="welcome" className="navbar-brand">Adventure Bucket List</Link>
-				</NavBrand>
-				<CollapsibleNav eventKey={1}>
+			<Navbar inverse>
+				<Navbar.Header inverse={true} toggleNavKey={1}>
+					<Navbar.Brand>
+						<Link to="welcome" className="navbar-brand">Adventure Bucket List</Link>
+					</Navbar.Brand>
+				</Navbar.Header>
+				<Navbar.Collapse eventKey={1}>
 					{AdminStore.isLoggedIn() ? this.renderMenu() : this.renderLoginButton()}
-				</CollapsibleNav>
+				</Navbar.Collapse>
 			</Navbar>
 		);
 	}
 }
+
+export default Header;

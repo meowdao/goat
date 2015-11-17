@@ -3,7 +3,8 @@
 import AbstractController from "../utils/abstractController.js";
 
 
-export default class HashController extends AbstractController {
+class HashController extends AbstractController {
 
 }
 
+export default HashController;

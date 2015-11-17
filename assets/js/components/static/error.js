@@ -4,7 +4,7 @@ import React from "react";
 import Title from "../partials/title.js";
 
 
-export default class NotFound extends React.Component {
+class NotFound extends React.Component {
 
 	static displayName = "Error";
 
@@ -19,3 +19,5 @@ export default class NotFound extends React.Component {
 	}
 
 }
+
+export default NotFound;

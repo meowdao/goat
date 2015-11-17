@@ -2,7 +2,7 @@
 
 import React, {PropTypes} from "react";
 
-export default class Title extends React.Component {
+class Title extends React.Component {
 
 	static contextTypes = {
 		location: PropTypes.object.isRequired
@@ -22,3 +22,4 @@ export default class Title extends React.Component {
 	}
 }
 
+export default Title;

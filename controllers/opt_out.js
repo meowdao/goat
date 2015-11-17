@@ -5,7 +5,7 @@ import mongoose from "mongoose";
 
 import AbstractController from "../utils/abstractController.js";
 
-export default class OptOutController extends AbstractController {
+class OptOutController extends AbstractController {
 
 	change(request) {
 		return this.remove({user: request.user._id})
@@ -26,3 +26,5 @@ export default class OptOutController extends AbstractController {
 	}
 
 }
+
+export default OptOutController;

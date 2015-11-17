@@ -6,7 +6,7 @@ import $ from "jquery";
 import Dispatcher from "../../utils/dispatcher.js";
 import ActionTypes from "../../utils/constants.js";
 
-export default class Change extends React.Component {
+class Change extends React.Component {
 
 	static propTypes = {
 		password: React.PropTypes.string,
@@ -86,3 +86,5 @@ export default class Change extends React.Component {
 		);
 	}
 }
+
+export default Change;

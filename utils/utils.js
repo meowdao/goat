@@ -115,7 +115,7 @@ export default {
 		let controllers = {};
 		fs.readdirSync(this.getPath("controllers")).forEach(file => {
 			const name = file.split(".")[0].replace(/-/g, "");
-			controllers[name] = new (require("../controllers/" + file))(...args);
+			controllers[name] = new (require("../controllers/" + file)).default(...args);
 		});
 		return controllers;
 	}

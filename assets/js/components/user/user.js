@@ -5,7 +5,7 @@ import {RouteHandler} from "react-router";
 import Title from "../partials/title.js";
 import Messages from "../partials/messages.js";
 
-export default class User extends React.Component {
+class User extends React.Component {
 
 	render() {
 		return (
@@ -18,3 +18,5 @@ export default class User extends React.Component {
 	}
 
 }
+
+export default User;

@@ -2,7 +2,7 @@
 
 import React, {PropTypes} from "react";
 
-export default class EML extends React.Component {
+class EML extends React.Component {
 	render() {
 		return (
 			<html>
@@ -14,3 +14,5 @@ export default class EML extends React.Component {
 		);
 	}
 }
+
+export default EML;

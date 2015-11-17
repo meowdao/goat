@@ -54,9 +54,9 @@ app.get("/", function (request, response) {
 	response.send(`<!doctype html>\n${html}`);
 });
 
-require("./configs/middleware.js")(app);
-require("./configs/routes.js")(app);
-require("./configs/error.js")(app);
+require("./configs/middleware.js").default(app);
+require("./configs/routes.js").default(app);
+require("./configs/error.js").default(app);
 
 app.listen(process.env.PORT, () => {
 	log("Express server listening on port " + process.env.PORT);

@@ -45,7 +45,7 @@ module.exports = {
 			},
 			{
 				test: /\.js$/,
-				loaders: ["react-hot", "babel-loader?stage=0&optional=runtime"],
+				loaders: ["react-hot", "babel-loader"],
 				exclude: [/node_modules/, /bower_components/]
 			}
 		]

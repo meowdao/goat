@@ -3,7 +3,7 @@
 import React, {PropTypes} from "react";
 import UserActionCreator from "../../actions/UserActionCreators.js";
 
-export default class Register extends React.Component {
+class Register extends React.Component {
 
 	static propTypes = {
 		email: PropTypes.string,
@@ -144,3 +144,4 @@ export default class Register extends React.Component {
 	}
 }
 
+export default Register;

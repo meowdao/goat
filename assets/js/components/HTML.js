@@ -2,7 +2,7 @@
 
 import React from "react";
 
-export default class HTML extends React.Component {
+class HTML extends React.Component {
 	render() {
 		return (
 			<html>
@@ -26,3 +26,4 @@ export default class HTML extends React.Component {
 	}
 }
 
+export default HTML;

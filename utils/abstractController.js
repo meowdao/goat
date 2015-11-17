@@ -1,51 +1,53 @@
 "use strict";
 
 import _ from "lodash";
-import DebuggableController from "./debuggableController.js";
 import RichModel from "./richModel.js";
 import messenger from "../utils/messenger.js";
 
-export default class AbstractController extends DebuggableController {
+import DebuggableController from "./debuggableController.js";
+
+class AbstractController extends DebuggableController {
 
 	constructor(isDebuggable, connection) {
 		super(isDebuggable);
-		this.model = new RichModel(this.constructor.name.slice(0, -10), this.constructor.isDebuggable, connection);
+		this.model = new RichModel(this.constructor.name.slice(0, -10), this.isDebuggable, connection);
 	}
 
 	getById(request) {
 		return this.findOne({
-			_id: request.params._id,
-			user: request.user._id
-		})
+				_id: request.params._id,
+				user: request.user._id
+			})
 			.then(messenger.checkModel("page-not-found", request.user));
 	}
 
 	list(request) {
 		return this.find({user: request.user._id})
 			.then(items => {
-				return {[this.constructor.displayName + "s"]: items};
+				return {[this.displayName + "s"]: items};
 			});
 	}
 
 	insert(request, fields = []) {
 		let clean = Object.assign({}, fields.length ? _.pick(request.body, fields) : request.body, {user: request.user._id});
 		return this.create(clean);
+			//.then(items => ({[this.displayName + "s"]: items}));
 	}
 
 	edit(request, fields = []) {
 		let clean = Object.assign({}, fields.length ? _.pick(request.body, fields) : request.body);
 		return this.findOneAndUpdate({
-			_id: request.params._id,
-			user: request.user._id
-		}, clean, {new: true})
+				_id: request.params._id,
+				user: request.user._id
+			}, clean, {new: true})
 			.then(messenger.checkModel("page-not-found", request.user));
 	}
 
 	delete(request) {
 		return this.findOneAndRemove({
-			user: request.user._id,
-			_id: request.params._id
-		})
+				user: request.user._id,
+				_id: request.params._id
+			})
 			.then(messenger.checkModel("page-not-found", request.user))
 			.thenResolve({success: true});
 	}
@@ -69,9 +71,12 @@ export default class AbstractController extends DebuggableController {
 	"populate",
 	"update",
 	"search",
-	"save"
+	"save",
+	"upsert"
 ].forEach(name => {
-		AbstractController.prototype[name] = function (...args) {
-			return this.model[name](...args);
-		};
-	});
+	AbstractController.prototype[name] = function (...args) {
+		return this.model[name](...args);
+	};
+});
+
+export default AbstractController;

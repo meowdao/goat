@@ -3,6 +3,7 @@
 import passport from "passport";
 import helper from "../utils/helper.js";
 import middleware from "../utils/middleware.js";
+import UserController from "../controllers/user.js";
 
 
 const tpl = `
@@ -19,7 +20,7 @@ const tpl = `
 
 export default function (app) {
 
-	let userController = new (require("../controllers/user.js"))();
+	let userController = new UserController();
 
 	// user routes
 	app.post("/user/login", helper.simpleJSONWrapper(userController.login.bind(userController)));

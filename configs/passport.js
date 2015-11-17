@@ -6,6 +6,7 @@ import {Strategy as LocalStrategy} from "passport-local";
 //import {Strategy as FacebookStrategy} from "passport-facebook";
 //import {OAuth2Strategy as GoogleStrategy} from "passport-google-oauth";
 import configs from "./config.js";
+import UserController from "../controllers/user.js";
 
 const config = configs[process.env.NODE_ENV];
 
@@ -18,7 +19,7 @@ export default function (app) {
 	});
 
 	passport.deserializeUser(function (id, callback) {
-		let userController = new (require("../controllers/user.js"))();
+		let userController = new UserController();
 		userController.findById(id, {lean: false})
 			.then(user => {
 				callback(null, user);
@@ -31,7 +32,7 @@ export default function (app) {
 
 	passport.use(new LocalStrategy(config.strategies.local,
 		function (email, password, callback) {
-			let userController = new (require("../controllers/user.js"))();
+			let userController = new UserController();
 			userController.findOne({email: email}, {lean: false})
 				.then(user => {
 					if (user) {
@@ -54,7 +55,7 @@ export default function (app) {
 	/*
 	passport.use(new GoogleStrategy(config.strategies.google,
 		function (accessToken, refreshToken, profile, callback) {
-			let userController = new (require("../controllers/user.js"))();
+			let userController = new UserController();
 			userController.findOne({"google.id": profile.id}, {lean: false})
 				.then(user => {
 					if (!user) {
@@ -82,7 +83,7 @@ export default function (app) {
 
 	passport.use(new FacebookStrategy(config.strategies.facebook,
 		function (accessToken, refreshToken, profile, callback) {
-			let userController = new (require("../controllers/user.js"))();
+			let userController = new UserController();
 			userController.findOne({"facebook.id": profile.id}, {lean: false})
 				.then(user => {
 					if (!user) {

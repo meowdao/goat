@@ -2,7 +2,7 @@
 
 import debug from "debug";
 
-export default class DebuggableController {
+class DebuggableController {
 
 	displayName = "Debuggable";
 
@@ -19,3 +19,6 @@ export default class DebuggableController {
 	}
 
 }
+
+
+export default DebuggableController;

@@ -3,7 +3,7 @@
 import {EventEmitter} from "events";
 import Dispatcher from "../dispatcher/dispatcher.js";
 
-export default class BaseStore extends EventEmitter {
+class BaseStore extends EventEmitter {
 
 	constructor() {
 		super();
@@ -29,3 +29,5 @@ export default class BaseStore extends EventEmitter {
 		this.removeListener("CHANGE", callback);
 	}
 }
+
+export default BaseStore;

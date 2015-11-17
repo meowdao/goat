@@ -20,7 +20,7 @@
 import React from 'react/addons';
 import classnames from 'classnames';
 
-export default class FormSelect extends React.Component {
+class FormSelect extends React.Component {
 
 	static propTypes = {
 		name: React.PropTypes.string,
@@ -69,3 +69,5 @@ export default class FormSelect extends React.Component {
 		);
 	}
 }
+
+export default FormSelect;

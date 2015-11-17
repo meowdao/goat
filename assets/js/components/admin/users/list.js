@@ -5,7 +5,7 @@ import classnames from "classnames";
 import UserActionCreators from "../../../actions/UserActionCreators.js";
 import UserStore from "../../../stores/UserStore.js";
 
-export default class UserList extends React.Component {
+class UserList extends React.Component {
 
 	static displayName = "User List";
 
@@ -74,4 +74,4 @@ export default class UserList extends React.Component {
 	}
 }
 
-
+export default UserList;

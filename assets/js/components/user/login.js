@@ -4,7 +4,7 @@ import React, {PropTypes} from "react";
 import UserActionCreator from "../../actions/UserActionCreators.js";
 import {History} from "react-router";
 
-export default class Login extends React.Component {
+class Login extends React.Component {
 
 	static displayName = "Login";
 
@@ -86,3 +86,5 @@ export default class Login extends React.Component {
 		);
 	}
 }
+
+export default Login;

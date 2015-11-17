@@ -2,12 +2,13 @@
 
 import helper from "../utils/helper.js";
 import middleware from "../utils/middleware.js";
+import OptOutController from "../controllers/opt_out.js";
 
 
 export default function (app) {
 
-	let optoutController = new (require("../controllers/opt_out.js"))();
+	let optOutController = new OptOutController();
 
-    app.post("/optout/notifications", [middleware.requiresLogin()], helper.simpleJSONWrapper(optoutController.change.bind(optoutController)));
+    app.post("/optout/notifications", [middleware.requiresLogin()], helper.simpleJSONWrapper(optOutController.change.bind(optOutController)));
 
 };

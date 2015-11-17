@@ -3,7 +3,7 @@
 import React from "react";
 import EmailStore from "../../stores/EmailStore.js";
 
-export default class Remind extends React.Component {
+class Remind extends React.Component {
 	render() {
 		let url = EmailStore.getUrl();
 		let data = EmailStore.getData();
@@ -14,3 +14,5 @@ export default class Remind extends React.Component {
 		);
 	}
 }
+
+export default Remind;

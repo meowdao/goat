@@ -7,8 +7,10 @@ import passport from "passport";
 
 import messenger from "../utils/messenger.js";
 import AbstractController from "../utils/abstractController.js";
+import MailController from "./mail.js";
+import HashController from "./hash.js";
 
-export default class AbstractUserController extends AbstractController {
+class AbstractUserController extends AbstractController {
 
 	login(request, response) {
 		var defer = Q.defer();
@@ -17,7 +19,10 @@ export default class AbstractUserController extends AbstractController {
 			defer.makeNodeResolver()(error || info, user);
 		})(request, response);
 
-		return defer.promise;
+		return defer.promise
+			.catch(error => {
+				throw messenger.makeError(error.message, request.user);
+			});
 	}
 
 	register(request) {
@@ -35,10 +40,10 @@ export default class AbstractUserController extends AbstractController {
 		return this.findOne(clean)
 			.then(messenger.checkModel("user-not-found"))
 			.then(user => {
-				let hashController = new (require("./hash.js"))();
+				let hashController = new HashController();
 				return hashController.create({user: user._id})
 					.then(hash => {
-						let mailController = new (require("./mail.js"))();
+						let mailController = new MailController();
 						return mailController.composeMail("user/remind", {to: user.email}, user, {
 							hash: hash
 						});
@@ -50,7 +55,7 @@ export default class AbstractUserController extends AbstractController {
 	}
 
 	change(request) {
-		let hashController = new (require("./hash.js"))();
+		let hashController = new HashController();
 		return hashController.findByIdAndRemove(request.params.hash)
 			.then(messenger.checkModel("expired-key"))
 			.then(hash => {
@@ -67,10 +72,10 @@ export default class AbstractUserController extends AbstractController {
 	}
 
 	sendEmailVerification(request) {
-		let hashController = new (require("./hash.js"))();
+		let hashController = new HashController();
 		return hashController.create({user: request.user._id})
 			.then(hash => {
-				let mailController = new (require("./mail.js"))();
+				let mailController = new HashController();
 				return mailController.composeMail("user/verify", {to: request.user.email}, request.user, {
 					hash: hash
 				});
@@ -81,7 +86,7 @@ export default class AbstractUserController extends AbstractController {
 	}
 
 	verify(request) {
-		let hashController = new (require("./hash.js"))();
+		let hashController = new HashController();
 		return hashController.findByIdAndRemove(request.params.hash)
 			.then(hash => {
 				return this.findById(hash.user, {lean: false})
@@ -103,3 +108,4 @@ export default class AbstractUserController extends AbstractController {
 	}
 }
 
+export default AbstractUserController;

@@ -10,7 +10,7 @@ import FormTextarea from './formTextareaComponent';
 import BootstrapPopoverWrapper from '../../../shared/components/objects/bootstrapPopoverWrapperComponent';
 
 
-export default class FormTextareaList extends React.Component {
+class FormTextareaList extends React.Component {
 
 	currentIndex = 0;
 
@@ -187,3 +187,5 @@ FormTextareaList.defaultProps = {
 	//maxLength: 1000,
 	defaultValue: ''
 };
+
+export default FormTextareaList;
