@@ -18,20 +18,20 @@ export default function () {
 		return mongoose;
 	}
 
-	db.on("close", function () {
+	db.on("close", () => {
 		log("connection closed");
 	});
-	db.on("connected", function () {
+	db.on("connected", () => {
 		log("MongoDB connected!");
 	});
-	db.on("connecting", function () {
-		log("connecting to MongoDB...");
+	db.on("connecting", () => {
+		log("connecting to MongoDB @ " + config.mongo.url);
 	});
-	db.on("disconnected", function () {
+	db.on("disconnected", () => {
 		log("MongoDB disconnected!");
 		mongoose.connect(config.mongo.url, config.mongo.options);
 	});
-	db.on("disconnecting", function () {
+	db.on("disconnecting", () => {
 		log("connecting from MongoDB...");
 	});
 	db.on("error", function (error) {
@@ -39,13 +39,13 @@ export default function () {
 		log(error);
 		mongoose.disconnect();
 	});
-	db.once("fullsetup", function () {
+	db.once("fullsetup", () => {
 		log("All nodes are connected.");
 	});
-	db.once("open", function () {
+	db.once("open", () => {
 		log("Connected to mongo server.");
 	});
-	db.on("reconnected", function () {
+	db.on("reconnected", () => {
 		log("MongoDB reconnected!");
 	});
 

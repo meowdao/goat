@@ -1,6 +1,6 @@
 "use strict";
 
-import messager from "../utils/messager.js";
+import messenger from "../utils/messenger.js";
 
 
 export default function (app) {
@@ -23,7 +23,7 @@ export default function (app) {
 
 	app.use(function (request, response, next) {
 		if (request.method === "POST" && !request.get("Origin")) {
-			return next(messager.makeError("no-origin", request.user));
+			return next(messenger.makeError("no-origin", request.user));
 		}
 		next();
 	});

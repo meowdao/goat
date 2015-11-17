@@ -1,6 +1,7 @@
 "use strict";
 
 import path from "path";
+import crypto from "crypto";
 
 export default {
 
@@ -62,5 +63,60 @@ export default {
         }
 
         return obj;
-    }
+    },
+
+	getRandomString(length = 64, type = 3){
+		let chars = [
+			"0123456789",
+			"ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+			"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+			"0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+		];
+		let randomBytes = crypto.randomBytes(length);
+		let result = new Array(length);
+		let cursor = 0;
+		for (var i = 0; i < length; i++) {
+			cursor += randomBytes[i];
+			result[i] = chars[type][cursor % chars[type].length];
+		}
+		return result.join("");
+	},
+
+	tpl(template, data) {
+		return template.replace(/(\$\{([^\{\}]+)\})/g, ($0, $1, $2) => $2 in data ? data[$2] : "");
+	},
+
+	setStatus(clean, query, obj) {
+		switch (query.status) {
+			case "all":
+				break;
+			case "inactive":
+				clean.status = obj.constructor.statuses.inactive;
+				break;
+			case "active":
+			default:
+				clean.status = obj.constructor.statuses.active;
+				break;
+		}
+	},
+
+	setRegExp(clean, query, fields){
+		fields.forEach(name => {
+			if (query[name]) {
+				clean[name] = {
+					$regex: "^" + query[name].replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&"),
+					$options: "i"
+				};
+			}
+		});
+	},
+
+	getControllers(...args) {
+		let controllers = {};
+		fs.readdirSync(this.getPath("controllers")).forEach(file => {
+			const name = file.split(".")[0].replace(/-/g, "");
+			controllers[name] = new (require("../controllers/" + file))(...args);
+		});
+		return controllers;
+	}
 };

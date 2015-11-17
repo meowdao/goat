@@ -1,12 +1,15 @@
 "use strict";
 
 import React from "react";
+import EmailStore from "../../stores/EmailStore.js";
 
 export default class Remind extends React.Component {
-	render () {
+	render() {
+		let url = EmailStore.getUrl();
+		let data = EmailStore.getData();
 		return (
 			<div>
-				<p><a href="http://{{this.props.serverHost}}/user/change/{{this.props.hash}}">Change your password</a></p>
+				<p><a href={url + "/user/change/" + data.hash.token}>Change your password</a></p>
 			</div>
 		);
 	}

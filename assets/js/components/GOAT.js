@@ -3,21 +3,20 @@
 import React, {PropTypes} from "react";
 import Header from "./partials/header.js";
 import Footer from "./partials/footer.js";
-import {RouteHandler} from "react-router";
 
 
 export default class GOAT extends React.Component {
 
 	static propTypes = {
-		params: PropTypes.object.isRequired,
-		query: PropTypes.object.isRequired
+		params: PropTypes.object.isRequired
 	};
 
 	render() {
+		console.log("GOAT:props", this.props);
 		return (
 			<div>
 				<Header/>
-				<RouteHandler {...this.props}/>
+				{this.props.children}
 				<Footer/>
 			</div>
 		);

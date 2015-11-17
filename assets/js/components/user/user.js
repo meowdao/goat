@@ -10,9 +10,9 @@ export default class User extends React.Component {
 	render() {
 		return (
 			<div className="container">
-				<Title/>
+				<Title {...this.props}/>
 				<Messages/>
-				<RouteHandler {...this.props}/>
+				{this.props.children}
 			</div>
 		);
 	}

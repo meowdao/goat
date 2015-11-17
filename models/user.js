@@ -75,16 +75,13 @@ var User = new Schema({
 		validate: password_validator
 	},
 
-	date: {
-		_id: false,
-		created: {
-			type: Date,
-			default: Date.now
-		},
-		updated: {
-			type: Date,
-			default: Date.now
-		}
+	created: {
+		type: Date,
+		default: Date.now
+	},
+	updated: {
+		type: Date,
+		default: Date.now
 	},
 
 	facebook: {
@@ -126,7 +123,7 @@ User.pre("save", function (next) {
 });
 
 User.pre("save", function (next) {
-	this.date.updated = new Date();
+	this.updated = new Date();
 	next();
 });
 

@@ -32,6 +32,13 @@ export default {
 			actionType: ActionTypes.MESSAGE,
 			messages: [].concat(message)
 		});
+	},
+
+	updateUser: function(admin){
+		Dispatcher.dispatch({
+			actionType: ActionTypes.ADMIN_LOGIN,
+			admin: admin
+		});
 	}
 
 };

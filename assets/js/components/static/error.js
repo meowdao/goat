@@ -11,7 +11,7 @@ export default class NotFound extends React.Component {
 	render() {
 		return (
 			<div className="container">
-				<Title/>
+				<Title {...this.props}/>
 
 				<p>Error page!</p>
 			</div>

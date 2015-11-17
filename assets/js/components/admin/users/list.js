@@ -61,7 +61,7 @@ export default class UserList extends React.Component {
 		return (
 			<li key={user._id} className="list-group-item">
 				<button className={classnames("pull-right", "btn", user.isActive ? "btn-success" : "btn-danger")}
-					onClick={() => UserActionCreators.updateUser(user)} type="button">
+					onClick={() => UserActionCreators.sync(user)} type="button">
 					{user.isActive ? "Active" : "Inactive"}
 				</button>
 

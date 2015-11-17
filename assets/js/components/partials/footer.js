@@ -1,8 +1,8 @@
 "use strict";
 
 import React from "react";
-import {Navbar, Nav} from "react-bootstrap";
-import {NavItemLink} from "react-router-bootstrap";
+import {Navbar, Nav, NavItem} from "react-bootstrap";
+import {LinkContainer} from "react-router-bootstrap";
 
 
 export default class Footer extends React.Component {
@@ -10,8 +10,12 @@ export default class Footer extends React.Component {
 		return (
 			<Navbar fixedBottom={true} inverse={true}>
 				<Nav navbar>
-					<NavItemLink to="dummy">Contact us</NavItemLink>
-					<NavItemLink to="dummy">Terms and conditions</NavItemLink>
+					<LinkContainer to="dummy">
+						<NavItem>Contact us</NavItem>
+					</LinkContainer>
+					<LinkContainer to="dummy">
+						<NavItem>Terms and conditions</NavItem>
+					</LinkContainer>
 				</Nav>
 
 				<p className="navbar-text navbar-right">

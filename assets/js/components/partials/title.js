@@ -5,14 +5,14 @@ import React, {PropTypes} from "react";
 export default class Title extends React.Component {
 
 	static contextTypes = {
-		router: PropTypes.func.isRequired
+		location: PropTypes.object.isRequired
 	};
 
 	render() {
 
-		let routes = this.context.router.getCurrentRoutes(),
-			route = routes[routes.length - 1],
-			title = route.handler.displayName || route.name || "Default Title";
+		console.log("->", this.props.route)
+
+		let title = /*this.props.route.component.displayName ||*/ "Default Title";
 
 		return (
 			<div className="page-header">

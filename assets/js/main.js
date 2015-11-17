@@ -3,9 +3,12 @@
 require("../css/styles.less");
 
 import debug from "debug";
-import React from "react";
+import React from "react"; // eslint-disable-line no-unused-vars
+import ReactDOM from "react-dom";
+import {Router} from "react-router";
+import {createHistory, createHashHistory} from "history";
 
-import router from "./utils/router.js";
+import routes from "./utils/routes.js";
 import $ from "./utils/jquery.js";
 
 
@@ -13,10 +16,10 @@ if (process.env.NODE_ENV !== "production") {
 	debug.enable("web:*");
 }
 
-$(()=> {
-	router.run((Handler, state) => {
-		React.render(<Handler {...state}/>, document.body);
-	});
+$(() => {
+	let history = createHashHistory({queryKey: false});
+	//history.pushState(null, "/");
+	ReactDOM.render(<Router history={history} routes={routes}/>, document.getElementById("app"));
 });
 
 

@@ -57,7 +57,7 @@ export default class SignUp extends React.Component {
 					view: Profile
 				});
 			})
-			.fail(e => {
+			.catch(e => {
 				Dispatcher.dispatch({
 					actionType: ActionTypes.MESSAGE,
 					type: MessageTypes.ERROR,

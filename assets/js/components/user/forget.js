@@ -39,7 +39,7 @@ export default class Change extends React.Component {
 					user: response
 				});
 			})
-			.fail(e => {
+			.catch(e => {
 				console.log(e)
 			});
 	}

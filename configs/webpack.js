@@ -16,7 +16,7 @@ module.exports = {
 	},
 	output: {
 		path: path.join(__dirname, "..", "build"),
-		filename: "[chunkhash].js",
+		filename: "[hash].js",
 		chunkFilename: "[id].js",
 		publicPath: "http://localhost:3001/"
 	},
@@ -45,7 +45,7 @@ module.exports = {
 			},
 			{
 				test: /\.js$/,
-				loaders: ["react-hot", "babel-loader?stage=0&optional=runtime", "eslint-loader"],
+				loaders: ["react-hot", "babel-loader?stage=0&optional=runtime"],
 				exclude: [/node_modules/, /bower_components/]
 			}
 		]

@@ -1,7 +1,7 @@
 "use strict";
 
 import React from "react";
-import {Route, DefaultRoute, NotFoundRoute} from "react-router";
+import {Route, IndexRoute} from "react-router";
 
 import GOAT from "../components/GOAT.js";
 
@@ -18,23 +18,25 @@ import Login from "../components/user/login.js";
 import Register from "../components/user/register.js";
 import Profile from "../components/user/profile.js";
 
+//import AdminStore from "../stores/AdminStore.js";
+
 void (React);
 
 export default (
-	<Route name="App" handler={GOAT} path="/">
-		<DefaultRoute name="welcome" handler={Welcome}/>
-		<Route name="Admin" path="/admin" handler={Article}>
-			<Route name="dashboard" path="dashboard" handler={Dashboard}/>
+	<Route path="/" component={GOAT}>
+		<IndexRoute component={Welcome}/>
+		<Route path="admin" component={Article}>
+			<Route path="dashboard" component={Dashboard} onEnter={() => {}}/>
+			<Route path="user" component={Article}>
+				<Route path="list" component={UserList}/>
+			</Route>
 		</Route>
-		<Route name="User" path="/admin/user" handler={Article}>
-			<Route name="userList" path="list" handler={UserList}/>
+		<Route path="user" component={User}>
+			<Route path="login" component={Login}/>
+			<Route path="register" component={Register}/>
+			<Route path="profile" component={Profile}/>
 		</Route>
-		<Route name="user" path="/user" handler={User}>
-			<Route name="login" path="login" handler={Login}/>
-			<Route name="register" path="register" handler={Register}/>
-			<Route name="profile" path="profile" handler={Profile}/>
-		</Route>
-		<Route name="dummy" path="/dummy" handler={Error}/>
-		<NotFoundRoute handler={Error}/>
+		<Route path="dummy" component={Error}/>
+		<Route path="*" component={Error}/>
 	</Route>
 );

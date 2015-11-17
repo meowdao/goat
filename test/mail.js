@@ -14,9 +14,7 @@ suite("mail", function () {
 
 	suite("#sendMail()", function () {
 		test("send mail", function (done) {
-			mail.sendMail({
-				view: "/test"
-			}, {}, {
+			mail.composeMail("test", {to: "test@example.com"}, {}, {
 				user: {
 					email: "test@example.com",
 					full_name: "Anonymous"
@@ -25,7 +23,7 @@ suite("mail", function () {
 				.then(function (result) {
 					assert.equal(result.message.substring(0, 3), "250"); // true for aws
 				})
-				.fail(function (error) {
+				.catch(function (error) {
 					throw error;
 				})
 				.finally(function () {

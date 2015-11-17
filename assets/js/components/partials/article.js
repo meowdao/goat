@@ -4,7 +4,7 @@ import React from "react";
 import {RouteHandler} from "react-router";
 import Title from "./title.js";
 import Messages from "./messages.js";
-import Breadcrumbs from "./breadcrumbs.js";
+//import Breadcrumbs from "./breadcrumbs.js";
 import AdminStore from "../../stores/AdminStore.js";
 
 
@@ -20,10 +20,9 @@ export default class Article extends React.Component {
 	render() {
 		return (
 			<div className="container">
-				<Breadcrumbs excludes={["App"]}/>
-				<Title/>
+				<Title {...this.props}/>
 				<Messages/>
-				<RouteHandler {...this.props}/>
+				{this.props.children}
 			</div>
 		);
 	}

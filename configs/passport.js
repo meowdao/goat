@@ -23,7 +23,7 @@ export default function (app) {
 			.then(user => {
 				callback(null, user);
 			})
-			.fail(error => {
+			.catch(error => {
 				callback(error, null);
 			})
 			.done();
@@ -44,7 +44,7 @@ export default function (app) {
 						callback(null, false, {message: "incorrect-name"});
 					}
 				})
-				.fail(error => {
+				.catch(error => {
 					callback(error, null);
 				})
 				.done();
@@ -65,7 +65,7 @@ export default function (app) {
 							.then(user => {
 								callback(null, user);
 							})
-							.fail(error => {
+							.catch(error => {
 								callback(error, null);
 							})
 							.done();
@@ -73,7 +73,7 @@ export default function (app) {
 						callback(null, user);
 					}
 				})
-				.fail(error => {
+				.catch(error => {
 					callback(error, null);
 				})
 				.done();
@@ -95,7 +95,7 @@ export default function (app) {
 							.then(user => {
 								callback(null, user);
 							})
-							.fail(error => {
+							.catch(error => {
 								callback(error, null);
 							})
 							.done();
@@ -103,7 +103,7 @@ export default function (app) {
 						callback(null, user);
 					}
 				})
-				.fail(error => {
+				.catch(error => {
 					callback(error, null);
 				})
 				.done();

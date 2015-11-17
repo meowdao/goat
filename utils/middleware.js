@@ -1,7 +1,7 @@
 "use strict";
 
 import _ from "lodash";
-import messager from "../utils/messager.js";
+import messenger from "../utils/messenger.js";
 
 
 export default {
@@ -12,7 +12,7 @@ export default {
 			if (!_.every(required, function (e) {
 					return !!query[e];
 				})) {
-				return next(messager.makeError("no-param"));
+				return next(messenger.makeError("no-param"));
 			}
 			return next();
 		};
@@ -22,7 +22,7 @@ export default {
 		return (request, response, next) => {
 			this.requiresLogin(request, response, function () {
 				if (!_.contains(required, request.user.role) || !(self && request.user._id.toString() === request.params.id)) {
-					return next(messager.makeError("access-denied"));
+					return next(messenger.makeError("access-denied"));
 				}
 				return next();
 			});
@@ -40,7 +40,7 @@ export default {
 	},
 
 	methodNotAllowed (request, response, next) {
-		return next(messager.makeError("method-not-allowed", request.user));
+		return next(messenger.makeError("method-not-allowed", request.user));
 	}
 
 }

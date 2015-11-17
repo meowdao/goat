@@ -18,7 +18,9 @@ export default class HTML extends React.Component {
 				<script src={this.props.webpackAssets["abl.js"]} type="text/javascript"/>
 				<link href={this.props.webpackAssets["abl.css"]} rel="stylesheet"/>
 			</head>
-			<body id="app"/>
+			<body>
+				<div id="app"/>
+			</body>
 			</html>
 		);
 	}

@@ -1,11 +1,13 @@
 "use strict";
 
-import router from "../utils/router.js";
+import {createHashHistory} from "history";
+
+let history = createHashHistory({queryKey: false});
 
 export default {
 
-	transitionTo: function(to, params, query) {
-		router.transitionTo(to, params, query);
+	transitionTo: function (to, params, query) {
+		history.pushState(null, to);
 	}
 
 };

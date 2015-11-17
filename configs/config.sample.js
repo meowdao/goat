@@ -42,6 +42,11 @@ export default {
 			    maxAge: 24 * 60 * 60 * 1000,
 			    signed: false
 		    }
+	    },
+	    server: {
+		    smtp: {
+			    from: "no-reply@example.com"
+		    }
 	    }
     }
 };

@@ -2,8 +2,11 @@
 
 import React, {PropTypes} from "react";
 import UserActionCreator from "../../actions/UserActionCreators.js";
+import {History} from "react-router";
 
 export default class Login extends React.Component {
+
+	static displayName = "Login";
 
 	static propTypes = {
 		email: PropTypes.string,
@@ -11,8 +14,8 @@ export default class Login extends React.Component {
 	};
 
 	static defaultProps = {
-		email: "ctapbiumabp@gmail.com",
-		password: "123456"
+		email: "trejgun@gmail.com",
+		password: "123qweASD"
 	};
 
 	state = {

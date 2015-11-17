@@ -16,7 +16,7 @@ export default {
 		})
 			.then(response => {
 				ServerActionCreators.updateUser(response);
-				RouteActionCreators.transitionTo("profile");
+				RouteActionCreators.transitionTo("user/profile");
 			});
 	},
 

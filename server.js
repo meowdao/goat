@@ -8,6 +8,7 @@ import http from "http";
 import path from "path";
 import debug from "debug";
 import React from "react";
+import ReactDOM from "react-dom/server";
 import webpack from "webpack";
 import WebpackDevServer from "webpack-dev-server";
 
@@ -18,6 +19,7 @@ import express from "./configs/express.js";
 if (process.env.NODE_ENV !== "production") {
 	debug.enable("log:*");
 	debug.enable("controller:*");
+	debug.enable("model:*");
 	debug.enable("web:*");
 }
 
@@ -26,7 +28,9 @@ var app = express();
 
 const webpackServer = new WebpackDevServer(webpack(require("./configs/webpack")), {
 	publicPath: "http://0.0.0.0:3001/",
-	watchDelay: 0,
+	watchOptions: {
+		aggregateTimeout: 0
+	},
 	hot: true,
 	stats: {
 		colors: true,
@@ -46,7 +50,7 @@ webpackServer.listen(3001, "0.0.0.0", function (error) {
 app.get("/", function (request, response) {
 	const statsJsonPath = path.join(__dirname, "build", "_stats.json");
 	const webpackAssets = JSON.parse(webpackServer.middleware.fileSystem.readFileSync(statsJsonPath));
-	const html = React.renderToStaticMarkup(<Html webpackAssets={webpackAssets}/>);
+	const html = ReactDOM.renderToStaticMarkup(<Html webpackAssets={webpackAssets}/>);
 	response.send(`<!doctype html>\n${html}`);
 });
 
@@ -54,10 +58,10 @@ require("./configs/middleware.js")(app);
 require("./configs/routes.js")(app);
 require("./configs/error.js")(app);
 
-app.listen(process.env.PORT, function () {
+app.listen(process.env.PORT, () => {
 	log("Express server listening on port " + process.env.PORT);
 });
 
-process.on("uncaughtException", function (exception) {
+process.on("uncaughtException", (exception) => {
 	log(exception);
 });

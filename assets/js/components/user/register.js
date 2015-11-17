@@ -9,15 +9,17 @@ export default class Register extends React.Component {
 		email: PropTypes.string,
 		password: PropTypes.string,
 		confirm: PropTypes.string,
-		contactName: PropTypes.string,
+		firstName: PropTypes.string,
+		lastName: PropTypes.string,
 		role: PropTypes.string
 	};
 
 	static defaultProps = {
-		email: "ctapbiumabp@gmail.com",
-		password: "123456",
-		confirm: "123456",
-		contactName: "CTAPbIu_MABP",
+		email: "trejgun@gmail.com",
+		password: "123qweASD",
+		confirm: "123qweASD",
+		firstName: "Trej",
+		lastName: "Gun",
 		role: "admin"
 	};
 
@@ -25,7 +27,8 @@ export default class Register extends React.Component {
 		email: this.props.email,
 		password: this.props.password,
 		confirm: this.props.confirm,
-		contactName: this.props.contactName,
+		firstName: this.props.firstName,
+		lastName: this.props.lastName,
 		role: this.props.role
 	};
 
@@ -72,12 +75,21 @@ export default class Register extends React.Component {
 							</div>
 						</div>
 						<div className="form-group">
-							<label htmlFor="contactName" className="col-sm-2 control-label">Contact name</label>
+							<label htmlFor="firstName" className="col-sm-2 control-label">First name</label>
 
 							<div className="col-sm-10">
-								<input type="text" className="form-control" name="contactName" id="contactName"
+								<input type="text" className="form-control" name="firstName" id="firstName"
 									placeholder="Fred Flintstone"
-									onChange={e => this.setState({contactName: e.target.value})}/>
+									onChange={e => this.setState({firstName: e.target.value})}/>
+							</div>
+						</div>
+						<div className="form-group">
+							<label htmlFor="lastName" className="col-sm-2 control-label">Last name</label>
+
+							<div className="col-sm-10">
+								<input type="text" className="form-control" name="lastName" id="lastName"
+									placeholder="Fred Flintstone"
+									onChange={e => this.setState({lastName: e.target.value})}/>
 							</div>
 						</div>
 						<div className="form-group">
