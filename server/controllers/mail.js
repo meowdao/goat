@@ -11,13 +11,13 @@ import lang from "../utils/lang.js";
 import React from "react"; // eslint-disable-line no-unused-vars
 import {renderToString} from "react-dom/server";
 import Router, { match, RoutingContext, Route } from 'react-router'
-import EML from "../assets/js/components/EML.js";
-import Article from "../assets/js/components/partials/article.js";
-import Remind from "../assets/js/components/email/remind.js";
-import Verify from "../assets/js/components/email/verify.js";
-import Test from "../assets/js/components/email/test.js";
+import EML from "../../client/assets/js/components/EML.js";
+import Article from "../../client/assets/js/components/partials/article.js";
+import Remind from "../../client/assets/js/components/email/remind.js";
+import Verify from "../../client/assets/js/components/email/verify.js";
+import Test from "../../client/assets/js/components/email/test.js";
 
-import EmailStore from "../assets/js/stores/EmailStore.js";
+import EmailStore from "../../client/assets/js/stores/EmailStore.js";
 
 import OptOutController from "../controllers/opt_out.js";
 

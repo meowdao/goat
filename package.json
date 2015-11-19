@@ -51,6 +51,7 @@
 		"passport-local": "1.0.0",
 		"passport-facebook": "1.0.3",
 		"passport-google-oauth": "0.1.5",
+		"proxy-middleware": "0.15.0",
 		"q": "1.4.1",
 		"react": "0.14.2",
 		"react-bootstrap": "0.28.1",
@@ -79,8 +80,8 @@
 		"node": "v0.12.x"
 	},
 	"scripts": {
-		"dev": "NODE_ENV=development DEBUG=web:* nodemon -w server.js -w assets/js/components/HTML.js -w configs/webpack.js server.js",
+		"dev": "NODE_ENV=development DEBUG=web:* nodemon -w server/server.js -w client/assets/js/components/HTML.js -w server/configs/webpack.js server/server.js",
 		"test": "NODE_ENV=test mocha --compilers js:babel/register",
-		"build": "NODE_ENV=production webpack -c --config configs/webpack.js"
+		"build": "NODE_ENV=production webpack -c --config server/configs/webpack.js"
 	}
 }

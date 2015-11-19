@@ -15,8 +15,8 @@ class HTML extends React.Component {
 				<meta name="robots" content="all"/>
 				<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
 				<title>G.O.A.T.</title>
-				<script src={this.props.webpackAssets["abl.js"]} type="text/javascript"/>
-				<link href={this.props.webpackAssets["abl.css"]} rel="stylesheet"/>
+				<script src="assets/bundle.js" type="text/javascript"/>
+				<link href="assets/style.css" rel="stylesheet"/>
 			</head>
 			<body>
 				<div id="app"/>

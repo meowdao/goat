@@ -3,31 +3,26 @@
 var path = require("path");
 var webpack = require("webpack");
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
-var StatsPlugin = require("../utils/stats");
 
 module.exports = {
-	devtool: "eval",
-	entry: {
-		abl: [
-			"webpack-dev-server/client?http://localhost:3001",
-			"webpack/hot/dev-server",
-			"./assets/js/main"
-		]
-	},
+	devtool: "source-map",
+	entry: [
+		"webpack-dev-server/client?http://localhost:3001",
+		"webpack/hot/dev-server",
+		"./client/assets/js/main"
+	],
 	output: {
-		path: path.join(__dirname, "..", "build"),
-		filename: "[hash].js",
-		chunkFilename: "[id].js",
-		publicPath: "http://localhost:3001/"
+		path: path.join(__dirname, "..", "client", "build"),
+		filename: "bundle.js",
+		sourceMapFilename: '[file].map',
+		//chunkFilename: "[id].js",
+		publicPath: "http://localhost:3001/assets/"
 	},
 	resolve: {
 		modulesDirectories: ["node_modules"],
 		alias: {
-			components: path.join(__dirname, "..", "assets", "js", "components")
+			components: path.join(__dirname, "..", "client", "assets", "js", "components")
 		}
-	},
-	eslint: {
-		//configFile: ".eslintrc"
 	},
 	module: {
 		loaders: [
@@ -52,7 +47,7 @@ module.exports = {
 	},
 	plugins: [
 		new webpack.DefinePlugin({
-			"process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV)
+			"process.env": JSON.stringify(process.env)
 		}),
 		new ExtractTextPlugin("style.css", {
 			allChunks: true
@@ -60,7 +55,6 @@ module.exports = {
 		new webpack.optimize.OccurenceOrderPlugin(),
 		new webpack.optimize.DedupePlugin(),
 		new webpack.NoErrorsPlugin(),
-		new StatsPlugin(),
 		new webpack.HotModuleReplacementPlugin()
 	]
 };

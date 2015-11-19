@@ -11,8 +11,9 @@ import React from "react";
 import ReactDOM from "react-dom/server";
 import webpack from "webpack";
 import WebpackDevServer from "webpack-dev-server";
+import proxy from "proxy-middleware";
 
-import Html from "./assets/js/components/Html";
+import Html from "../client/assets/js/components/Html";
 import express from "./configs/express.js";
 
 
@@ -27,7 +28,7 @@ var log = debug("log:server");
 var app = express();
 
 const webpackServer = new WebpackDevServer(webpack(require("./configs/webpack")), {
-	publicPath: "http://0.0.0.0:3001/",
+	publicPath: "/assets/",
 	watchOptions: {
 		aggregateTimeout: 0
 	},
@@ -47,10 +48,10 @@ webpackServer.listen(3001, "0.0.0.0", function (error) {
 	log(error || "Webpack server listening on port 3001");
 });
 
+app.use("/assets", proxy("http://localhost:3001/assets"));
+
 app.get("/", function (request, response) {
-	const statsJsonPath = path.join(__dirname, "build", "_stats.json");
-	const webpackAssets = JSON.parse(webpackServer.middleware.fileSystem.readFileSync(statsJsonPath));
-	const html = ReactDOM.renderToStaticMarkup(<Html webpackAssets={webpackAssets}/>);
+	const html = ReactDOM.renderToStaticMarkup(<Html/>);
 	response.send(`<!doctype html>\n${html}`);
 });
 

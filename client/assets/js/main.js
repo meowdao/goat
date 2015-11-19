@@ -1,6 +1,6 @@
 "use strict";
 
-require("../css/styles.less");
+import '../css/styles.less';
 
 import debug from "debug";
 import React from "react"; // eslint-disable-line no-unused-vars
