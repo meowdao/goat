@@ -29,7 +29,6 @@ export default {
 		    }
 	    },
 	    session: {
-		    proxy: false,
 		    secret: "keyboard_cat",
 		    saveUninitialized: true,
 		    resave: false,

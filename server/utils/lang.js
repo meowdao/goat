@@ -1,7 +1,7 @@
 "use strict";
 
 var langusges = {
-	en: require("../utils/lang/en")
+	en: require("../utils/lang/en").default
 };
 
 export default {

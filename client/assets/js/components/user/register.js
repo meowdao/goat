@@ -51,8 +51,7 @@ class Register extends React.Component {
 							<label htmlFor="email" className="col-sm-2 control-label">Email</label>
 
 							<div className="col-sm-10">
-								<input type="text" className="form-control" name="email" id="email"
-									placeholder="me@example.com"
+								<input type="text" className="form-control" name="email" id="email" placeholder="me@example.com"
 									onChange={e => this.setState({email: e.target.value})}/>
 							</div>
 						</div>
@@ -60,8 +59,7 @@ class Register extends React.Component {
 							<label htmlFor="password" className="col-sm-2 control-label">Password</label>
 
 							<div className="col-sm-10">
-								<input type="password" className="form-control" name="password" id="password"
-									placeholder="******"
+								<input type="password" className="form-control" name="password" id="password" placeholder="******"
 									onChange={e => this.setState({password: e.target.value})}/>
 							</div>
 						</div>
@@ -69,8 +67,7 @@ class Register extends React.Component {
 							<label htmlFor="confirm" className="col-sm-2 control-label">Confirm password</label>
 
 							<div className="col-sm-10">
-								<input type="password" className="form-control" name="confirm" id="confirm"
-									placeholder="******"
+								<input type="password" className="form-control" name="confirm" id="confirm" placeholder="******"
 									onChange={e => this.setState({confirm: e.target.value})}/>
 							</div>
 						</div>
@@ -78,8 +75,7 @@ class Register extends React.Component {
 							<label htmlFor="firstName" className="col-sm-2 control-label">First name</label>
 
 							<div className="col-sm-10">
-								<input type="text" className="form-control" name="firstName" id="firstName"
-									placeholder="Fred Flintstone"
+								<input type="text" className="form-control" name="firstName" id="firstName" placeholder="Fred Flintstone"
 									onChange={e => this.setState({firstName: e.target.value})}/>
 							</div>
 						</div>
@@ -87,13 +83,12 @@ class Register extends React.Component {
 							<label htmlFor="lastName" className="col-sm-2 control-label">Last name</label>
 
 							<div className="col-sm-10">
-								<input type="text" className="form-control" name="lastName" id="lastName"
-									placeholder="Fred Flintstone"
+								<input type="text" className="form-control" name="lastName" id="lastName" placeholder="Fred Flintstone"
 									onChange={e => this.setState({lastName: e.target.value})}/>
 							</div>
 						</div>
 						<div className="form-group">
-							<label htmlFor="contactName" className="col-sm-2 control-label">Role</label>
+							<label htmlFor="role" className="col-sm-2 control-label">Role</label>
 
 							<div className="col-sm-10">
 								<select className="form-control" name="role" id="role"
@@ -125,8 +120,7 @@ class Register extends React.Component {
 					<label htmlFor="phoneNumber" className="col-sm-2 control-label">Phone number</label>
 
 					<div className="col-sm-10">
-						<input type="text" className="form-control" name="phoneNumber" id="phoneNumber"
-							placeholder="+1234567890"
+						<input type="text" className="form-control" name="phoneNumber" id="phoneNumber" placeholder="+1234567890"
 							onChange={e => this.setState({contactName: e.target.value})}/>
 					</div>
 				</div>
@@ -134,8 +128,7 @@ class Register extends React.Component {
 					<label htmlFor="contactName" className="col-sm-2 control-label">Domain name</label>
 
 					<div className="col-sm-10">
-						<input type="text" className="form-control" name="domainName" id="domainName"
-							placeholder="examle.com"
+						<input type="text" className="form-control" name="domainName" id="domainName" placeholder="examle.com"
 							onChange={e => this.setState({contactName: e.target.value})}/>
 					</div>
 				</div>

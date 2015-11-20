@@ -75,7 +75,7 @@ class AbstractUserController extends AbstractController {
 		let hashController = new HashController();
 		return hashController.create({user: request.user._id})
 			.then(hash => {
-				let mailController = new HashController();
+				let mailController = new MailController();
 				return mailController.composeMail("user/verify", {to: request.user.email}, request.user, {
 					hash: hash
 				});

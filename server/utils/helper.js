@@ -34,7 +34,7 @@ export default {
 
 	/*eslint-disable no-unused-vars */
 	sendError(error, request, response, next){
-		log("sendError", error);
+		log("sendError", error.message, error.stack);
 		if (error.name === "ValidationError") {
 			error = {
 				status: 409,

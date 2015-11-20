@@ -15,6 +15,7 @@ import Q from "./q.js";
 
 import session from "./session.js";
 import passport from "./passport.js";
+import proxy from "./proxy.js";
 
 
 export default function () {
@@ -33,6 +34,7 @@ export default function () {
 		extended: true
 	}));
 
+	proxy(app);
 	session(app);
 	passport(app);
 
