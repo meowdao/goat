@@ -58,6 +58,7 @@ class AbstractController extends DebuggableController {
 	"count",
 	"distinct",
 	"remove",
+	"destroy",
 	"create",
 	"aggregate",
 	"mapReduce",

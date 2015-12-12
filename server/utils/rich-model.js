@@ -1,16 +1,14 @@
 "use strict";
 
-import Q from "q";
 import mongoose from "mongoose";
 import debug from "debug";
 
 class RichModel {
 
 	constructor(displayName, isDebuggable, connection = mongoose) {
-		this.displayName = displayName;
 		this.model = connection.model(displayName);
 		this.isDebuggable = isDebuggable;
-		this.log = debug(`model:${this.displayName}`);
+		this.log = debug(`model:${displayName}`);
 	}
 
 	_log(where) {
@@ -21,7 +19,8 @@ class RichModel {
 		};
 	}
 
-	static enchant(query, options) {
+	enchant(method, params, options) {
+		let query = this.model[method](...params);
 		options = Object.assign({lean: true}, options);
 		Object.keys(options).forEach(method => {
 			if (Array.isArray(options[method]) && method !== "deepPopulate") {
@@ -32,7 +31,7 @@ class RichModel {
 				query[method](options[method]);
 			}
 		});
-		return Q.nbind(query.exec, query)();
+		return query.exec();
 	}
 
 	/**
@@ -42,7 +41,7 @@ class RichModel {
 	 * @returns {Q.Promise}
 	 */
 	findById(id, options) {
-		return this.constructor.enchant(this.model.findById(id), options)
+		return this.enchant("findById", [id], options)
 			.tap(this._log("found"));
 	}
 
@@ -53,7 +52,7 @@ class RichModel {
 	 * @returns {Q.Promise}
 	 */
 	find(query, options) {
-		return this.constructor.enchant(this.model.find(query), options)
+		return this.enchant("find", [query], options)
 			.tap(this._log("found"));
 	}
 
@@ -64,7 +63,7 @@ class RichModel {
 	 * @returns {Q.Promise}
 	 */
 	findOne(query, options) {
-		return this.constructor.enchant(this.model.findOne(query), options)
+		return this.enchant("findOne", [query], options)
 			.tap(this._log("found"));
 	}
 
@@ -77,12 +76,12 @@ class RichModel {
 	 * @returns {Q.Promise}
 	 */
 	upsert(query, data, options, params) {
-		return this.constructor.enchant(this.model.findOneAndUpdate(query, data, Object.assign({
+		return this.enchant("findOneAndUpdate", [query, data, Object.assign({
 				new: true,
 				upsert: true,
 				runValidators: true,
 				setDefaultsOnInsert: true
-			}, params)), options)
+			}, params)], options)
 			.tap(this._log("upserted"));
 	}
 
@@ -96,16 +95,17 @@ class RichModel {
 	 */
 	update(query, data, options, params) {
 		// http://mongoosejs.com/docs/api.html#model_Model.update
-		return Q.nbind(this.model.update, this.model)(query, data, Object.assign({
+		return this.model.update(query, data, Object.assign({
 				strict: true,
 				multi: true,
 				runValidators: true
 			}, params))
+			.exec()
 			.tap(this._log("updated"));
 	}
 
 	populate(list, path, options) {
-		return Q.nbind(this.model.populate, this.model)(list, [{
+		return this.model.populate(list, [{
 			path: path,
 			options: Object.assign({}, options)
 		}]);
@@ -127,7 +127,7 @@ class RichModel {
 	 * @returns {Q.Promise}
 	 */
 	save(model) {
-		return Q.denodeify(model.save, model)()
+		return model.save()
 			.get(0)
 			.tap(this._log("saved"));
 	}
@@ -138,9 +138,8 @@ class RichModel {
 	 * @returns {Q.Promise}
 	 */
 	destroy(model) {
-		return Q.denodeify(model.remove, model)()
-			.get(0)
-			.tap(this._log("removed"));
+		return model.remove()
+			.tap(this._log("destroyed"));
 	}
 
 }
@@ -159,7 +158,7 @@ class RichModel {
 	"findOneAndUpdate"
 ].forEach(name => {
 	RichModel.prototype[name] = function (...args) {
-		return Q.nfapply(this.model[name].bind(this.model), args)
+		return this.model[name](...args)
 			.then(result => {
 				if (name === "remove") {
 					return result.result;
