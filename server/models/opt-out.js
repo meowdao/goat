@@ -2,7 +2,7 @@
 
 import {Schema} from "mongoose";
 
-var OptOut = new Schema({
+let OptOut = new Schema({
 	user: {
 		type: Schema.Types.ObjectId,
 		ref: "User"

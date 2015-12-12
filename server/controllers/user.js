@@ -2,9 +2,9 @@
 
 import Q from "q";
 
-import AbstractUserController from "./user.abstract.js";
+import AbstractUserController from "./user-abstract.js";
 
-class UserController extends AbstractUserController {
+export default class UserController extends AbstractUserController {
 
 	sync(request) {
 		return Q(request.user);
@@ -12,4 +12,3 @@ class UserController extends AbstractUserController {
 
 }
 
-export default UserController;

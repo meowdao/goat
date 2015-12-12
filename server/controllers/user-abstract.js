@@ -2,15 +2,14 @@
 
 import Q from "q";
 import _ from "lodash";
-import mongoose from "mongoose";
 import passport from "passport";
 
 import messenger from "../utils/messenger.js";
-import AbstractController from "../utils/abstractController.js";
+import AbstractController from "../utils/abstract-controller.js";
 import MailController from "./mail.js";
 import HashController from "./hash.js";
 
-class AbstractUserController extends AbstractController {
+export default class AbstractUserController extends AbstractController {
 
 	login(request, response) {
 		var defer = Q.defer();
@@ -26,12 +25,13 @@ class AbstractUserController extends AbstractController {
 	}
 
 	register(request) {
+
 		return this.create(request.body)
-			.then(user => {
+			.tap(user => {
 				return Q.nbind(request.login, request)(user)
-					.then(() => {
-						return this.sendEmailVerification(request);
-					});
+			})
+			.tap(() => {
+				return this.sendEmailVerification(request);
 			});
 	}
 
@@ -104,8 +104,7 @@ class AbstractUserController extends AbstractController {
 		request.logout();
 		request.session.logout = true;
 		response.clearCookie();
-		response.redirect("user/login");
+		response.redirect("/");
 	}
 }
 
-export default AbstractUserController;

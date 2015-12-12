@@ -10,7 +10,7 @@ import FormTextarea from './formTextareaComponent';
 import BootstrapPopoverWrapper from '../../../shared/components/objects/bootstrapPopoverWrapperComponent';
 
 
-class FormTextareaList extends React.Component {
+export default class FormTextareaList extends React.Component {
 
 	currentIndex = 0;
 
@@ -79,15 +79,6 @@ class FormTextareaList extends React.Component {
 
 		const {help, containerClassName, length, ...props} = this.props;
 
-		const helpContainer = !help ? null :
-			<BootstrapPopoverWrapper
-				className="icon-question-sign"
-				content={help}
-				placement="right"
-				trigger="hover"
-				displayType="inline-block"
-				attachToBody={true}/>;
-
 		return (
 			<div className="multi-field" onMouseEnter={this.onMouseEnter.bind(this)} onMouseLeave={this.onMouseLeave.bind(this)}>
 				<ul ref="list" className={classnames('multi-field__list', containerClassName)}>
@@ -95,9 +86,6 @@ class FormTextareaList extends React.Component {
 				</ul>
 				<div className="multi-field__add">
 					<a className="lc-icon-text" onClick={this.addMoreFields.bind(this)}><i className="icon-plus"></i>Add goal or objective</a>
-				</div>
-				<div className="extra">
-					{helpContainer}
 				</div>
 				{this.renderOptions()}
 			</div>
@@ -188,4 +176,3 @@ FormTextareaList.defaultProps = {
 	defaultValue: ''
 };
 
-export default FormTextareaList;

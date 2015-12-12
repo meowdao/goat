@@ -4,7 +4,7 @@ import React from "react";
 import {Link} from "react-router";
 import AdminStore from "../../stores/AdminStore.js";
 
-class Dashboard extends React.Component {
+export default class Dashboard extends React.Component {
 
 	static displayName = "Dashboard";
 
@@ -19,12 +19,10 @@ class Dashboard extends React.Component {
 			<div className="panel panel-default">
 				<div className="panel-body">
 					<div className="list-group">
-						<Link to="userList" className="list-group-item">User List</Link>
+						<Link to="admin/user/list" className="list-group-item">User List</Link>
 					</div>
 				</div>
 			</div>
 		);
 	}
 }
-
-export default Dashboard;

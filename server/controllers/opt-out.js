@@ -3,9 +3,9 @@
 import _ from "lodash";
 import mongoose from "mongoose";
 
-import AbstractController from "../utils/abstractController.js";
+import AbstractController from "../utils/abstract-controller.js";
 
-class OptOutController extends AbstractController {
+export default class OptOutController extends AbstractController {
 
 	change(request) {
 		return this.remove({user: request.user._id})
@@ -27,4 +27,3 @@ class OptOutController extends AbstractController {
 
 }
 
-export default OptOutController;

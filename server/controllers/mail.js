@@ -3,7 +3,7 @@
 import Q from "q";
 import mongoose from "mongoose";
 import debug from "debug";
-import AbstractController from "../utils/abstractController.js";
+import AbstractController from "../utils/abstract-controller.js";
 import messenger from "../utils/messenger.js";
 import {createHistory, createHashHistory} from "history";
 import lang from "../utils/lang.js";
@@ -19,7 +19,7 @@ import Test from "../../client/assets/js/components/email/test.js";
 
 import EmailStore from "../../client/assets/js/stores/EmailStore.js";
 
-import OptOutController from "../controllers/opt_out.js";
+import OptOutController from "../controllers/opt-out.js";
 
 const routes = (
 	<Route component={EML} path="/">
@@ -32,7 +32,7 @@ const routes = (
 );
 
 
-class MailController extends AbstractController {
+export default class MailController extends AbstractController {
 
 	static statuses = {
 		cancelled: "cancelled",
@@ -86,5 +86,3 @@ class MailController extends AbstractController {
 	}
 
 }
-
-export default MailController;

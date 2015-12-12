@@ -6,9 +6,10 @@ import mongoose from "mongoose";
 import utils from "../utils/utils.js";
 import configs from "../configs/config.js";
 
-const config = configs[process.env.NODE_ENV];
 
 export default function () {
+
+	const config = configs[process.env.NODE_ENV];
 
 	let log = debug("log:mongoose");
 
@@ -32,9 +33,9 @@ export default function () {
 		mongoose.connect(config.mongo.url, config.mongo.options);
 	});
 	db.on("disconnecting", () => {
-		log("connecting from MongoDB...");
+		log("disconnecting from MongoDB...");
 	});
-	db.on("error", function (error) {
+	db.on("error", error => {
 		log("Error in MongoDb connection");
 		log(error);
 		mongoose.disconnect();
@@ -52,13 +53,13 @@ export default function () {
 	mongoose.connect(config.mongo.url, config.mongo.options);
 
 	function toTitleCase(str) {
-		return str.split(".")[0].replace(/(^|_)(\w)/g, function (all, $1, $2) {
+		return str.split(".")[0].replace(/(^|-)(\w)/g, (all, $1, $2) => {
 			return $2.toUpperCase();
 		});
 	}
 
 	fs.readdirSync(utils.getPath("models")).forEach(file => {
-		mongoose.model(toTitleCase(file), require(utils.getPath("models", file)));
+		mongoose.model(toTitleCase(file), require(utils.getPath("models", file)).default);
 	});
 
 	return mongoose;

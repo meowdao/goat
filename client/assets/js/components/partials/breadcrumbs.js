@@ -4,7 +4,7 @@ import React, {PropTypes} from "react";
 import {Link} from "react-router";
 
 
-class Breadcrumbs extends React.Component {
+export default class Breadcrumbs extends React.Component {
 
 	static propTypes = {
 		excludes: PropTypes.arrayOf(PropTypes.string)
@@ -50,4 +50,3 @@ class Breadcrumbs extends React.Component {
 	}
 }
 
-export default Breadcrumbs;

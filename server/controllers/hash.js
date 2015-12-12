@@ -1,10 +1,9 @@
 "use strict";
 
-import AbstractController from "../utils/abstractController.js";
+import AbstractController from "../utils/abstract-controller.js";
 
 
-class HashController extends AbstractController {
+export default class HashController extends AbstractController {
 
 }
 
-export default HashController;

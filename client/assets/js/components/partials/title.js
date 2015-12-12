@@ -2,7 +2,7 @@
 
 import React, {PropTypes} from "react";
 
-class Title extends React.Component {
+export default class Title extends React.Component {
 
 	static contextTypes = {
 		location: PropTypes.object.isRequired
@@ -10,7 +10,7 @@ class Title extends React.Component {
 
 	render() {
 
-		console.log("->", this.props.route)
+		console.log("->", this.props.route);
 
 		let title = /*this.props.route.component.displayName ||*/ "Default Title";
 
@@ -22,4 +22,3 @@ class Title extends React.Component {
 	}
 }
 
-export default Title;

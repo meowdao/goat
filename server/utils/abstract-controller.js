@@ -1,10 +1,10 @@
 "use strict";
 
 import _ from "lodash";
-import RichModel from "./richModel.js";
-import messenger from "../utils/messenger.js";
+import RichModel from "./rich-model.js";
+import messenger from "./messenger.js";
 
-import DebuggableController from "./debuggableController.js";
+import DebuggableController from "./debuggable-controller.js";
 
 class AbstractController extends DebuggableController {
 
@@ -18,7 +18,7 @@ class AbstractController extends DebuggableController {
 				_id: request.params._id,
 				user: request.user._id
 			})
-			.then(messenger.checkModel("page-not-found", request.user));
+			.then(messenger.notFound(this.displayName, request.user));
 	}
 
 	list(request) {
@@ -31,7 +31,6 @@ class AbstractController extends DebuggableController {
 	insert(request, fields = []) {
 		let clean = Object.assign({}, fields.length ? _.pick(request.body, fields) : request.body, {user: request.user._id});
 		return this.create(clean);
-			//.then(items => ({[this.displayName + "s"]: items}));
 	}
 
 	edit(request, fields = []) {
@@ -40,7 +39,7 @@ class AbstractController extends DebuggableController {
 				_id: request.params._id,
 				user: request.user._id
 			}, clean, {new: true})
-			.then(messenger.checkModel("page-not-found", request.user));
+			.then(messenger.notFound(this.displayName, request.user));
 	}
 
 	delete(request) {
@@ -48,11 +47,12 @@ class AbstractController extends DebuggableController {
 				user: request.user._id,
 				_id: request.params._id
 			})
-			.then(messenger.checkModel("page-not-found", request.user))
+			.then(messenger.notFound(this.displayName, request.user))
 			.thenResolve({success: true});
 	}
 
-}; // eslint-disable-line no-extra-semi
+}
+; // eslint-disable-line no-extra-semi
 
 [
 	"count",

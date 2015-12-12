@@ -12,7 +12,7 @@
 import React from 'react/addons';
 import classnames from 'classnames';
 
-class FormTextarea extends React.Component {
+export default class FormTextarea extends React.Component {
 
 	static propTypes = {
 		type: React.PropTypes.string,
@@ -45,5 +45,3 @@ class FormTextarea extends React.Component {
 		);
 	}
 }
-
-export default FormTextarea;

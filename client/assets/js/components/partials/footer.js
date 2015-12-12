@@ -5,7 +5,7 @@ import {Navbar, Nav, NavItem} from "react-bootstrap";
 import {LinkContainer} from "react-router-bootstrap";
 
 
-class Footer extends React.Component {
+export default class Footer extends React.Component {
 	render() {
 		return (
 			<Navbar fixedBottom={true} inverse={true}>
@@ -26,4 +26,3 @@ class Footer extends React.Component {
 	}
 }
 
-export default Footer;

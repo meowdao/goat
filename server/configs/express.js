@@ -1,8 +1,6 @@
 "use strict";
 
 import express from "express";
-import connectMongo from "connect-mongo";
-import debug from "debug";
 
 // middleware
 import logger from "morgan";
@@ -11,16 +9,12 @@ import bodyParser from "body-parser";
 
 
 // configs
-import Q from "./q.js";
-
 import session from "./session.js";
 import passport from "./passport.js";
 import proxy from "./proxy.js";
 
 
 export default function () {
-
-	void(Q);
 
 	let app = express();
 

@@ -5,7 +5,7 @@ import {Schema} from "mongoose";
 import regexp from "../utils/regexp.js";
 
 // last is first
-var password_validator = [
+let password_validator = [
 	{
 		validator: function () {
 			return this.password === this.confirm;
@@ -38,7 +38,7 @@ var password_validator = [
 	}
 ];
 
-var User = new Schema({
+let User = new Schema({
 	avatar: {
 		type: Schema.Types.ObjectId,
 		ref: "Avatar"
@@ -46,6 +46,8 @@ var User = new Schema({
 
 	email: {
 		type: String,
+		lowercase: true,
+		trim: true,
 		unique: true,
 		required: "Email cannot be blank",
 		match: [regexp.email, "Email is invalid"]

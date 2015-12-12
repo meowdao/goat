@@ -8,9 +8,10 @@ import {Strategy as LocalStrategy} from "passport-local";
 import configs from "./config.js";
 import UserController from "../controllers/user.js";
 
-const config = configs[process.env.NODE_ENV];
 
 export default function (app) {
+
+	const config = configs[process.env.NODE_ENV];
 
 	let log = debug("log:passport");
 

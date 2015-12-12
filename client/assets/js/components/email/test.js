@@ -3,7 +3,7 @@
 import React from "react";
 import EmailStore from "../../stores/EmailStore.js";
 
-class Test extends React.Component {
+export default class Test extends React.Component {
 	render () {
 		let data = EmailStore.getData();
 		return (
@@ -14,4 +14,3 @@ class Test extends React.Component {
 	}
 }
 
-export default Test;

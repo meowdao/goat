@@ -5,7 +5,7 @@ import Header from "./partials/header.js";
 import Footer from "./partials/footer.js";
 
 
-class GOAT extends React.Component {
+export default class GOAT extends React.Component {
 
 	static propTypes = {
 		params: PropTypes.object.isRequired
@@ -23,4 +23,3 @@ class GOAT extends React.Component {
 	}
 }
 
-export default GOAT;

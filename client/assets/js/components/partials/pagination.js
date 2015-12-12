@@ -2,7 +2,7 @@
 
 import React from "react";
 
-class Pagination extends React.Component {
+export default class Pagination extends React.Component {
 	render() {
 		return (
 			<nav className="text-center">
@@ -26,4 +26,3 @@ class Pagination extends React.Component {
 	}
 }
 
-export default Pagination;

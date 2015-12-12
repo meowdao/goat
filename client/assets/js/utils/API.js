@@ -8,10 +8,21 @@ import RouteActionCreators from "../actions/RouteActionCreators.js";
 export default {
 
 	login(data) {
-
 		$.ajax({
 			method: "POST",
 			url: "/user/login",
+			data: data
+		})
+			.then(response => {
+				ServerActionCreators.updateUser(response);
+				RouteActionCreators.transitionTo("user/profile");
+			});
+	},
+
+	logout(data) {
+		$.ajax({
+			method: "GET",
+			url: "/user/logout",
 			data: data
 		})
 			.then(response => {

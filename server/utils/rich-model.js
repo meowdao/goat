@@ -24,7 +24,7 @@ class RichModel {
 	static enchant(query, options) {
 		options = Object.assign({lean: true}, options);
 		Object.keys(options).forEach(method => {
-			if (Array.isArray(options[method])) {
+			if (Array.isArray(options[method]) && method !== "deepPopulate") {
 				options[method].forEach(item => {
 					query[method](item);
 				});
@@ -97,10 +97,10 @@ class RichModel {
 	update(query, data, options, params) {
 		// http://mongoosejs.com/docs/api.html#model_Model.update
 		return Q.nbind(this.model.update, this.model)(query, data, Object.assign({
-			strict: true,
-			multi: true,
-			runValidators: true
-		}, params))
+				strict: true,
+				multi: true,
+				runValidators: true
+			}, params))
 			.tap(this._log("updated"));
 	}
 
@@ -132,7 +132,19 @@ class RichModel {
 			.tap(this._log("saved"));
 	}
 
-}; // eslint-disable-line no-extra-semi
+	/**
+	 *
+	 * @param model {mongoose.Document}
+	 * @returns {Q.Promise}
+	 */
+	destroy(model) {
+		return Q.denodeify(model.remove, model)()
+			.get(0)
+			.tap(this._log("removed"));
+	}
+
+}
+; // eslint-disable-line no-extra-semi
 
 [
 	"count",

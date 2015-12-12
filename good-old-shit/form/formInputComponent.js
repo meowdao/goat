@@ -18,7 +18,7 @@
 import React from 'react/addons';
 import classnames from 'classnames';
 
-class FormInput extends React.Component {
+export default class FormInput extends React.Component {
 
 	static propTypes = {
 		type: React.PropTypes.string,
@@ -70,4 +70,3 @@ class FormInput extends React.Component {
 
 }
 
-export default FormInput;

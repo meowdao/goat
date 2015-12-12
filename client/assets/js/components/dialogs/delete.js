@@ -2,7 +2,7 @@
 
 import React from "react";
 
-class DeleteDialog extends React.Component {
+export default class DeleteDialog extends React.Component {
 	render() {
 		return (
 			<div class="modal fade" id="confirmDeletionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -26,4 +26,3 @@ class DeleteDialog extends React.Component {
 	}
 }
 
-export default DeleteDialog;

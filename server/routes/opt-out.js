@@ -2,7 +2,7 @@
 
 import helper from "../utils/helper.js";
 import middleware from "../utils/middleware.js";
-import OptOutController from "../controllers/opt_out.js";
+import OptOutController from "../controllers/opt-out.js";
 
 
 export default function (app) {

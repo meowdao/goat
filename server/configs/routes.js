@@ -19,7 +19,7 @@ export default function (app) {
 		};
 	}
 
-	app.param("id", createRegExpParameter(/^[0-9a-z]{24}$/));
+	app.param("_id", createRegExpParameter(/^[0-9a-z]{24}$/));
 
 	fs.readdirSync(utils.getPath("routes")).forEach(file => {
 		require(utils.getPath("routes", file)).default(app);

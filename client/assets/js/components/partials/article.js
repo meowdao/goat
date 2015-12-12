@@ -8,7 +8,7 @@ import Messages from "./messages.js";
 import AdminStore from "../../stores/AdminStore.js";
 
 
-class Article extends React.Component {
+export default class Article extends React.Component {
 
 	static willTransitionTo(transition) {
 		// This method is called before transitioning to this component. If the user is not logged in, we’ll send him or her to the Login page.
@@ -29,4 +29,3 @@ class Article extends React.Component {
 
 }
 
-export default Article;

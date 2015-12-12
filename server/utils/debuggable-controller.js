@@ -9,7 +9,7 @@ class DebuggableController {
 	isDebuggable = true;
 
 	constructor(isDebuggable = true) {
-		this.displayName = this.constructor.name.slice(0, -10).toLocaleLowerCase();
+		this.displayName = this.constructor.name.slice(0, -10).toLowerCase();
 		this.isDebuggable = isDebuggable;
 		if (this.isDebuggable) {
 			this.log = debug(`controller:${this.displayName}`);

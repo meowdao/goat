@@ -4,10 +4,10 @@ import React from "react";
 import {Link} from "react-router";
 import AdminStore from "../../stores/AdminStore.js";
 import UserActionCreators from "../../actions/UserActionCreators.js";
-import {CollapsibleNav, Navbar, NavbarBrand, Nav, NavItem, DropdownButton, MenuItem} from "react-bootstrap";
+import {CollapsibleNav, Navbar, NavbarBrand, Nav, NavItem, NavDropdown, MenuItem} from "react-bootstrap";
 import {LinkContainer} from "react-router-bootstrap";
 
-class Header extends React.Component {
+export default class Header extends React.Component {
 
 	state = {
 		user: null
@@ -43,14 +43,14 @@ class Header extends React.Component {
 	renderMenu() {
 		return (
 			<Nav navbar pullRight>
-				<DropdownButton title={this.state.user.email} id="dropdown">
+				<NavDropdown title={this.state.user.email} id="dropdown">
 					{/* https://github.com/react-bootstrap/react-router-bootstrap/issues/24 */}
-					<LinkContainer to="/dashboard">
+					<LinkContainer to="/admin/dashboard">
 						<MenuItem >Dashboard</MenuItem>
 					</LinkContainer>
 					<MenuItem divider/>
 					<MenuItem onSelect={this.logout}>Logout</MenuItem>
-				</DropdownButton>
+				</NavDropdown>
 			</Nav>
 		);
 	}
@@ -73,15 +73,13 @@ class Header extends React.Component {
 			<Navbar inverse>
 				<Navbar.Header inverse={true} toggleNavKey={1}>
 					<Navbar.Brand>
-						<Link to="welcome" className="navbar-brand">Adventure Bucket List</Link>
+						<Link to="/" className="navbar-brand">Adventure Bucket List</Link>
 					</Navbar.Brand>
 				</Navbar.Header>
-				<Navbar.Collapse eventKey={1}>
+				<Navbar.Collapse eventKey={1} href="#">
 					{AdminStore.isLoggedIn() ? this.renderMenu() : this.renderLoginButton()}
 				</Navbar.Collapse>
 			</Navbar>
 		);
 	}
 }
-
-export default Header;

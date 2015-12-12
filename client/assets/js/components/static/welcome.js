@@ -4,7 +4,7 @@ import React from "react";
 import Title from "../partials/title.js";
 
 
-class Welcome extends React.Component {
+export default class Welcome extends React.Component {
 
 	static displayName = "Welcome";
 
@@ -21,4 +21,3 @@ class Welcome extends React.Component {
 
 }
 
-export default Welcome;

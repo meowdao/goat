@@ -2,7 +2,7 @@
 
 import {Schema} from "mongoose";
 
-var Avatar = new Schema({
+let Avatar = new Schema({
 	url: String
 }, {versionKey: false});
 
