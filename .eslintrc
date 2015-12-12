@@ -1,18 +1,35 @@
 {
-  "parser": "babel-eslint",
-  "plugins": [
-    "react"
-  ],
-  "ecmaFeatures": {
-    "jsx": true
-  },
-  "rules": {
-    "global-strict": false,
-    "eol-last": false,
-    "no-underscore-dangle": false
-  },
-  "env": {
-    "browser": 1,
-    "node": 1
-  }
+	"parser": "babel-eslint",
+	"rules": {
+		"indent": [
+			0,
+			"tab"
+		],
+		"quotes": [
+			2,
+			"double"
+		],
+		"linebreak-style": [
+			2,
+			"unix"
+		],
+		"semi": [
+			2,
+			"always"
+		]
+	},
+	"env": {
+		"node": true,
+		"mocha": true,
+		"es6": true,
+		"browser": true
+	},
+	"plugins": [
+		"react"
+	],
+	"extends": "eslint:recommended",
+	"ecmaFeatures": {
+		"jsx": true,
+		"experimentalObjectRestSpread": true
+	}
 }

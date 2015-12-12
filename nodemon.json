@@ -1,9 +1,8 @@
 {
     "ignore": [
-        "node_modules/*",
-        "bower_components/*"
+        ".idea"
     ],
     "execMap": {
-        "js": "node_modules/.bin/babel-node --stage=0"
+        "js": "babel-node"
     }
 }
