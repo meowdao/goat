@@ -78,8 +78,8 @@
 		"node": "v0.12.x"
 	},
 	"scripts": {
-		"start": "NODE_ENV=development DEBUG=web:* nodemon -w server/server.js -w client/assets/js/components/HTML.js -w server/configs/webpack.js server/server.js",
-		"test": "NODE_ENV=test mocha --compilers js:babel/register",
-		"build": "NODE_ENV=production webpack -c --config server/configs/webpack.js"
+		"start": "NODE_ENV=${NODE_ENV:=development} DEBUG=web:* nodemon -w server/server.js -w client/assets/js/components/HTML.js -w server/configs/webpack.js server/server.js",
+		"test": "NODE_ENV=${NODE_ENV:=test} mocha --compilers js:babel/register",
+		"build": "NODE_ENV=${NODE_ENV:=development} webpack -c --config server/configs/webpack.js"
 	}
 }

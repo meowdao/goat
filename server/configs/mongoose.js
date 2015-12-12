@@ -1,10 +1,11 @@
 "use strict";
 
+import Q from "q";
 import fs from "fs";
 import debug from "debug";
 import mongoose from "mongoose";
-import utils from "../utils/utils.js";
 import configs from "../configs/config.js";
+import utils from "../utils/utils.js";
 
 
 export default function () {
@@ -14,6 +15,8 @@ export default function () {
 	let log = debug("log:mongoose");
 
 	let db = mongoose.connection;
+
+	mongoose.Promise = Q.Promise;
 
 	if (db.readyState) {
 		return mongoose;
@@ -65,3 +68,4 @@ export default function () {
 	return mongoose;
 
 }
+
