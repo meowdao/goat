@@ -28,12 +28,12 @@ $(document)
 		$(document).css({cursor: "wait"});
 	})
 	.ajaxError((event, XMLHttpRequest, ajaxOptions, thrownError) => {
-		log(document.location.protocol + "//" + document.location.host + "/" + ajaxOptions.url + "?" + (ajaxOptions.data || ""));
+		log(ajaxOptions.method + " " + document.location.protocol + "//" + document.location.host + "/" + ajaxOptions.url + "?" + (ajaxOptions.data || ""));
 		log(thrownError);
 		ServerActionCreators.error(XMLHttpRequest.responseJSON && XMLHttpRequest.responseJSON.errors || thrownError || "Unknown error!");
 	})
 	.ajaxSuccess((event, XMLHttpRequest, ajaxOptions) => {
-		log(document.location.protocol + "//" + document.location.host + "/" + ajaxOptions.url + "?" + (ajaxOptions.data || ""));
+		log(ajaxOptions.method + " " + document.location.protocol + "//" + document.location.host + "/" + ajaxOptions.url + "?" + (ajaxOptions.data || ""));
 	})
 	.ajaxComplete(() => {
 		$(document).css({cursor: "auto"});

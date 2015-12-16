@@ -2,8 +2,7 @@
 
 import {ActionTypes} from "../constants/constants.js";
 import BaseStore from "./BaseStore.js";
-import RouteActionCreators from "../actions/RouteActionCreators.js";
-
+import history from "../utils/history.js";
 
 class AdminStore extends BaseStore {
 
@@ -20,13 +19,13 @@ class AdminStore extends BaseStore {
 			case ActionTypes.ADMIN_LOGIN:
 				this._admin = action.admin;
 				this.emitChange();
-				RouteActionCreators.transitionTo("dashboard");
+				history.pushState(null, "dashboard");
 				break;
 
 			case ActionTypes.ADMIN_LOGOUT:
 				this._admin = null;
 				this.emitChange();
-				RouteActionCreators.transitionTo("/");
+				history.pushState(null, "/");
 				break;
 
 			default:

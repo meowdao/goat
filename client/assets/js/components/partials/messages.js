@@ -45,9 +45,7 @@ export default class Message extends React.Component {
 		return (
 			<div>
 				{this.state.messages.map(message =>
-						<Alert key={message.id} dismissAfter={3000}
-							onDismiss={() => { MessageStore.remove(message.id); }}
-							bsStyle={message.type}>
+						<Alert key={message.id} dismissAfter={3000} onDismiss={() => { MessageStore.remove(message.id); }} bsStyle={message.type}>
 							{message.text}
 						</Alert>
 				)}

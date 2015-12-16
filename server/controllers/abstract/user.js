@@ -38,7 +38,7 @@ export default class AbstractUserController extends AbstractController {
 	forgot(request) {
 		var clean = _.pick(request.body, ["email"]);
 		return this.findOne(clean)
-			.then(messenger.checkModel("user-not-found"))
+			.then(messenger.notFound(this, request.user))
 			.then(user => {
 				let hashController = new HashController();
 				return hashController.create({user: user._id})
@@ -57,7 +57,7 @@ export default class AbstractUserController extends AbstractController {
 	change(request) {
 		let hashController = new HashController();
 		return hashController.findByIdAndRemove(request.params.hash)
-			.then(messenger.checkModel("expired-key"))
+			.then(messenger.notFound(hashController, request.user))
 			.then(hash => {
 				return this.findById(hash.user, {lean: false})
 					.then(user => {
@@ -104,7 +104,7 @@ export default class AbstractUserController extends AbstractController {
 		request.logout();
 		request.session.logout = true;
 		response.clearCookie();
-		response.redirect("/");
+		response.status(204).send("");
 	}
 }
 

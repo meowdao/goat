@@ -1,5 +1,5 @@
 #project
-configs/config.js
+server/configs/config.js
 
 # IDEA
 .idea

@@ -3,8 +3,8 @@
 import debug from "debug";
 import passport from "passport";
 import {Strategy as LocalStrategy} from "passport-local";
-//import {Strategy as FacebookStrategy} from "passport-facebook";
-//import {OAuth2Strategy as GoogleStrategy} from "passport-google-oauth";
+import {Strategy as FacebookStrategy} from "passport-facebook";
+import {OAuth2Strategy as GoogleStrategy} from "passport-google-oauth";
 import configs from "./config.js";
 import UserController from "../controllers/user.js";
 
@@ -34,7 +34,10 @@ export default function (app) {
 	passport.use(new LocalStrategy(config.strategies.local,
 		function (email, password, callback) {
 			let userController = new UserController();
-			userController.findOne({email: email}, {lean: false})
+			userController.findOne({email: email}, {
+					select: "+password",
+					lean: false
+				})
 				.then(user => {
 					if (user) {
 						if (user.verifyPassword(password)) {
@@ -53,7 +56,7 @@ export default function (app) {
 		}
 	));
 
-	/*
+
 	passport.use(new GoogleStrategy(config.strategies.google,
 		function (accessToken, refreshToken, profile, callback) {
 			let userController = new UserController();
@@ -61,9 +64,12 @@ export default function (app) {
 				.then(user => {
 					if (!user) {
 						userController.create({
-							email: profile.emails[0].value,
-							google: profile._json
-						})
+								firstName: profile.name.givenName,
+								lastName: profile.name.familyName,
+								email: profile.emails[0].value,
+								isEmailVerified: true,
+								google: profile._json
+							})
 							.then(user => {
 								callback(null, user);
 							})
@@ -89,11 +95,12 @@ export default function (app) {
 				.then(user => {
 					if (!user) {
 						userController.create({
-							first_name: profile.name.givenName,
-							last_name: profile.name.familyName,
-							email: profile.emails[0].value,
-							facebook: profile._json
-						})
+								firstName: profile.name.givenName,
+								lastName: profile.name.familyName,
+								email: profile.emails[0].value,
+								isEmailVerified: true,
+								facebook: profile._json
+							})
 							.then(user => {
 								callback(null, user);
 							})
@@ -111,7 +118,6 @@ export default function (app) {
 				.done();
 		}
 	));
-	*/
 
 	app.use(passport.initialize());
 	app.use(passport.session());

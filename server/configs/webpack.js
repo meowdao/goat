@@ -12,7 +12,7 @@ module.exports = {
 		"./client/assets/js/main"
 	],
 	output: {
-		path: path.join(__dirname, "..", "client", "build"),
+		path: path.join(__dirname, "..", "..", "client", "build"),
 		filename: "bundle.js",
 		sourceMapFilename: '[file].map',
 		//chunkFilename: "[id].js",

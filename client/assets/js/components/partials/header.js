@@ -44,7 +44,6 @@ export default class Header extends React.Component {
 		return (
 			<Nav navbar pullRight>
 				<NavDropdown title={this.state.user.email} id="dropdown">
-					{/* https://github.com/react-bootstrap/react-router-bootstrap/issues/24 */}
 					<LinkContainer to="/admin/dashboard">
 						<MenuItem >Dashboard</MenuItem>
 					</LinkContainer>

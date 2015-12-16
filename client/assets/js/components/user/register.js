@@ -11,6 +11,7 @@ export default class Register extends React.Component {
 		confirm: PropTypes.string,
 		firstName: PropTypes.string,
 		lastName: PropTypes.string,
+		companyName: PropTypes.string,
 		role: PropTypes.string
 	};
 
@@ -20,6 +21,7 @@ export default class Register extends React.Component {
 		confirm: "123qweASD",
 		firstName: "Trej",
 		lastName: "Gun",
+		companyName: "Bintang",
 		role: "admin"
 	};
 
@@ -29,6 +31,7 @@ export default class Register extends React.Component {
 		confirm: this.props.confirm,
 		firstName: this.props.firstName,
 		lastName: this.props.lastName,
+		companyName: this.props.companyName,
 		role: this.props.role
 	};
 

@@ -1,9 +1,8 @@
 "use strict";
 
 import $ from "jquery";
-import ServerActionCreators from "../actions/ServerActionCreators";
-import RouteActionCreators from "../actions/RouteActionCreators.js";
-
+import ServerActionCreators from "../actions/ServerActionCreators.js";
+import history from "../utils/history.js";
 
 export default {
 
@@ -15,7 +14,7 @@ export default {
 		})
 			.then(response => {
 				ServerActionCreators.updateUser(response);
-				RouteActionCreators.transitionTo("user/profile");
+				history.pushState(null, "user/profile");
 			});
 	},
 
@@ -27,7 +26,7 @@ export default {
 		})
 			.then(response => {
 				ServerActionCreators.updateUser(response);
-				RouteActionCreators.transitionTo("user/profile");
+				history.pushState(null, "/");
 			});
 	},
 
@@ -39,7 +38,7 @@ export default {
 		})
 			.then(response => {
 				ServerActionCreators.updateUser(response);
-				RouteActionCreators.transitionTo("profile");
+				history.pushState(null, "user/profile");
 			});
 	},
 
@@ -51,7 +50,7 @@ export default {
 		})
 			.then(response => {
 				ServerActionCreators.updateUser(response);
-				RouteActionCreators.transitionTo("profile");
+				history.pushState(null, "user/profile");
 			});
 	}
 

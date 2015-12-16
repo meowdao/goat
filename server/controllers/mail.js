@@ -5,7 +5,6 @@ import mongoose from "mongoose";
 import debug from "debug";
 import AbstractController from "./abstract/abstract.js";
 import messenger from "../utils/messenger.js";
-import {createHistory, createHashHistory} from "history";
 import lang from "../utils/lang.js";
 
 import React from "react"; // eslint-disable-line no-unused-vars
@@ -53,7 +52,7 @@ export default class MailController extends AbstractController {
 			type: view
 		})
 			.then(optout => {
-				return messenger.checkModel("optout")(!optout);
+				return messenger.notFound(optOutController, user)(!optout);
 			})
 			.then(() => {
 				EmailStore.setData(data);

@@ -52,7 +52,8 @@ export default class Login extends React.Component {
 			<div className="panel panel-default">
 				<div className="panel-body">
 
-					<a href="#" onClick={this.open("/auth/google")}>google</a>
+					[<a href="#" onClick={this.open("/auth/google")}>google</a> ,
+					<a href="#" onClick={this.open("/auth/facebook")}>facebook</a>]
 
 					<form className="form-horizontal" onSubmit={this.onSubmit.bind(this)} autoComplete="off">
 
@@ -61,7 +62,7 @@ export default class Login extends React.Component {
 
 							<div className="col-sm-10">
 								<input type="text" className="form-control" name="email" id="email"
-									placeholder="me@example.com" defaultValue=""
+									placeholder="me@example.com"
 									onChange={e => this.setState({email: e.target.value})}/>
 							</div>
 						</div>
@@ -70,7 +71,7 @@ export default class Login extends React.Component {
 
 							<div className="col-sm-10">
 								<input type="password" className="form-control" name="password" id="password"
-									placeholder="******" defaultValue=""
+									placeholder="******"
 									onChange={e => this.setState({password: e.target.value})}/>
 							</div>
 						</div>
