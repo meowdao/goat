@@ -38,7 +38,7 @@ class RichModel {
 	 *
 	 * @param id {String}
 	 * @param options {Object} (select, sort, populate)
-	 * @returns {Q.Promise}
+	 * @returns {Promise}
 	 */
 	findById(id, options) {
 		return this.enchant("findById", [id], options)
@@ -49,7 +49,7 @@ class RichModel {
 	 *
 	 * @param query {Object}
 	 * @param options {Object} (select, sort, populate)
-	 * @returns {Q.Promise}
+	 * @returns {Promise}
 	 */
 	find(query, options) {
 		return this.enchant("find", [query], options)
@@ -60,7 +60,7 @@ class RichModel {
 	 *
 	 * @param query {Object}
 	 * @param options {Object} (select, sort, populate)
-	 * @returns {Q.Promise}
+	 * @returns {Promise}
 	 */
 	findOne(query, options) {
 		return this.enchant("findOne", [query], options)
@@ -73,7 +73,7 @@ class RichModel {
 	 * @param data {Object}
 	 * @param options {Object} (select, sort, populate)
 	 * @param params {Object} (new, upsert, runValidators, setDefaultsOnInsert)
-	 * @returns {Q.Promise}
+	 * @returns {Promise}
 	 */
 	upsert(query, data, options, params) {
 		return this.enchant("findOneAndUpdate", [query, data, Object.assign({
@@ -89,18 +89,17 @@ class RichModel {
 	 *
 	 * @param query {Object}
 	 * @param data {Object}
-	 * @param options {Object}
+	 * @param options {Object} (setOptions)
 	 * @param params {Object} (safe, upsert, multi, strict, overwrite)
-	 * @returns {Q.Promise}
+	 * @returns {Promise}
 	 */
 	update(query, data, options, params) {
 		// http://mongoosejs.com/docs/api.html#model_Model.update
-		return this.model.update(query, data, Object.assign({
+		return this.enchant("update", [query, data, Object.assign({
 				strict: true,
 				multi: true,
 				runValidators: true
-			}, params))
-			.exec()
+			}, params)], options)
 			.tap(this._log("updated"));
 	}
 
@@ -114,7 +113,7 @@ class RichModel {
 	/**
 	 *
 	 * @param text {String}
-	 * @returns {Q.Promise}
+	 * @returns {Promise}
 	 */
 	search(text) {
 		return this.find({$text: {$search: text}})
@@ -124,18 +123,17 @@ class RichModel {
 	/**
 	 *
 	 * @param model {mongoose.Document}
-	 * @returns {Q.Promise}
+	 * @returns {Promise}
 	 */
 	save(model) {
 		return model.save()
-			.get(0)
 			.tap(this._log("saved"));
 	}
 
 	/**
 	 *
 	 * @param model {mongoose.Document}
-	 * @returns {Q.Promise}
+	 * @returns {Promise}
 	 */
 	destroy(model) {
 		return model.remove()

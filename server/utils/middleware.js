@@ -12,7 +12,7 @@ export default {
 			if (!_.every(required, function (e) {
 					return !!query[e];
 				})) {
-				return next(messenger.makeError("no-param"));
+				return next(messenger.makeError("no-param", request.user));
 			}
 			return next();
 		};
@@ -22,7 +22,7 @@ export default {
 		return (request, response, next) => {
 			this.requiresLogin(request, response, function () {
 				if (!_.contains(required, request.user.role) || !(self && request.user._id.toString() === request.params.id)) {
-					return next(messenger.makeError("access-denied"));
+					return next(messenger.makeError("access-denied", request.user, 403));
 				}
 				return next();
 			});
@@ -40,7 +40,7 @@ export default {
 	},
 
 	methodNotAllowed (request, response, next) {
-		return next(messenger.makeError("method-not-allowed", request.user));
+		return next(messenger.makeError("method-not-allowed", request.user, 405));
 	}
 
 }

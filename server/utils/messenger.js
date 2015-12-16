@@ -2,42 +2,52 @@
 
 import lang from "./lang.js";
 
-var statuses = {
-    "expired-key": 200,
-    "no-param": 400,
-    "no-origin": 403,
-    "access-denied": 403,
-    "page-not-found": 404,
-    "user-not-found": 404,
-    "server-error": 500
-};
 
 export default {
-    makeError (key, user) {
-        var error = new Error();
-        error.message = lang.translate("error/server/" + key, user);
-        error.status = statuses[key] || 500;
-        return error;
-    },
-    checkModel (key, user) {
-        return model => {
-            if (!model) {
-                throw this.makeError(key, user);
-            } else {
-                return model;
-            }
-        };
-    },
-    checkUser(key, user){
-        return model => {
-            if (user._id.toString() !== model.user._id.toString()) {
-                throw this.makeError(key, user);
-            } else {
-                return model;
-            }
-        };
-    }
+
+	_makeError(text, code = 500) {
+		let error = new Error();
+		error.message = text;
+		error.status = code;
+		return error;
+	},
+
+	makeError(key, user, code = 400) {
+		return this._makeError(lang.translate("error/server/" + key, user), code);
+	},
+
+	notFound(controller, user) {
+		return model => {
+			if (!model) {
+				throw this._makeError(this.getText(controller.displayName, "not-found", user, "Not Found"), 404);
+			} else {
+				return model;
+			}
+		};
+	},
+
+	notActive(controller, user) {
+		return model => {
+			if (model.status !== controller.constructor.statuses.active) {
+				throw this._makeError(this.getText(controller.displayName, "not-active", user, "Is Not Active"), 400);
+			} else {
+				return model;
+			}
+		};
+	},
+
+	notMine(controller, user){
+		return model => {
+			if (user._id.toString() !== model.user._id.toString()) {
+				throw this.makeError("access-denied", user, 403);
+			} else {
+				return model;
+			}
+		};
+	},
+
+	getText(displayName, key, user, fallback){
+		return lang.translate(`error/server/${displayName}-${key}`, user) || `${displayName.charAt(0).toUpperCase() + displayName.slice(1)} ${fallback}`;
+	}
 };
-
-
 

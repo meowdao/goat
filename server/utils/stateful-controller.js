@@ -28,20 +28,21 @@ class StatefulController extends AbstractController {
 	}
 
 	edit(request) {
-		return this.change(request);
+		return this.change(request)
+			.thenResolve({success: true});
 	}
 
 	change(request, populate = [], fields = []) {
 		return this.check(request, populate)
+			.then(messenger.notActive(this, request.user))
 			.then(item => {
-				if (item.status === this.constructor.statuses.inactive) {
-					throw messenger.notActive(this.displayName, request.user);
+				let clean = fields.length ? _.pick(request.body, fields) : request.body;
+				if (Object.keys(clean).length) {
+					Object.assign(item, clean);
+					return this.save(item);
+				} else {
+					return item;
 				}
-				return item;
-			})
-			.then(item => {
-				let clean = Object.assign(item, fields.length ? _.pick(request.body, fields) : request.body);
-				return this.save(clean);
 			});
 	}
 
@@ -50,7 +51,8 @@ class StatefulController extends AbstractController {
 				lean: false,
 				populate: ["user"].concat(populate)
 			})
-			.then(messenger.checkUser(this.displayName, request.user))
+			.then(messenger.notFound(this, request.user))
+			.then(messenger.notMine(this, request.user))
 			.then(item => {
 				conditions.forEach(condition => condition.bind(this)(item, request));
 				return item;
@@ -58,12 +60,8 @@ class StatefulController extends AbstractController {
 	}
 
 	deactivate(request, populate = [], conditions = []) {
-		conditions.unshift(function (item, request) { // don't use =>
-			if (item.status === this.constructor.statuses.inactive) {
-				throw messenger.notActive(this.displayName, request.user);
-			}
-		});
 		return this.check(request, populate, conditions)
+			.then(messenger.notActive(this, request.user))
 			.then(item => {
 				item.status = this.constructor.statuses.inactive;
 				return this.save(item);

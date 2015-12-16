@@ -18,7 +18,7 @@ class AbstractController extends DebuggableController {
 				_id: request.params._id,
 				user: request.user._id
 			})
-			.then(messenger.notFound(this.displayName, request.user));
+			.then(messenger.notFound(this, request.user));
 	}
 
 	list(request) {
@@ -39,7 +39,7 @@ class AbstractController extends DebuggableController {
 				_id: request.params._id,
 				user: request.user._id
 			}, clean, {new: true})
-			.then(messenger.notFound(this.displayName, request.user));
+			.then(messenger.notFound(this, request.user));
 	}
 
 	delete(request) {
@@ -47,7 +47,7 @@ class AbstractController extends DebuggableController {
 				user: request.user._id,
 				_id: request.params._id
 			})
-			.then(messenger.notFound(this.displayName, request.user))
+			.then(messenger.notFound(this, request.user))
 			.thenResolve({success: true});
 	}
 

@@ -50,7 +50,7 @@ export default {
 		}
 		if (!error.status) {
 			if (process.env.NODE_ENV === "production") {
-				error = messenger.makeError("server-error", request.user);
+				error = messenger.makeError("server-error", request.user, 500);
 			} else {
 				error.status = 500;
 				error.message = error.stack;

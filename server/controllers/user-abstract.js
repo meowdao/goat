@@ -20,7 +20,7 @@ export default class AbstractUserController extends AbstractController {
 
 		return defer.promise
 			.catch(error => {
-				throw messenger.makeError(error.message, request.user);
+				throw messenger.makeError(error.message, request.user, 401);
 			});
 	}
 
