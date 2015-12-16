@@ -3,7 +3,7 @@
 import _ from "lodash";
 import mongoose from "mongoose";
 
-import AbstractController from "../utils/abstract-controller.js";
+import AbstractController from "./abstract/abstract.js";
 
 export default class OptOutController extends AbstractController {
 

@@ -2,41 +2,8 @@
 
 import bcrypt from "bcrypt-nodejs";
 import {Schema} from "mongoose";
+import zxcvbn from "zxcvbn";
 import regexp from "../utils/regexp.js";
-
-// last is first
-let password_validator = [
-	{
-		validator: function () {
-			return this.password === this.confirm;
-		},
-		msg: "Passwords doesn't much"
-	},
-	{
-		validator: function () {
-			return regexp.numbers.test(this.password);
-		},
-		msg: "Passwords should contains numbers"
-	},
-	{
-		validator: function () {
-			return regexp.upper.test(this.password);
-		},
-		msg: "Passwords should contains upper case letters"
-	},
-	{
-		validator: function () {
-			return regexp.lower.test(this.password);
-		},
-		msg: "Passwords should contains lower case letters"
-	},
-	{
-		validator: function () {
-			return !!this.password;
-		},
-		msg: "Password cannot be blank"
-	}
-];
 
 let User = new Schema({
 	avatar: {
@@ -66,15 +33,40 @@ let User = new Schema({
 		required: "Last name cannot be blank"
 	},
 
+	companyName: {
+		type: String,
+		required: "Company name cannot be blank"
+	},
+
 	role: {
 		type: String,
 		default: "user",
-		enum: ["user", "admin"]
+		enum: {
+			values: ["user", "admin"],
+			message: "Unrecognized user role"
+		}
 	},
 
 	password: {
 		type: String,
-		validate: password_validator
+		select: false,
+		required: "Password cannot be blank",
+		validate: [{
+			validator: function () {
+				return this.isModified("password") ? this.password === this.confirm : true;
+			},
+			msg: "Passwords doesn't much"
+		}, {
+			validator: function () {
+				return !!this.password;
+			},
+			msg: "Password cannot be blank"
+		}, {
+			validator: function () {
+				return zxcvbn(this.password).score >= 1;
+			},
+			msg: "Password is too weak"
+		}]
 	},
 
 	created: {
@@ -140,7 +132,9 @@ User.index({
 }, {
 	name: "search",
 	weights: {
-		name: 1
+		firstName: 1,
+		lastName: 1,
+		companyName: 1
 	}
 });
 

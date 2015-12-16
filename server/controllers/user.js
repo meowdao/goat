@@ -2,7 +2,7 @@
 
 import Q from "q";
 
-import AbstractUserController from "./user-abstract.js";
+import AbstractUserController from "./abstract/user.js";
 
 export default class UserController extends AbstractUserController {
 

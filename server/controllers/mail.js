@@ -3,7 +3,7 @@
 import Q from "q";
 import mongoose from "mongoose";
 import debug from "debug";
-import AbstractController from "../utils/abstract-controller.js";
+import AbstractController from "./abstract/abstract.js";
 import messenger from "../utils/messenger.js";
 import {createHistory, createHashHistory} from "history";
 import lang from "../utils/lang.js";

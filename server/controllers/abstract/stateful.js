@@ -1,8 +1,8 @@
 "use strict";
 
 import _ from "lodash";
-import messenger from "../utils/messenger.js";
-import AbstractController from "./abstract-controller.js";
+import messenger from "../../utils/messenger.js";
+import AbstractController from "./abstract.js";
 
 class StatefulController extends AbstractController {
 

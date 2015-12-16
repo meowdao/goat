@@ -2,7 +2,7 @@
 	"name": "goat",
 	"title": "-=GOAT=-",
 	"description": "just a goat",
-	"version": "0.0.5",
+	"version": "0.0.6",
 	"homepage": "http://mabp.kiev.ua/",
 	"keywords": [],
 	"author": {
@@ -39,10 +39,13 @@
 		"font-awesome": "4.5.0",
 		"history": "1.13.1",
 		"jquery": "2.1.4",
+		"lackey-mongoose-version": "1.0.2",
 		"less": "2.5.3",
 		"less-loader": "2.2.2",
 		"lodash": "3.10.1",
 		"moment": "2.10.6",
+		"moment-range": "2.0.3",
+		"moment-timezone": "0.4.1",
 		"mongodb": "2.1.0",
 		"mongoose": "4.3.1",
 		"morgan": "1.6.1",
@@ -61,7 +64,8 @@
 		"react-router-bootstrap": "0.19.3",
 		"style-loader": "0.13.0",
 		"webpack": "1.12.9",
-		"webpack-dev-server": "1.14.0"
+		"webpack-dev-server": "1.14.0",
+		"zxcvbn": "4.2.0"
 	},
 	"devDependencies": {
 		"babel-core": "6.3.15",
@@ -78,8 +82,8 @@
 		"node": "v0.12.x"
 	},
 	"scripts": {
-		"start": "NODE_ENV=${NODE_ENV:=development} DEBUG=web:* nodemon -w server/server.js -w client/assets/js/components/HTML.js -w server/configs/webpack.js server/server.js",
-		"test": "NODE_ENV=${NODE_ENV:=test} mocha --compilers js:babel/register",
+		"start": "NODE_ENV=${NODE_ENV:=development} DEBUG=web:* nodemon server/server.js",
+		"test": "NODE_ENV=${NODE_ENV:=development} mocha --opts test/mocha.opts",
 		"build": "NODE_ENV=${NODE_ENV:=development} webpack -c --config server/configs/webpack.js"
 	}
 }

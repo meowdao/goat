@@ -1,10 +1,10 @@
 "use strict";
 
 import _ from "lodash";
-import RichModel from "./rich-model.js";
-import messenger from "./messenger.js";
+import RichModel from "./../../utils/rich-model.js";
+import messenger from "./../../utils/messenger.js";
 
-import DebuggableController from "./debuggable-controller.js";
+import DebuggableController from "./debuggable.js";
 
 class AbstractController extends DebuggableController {
 

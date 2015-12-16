@@ -1,69 +1,70 @@
 "use strict";
 
+import fs from "fs";
 import path from "path";
 import crypto from "crypto";
 
 export default {
 
-    getPath: function () {
-	    return path.join(__dirname, "..", ...Array.prototype.slice.call(arguments));
-    },
+	getPath (...args) {
+		return path.join(__dirname, "..", ...args);
+	},
 
-    isType: function (variable, type) {
-        return Object.prototype.toString.call(variable) === "[object " + type + "]";
-    },
+	isType (variable, type) {
+		return Object.prototype.toString.call(variable) === "[object " + type + "]";
+	},
 
-    getType: function (variable) {
-        return Object.prototype.toString.call(variable).match(/\s([^\]]+)/)[1]; // .slice(8, -1);
-    },
+	getType (variable) {
+		return Object.prototype.toString.call(variable).match(/\s([^\]]+)/)[1];
+	},
 
-    roughSizeOfObject: function (object) {
+	roughSizeOfObject (object) {
 
-        var objectList = [],
-            stack = [object],
-            bytes = 0;
+		var objectList = [],
+			stack = [object],
+			bytes = 0;
 
-        while (stack.length) {
-            var value = stack.pop();
-            if (typeof value === "boolean") {
-                bytes += 4;
-            } else if (typeof value === "string") {
-                bytes += value.length * 2;
-            } else if (typeof value === "number") {
-                bytes += 8;
-            } else if (typeof value === "object" && objectList.indexOf(value) === -1) {
-                objectList.push(value);
-                for (var i in value) {
-                    stack.push(value[i]);
-                }
-            }
-        }
-        return bytes;
-    },
+		while (stack.length) {
+			var value = stack.pop();
+			if (typeof value === "boolean") {
+				bytes += 4;
+			} else if (typeof value === "string") {
+				bytes += value.length * 2;
+			} else if (typeof value === "number") {
+				bytes += 8;
+			} else if (typeof value === "object" && objectList.indexOf(value) === -1) {
+				objectList.push(value);
+				for (var i in value) {
+					stack.push(value[i]);
+				}
+			}
+		}
+		return bytes;
+	},
 
-    getObject: function (parts, create, obj) {
+	getObject (parts, create, obj) {
 
-        if (typeof parts === "string") {
-            parts = parts.split(".");
-        }
+		if (typeof parts === "string") {
+			parts = parts.split(".");
+		}
 
-        if (typeof create !== "boolean") {
-            obj = create;
-            create = undefined;
-        }
+		if (typeof create !== "boolean") {
+			obj = create;
+			create = undefined;
+		}
 
-        var p;
+		var p;
 
-        while (obj && parts.length) {
-            p = parts.shift();
-            if (obj[p] === undefined && create) {
-                obj[p] = {};
-            }
-            obj = obj[p];
-        }
+		while (obj && parts.length) {
+			p = parts.shift();
+			if (obj[p] === undefined && create) {
+				obj[p] = {};
+			}
+			obj = obj[p];
+		}
 
-        return obj;
-    },
+		return obj;
+	},
 
 	getRandomString(length = 64, type = 3){
 		let chars = [
@@ -114,8 +115,10 @@ export default {
 	getControllers(...args) {
 		let controllers = {};
 		fs.readdirSync(this.getPath("controllers")).forEach(file => {
-			const name = file.split(".")[0].replace(/-/g, "");
-			controllers[name] = new (require("../controllers/" + file)).default(...args);
+			if (fs.statSync(this.getPath("controllers", file)).isFile()) {
+				const name = file.split(".")[0].replace(/-/g, "");
+				controllers[name] = new (require(this.getPath("controllers", file)).default)(...args);
+			}
 		});
 		return controllers;
 	}

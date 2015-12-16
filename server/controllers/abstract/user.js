@@ -4,10 +4,10 @@ import Q from "q";
 import _ from "lodash";
 import passport from "passport";
 
-import messenger from "../utils/messenger.js";
-import AbstractController from "../utils/abstract-controller.js";
-import MailController from "./mail.js";
-import HashController from "./hash.js";
+import messenger from "../../utils/messenger.js";
+import AbstractController from "./abstract.js";
+import MailController from "./../mail.js";
+import HashController from "./../hash.js";
 
 export default class AbstractUserController extends AbstractController {
 

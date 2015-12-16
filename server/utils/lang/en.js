@@ -3,6 +3,7 @@
 export default  {
 	"error": {
 		"server": {
+			// SERVER
 			"no-param": "Required parameter not found",
 			"page-not-found": "Page Not Found",
 			"user-not-found": "User Not Found",
@@ -13,6 +14,13 @@ export default  {
 			"missing-credentials": "Missing credentials",
 			"incorrect-password": "Incorrect password.",
 			"incorrect-name": "Incorrect username."
+
+			// USER
+
+			// API
+		},
+		"model": {
+
 		},
 		"mongo": {
 			"E11000": "Duplicate key error"

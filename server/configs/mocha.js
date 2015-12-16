@@ -1,24 +1,32 @@
+"use strict";
+
 process.env.NODE_ENV = process.env.NODE_ENV || "test";
+process.env.HOST = process.env.HOST || "localhost";
+process.env.PORT = process.env.PORT || "80";
 
 require("babel-core/register");
 require("babel-polyfill");
 
-Error.stackTraceLimit = 25; // Infinity
-//require("bluebird").longStackTraces();
-require("q").longStackSupport = true;
+require("./moment.js");
 
-let debug = require("debug");
+Error.stackTraceLimit = Infinity;
+
+var debug = require("debug");
 debug.enable("controller:*");
 debug.enable("model:*");
 debug.enable("test:*");
 debug.enable("log:*");
 
-let log = debug("log:mocha");
+let bluebird = require("bluebird");
+bluebird.longStackTraces();
+
+let q = require("q");
+q.longStackSupport = true;
 
 let mongoose = require("./mongoose.js").default();
-
 mongoose.set("debug", false);
 
-process.on("uncaughtException", function (exception) {
-	log(exception);
+process.on("uncaughtException", (exception) => {
+	debug("log:mocha")(exception);
 });
+
