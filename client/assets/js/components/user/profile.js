@@ -3,6 +3,9 @@
 import React from "react";
 
 export default class Profile extends React.Component {
+
+	static displayName = "Profile";
+
 	render () {
 		return (
 			<div className="panel panel-default">

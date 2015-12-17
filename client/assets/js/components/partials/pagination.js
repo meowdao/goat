@@ -3,6 +3,7 @@
 import React from "react";
 
 export default class Pagination extends React.Component {
+
 	render() {
 		return (
 			<nav className="text-center">
@@ -24,5 +25,6 @@ export default class Pagination extends React.Component {
 			</nav>
 		);
 	}
+
 }
 

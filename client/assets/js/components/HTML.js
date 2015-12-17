@@ -14,12 +14,13 @@ export default class HTML extends React.Component {
 				<meta name="keywords" content="keywords"/>
 				<meta name="robots" content="all"/>
 				<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+				<link rel="shortcut icon" href="favicon.ico"/>
 				<title>G.O.A.T.</title>
-				<script src="assets/bundle.js" type="text/javascript"/>
-				<link href="assets/style.css" rel="stylesheet"/>
 			</head>
 			<body>
 				<div id="app"/>
+				<link href="assets/style.css" rel="stylesheet"/>
+				<script src="assets/bundle.js" type="text/javascript"/>
 			</body>
 			</html>
 		);

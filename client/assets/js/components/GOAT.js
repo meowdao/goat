@@ -7,6 +7,8 @@ import Footer from "./partials/footer.js";
 
 export default class GOAT extends React.Component {
 
+	static displayName = "GOAT";
+
 	static propTypes = {
 		params: PropTypes.object.isRequired
 	};
@@ -15,7 +17,7 @@ export default class GOAT extends React.Component {
 		console.log("GOAT:props", this.props);
 		return (
 			<div>
-				<Header/>
+				<Header {...this.props}/>
 				{this.props.children}
 				<Footer/>
 			</div>

@@ -5,7 +5,7 @@ import fs from "fs";
 import debug from "debug";
 import mongoose from "mongoose";
 import configs from "../configs/config.js";
-import utils from "../utils/utils.js";
+import path from "path";
 
 
 export default function () {
@@ -61,8 +61,8 @@ export default function () {
 		});
 	}
 
-	fs.readdirSync(utils.getPath("models")).forEach(file => {
-		mongoose.model(toTitleCase(file), require(utils.getPath("models", file)).default);
+	fs.readdirSync(path.join(__dirname, "../models")).forEach(file => {
+		mongoose.model(toTitleCase(file), require(path.join(__dirname, "../models", file)).default);
 	});
 
 	return mongoose;

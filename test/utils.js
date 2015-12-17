@@ -2,6 +2,8 @@
 
 import Q from "q";
 import _ from "lodash";
+import fs from "fs";
+import path from "path";
 import debug from "debug";
 import moment from "moment";
 import utils from "../server/utils/utils.js";
@@ -11,10 +13,9 @@ import configs from "../server/configs/config.js";
 
 const config = configs[process.env.NODE_ENV];
 
-let controllers = utils.getControllers(false);
+let controllers = getControllers(false);
 
 let log = debug("log:helper");
-
 
 
 export function createUser(requires, users, data) {
@@ -147,4 +148,16 @@ export function wrapResponse(data) {
 		clearCookie(){
 		}
 	}, data);
+}
+
+
+export function getControllers(...args) {
+	let controllers = {};
+	fs.readdirSync(path.join(__dirname, "../controllers")).forEach(file => {
+		if (fs.statSync(path.join(__dirname, "../controllers", file)).isFile()) {
+			const name = file.split(".")[0].replace(/-/g, "");
+			controllers[name] = new (require(path.join(__dirname, "../controllers", file)).default)(...args);
+		}
+	});
+	return controllers;
 }

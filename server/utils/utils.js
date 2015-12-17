@@ -1,14 +1,10 @@
 "use strict";
 
-import fs from "fs";
 import path from "path";
 import crypto from "crypto";
 
-export default {
 
-	getPath (...args) {
-		return path.join(__dirname, "..", ...args);
-	},
+export default {
 
 	isType (variable, type) {
 		return Object.prototype.toString.call(variable) === "[object " + type + "]";
@@ -42,30 +38,6 @@ export default {
 		return bytes;
 	},
 
-	getObject (parts, create, obj) {
-
-		if (typeof parts === "string") {
-			parts = parts.split(".");
-		}
-
-		if (typeof create !== "boolean") {
-			obj = create;
-			create = undefined;
-		}
-
-		var p;
-
-		while (obj && parts.length) {
-			p = parts.shift();
-			if (obj[p] === undefined && create) {
-				obj[p] = {};
-			}
-			obj = obj[p];
-		}
-
-		return obj;
-	},
-
 	getRandomString(length = 64, type = 3){
 		let chars = [
 			"0123456789",
@@ -85,41 +57,6 @@ export default {
 
 	tpl(template, data) {
 		return template.replace(/(\$\{([^\{\}]+)\})/g, ($0, $1, $2) => $2 in data ? data[$2] : "");
-	},
-
-	setStatus(clean, query, obj) {
-		switch (query.status) {
-			case "all":
-				break;
-			case "inactive":
-				clean.status = obj.constructor.statuses.inactive;
-				break;
-			case "active":
-			default:
-				clean.status = obj.constructor.statuses.active;
-				break;
-		}
-	},
-
-	setRegExp(clean, query, fields){
-		fields.forEach(name => {
-			if (query[name]) {
-				clean[name] = {
-					$regex: "^" + query[name].replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&"),
-					$options: "i"
-				};
-			}
-		});
-	},
-
-	getControllers(...args) {
-		let controllers = {};
-		fs.readdirSync(this.getPath("controllers")).forEach(file => {
-			if (fs.statSync(this.getPath("controllers", file)).isFile()) {
-				const name = file.split(".")[0].replace(/-/g, "");
-				controllers[name] = new (require(this.getPath("controllers", file)).default)(...args);
-			}
-		});
-		return controllers;
 	}
+
 };

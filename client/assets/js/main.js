@@ -17,9 +17,8 @@ if (process.env.NODE_ENV !== "production") {
 	debug.enable("web:*");
 }
 
-$(() => {
-	ReactDOM.render(<Router history={history} routes={routes}/>, document.getElementById("app"));
-});
+ReactDOM.render(<Router history={history} routes={routes}/>, document.getElementById("app"));
+
 
 
 

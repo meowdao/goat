@@ -2,7 +2,7 @@
 
 import React, {PropTypes} from "react";
 import UserActionCreator from "../../actions/UserActionCreators.js";
-import {History} from "react-router";
+import {email, password} from "../../../../../server/utils/constants/misc.js";
 
 export default class Login extends React.Component {
 
@@ -14,8 +14,8 @@ export default class Login extends React.Component {
 	};
 
 	static defaultProps = {
-		email: "trejgun@gmail.com",
-		password: "123qweASD"
+		email: email,
+		password: password
 	};
 
 	state = {

@@ -2,6 +2,8 @@
 
 import React, {PropTypes} from "react";
 import UserActionCreator from "../../actions/UserActionCreators.js";
+import {email, password} from "../../../../../server/utils/constants/misc.js";
+
 
 export default class Register extends React.Component {
 
@@ -16,9 +18,9 @@ export default class Register extends React.Component {
 	};
 
 	static defaultProps = {
-		email: "trejgun@gmail.com",
-		password: "123qweASD",
-		confirm: "123qweASD",
+		email: email,
+		password: password,
+		confirm: password,
 		firstName: "Trej",
 		lastName: "Gun",
 		companyName: "Bintang",

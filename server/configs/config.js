@@ -17,16 +17,16 @@ export default {
 			    usernameField: "email",
 			    passwordField: "password"
 		    },
-		    facebook: {
-			    clientID: "",
-			    clientSecret: "",
-			    callbackURL: ""
-		    },
-		    google: {
-			    clientID: "",
-			    clientSecret: "",
-			    callbackURL: "http://localhost:8888/auth/google/callback"
-		    }
+			facebook: {
+				clientID: "884111858371676",
+				clientSecret: "f167fc2daa4d2887ebe1a9a0bfb52c1d",
+				callbackURL: "http://localhost:3000/auth/facebook/callback"
+			},
+			google: {
+				clientID: "451759059572.apps.googleusercontent.com",
+				clientSecret: "6I3MjJS1AWDOOsMQy6joeasg",
+				callbackURL: "http://localhost:3000/auth/google/callback"
+			}
 	    },
 	    session: {
 		    proxy: false,

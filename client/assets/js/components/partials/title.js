@@ -4,15 +4,9 @@ import React, {PropTypes} from "react";
 
 export default class Title extends React.Component {
 
-	static contextTypes = {
-		location: PropTypes.object.isRequired
-	};
-
 	render() {
 
-		console.log("->", this.props.route);
-
-		let title = /*this.props.route.component.displayName ||*/ "Default Title";
+		let title = this.props.routes.pop().component.displayName || "Default Title";
 
 		return (
 			<div className="page-header">
@@ -20,5 +14,6 @@ export default class Title extends React.Component {
 			</div>
 		);
 	}
+
 }
 

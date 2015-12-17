@@ -2,7 +2,7 @@
 
 import fs from "fs";
 import messenger from "../utils/messenger.js";
-import utils from "../utils/utils.js";
+import path from "path";
 
 
 export default function (app) {
@@ -21,8 +21,8 @@ export default function (app) {
 
 	app.param("_id", createRegExpParameter(/^[0-9a-z]{24}$/));
 
-	fs.readdirSync(utils.getPath("routes")).forEach(file => {
-		require(utils.getPath("routes", file)).default(app);
+	fs.readdirSync(path.join(__dirname, "../routes")).forEach(file => {
+		require(path.join(__dirname, "../routes", file)).default(app);
 	});
 
 }
