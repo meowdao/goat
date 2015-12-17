@@ -5,8 +5,12 @@ import $ from "jquery";
 
 import Dispatcher from "../../utils/dispatcher.js";
 import ActionTypes from "../../utils/constants.js";
+import {password} from "../../../../../server/utils/constants/misc.js";
+
 
 export default class Change extends React.Component {
+
+	static displayName = "Password Change";
 
 	static propTypes = {
 		password: React.PropTypes.string,
@@ -14,18 +18,14 @@ export default class Change extends React.Component {
 	};
 
 	static defaultProps = {
-		password: "321ewqDSA",
-		confirm: "321ewqDSA"
+		password: password,
+		confirm: password
 	};
 
 	state = {
 		password: this.props.password,
 		confirm: this.props.confirm
 	};
-
-	constructor(props) {
-		super(props);
-	}
 
 	onSubmit(e) {
 		e.preventDefault();
@@ -43,9 +43,6 @@ export default class Change extends React.Component {
 					actionType: ActionTypes.UPDATE_USER,
 					user: response
 				});
-			})
-			.catch(e => {
-				console.log(e)
 			});
 	}
 

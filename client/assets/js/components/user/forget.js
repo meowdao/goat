@@ -5,15 +5,19 @@ import $ from "jquery";
 
 import Dispatcher from "../../utils/dispatcher.js";
 import ActionTypes from "../../utils/constants.js";
+import {email} from "../../../../../server/utils/constants/misc.js";
+
 
 export default class Forgot extends React.Component {
+
+	static displayName = "Password Recovery";
 
 	static propTypes = {
 		email: React.PropTypes.string
 	};
 
 	static defaultProps = {
-		email: "ctapbiumabp@gmail.com"
+		email: email
 	};
 
 	state = {

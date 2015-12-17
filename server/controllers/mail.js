@@ -51,9 +51,7 @@ export default class MailController extends AbstractController {
 			user: user._id,
 			type: view
 		})
-			.then(optout => {
-				return messenger.notFound(optOutController, user)(!optout);
-			})
+			.tap(optout => messenger.notFound(optOutController, user)(!optout))
 			.then(() => {
 				EmailStore.setData(data);
 				return this.renderToString(view)
@@ -62,11 +60,7 @@ export default class MailController extends AbstractController {
 						return this.create(Object.assign({
 							subject: lang.translate("email/subject/" + view, user),
 							html: html
-						}, address))
-							.then(mail => {
-								this.log("mail:created");
-								return mail;
-							});
+						}, address));
 					});
 			});
 	}

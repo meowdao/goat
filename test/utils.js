@@ -153,10 +153,10 @@ export function wrapResponse(data) {
 
 export function getControllers(...args) {
 	let controllers = {};
-	fs.readdirSync(path.join(__dirname, "../controllers")).forEach(file => {
-		if (fs.statSync(path.join(__dirname, "../controllers", file)).isFile()) {
+	fs.readdirSync(path.join(__dirname, "../server/controllers")).forEach(file => {
+		if (fs.statSync(path.join(__dirname, "../server/controllers", file)).isFile()) {
 			const name = file.split(".")[0].replace(/-/g, "");
-			controllers[name] = new (require(path.join(__dirname, "../controllers", file)).default)(...args);
+			controllers[name] = new (require(path.join(__dirname, "../server/controllers", file)).default)(...args);
 		}
 	});
 	return controllers;

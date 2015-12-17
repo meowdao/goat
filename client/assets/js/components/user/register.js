@@ -2,10 +2,12 @@
 
 import React, {PropTypes} from "react";
 import UserActionCreator from "../../actions/UserActionCreators.js";
-import {email, password} from "../../../../../server/utils/constants/misc.js";
+import {email, password, firstName, lastName} from "../../../../../server/utils/constants/misc.js";
 
 
 export default class Register extends React.Component {
+
+	static displayName = "Register";
 
 	static propTypes = {
 		email: PropTypes.string,
@@ -21,8 +23,8 @@ export default class Register extends React.Component {
 		email: email,
 		password: password,
 		confirm: password,
-		firstName: "Trej",
-		lastName: "Gun",
+		firstName: firstName,
+		lastName: lastName,
 		companyName: "Bintang",
 		role: "admin"
 	};
