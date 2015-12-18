@@ -16,7 +16,6 @@ import Remind from "./assets/js/components/email/remind.js";
 import Verify from "./assets/js/components/email/verify.js";
 import Test from "./assets/js/components/email/test.js";
 
-import EmailStore from "./assets/js/stores/EmailStore.js";
 
 debug.enable("log:*");
 let log = debug("log:mail");
@@ -34,7 +33,6 @@ const routes = (
 
 // https://github.com/rackt/react-router/blob/master/docs/guides/advanced/ServerRendering.md
 function myRenderToString(view, data) {
-	EmailStore.setData(data);
 	log("renderToString", arguments);
 	let defered = Q.defer();
 	match({routes, location: "/" + view}, (error, redirectLocation, renderProps) => {

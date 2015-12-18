@@ -19,6 +19,14 @@ export default {
 
 	sync(data) {
 		API.sync(data);
+	},
+
+	forgot(data) {
+		API.forgot(data);
+	},
+
+	change(data) {
+		API.forgot(data);
 	}
 
 };

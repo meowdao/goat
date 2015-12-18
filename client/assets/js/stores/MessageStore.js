@@ -41,7 +41,8 @@ class MessageStore extends BaseStore {
 				break;
 
 			default:
-			// do nothing
+				// do nothing
+				break;
 		}
 	}
 

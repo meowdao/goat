@@ -1,14 +1,16 @@
 "use strict";
 
 import React from "react";
-import EmailStore from "../../stores/EmailStore.js";
+import configs from "../../../../../server/configs/config.js";
+
+
+const config = configs[process.env.NODE_ENV];
 
 export default class Test extends React.Component {
 	render () {
-		let data = EmailStore.getData();
 		return (
 			<div>
-				<p>Test email {JSON.stringify(data)}</p>
+				<p>Test email {config.server.http.url} {JSON.stringify(this.props.params)}</p>
 			</div>
 		);
 	}

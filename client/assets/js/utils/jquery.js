@@ -4,7 +4,7 @@ import $ from "jquery";
 import debug from "debug";
 import ServerActionCreators from "../actions/ServerActionCreators.js";
 
-window.jQuery = $;
+$.noConflict();
 
 let log = debug("web:jquery");
 

@@ -1,10 +1,7 @@
 "use strict";
 
 import React from "react";
-import $ from "jquery";
-
-import Dispatcher from "../../utils/dispatcher.js";
-import ActionTypes from "../../utils/constants.js";
+import UserActionCreator from "../../actions/UserActionCreators.js";
 import {email} from "../../../../../server/utils/constants/misc.js";
 
 
@@ -30,22 +27,7 @@ export default class Forgot extends React.Component {
 
 	onSubmit(e) {
 		e.preventDefault();
-		$.ajax({
-			method: "POST",
-			url: "/user/forgot",
-			data: {
-				email: this.state.email
-			}
-		})
-			.then(response => {
-				Dispatcher.dispatch({
-					actionType: ActionTypes.UPDATE_USER,
-					user: response
-				});
-			})
-			.catch(e => {
-				console.log(e)
-			});
+		UserActionCreator.forgot(this.state);
 	}
 
 	render() {
@@ -55,7 +37,7 @@ export default class Forgot extends React.Component {
 					<h3 className="panel-title">Forgot password</h3>
 				</div>
 				<div className="panel-body">
-					<form className="form-horizontal" onSubmit={this.onSubmit.bind(this)} autocomplete="off">
+					<form className="form-horizontal" onSubmit={this.onSubmit.bind(this)} autoComplete="off">
 
 						<div className="form-group">
 							<label htmlFor="email" className="col-sm-2 control-label">Email</label>

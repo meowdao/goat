@@ -1,6 +1,6 @@
 GOAT
 ====
-[![Build Status](https://travis-ci.org/CTAPbIuMABP/goat.png?branch=master)](https://travis-ci.org/CTAPbIuMABP/goat)
+[![Build Status](https://travis-ci.org/TrejGun/goat.svg?branch=master)](https://travis-ci.org/TrejGun/goat)
 
 :)
 
@@ -15,9 +15,9 @@ npm run dev
 
 To run tests:
 ```bash
-npm run test
+npm run test test/test.js
 ```
 or
 ```bash
-NODE_ENV=test mocha test/xxx.js
+NODE_ENV=test mocha test/test.js
 ```

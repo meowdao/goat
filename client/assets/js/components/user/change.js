@@ -1,10 +1,7 @@
 "use strict";
 
 import React from "react";
-import $ from "jquery";
-
-import Dispatcher from "../../utils/dispatcher.js";
-import ActionTypes from "../../utils/constants.js";
+import UserActionCreator from "../../actions/UserActionCreators.js";
 import {password} from "../../../../../server/utils/constants/misc.js";
 
 
@@ -14,36 +11,25 @@ export default class Change extends React.Component {
 
 	static propTypes = {
 		password: React.PropTypes.string,
-		confirm: React.PropTypes.string
+		confirm: React.PropTypes.string,
+		hash: React.PropTypes.string
 	};
 
 	static defaultProps = {
 		password: password,
-		confirm: password
+		confirm: password,
+		hash: null
 	};
 
 	state = {
 		password: this.props.password,
-		confirm: this.props.confirm
+		confirm: this.props.confirm,
+		hash: this.props.hash
 	};
 
 	onSubmit(e) {
 		e.preventDefault();
-		$.ajax({
-			method: "POST",
-			url: "/user/change",
-			data: {
-				hash: hash,
-				email: this.state.email,
-				password: this.state.password
-			}
-		})
-			.then(response => {
-				Dispatcher.dispatch({
-					actionType: ActionTypes.UPDATE_USER,
-					user: response
-				});
-			});
+		UserActionCreator.change(this.state);
 	}
 
 	render() {
@@ -53,7 +39,8 @@ export default class Change extends React.Component {
 					<h3 className="panel-title">Change password</h3>
 				</div>
 				<div className="panel-body">
-					<form className="form-horizontal" onSubmit={this.onSubmit.bind(this)} autocomplete="off">
+					<form className="form-horizontal" onSubmit={this.onSubmit.bind(this)} autoComplete="off">
+						<input type="hidden" name="hash" value={this.props.params.hash}/>
 
 						<div className="form-group">
 							<label htmlFor="name" className="col-sm-2 control-label">Password</label>

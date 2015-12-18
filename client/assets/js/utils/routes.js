@@ -1,7 +1,7 @@
 "use strict";
 
 import React from "react";
-import {Route, IndexRoute} from "react-router";
+import {Route, IndexRoute, Redirect} from "react-router";
 
 import GOAT from "../components/GOAT.js";
 
@@ -17,8 +17,13 @@ import User from "../components/user/user.js";
 import Login from "../components/user/login.js";
 import Register from "../components/user/register.js";
 import Profile from "../components/user/profile.js";
+import Forgot from "../components/user/forgot.js";
+import Change from "../components/user/change.js";
 
 //import AdminStore from "../stores/AdminStore.js";
+import MessageStore from "../stores/MessageStore.js";
+
+import {ActionTypes} from "../constants/constants.js";
 
 void (React);
 
@@ -35,8 +40,14 @@ export default (
 			<Route path="login" component={Login}/>
 			<Route path="register" component={Register}/>
 			<Route path="profile" component={Profile}/>
+			<Route path="forgot" component={Forgot}/>
+			<Route path="change/:hash" component={Change}/>
 		</Route>
-		<Route path="dummy" component={Error}/>
-		<Route path="*" component={Error}/>
+		<Route path="error" component={Error}/>
+		<Route path="*" component={Error} onEnter={() => MessageStore._registerToActions({
+			actionType: ActionTypes.ERROR,
+			messages: ["Page Not Found"]
+		})}>
+		</Route>
 	</Route>
 );

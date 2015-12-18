@@ -10,7 +10,6 @@ import {Router} from "react-router";
 
 import routes from "./utils/routes.js";
 import history from "./utils/history.js";
-import $ from "./utils/jquery.js";
 
 
 if (process.env.NODE_ENV !== "production") {

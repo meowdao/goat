@@ -11,20 +11,18 @@ import React from "react"; // eslint-disable-line no-unused-vars
 import {renderToString} from "react-dom/server";
 import Router, { match, RoutingContext, Route } from 'react-router'
 import EML from "../../client/assets/js/components/EML.js";
-import Article from "../../client/assets/js/components/partials/article.js";
-import Remind from "../../client/assets/js/components/email/remind.js";
+import Wrapper from "../../client/assets/js/components/email/wrapper.js";
+import Forgot from "../../client/assets/js/components/email/forgot.js";
 import Verify from "../../client/assets/js/components/email/verify.js";
 import Test from "../../client/assets/js/components/email/test.js";
-
-import EmailStore from "../../client/assets/js/stores/EmailStore.js";
 
 import OptOutController from "../controllers/opt-out.js";
 
 const routes = (
 	<Route component={EML} path="/">
 		<Route path="test" component={Test}/>
-		<Route path="user" component={Article}>
-			<Route path="remind" component={Remind}/>
+		<Route path="user" component={Wrapper}>
+			<Route path="forgot" component={Forgot}/>
 			<Route path="verify" component={Verify}/>
 		</Route>
 	</Route>
@@ -53,8 +51,7 @@ export default class MailController extends AbstractController {
 		})
 			.tap(optout => messenger.notFound(optOutController, user)(!optout))
 			.then(() => {
-				EmailStore.setData(data);
-				return this.renderToString(view)
+				return this.renderToString(view, data)
 					.then(html => {
 						this.log("template", html);
 						return this.create(Object.assign({
@@ -66,13 +63,13 @@ export default class MailController extends AbstractController {
 	}
 
 	// https://github.com/rackt/react-router/blob/master/docs/guides/advanced/ServerRendering.md
-	renderToString(view, data) {
+	renderToString(view, params) {
 		let defered = Q.defer();
 		match({routes, location: "/" + view}, (error, redirectLocation, renderProps) => {
 			if (error) {
 				defered.reject(error);
 			} else {
-				defered.resolve(renderToString(<RoutingContext {...renderProps}/>))
+				defered.resolve(renderToString(<RoutingContext {...renderProps} params={params}/>))
 			}
 		});
 		return defered.promise;

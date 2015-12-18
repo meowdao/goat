@@ -4,7 +4,7 @@ import assert from "assert";
 import Test from "../../client/assets/js/components/email/test.js";
 import {email, firstName, lastName} from "../../server/utils/constants/misc.js";
 import {getControllers} from "../utils.js";
-import util from "util";
+
 
 let controllers = getControllers(true);
 

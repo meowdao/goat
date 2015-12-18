@@ -29,7 +29,7 @@ export default function (app) {
 
 	app.post("/user/forgot", helper.simpleJSONWrapper(userController.forgot.bind(userController)));
 
-	app.post("/user/change/:hash", helper.simpleJSONWrapper(userController.change.bind(userController)));
+	app.post("/user/change", helper.simpleJSONWrapper(userController.change.bind(userController)));
 
 	app.get("/user/logout", userController.logout.bind(userController));
 

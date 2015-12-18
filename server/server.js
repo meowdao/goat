@@ -27,6 +27,7 @@ if (process.env.NODE_ENV !== "production") {
 var log = debug("log:server");
 var app = express();
 
+// http://webpack.github.io/docs/webpack-dev-server.html#combining-with-an-existing-server
 const webpackServer = new WebpackDevServer(webpack(require("./configs/webpack")), {
 	publicPath: "/assets/",
 	watchOptions: {
@@ -41,6 +42,9 @@ const webpackServer = new WebpackDevServer(webpack(require("./configs/webpack"))
 		chunkModules: false,
 		modules: false,
 		children: false
+	},
+	proxy: {
+		"*": "http://localhost:3000"
 	}
 });
 

@@ -41,10 +41,10 @@ export default class AbstractUserController extends AbstractController {
 			.then(messenger.notFound(this, request.user))
 			.then(user => {
 				let hashController = new HashController();
-				return hashController.create({user: user._id})
+				return hashController.upsert({user: user._id, type: "password"})
 					.then(hash => {
 						let mailController = new MailController();
-						return mailController.composeMail("user/remind", {to: user.email}, user, {
+						return mailController.composeMail("user/forgot", {to: user.email}, user, {
 							hash: hash
 						});
 					});
@@ -56,8 +56,8 @@ export default class AbstractUserController extends AbstractController {
 
 	change(request) {
 		let hashController = new HashController();
-		return hashController.findByIdAndRemove(request.params.hash)
-			.then(messenger.notFound(hashController, request.user))
+		return hashController.findByIdAndRemove(request.body.hash)
+			.then(messenger.notFound(hashController, null))
 			.then(hash => {
 				return this.findById(hash.user, {lean: false})
 					.then(user => {

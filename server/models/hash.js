@@ -9,7 +9,8 @@ let Hash = new Schema({
 		ref: "User"
 	},
 	token: {
-		type: String
+		type: String,
+		default: () => utils.getRandomString(20)
 	},
 	created: {
 		type: Date,
@@ -18,16 +19,5 @@ let Hash = new Schema({
 	}
 }, {versionKey: false});
 
-Hash.pre("save", function (next) {
-	if (this.isNew) {
-		this.token = utils.getRandomString(20);
-	}
-	next();
-});
-
-Hash.index({
-	user: 1,
-	type: 1
-}, {unique: true});
 
 export default Hash;

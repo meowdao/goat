@@ -3,6 +3,8 @@
 import React, {PropTypes} from "react";
 import UserActionCreator from "../../actions/UserActionCreators.js";
 import {email, password} from "../../../../../server/utils/constants/misc.js";
+import {Link} from "react-router";
+
 
 export default class Login extends React.Component {
 
@@ -54,6 +56,8 @@ export default class Login extends React.Component {
 
 					[<a href="#" onClick={this.open("/auth/google")}>google</a> ,
 					<a href="#" onClick={this.open("/auth/facebook")}>facebook</a>]
+
+					[<Link to="/user/forgot">Forgot password?</Link>]
 
 					<form className="form-horizontal" onSubmit={this.onSubmit.bind(this)} autoComplete="off">
 

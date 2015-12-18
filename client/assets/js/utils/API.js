@@ -1,8 +1,9 @@
 "use strict";
 
-import $ from "jquery";
-import ServerActionCreators from "../actions/ServerActionCreators.js";
+import $ from "../utils/jquery.js";
 import history from "../utils/history.js";
+import ServerActionCreators from "../actions/ServerActionCreators.js";
+
 
 export default {
 
@@ -39,6 +40,30 @@ export default {
 			.then(response => {
 				ServerActionCreators.updateUser(response);
 				history.pushState(null, "user/profile");
+			});
+	},
+
+	forgot(data) {
+		$.ajax({
+				method: "POST",
+				url: "/user/forgot",
+				data: data
+			})
+			.then(response => {
+				ServerActionCreators.updateUser(response);
+				history.pushState(null, "/");
+			});
+	},
+
+	change(data) {
+		$.ajax({
+				method: "POST",
+				url: "/user/change",
+				data: data
+			})
+			.then(response => {
+				ServerActionCreators.updateUser(response);
+				history.pushState(null, "/");
 			});
 	},
 

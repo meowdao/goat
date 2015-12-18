@@ -1,7 +1,7 @@
 "use strict";
 
 export default {
-    development: {
+    test: {
 	    mongo: {
 		    url: "mongodb://localhost/goat",
 		    options: {
