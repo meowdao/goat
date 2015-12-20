@@ -25,10 +25,6 @@ export default class Login extends React.Component {
 		password: this.props.password
 	};
 
-	constructor(props) {
-		super(props);
-	}
-
 	onSubmit(e) {
 		e.preventDefault();
 		UserActionCreator.login(this.state);

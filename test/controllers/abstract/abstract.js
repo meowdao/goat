@@ -157,7 +157,7 @@ suite("Abstract", () => {
 				})
 				.then(assert.ifError)
 				.catch(e => {
-					assert.equal(e.status, 404);
+					assert.equal(e.code, 404);
 				})
 				.finally(done)
 				.done();
@@ -250,7 +250,7 @@ suite("Abstract", () => {
 				})
 				.then(assert.ifError)
 				.catch(e => {
-					assert.equal(e.status, 404);
+					assert.equal(e.code, 404);
 				})
 				.finally(done)
 				.done();
@@ -296,7 +296,7 @@ suite("Abstract", () => {
 				})
 				.then(assert.ifError)
 				.catch(e => {
-					assert.equal(e.status, 404);
+					assert.equal(e.code, 404);
 				})
 				.finally(done)
 				.done();

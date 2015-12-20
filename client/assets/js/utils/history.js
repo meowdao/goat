@@ -1,5 +1,9 @@
 "use strict";
 
-import {createHashHistory} from "history";
+import {createHistory, useBasename} from "history";
 
-export default createHashHistory({queryKey: false});
+const history = useBasename(createHistory)({
+	basename: "/"
+});
+
+export default history;

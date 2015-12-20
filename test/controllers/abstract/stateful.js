@@ -107,7 +107,7 @@ function tearDown() {
 function teapot() {
 	let e = new Error();
 	e.message = "I'm a teapot";
-	e.status = 418;
+	e.code = 418;
 	throw e;
 }
 
@@ -156,7 +156,7 @@ suite("Stateful", () => {
 				})
 				.then(assert.ifError)
 				.catch(e => {
-					assert.equal(e.status, 403);
+					assert.equal(e.code, 403);
 				})
 				.finally(done)
 				.done();
@@ -173,7 +173,7 @@ suite("Stateful", () => {
 				}, [], [teapot])
 				.then(assert.ifError)
 				.catch(e => {
-					assert.equal(e.status, 403);
+					assert.equal(e.code, 403);
 				})
 				.finally(done)
 				.done();
@@ -208,7 +208,7 @@ suite("Stateful", () => {
 				}, [], [teapot])
 				.then(assert.ifError)
 				.catch(e => {
-					assert.equal(e.status, 418);
+					assert.equal(e.code, 418);
 				})
 				.finally(done)
 				.done();
@@ -299,7 +299,7 @@ suite("Stateful", () => {
 				})
 				.then(assert.ifError)
 				.catch(e => {
-					assert.equal(e.status, 403);
+					assert.equal(e.code, 403);
 				})
 				.finally(done)
 				.done();
@@ -345,7 +345,7 @@ suite("Stateful", () => {
 				})
 				.then(assert.ifError)
 				.catch(e => {
-					assert.equal(e.status, 403);
+					assert.equal(e.code, 403);
 				})
 				.finally(done)
 				.done();
@@ -362,7 +362,7 @@ suite("Stateful", () => {
 				})
 				.then(assert.ifError)
 				.catch(e => {
-					assert.equal(e.status, 400);
+					assert.equal(e.code, 400);
 				})
 				.finally(done)
 				.done();
@@ -379,7 +379,7 @@ suite("Stateful", () => {
 				}, [], [teapot])
 				.then(assert.ifError)
 				.catch(e => {
-					assert.equal(e.status, 400);
+					assert.equal(e.code, 400);
 				})
 				.finally(done)
 				.done();
@@ -396,7 +396,7 @@ suite("Stateful", () => {
 				}, [], [teapot])
 				.then(assert.ifError)
 				.catch(e => {
-					assert.equal(e.status, 403);
+					assert.equal(e.code, 403);
 				})
 				.finally(done)
 				.done();
@@ -413,7 +413,7 @@ suite("Stateful", () => {
 				}, [], [teapot])
 				.then(assert.ifError)
 				.catch(e => {
-					assert.equal(e.status, 418);
+					assert.equal(e.code, 418);
 				})
 				.finally(done)
 				.done();

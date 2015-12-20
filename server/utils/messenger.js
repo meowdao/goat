@@ -5,10 +5,10 @@ import lang from "./lang.js";
 
 export default {
 
-	_makeError(text, code = 500) {
+	_makeError(message, code = 500) {
 		let error = new Error();
-		error.message = text;
-		error.status = code;
+		error.message = message;
+		error.code = code;
 		return error;
 	},
 

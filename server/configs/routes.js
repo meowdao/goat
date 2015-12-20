@@ -9,8 +9,8 @@ export default function (app) {
 
 	function createRegExpParameter(re) {
 		return function (request, response, next, val, name) {
-			var captures;
-			if (captures = re.exec(String(val))) {
+			var captures = re.exec(String(val));
+			if (captures) {
 				request.params[name] = captures;
 				next();
 			} else {

@@ -14,12 +14,16 @@ let client = nodemailer.createTransport(config.server.smtp);
 
 export default function API() {
 
-};
+}
 
 API.key = "MAIL_API";
 
 API.sendMail = wrapper.promise(function (message) {
-	return Q.nfcall(client.sendMail.bind(client), Object.assign(message, {from: config.server.smtp.from}));
+	return Q.nfcall(client.sendMail.bind(client), Object.assign(message, {from: config.server.smtp.from}))
+		.catch(e => {
+			log(e);
+			throw e;
+		});
 });
 
 

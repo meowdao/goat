@@ -1,7 +1,6 @@
 "use strict";
 
 import _ from "lodash";
-import mongoose from "mongoose";
 
 import AbstractController from "./abstract/abstract.js";
 

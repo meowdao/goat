@@ -13,7 +13,7 @@ export default {
 					args[0](); // done
 				});
 			}
-		}
+		};
 	},
 
 	promise (func) {
@@ -26,7 +26,7 @@ export default {
 					message: `process.env.${this.key} != true, method is mocked up!`
 				});
 			}
-		}
+		};
 	}
 
 };

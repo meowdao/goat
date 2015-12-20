@@ -1,7 +1,7 @@
 "use strict";
 
-import $ from "../utils/jquery.js";
-import history from "../utils/history.js";
+//import $ from "../utils/jquery.js";
+//import history from "../utils/history.js";
 import ServerActionCreators from "../actions/ServerActionCreators.js";
 
 

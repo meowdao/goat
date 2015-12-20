@@ -28,7 +28,7 @@ export default class AbstractUserController extends AbstractController {
 
 		return this.create(request.body)
 			.tap(user => {
-				return Q.nbind(request.login, request)(user)
+				return Q.nbind(request.login, request)(user);
 			})
 			.tap(() => {
 				return this.sendEmailVerification(request);
@@ -48,10 +48,7 @@ export default class AbstractUserController extends AbstractController {
 							hash: hash
 						});
 					});
-			})
-			.thenResolve({
-				messages: ["Email was sent"]
-			});
+			}).thenResolve({success: true});
 	}
 
 	change(request) {
@@ -65,10 +62,7 @@ export default class AbstractUserController extends AbstractController {
 						user.confirm = request.body.confirm;
 						return this.save(user);
 					});
-			})
-			.thenResolve({
-				messages: ["Now you can login with your new password"]
-			});
+			}).thenResolve({success: true});
 	}
 
 	sendEmailVerification(request) {
@@ -79,10 +73,7 @@ export default class AbstractUserController extends AbstractController {
 				return mailController.composeMail("user/verify", {to: request.user.email}, request.user, {
 					hash: hash
 				});
-			})
-			.thenResolve({
-				messages: ["Verification email was sent to " + request.user.email]
-			});
+			}).thenResolve({success: true});
 	}
 
 	verify(request) {
@@ -94,10 +85,7 @@ export default class AbstractUserController extends AbstractController {
 						user.email_verified = true;
 						return this.save(user);
 					});
-			})
-			.thenResolve({
-				messages: ["Email is verified"]
-			});
+			}).thenResolve({success: true});
 	}
 
 	logout(request, response) {

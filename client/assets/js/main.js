@@ -8,7 +8,7 @@ import ReactDOM from "react-dom";
 import {Router} from "react-router";
 
 
-import routes from "./utils/routes.js";
+import routes from "./routes/app.js";
 import history from "./utils/history.js";
 
 

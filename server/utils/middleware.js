@@ -43,4 +43,4 @@ export default {
 		return next(messenger.makeError("method-not-allowed", request.user, 405));
 	}
 
-}
+};

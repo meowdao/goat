@@ -47,10 +47,15 @@ class MessageStore extends BaseStore {
 	}
 
 	remove(id) {
-		var index = _.findIndex(this._messages, message => message.id === id);
-		this._messages.splice(index, 1);
+		if (id) {
+			var index = _.findIndex(this._messages, message => message.id === id);
+			this._messages.splice(index, 1);
+		} else {
+			this._messages = [];
+		}
 		this.emitChange();
 	}
+
 
 	getMessages() {
 		return this._messages;

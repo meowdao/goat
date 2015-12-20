@@ -18,9 +18,9 @@ export default class HTML extends React.Component {
 				<title>G.O.A.T.</title>
 			</head>
 			<body>
-				<div id="app"/>
-				<link href="assets/style.css" rel="stylesheet"/>
-				<script src="assets/bundle.js" type="text/javascript"/>
+				<div id="app" {...this.props}></div>
+				<link href="/assets/style.css" rel="stylesheet"/>
+				<script src="/assets/bundle.js" type="text/javascript"/>
 			</body>
 			</html>
 		);

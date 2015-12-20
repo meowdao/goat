@@ -1,6 +1,6 @@
 "use strict";
 
-import React from "react";
+import React from "react"; // eslint-disable-line no-unused-vars
 import {Route, IndexRoute, Redirect} from "react-router";
 
 import GOAT from "../components/GOAT.js";
@@ -8,7 +8,7 @@ import GOAT from "../components/GOAT.js";
 import Article from "../components/partials/article.js";
 
 import Welcome from "../components/static/welcome.js";
-import Error from "../components/static/error.js";
+import Message from "../components/static/message.js";
 
 import Dashboard from "../components/admin/dashboard.js";
 import UserList from "../components/admin/users/list.js";
@@ -25,7 +25,6 @@ import MessageStore from "../stores/MessageStore.js";
 
 import {ActionTypes} from "../constants/constants.js";
 
-void (React);
 
 export default (
 	<Route path="/" component={GOAT}>
@@ -43,11 +42,20 @@ export default (
 			<Route path="forgot" component={Forgot}/>
 			<Route path="change/:hash" component={Change}/>
 		</Route>
-		<Route path="error" component={Error}/>
-		<Route path="*" component={Error} onEnter={() => MessageStore._registerToActions({
-			actionType: ActionTypes.ERROR,
-			messages: ["Page Not Found"]
-		})}>
-		</Route>
+		<Route path="error" component={Message}/>
+		<Route path="*" component={Message}
+			onEnter={() => {
+				MessageStore.remove();
+				MessageStore._registerToActions({
+					actionType: ActionTypes.ERROR,
+					messages: ["Page Not Found"]
+				});
+			}}
+			onLeave={() => {
+				MessageStore.remove();
+			}}
+		/>
 	</Route>
 );
+
+

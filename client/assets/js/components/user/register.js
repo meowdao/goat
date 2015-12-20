@@ -39,10 +39,6 @@ export default class Register extends React.Component {
 		role: this.props.role
 	};
 
-	constructor(props) {
-		super(props);
-	}
-
 	onSubmit(e) {
 		e.preventDefault();
 		UserActionCreator.register(this.state);

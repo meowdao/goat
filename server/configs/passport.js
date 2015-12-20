@@ -59,6 +59,7 @@ export default function (app) {
 
 	passport.use(new GoogleStrategy(config.strategies.google,
 		function (accessToken, refreshToken, profile, callback) {
+			log("google:profile", profile);
 			let userController = new UserController();
 			userController.findOne({"google.id": profile.id}, {lean: false})
 				.then(user => {
@@ -90,6 +91,7 @@ export default function (app) {
 
 	passport.use(new FacebookStrategy(config.strategies.facebook,
 		function (accessToken, refreshToken, profile, callback) {
+			log("facebook:profile", profile);
 			let userController = new UserController();
 			userController.findOne({"facebook.id": profile.id}, {lean: false})
 				.then(user => {

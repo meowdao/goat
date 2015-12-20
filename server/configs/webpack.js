@@ -14,7 +14,7 @@ module.exports = {
 	output: {
 		path: path.join(__dirname, "..", "..", "client", "build"),
 		filename: "bundle.js",
-		sourceMapFilename: '[file].map',
+		sourceMapFilename: "[file].map",
 		//chunkFilename: "[id].js",
 		publicPath: "http://localhost:3001/assets/"
 	},

@@ -72,7 +72,7 @@ export default class Header extends React.Component {
 			<Navbar inverse>
 				<Navbar.Header inverse={true} toggleNavKey={1}>
 					<Navbar.Brand>
-						<Link to="/" className="navbar-brand">Adventure Bucket List</Link>
+						<Link to="/" className="navbar-brand">G.O.A.T.</Link>
 					</Navbar.Brand>
 				</Navbar.Header>
 				<Navbar.Collapse eventKey={1} href="#">

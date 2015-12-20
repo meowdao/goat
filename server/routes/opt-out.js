@@ -11,4 +11,4 @@ export default function (app) {
 
     app.post("/optout/notifications", middleware.requiresLogin(), helper.simpleJSONWrapper(optOutController.change.bind(optOutController)));
 
-};
+}
