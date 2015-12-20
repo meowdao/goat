@@ -37,7 +37,7 @@
 		"file-loader": "0.8.5",
 		"flux": "2.1.1",
 		"font-awesome": "4.5.0",
-		"history": "1.17.0",
+		"history": "1.13.1",
 		"jquery": "2.1.4",
 		"lackey-mongoose-version": "1.0.2",
 		"less": "2.5.3",
