@@ -1,6 +1,6 @@
 "use strict";
 
-export default  {
+export default {
 	"error": {
 		"server": {
 			// SERVER

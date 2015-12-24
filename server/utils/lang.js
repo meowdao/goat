@@ -1,20 +1,20 @@
 "use strict";
 
-var langusges = {
+const langusges = {
 	en: require("../utils/lang/en").default
 };
 
 export default {
 
-	getDefaultLanguage: function () {
+	getDefaultLanguage() {
 		return "en";
 	},
 
-	getLanguage: function(user){
+	getLanguage(user) {
 		return langusges[user && user.language || this.getDefaultLanguage()];
 	},
 
-	getObject: function (parts, create, obj) {
+	getObject(parts, create, obj) {
 
 		if (typeof parts === "string") {
 			parts = parts.split("/");
@@ -38,7 +38,7 @@ export default {
 		return obj;
 	},
 
-	translate: function(key, user){
+	translate(key, user) {
 		return this.getObject(key, this.getLanguage(user));
 	}
 

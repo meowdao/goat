@@ -20,7 +20,7 @@ class RichModel {
 	}
 
 	enchant(method, params, options) {
-		let query = this.model[method](...params);
+		const query = this.model[method](...params);
 		options = Object.assign({lean: true}, options);
 		Object.keys(options).forEach(method => {
 			if (Array.isArray(options[method]) && method !== "deepPopulate") {
@@ -42,7 +42,7 @@ class RichModel {
 	 */
 	findById(id, options) {
 		return this.enchant("findById", [id], options)
-			.tap(this._log("found"));
+		.tap(this._log("found"));
 	}
 
 	/**
@@ -53,7 +53,7 @@ class RichModel {
 	 */
 	find(query, options) {
 		return this.enchant("find", [query], options)
-			.tap(this._log("found"));
+		.tap(this._log("found"));
 	}
 
 	/**
@@ -64,7 +64,7 @@ class RichModel {
 	 */
 	findOne(query, options) {
 		return this.enchant("findOne", [query], options)
-			.tap(this._log("found"));
+		.tap(this._log("found"));
 	}
 
 	/**
@@ -77,12 +77,12 @@ class RichModel {
 	 */
 	upsert(query, data, options, params) {
 		return this.enchant("findOneAndUpdate", [query, data, Object.assign({
-				new: true,
-				upsert: true,
-				runValidators: true,
-				setDefaultsOnInsert: true
-			}, params)], options)
-			.tap(this._log("upserted"));
+			new: true,
+			upsert: true,
+			runValidators: true,
+			setDefaultsOnInsert: true
+		}, params)], options)
+		.tap(this._log("upserted"));
 	}
 
 	/**
@@ -96,11 +96,11 @@ class RichModel {
 	update(query, data, options, params) {
 		// http://mongoosejs.com/docs/api.html#model_Model.update
 		return this.enchant("update", [query, data, Object.assign({
-				strict: true,
-				multi: true,
-				runValidators: true
-			}, params)], options)
-			.tap(this._log("updated"));
+			strict: true,
+			multi: true,
+			runValidators: true
+		}, params)], options)
+		.tap(this._log("updated"));
 	}
 
 	populate(list, path, options) {
@@ -117,7 +117,7 @@ class RichModel {
 	 */
 	search(text) {
 		return this.find({$text: {$search: text}})
-			.tap(this._log("found"));
+		.tap(this._log("found"));
 	}
 
 	/**
@@ -127,7 +127,7 @@ class RichModel {
 	 */
 	save(model) {
 		return model.save()
-			.tap(this._log("saved"));
+		.tap(this._log("saved"));
 	}
 
 	/**
@@ -137,7 +137,7 @@ class RichModel {
 	 */
 	destroy(model) {
 		return model.remove()
-			.tap(this._log("destroyed"));
+		.tap(this._log("destroyed"));
 	}
 
 }
@@ -155,18 +155,18 @@ class RichModel {
 	"findOneAndRemove",
 	"findOneAndUpdate"
 ].forEach(name => {
-	RichModel.prototype[name] = function (...args) {
+	RichModel.prototype[name] = function(...args) {
 		return this.model[name](...args)
-			.then(result => {
-				if (name === "remove") {
-					return result.result;
-				}
-				if (name === "create" && !result) {
-					return [];
-				}
-				return result;
-			})
-			.tap(this._log(`${name}${name[name.length - 1] === "e" ? "d" : "ed"}`));
+		.then(result => {
+			if (name === "remove") {
+				return result.result;
+			}
+			if (name === "create" && !result) {
+				return [];
+			}
+			return result;
+		})
+		.tap(this._log(`${name}${name[name.length - 1] === "e" ? "d" : "ed"}`));
 	};
 });
 

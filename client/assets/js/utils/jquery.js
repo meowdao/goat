@@ -6,10 +6,10 @@ import ServerActionCreators from "../actions/ServerActionCreators.js";
 
 $.noConflict();
 
-let log = debug("web:jquery");
+const log = debug("web:jquery");
 
 function readCookie(name) {
-	var match = document.cookie.match(new RegExp("(^|;\\s*)(" + name + ")=([^;]*)"));
+	const match = document.cookie.match(new RegExp("(^|;\\s*)(" + name + ")=([^;]*)"));
 	return match ? decodeURIComponent(match[3]) : null;
 }
 

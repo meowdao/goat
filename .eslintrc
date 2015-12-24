@@ -1,35 +1,33 @@
 {
 	"parser": "babel-eslint",
+	"extends": "airbnb",
 	"rules": {
 		"indent": [
-			0,
+			2,
 			"tab"
+		],
+		"comma-dangle": [
+			2,
+			"never"
 		],
 		"quotes": [
 			2,
 			"double"
 		],
-		"linebreak-style": [
+		"object-curly-spacing": [
 			2,
-			"unix"
+			"never"
 		],
-		"semi": [
+		"space-before-function-paren": [
 			2,
-			"always"
+			"never"
+		],
+		"padded-blocks": [
+			0,
+			"never"
 		]
 	},
 	"env": {
-		"node": true,
-		"mocha": true,
-		"es6": true,
-		"browser": true
-	},
-	"plugins": [
-		"react"
-	],
-	"extends": "eslint:recommended",
-	"ecmaFeatures": {
-		"jsx": true,
-		"experimentalObjectRestSpread": true
+		"mocha": true
 	}
 }

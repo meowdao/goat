@@ -1,13 +1,11 @@
 "use strict";
 
+import path from "path";
 
-import {renderAppToString} from "../utils/render.js";
+export default function(app) {
 
-export default function (app) {
-
-	app.use(function (request, response) {
-		renderAppToString(request, response);
+	app.use(function(request, response) {
+		response.sendFile(path.join(__dirname, "../../client/assets/html/index.html"));
 	});
-
 
 }

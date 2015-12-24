@@ -13,7 +13,7 @@ export default class Article extends React.Component {
 	render() {
 		return (
 			<div className="container">
-				<Breadcrumbs/>
+				<Breadcrumbs {...this.props}/>
 				<Title {...this.props}/>
 				<Messages/>
 				{this.props.children}

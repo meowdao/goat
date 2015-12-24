@@ -2,7 +2,7 @@
 
 import {ActionTypes} from "../constants/constants.js";
 import BaseStore from "./BaseStore.js";
-//import history from "../utils/history.js";
+// import history from "../utils/history.js";
 
 class AdminStore extends BaseStore {
 
@@ -14,21 +14,21 @@ class AdminStore extends BaseStore {
 	}
 
 	_registerToActions(action) {
-		switch(action.actionType) {
+		switch (action.actionType) {
 
-			case ActionTypes.ADMIN_LOGIN:
-				this._admin = action.admin;
-				this.emitChange();
-				//history.pushState(null, "dashboard");
-				break;
+		case ActionTypes.ADMIN_LOGIN:
+			this._admin = action.admin;
+			this.emitChange();
+			// history.pushState(null, "dashboard");
+			break;
 
-			case ActionTypes.ADMIN_LOGOUT:
-				this._admin = null;
-				this.emitChange();
-				//history.pushState(null, "/");
-				break;
+		case ActionTypes.ADMIN_LOGOUT:
+			this._admin = null;
+			this.emitChange();
+			// history.pushState(null, "/");
+			break;
 
-			default:
+		default:
 			// do nothing
 		}
 	}

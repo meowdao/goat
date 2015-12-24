@@ -20,7 +20,7 @@ import Profile from "../components/user/profile.js";
 import Forgot from "../components/user/forgot.js";
 import Change from "../components/user/change.js";
 
-//import AdminStore from "../stores/AdminStore.js";
+// import AdminStore from "../stores/AdminStore.js";
 import MessageStore from "../stores/MessageStore.js";
 
 import {ActionTypes} from "../constants/constants.js";
@@ -30,8 +30,8 @@ export default (
 	<Route path="/" component={GOAT}>
 		<IndexRoute component={Welcome}/>
 		<Route path="admin" component={Article}>
-			<Route path="dashboard" component={Dashboard} onEnter={() => {}}/>
-			<Route path="user" component={Article}>
+			<IndexRoute component={Dashboard} onEnter={() => {}}/>
+			<Route path="user">
 				<Route path="list" component={UserList}/>
 			</Route>
 		</Route>
@@ -44,18 +44,16 @@ export default (
 		</Route>
 		<Route path="error" component={Message}/>
 		<Route path="*" component={Message}
-			onEnter={() => {
+		       onEnter={() => {
 				MessageStore.remove();
 				MessageStore._registerToActions({
 					actionType: ActionTypes.ERROR,
 					messages: ["Page Not Found"]
 				});
 			}}
-			onLeave={() => {
+		       onLeave={() => {
 				MessageStore.remove();
 			}}
 		/>
 	</Route>
 );
-
-

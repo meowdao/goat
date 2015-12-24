@@ -3,7 +3,7 @@
 import {Schema} from "mongoose";
 import utils from "../utils/utils.js";
 
-let Hash = new Schema({
+const Hash = new Schema({
 	user: {
 		type: Schema.Types.ObjectId,
 		ref: "User"

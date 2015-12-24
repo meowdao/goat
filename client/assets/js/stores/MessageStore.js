@@ -18,38 +18,37 @@ class MessageStore extends BaseStore {
 	_registerToActions(action) {
 		switch (action.actionType) {
 
-			case ActionTypes.ERROR:
-				action.messages.forEach(message => {
-					this._messages.push({
-						id: cuid(),
-						type: "danger",
-						text: message
-					});
+		case ActionTypes.ERROR:
+			action.messages.forEach(message => {
+				this._messages.push({
+					id: cuid(),
+					type: "danger",
+					text: message
 				});
-				this.emitChange();
-				break;
+			});
+			this.emitChange();
+			break;
 
-			case ActionTypes.MESSAGE:
-				action.messages.forEach(message => {
-					this._messages.push({
-						id: cuid(),
-						type: "success",
-						text: message
-					});
+		case ActionTypes.MESSAGE:
+			action.messages.forEach(message => {
+				this._messages.push({
+					id: cuid(),
+					type: "success",
+					text: message
 				});
-				this.emitChange();
-				break;
+			});
+			this.emitChange();
+			break;
 
-			default:
-				// do nothing
-				break;
+		default:
+			// do nothing
+			break;
 		}
 	}
 
 	remove(id) {
 		if (id) {
-			var index = _.findIndex(this._messages, message => message.id === id);
-			this._messages.splice(index, 1);
+			this._messages.splice(_.findIndex(this._messages, message => message.id === id), 1);
 		} else {
 			this._messages = [];
 		}
@@ -64,4 +63,3 @@ class MessageStore extends BaseStore {
 }
 
 export default new MessageStore();
-

@@ -23,22 +23,22 @@ export default class MailController extends AbstractController {
 	};
 
 	composeMail(view, address, user, data) {
-		let optOutController = new OptOutController();
+		const optOutController = new OptOutController();
 		return optOutController.findOne({
 			user: user._id,
 			type: view
 		})
-			.tap(optout => messenger.notFound(optOutController, user)(!optout))
-			.then(() => {
-				return renderEmailToString(view, data)
-					.then(html => {
-						this.log("template", html);
-						return this.create(Object.assign({
-							subject: lang.translate("email/subject/" + view, user),
-							html: html
-						}, address));
-					});
+		.tap(optout => messenger.notFound(optOutController, user)(!optout))
+		.then(() => {
+			return renderEmailToString(view, data)
+			.then(html => {
+				this.log("template", html);
+				return this.create(Object.assign({
+					subject: lang.translate("email/subject/" + view, user),
+					html: html
+				}, address));
 			});
+		});
 	}
 
 }

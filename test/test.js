@@ -13,4 +13,3 @@ suite("simple suite", () => {
 	});
 
 });
-

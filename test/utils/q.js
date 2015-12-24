@@ -1,16 +1,16 @@
 "use strict";
 
-import Q from "q";
+import q from "q";
 import debug from "debug";
 import assert from "assert";
 
-let log = debug("test:q");
+const log = debug("test:q");
 
 suite("Q", () => {
 
 	test("should throw error", done => {
 
-		Q()
+		q()
 			.then(() => {
 				throw new Error("ERROR");
 			})
@@ -24,7 +24,7 @@ suite("Q", () => {
 
 	test("should throw error 2", done => {
 
-		Q()
+		q()
 			.then(() => {
 				throw new Error("ERROR");
 			})
@@ -42,7 +42,7 @@ suite("Q", () => {
 
 	test("should throw error 3", done => {
 
-		let deferred = Q.defer();
+		const deferred = q.defer();
 
 		deferred.makeNodeResolver()(null, true);
 
@@ -61,11 +61,11 @@ suite("Q", () => {
 
 	test("should use destructive assignment", done => {
 
-		Q({
+		q({
 			a: 1,
 			b: 2
 		})
-			.then(({a,b}) => {
+			.then(({a, b}) => {
 				log("a", a);
 				log("b", b);
 			})
@@ -77,14 +77,14 @@ suite("Q", () => {
 
 	test("should rollback", done => {
 
-		Q({})
+		q({})
 			.then(o => {
 				log("then 1", o);
 				throw new Error("X");
 			})
 			.catch(e => {
 				log("catch 1", e);
-				return Q({})
+				return q({})
 					.then(i => {
 						log("then 2", i);
 						throw e;
@@ -98,6 +98,4 @@ suite("Q", () => {
 
 	});
 
-
 });
-

@@ -2,7 +2,7 @@
 
 import React, {PropTypes} from "react";
 import classnames from "classnames";
-import UserActionCreators from "../../../actions/UserActionCreators.js";
+import API from "../../../utils/API";
 import UserStore from "../../../stores/UserStore.js";
 
 
@@ -35,7 +35,6 @@ export default class UserList extends React.Component {
 
 	componentDidMount() {
 		UserStore.addChangeListener(this._onChange.bind(this));
-		UserActionCreators.getUsers();
 	}
 
 	componentWillUnmount() {
@@ -44,6 +43,10 @@ export default class UserList extends React.Component {
 
 	_onChange() {
 		this.setState(this.getStateFromStores());
+	}
+	
+	sync (e) {
+		// sync
 	}
 
 	render() {
@@ -62,7 +65,7 @@ export default class UserList extends React.Component {
 		return (
 			<li key={user._id} className="list-group-item">
 				<button className={classnames("pull-right", "btn", user.isActive ? "btn-success" : "btn-danger")}
-					onClick={() => UserActionCreators.sync(user)} type="button">
+					onClick={() => this.sync(user)} type="button">
 					{user.isActive ? "Active" : "Inactive"}
 				</button>
 

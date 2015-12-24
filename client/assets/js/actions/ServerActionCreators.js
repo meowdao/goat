@@ -6,35 +6,35 @@ import {ActionTypes} from "../constants/constants.js";
 
 export default {
 
-	adminLogin: function (admin) {
+	adminLogin(admin) {
 		Dispatcher.dispatch({
 			actionType: ActionTypes.ADMIN_LOGIN,
 			admin: admin
 		});
 	},
 
-	adminLogout: function (admin) {
+	adminLogout(admin) {
 		Dispatcher.dispatch({
 			actionType: ActionTypes.ADMIN_LOGOUT,
 			admin: admin
 		});
 	},
 
-	error: function (error) {
+	error(error) {
 		Dispatcher.dispatch({
 			actionType: ActionTypes.ERROR,
 			messages: [].concat(error)
 		});
 	},
 
-	message: function (message) {
+	message(message) {
 		Dispatcher.dispatch({
 			actionType: ActionTypes.MESSAGE,
 			messages: [].concat(message)
 		});
 	},
 
-	updateUser: function(admin){
+	updateUser(admin) {
 		Dispatcher.dispatch({
 			actionType: ActionTypes.ADMIN_LOGIN,
 			admin: admin

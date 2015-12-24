@@ -2,27 +2,21 @@
 
 import React from "react";
 import {Link} from "react-router";
+import API from "../../utils/API";
 import AdminStore from "../../stores/AdminStore.js";
-import UserActionCreators from "../../actions/UserActionCreators.js";
-import {CollapsibleNav, Navbar, NavbarBrand, Nav, NavItem, NavDropdown, MenuItem} from "react-bootstrap";
+import {Navbar, Nav, NavItem, NavDropdown, MenuItem} from "react-bootstrap";
 import {LinkContainer} from "react-router-bootstrap";
 
 export default class Header extends React.Component {
-
-	state = {
-		user: null
-	};
 
 	constructor(props) {
 		super(props);
 		this.state = this.getStateFromStores();
 	}
 
-	getStateFromStores() {
-		return {
-			user: AdminStore.getCurrent()
-		};
-	}
+	state = {
+		user: null
+	};
 
 	componentDidMount() {
 		AdminStore.addChangeListener(this._onChange.bind(this));
@@ -32,12 +26,22 @@ export default class Header extends React.Component {
 		AdminStore.removeChangeListener(this._onChange.bind(this));
 	}
 
+	getStateFromStores() {
+		return {
+			user: AdminStore.getCurrent()
+		};
+	}
+
 	_onChange() {
 		this.setState(this.getStateFromStores());
 	}
 
-	logout() {
-		UserActionCreators.logout();
+	logout(e) {
+		e.preventDefault();
+		API.logout()
+			.then(() => {
+				this.props.history.pushState(null, "/user/login");
+			});
 	}
 
 	renderMenu() {
@@ -48,7 +52,7 @@ export default class Header extends React.Component {
 						<MenuItem >Dashboard</MenuItem>
 					</LinkContainer>
 					<MenuItem divider/>
-					<MenuItem onSelect={this.logout}>Logout</MenuItem>
+					<MenuItem onSelect={this.logout.bind(this)}>Logout</MenuItem>
 				</NavDropdown>
 			</Nav>
 		);

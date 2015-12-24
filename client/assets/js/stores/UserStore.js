@@ -1,4 +1,3 @@
-
 "use strict";
 
 import {ActionTypes} from "../constants/constants.js";
@@ -15,14 +14,14 @@ class UserStore extends BaseStore {
 	}
 
 	_registerToActions(action) {
-		switch(action.actionType) {
+		switch (action.actionType) {
 
-			case ActionTypes.UPDATE_USER_LIST:
-				this._users = action.users;
-				this.emitChange();
-				break;
+		case ActionTypes.UPDATE_USER_LIST:
+			this._users = action.users;
+			this.emitChange();
+			break;
 
-			default:
+		default:
 			// do nothing
 		}
 	}
@@ -34,5 +33,3 @@ class UserStore extends BaseStore {
 }
 
 export default new UserStore();
-
-

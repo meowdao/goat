@@ -1,11 +1,11 @@
 "use strict";
 
-import Q from "q";
+import q from "q";
 
 export default {
 
 	callback (func) {
-		return function (...args) {
+		return function(...args) {
 			if (process.env[this.key] === "true") {
 				func.bind(this)(...args);
 			} else {
@@ -17,11 +17,11 @@ export default {
 	},
 
 	promise (func) {
-		return function (...args) {
+		return function(...args) {
 			if (process.env[this.key] === "true") {
 				return func.bind(this)(...args);
 			} else {
-				return Q({
+				return q({
 					success: false,
 					message: `process.env.${this.key} != true, method is mocked up!`
 				});

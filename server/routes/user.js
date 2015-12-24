@@ -18,21 +18,16 @@ const tpl = `
 </html>
 `;
 
-export default function (app) {
+export default function(app) {
 
-	let userController = new UserController();
+	const userController = new UserController();
 
 	// user routes
 	app.post("/user/login", helper.simpleJSONWrapper(userController.login.bind(userController)));
-
 	app.post("/user/register", helper.simpleJSONWrapper(userController.register.bind(userController)));
-
 	app.post("/user/forgot", helper.simpleJSONWrapper(userController.forgot.bind(userController)));
-
 	app.post("/user/change", helper.simpleJSONWrapper(userController.change.bind(userController)));
-
 	app.get("/user/logout", userController.logout.bind(userController));
-
 	app.post("/user/sendEmailVerification", [middleware.requiresLogin()], helper.simpleJSONWrapper(userController.sendEmailVerification.bind(userController)));
 	app.get("/user/verify/:hash", helper.simpleJSONWrapper(userController.verify.bind(userController)));
 
@@ -42,7 +37,6 @@ export default function (app) {
 			scope: ["email"],
 			failureRedirect: "/user/login"
 		}));
-
 	app.get("/auth/facebook/callback", passport.authenticate("facebook"), (request, response) => {
 		response.send(tpl);
 	});
@@ -55,7 +49,6 @@ export default function (app) {
 				"https://www.googleapis.com/auth/userinfo.email"
 			]
 		}));
-
 	app.get("/auth/google/callback", passport.authenticate("google"), (request, response) => {
 		response.send(tpl);
 	});

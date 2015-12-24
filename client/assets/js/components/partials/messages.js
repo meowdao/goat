@@ -14,20 +14,14 @@ export default class Message extends React.Component {
 		messages: []
 	};
 
-	state = {
-		messages: this.props.messages
-	};
-
 	constructor(props) {
 		super(props);
 		this.state = this.getStateFromStores();
 	}
 
-	getStateFromStores() {
-		return {
-			messages: MessageStore.getMessages()
-		};
-	}
+	state = {
+		messages: this.props.messages
+	};
 
 	componentDidMount() {
 		MessageStore.addChangeListener(this._onChange.bind(this));
@@ -35,6 +29,12 @@ export default class Message extends React.Component {
 
 	componentWillUnmount() {
 		MessageStore.removeChangeListener(this._onChange.bind(this));
+	}
+
+	getStateFromStores() {
+		return {
+			messages: MessageStore.getMessages()
+		};
 	}
 
 	_onChange() {

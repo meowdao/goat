@@ -2,8 +2,6 @@
 
 import {createHistory, useBasename} from "history";
 
-const history = useBasename(createHistory)({
+export default useBasename(createHistory)({
 	basename: "/"
 });
-
-export default history;

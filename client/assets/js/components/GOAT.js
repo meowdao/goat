@@ -10,11 +10,11 @@ export default class GOAT extends React.Component {
 	static displayName = "GOAT";
 
 	static propTypes = {
+		children: PropTypes.node,
 		params: PropTypes.object.isRequired
 	};
 
 	render() {
-		console.log("GOAT:props", this.props);
 		return (
 			<div>
 				<Header {...this.props}/>
@@ -24,4 +24,3 @@ export default class GOAT extends React.Component {
 		);
 	}
 }
-

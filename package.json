@@ -30,6 +30,7 @@
 		"debug": "2.2.0",
 		"eslint": "1.10.3",
 		"eslint-loader": "1.1.1",
+		"eslint-config-airbnb": "2.1.1",
 		"eslint-plugin-react": "3.11.3",
 		"express": "4.13.3",
 		"express-session": "1.12.1",
@@ -84,6 +85,7 @@
 	"scripts": {
 		"start": "NODE_ENV=${NODE_ENV:=development} DEBUG=web:* nodemon server/server.js",
 		"test": "NODE_ENV=${NODE_ENV:=development} mocha",
-		"build": "NODE_ENV=${NODE_ENV:=development} webpack -c --config server/configs/webpack.js"
+		"build": "NODE_ENV=${NODE_ENV:=development} webpack -c --config server/configs/webpack.js",
+		"lint" : "eslint server/* client/assets/js/* test/*"
 	}
 }

@@ -1,6 +1,6 @@
 "use strict";
 
-import Q from "q";
+import q from "q";
 import assert from "assert";
 import debug from "debug";
 import mongoose, {Schema} from "mongoose";
@@ -8,7 +8,7 @@ import mongooseVersion from "lackey-mongoose-version";
 
 import AbstractController from "../../server/controllers/abstract/abstract.js";
 
-let MyModel = new Schema({
+const MyModel = new Schema({
 	string: String
 }, {versionKey: false});
 
@@ -25,10 +25,10 @@ class MyController extends AbstractController {
 class MyVersionsController extends AbstractController {
 }
 
-let myController = new MyController();
-let myVersionsController = new MyVersionsController();
+const myController = new MyController();
+const myVersionsController = new MyVersionsController();
 
-let log = debug("test:versioning");
+const log = debug("test:versioning");
 
 suite("versioning plugin", () => {
 
@@ -49,7 +49,7 @@ suite("versioning plugin", () => {
 			})
 			.catch(e => {
 				log(e);
-				let messages = Object.keys(e.errors).map(key => e.errors[key].message);
+				const messages = Object.keys(e.errors).map(key => e.errors[key].message);
 				log(messages);
 			})
 			.finally(done)
@@ -60,9 +60,9 @@ suite("versioning plugin", () => {
 	test("should not update record with findOneAndUpdate", done => {
 
 		myController.create(my)
-			.then(my => {
-				log("my:created", my);
-				return myController.findByIdAndUpdate(my._id, {string: "asdfgh"}, {new: true})
+			.then(createdmy => {
+				log("my:created", createdmy);
+				return myController.findByIdAndUpdate(createdmy._id, {string: "asdfgh"}, {new: true})
 					.then(newmy => {
 						log("my:updated", newmy);
 						return myVersionsController.count({refId: newmy._id})
@@ -81,10 +81,10 @@ suite("versioning plugin", () => {
 	test("should update record after setting same value", done => {
 
 		myController.create(my)
-			.then(my => {
-				log("my:created", my);
-				my.status = "active";
-				return myController.save(my)
+			.then(createdmy => {
+				log("my:created", createdmy);
+				createdmy.status = "active";
+				return myController.save(createdmy)
 					.then(newmy => {
 						log("my:updated", newmy);
 						return myVersionsController.count({refId: newmy._id})
@@ -103,10 +103,10 @@ suite("versioning plugin", () => {
 	test("should update record after setting new value", done => {
 
 		myController.create(my)
-			.then(my => {
-				log("my:created", my);
-				my.string = "zxcvbn";
-				return myController.save(my)
+			.then(createdmy => {
+				log("my:created", createdmy);
+				createdmy.string = "zxcvbn";
+				return myController.save(createdmy)
 					.then(newmy => {
 						log("my:updated", newmy);
 						return myVersionsController.count({refId: newmy._id})
@@ -123,7 +123,7 @@ suite("versioning plugin", () => {
 	});
 
 	suiteTeardown(done => {
-		Q.all([
+		q.all([
 			myController.remove(),
 			myVersionsController.remove()
 		])

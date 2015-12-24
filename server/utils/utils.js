@@ -5,22 +5,22 @@ import crypto from "crypto";
 
 export default {
 
-	isType (variable, type) {
+	isType(variable, type) {
 		return Object.prototype.toString.call(variable) === "[object " + type + "]";
 	},
 
-	getType (variable) {
+	getType(variable) {
 		return Object.prototype.toString.call(variable).match(/\s([^\]]+)/)[1];
 	},
 
-	roughSizeOfObject (object) {
-
-		var objectList = [],
-			stack = [object],
-			bytes = 0;
+	roughSizeOfObject(object) {
+		const objectList = [];
+		const stack = [object];
+		let bytes = 0;
+		let value;
 
 		while (stack.length) {
-			var value = stack.pop();
+			value = stack.pop();
 			if (typeof value === "boolean") {
 				bytes += 4;
 			} else if (typeof value === "string") {
@@ -29,7 +29,7 @@ export default {
 				bytes += 8;
 			} else if (typeof value === "object" && objectList.indexOf(value) === -1) {
 				objectList.push(value);
-				for (var i in value) {
+				for (let i in value) {
 					stack.push(value[i]);
 				}
 			}
@@ -37,17 +37,17 @@ export default {
 		return bytes;
 	},
 
-	getRandomString(length = 64, type = 3){
-		let chars = [
+	getRandomString(length = 64, type = 3) {
+		const chars = [
 			"0123456789",
 			"ABCDEFGHIJKLMNOPQRSTUVWXYZ",
 			"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ",
 			"0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 		];
-		let randomBytes = crypto.randomBytes(length);
-		let result = new Array(length);
+		const randomBytes = crypto.randomBytes(length);
+		const result = new Array(length);
 		let cursor = 0;
-		for (var i = 0; i < length; i++) {
+		for (let i = 0; i < length; i++) {
 			cursor += randomBytes[i];
 			result[i] = chars[type][cursor % chars[type].length];
 		}

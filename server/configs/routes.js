@@ -5,11 +5,11 @@ import messenger from "../utils/messenger.js";
 import path from "path";
 
 
-export default function (app) {
+export default function(app) {
 
 	function createRegExpParameter(re) {
-		return function (request, response, next, val, name) {
-			var captures = re.exec(String(val));
+		return function(request, response, next, val, name) {
+			const captures = re.exec(String(val));
 			if (captures) {
 				request.params[name] = captures;
 				next();

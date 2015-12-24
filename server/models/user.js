@@ -5,7 +5,7 @@ import {Schema} from "mongoose";
 import zxcvbn from "zxcvbn";
 import regexp from "../utils/regexp.js";
 
-let User = new Schema({
+const User = new Schema({
 	avatar: {
 		type: Schema.Types.ObjectId,
 		ref: "Avatar"
@@ -33,11 +33,6 @@ let User = new Schema({
 		required: "Last name cannot be blank"
 	},
 
-	companyName: {
-		type: String,
-		required: "Company name cannot be blank"
-	},
-
 	role: {
 		type: String,
 		default: "user",
@@ -52,17 +47,17 @@ let User = new Schema({
 		select: false,
 		required: "Password cannot be blank",
 		validate: [{
-			validator: function () {
+			validator() {
 				return this.isModified("password") ? this.password === this.confirm : true;
 			},
 			msg: "Passwords doesn't much"
 		}, {
-			validator: function () {
+			validator() {
 				return !!this.password;
 			},
 			msg: "Password cannot be blank"
 		}, {
-			validator: function () {
+			validator() {
 				return zxcvbn(this.password).score >= 1;
 			},
 			msg: "Password is too weak"
@@ -90,39 +85,39 @@ let User = new Schema({
 }, {versionKey: false});
 
 User.virtual("fullName")
-	.get(function () {
+	.get(function() {
 		return this.firstName + " " + this.lastName;
 	});
 
 User.virtual("confirm")
-	.set(function (password) {
+	.set(function(password) {
 		this._confirm = password;
 	})
-	.get(function () {
+	.get(function() {
 		return this._confirm;
 	});
 
-User.pre("save", function (next) {
+User.pre("save", function(next) {
 	if (this.isModified("password")) {
 		this.password = bcrypt.hashSync(this.password, bcrypt.genSaltSync(5));
 	}
 	next();
 });
 
-User.pre("save", function (next) {
+User.pre("save", function(next) {
 	if (this.isModified("email")) {
 		this.isEmailVerified = false;
 	}
 	next();
 });
 
-User.pre("save", function (next) {
+User.pre("save", function(next) {
 	this.updated = new Date();
 	next();
 });
 
 User.methods = {
-	verifyPassword: function (password) {
+	verifyPassword(password) {
 		return bcrypt.compareSync(password, this.password);
 	}
 };

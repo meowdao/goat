@@ -14,9 +14,9 @@ import passport from "./passport.js";
 import proxy from "./proxy.js";
 
 
-export default function () {
+export default function() {
 
-	let app = express();
+	const app = express();
 
 	app.disable("x-powered-by");
 

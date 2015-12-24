@@ -1,18 +1,18 @@
 "use strict";
 
-import Q from "q";
+import q from "q";
 import debug from "debug";
 import assert from "assert";
 import mongoose, {Schema} from "mongoose";
 import AbstractController from "../../../server/controllers/abstract/abstract.js";
 import {cleanUp, mockInChain} from "../../utils.js";
 
-let log = debug("test:AbstractController");
+const log = debug("test:AbstractController");
 
 class TestAbstractController extends AbstractController {
 }
 
-let TestAbstractSchema = new Schema({
+const TestAbstractSchema = new Schema({
 	user: {
 		type: Schema.Types.ObjectId,
 		ref: "User"
@@ -30,7 +30,7 @@ let TestAbstractSchema = new Schema({
 
 mongoose.model("TestAbstract", TestAbstractSchema);
 
-let testAbstractController = new TestAbstractController();
+const testAbstractController = new TestAbstractController();
 
 function setUp(data, count) {
 	return (done) => {
@@ -39,38 +39,38 @@ function setUp(data, count) {
 			model: "User",
 			count: 2
 		}])
+		.then(result => {
+			Object.assign(data, result);
+			return testAbstractController.create(new Array(count).fill(1).map(function(n, i) {
+				return {
+					user: data.User[i % 2],
+					bool: true,
+					string: String.fromCharCode(97 + i),
+					number: i
+				};
+			}))
 			.then(result => {
-				Object.assign(data, result);
-				return testAbstractController.create(new Array(count).fill(1).map(function (n, i) {
-						return {
-							user: data.User[i % 2],
-							bool: true,
-							string: String.fromCharCode(97 + i),
-							number: i
-						};
-					}))
-					.then(result => {
-						data.Test = result;
-					})
-			})
-			.finally(done)
-			.done();
+				data.Test = result;
+			});
+		})
+		.finally(done)
+		.done();
 	};
 }
 
 function tearDown() {
 	return (done) => {
-		Q.all([
-				testAbstractController.remove()
-			])
-			.finally(() => cleanUp(done))
-			.done();
+		q.all([
+			testAbstractController.remove()
+		])
+		.finally(() => cleanUp(done))
+		.done();
 	};
 }
 
 suite("Abstract", () => {
 
-	let data = {};
+	const data = {};
 
 	const testObject = {
 		bool: false,
@@ -85,38 +85,38 @@ suite("Abstract", () => {
 		test("should insert (full data)", done => {
 
 			testAbstractController.insert({
-					user: data.User[0],
-					body: testObject
-				})
-				.then(test => {
-					log("test", test);
-					assert.equal(test.user.toString(), data.User[0]._id.toString());
-					assert.equal(test.bool, testObject.bool);
-					assert.equal(test.string, testObject.string);
-					assert.equal(test.number, testObject.number);
-				})
-				.catch(assert.ifError)
-				.finally(done)
-				.done();
+				user: data.User[0],
+				body: testObject
+			})
+			.then(test => {
+				log("test", test);
+				assert.equal(test.user.toString(), data.User[0]._id.toString());
+				assert.equal(test.bool, testObject.bool);
+				assert.equal(test.string, testObject.string);
+				assert.equal(test.number, testObject.number);
+			})
+			.catch(assert.ifError)
+			.finally(done)
+			.done();
 
 		});
 
 		test("should insert (part data)", done => {
 
 			testAbstractController.insert({
-					user: data.User[0],
-					body: testObject
-				}, ["bool"])
-				.then(test => {
-					log("test", test);
-					assert.equal(test.user.toString(), data.User[0]._id.toString());
-					assert.equal(test.bool, testObject.bool);
-					assert.equal(test.string, void (0));
-					assert.equal(test.number, void (0));
-				})
-				.catch(assert.ifError)
-				.finally(done)
-				.done();
+				user: data.User[0],
+				body: testObject
+			}, ["bool"])
+			.then(test => {
+				log("test", test);
+				assert.equal(test.user.toString(), data.User[0]._id.toString());
+				assert.equal(test.bool, testObject.bool);
+				assert.equal(test.string, void (0));
+				assert.equal(test.number, void (0));
+			})
+			.catch(assert.ifError)
+			.finally(done)
+			.done();
 
 		});
 
@@ -130,37 +130,37 @@ suite("Abstract", () => {
 		test("should getById (obj)", done => {
 
 			testAbstractController.getById({
-					user: data.User[0],
-					params: {
-						_id: data.Test[0]._id
-					}
-				})
-				.then(test => {
-					log("test", test);
-					assert.equal(test.bool, data.Test[0].bool);
-					assert.equal(test.string, data.Test[0].string);
-					assert.equal(test.number, data.Test[0].number);
-				})
-				.catch(assert.ifError)
-				.finally(done)
-				.done();
+				user: data.User[0],
+				params: {
+					_id: data.Test[0]._id
+				}
+			})
+			.then(test => {
+				log("test", test);
+				assert.equal(test.bool, data.Test[0].bool);
+				assert.equal(test.string, data.Test[0].string);
+				assert.equal(test.number, data.Test[0].number);
+			})
+			.catch(assert.ifError)
+			.finally(done)
+			.done();
 
 		});
 
 		test("should getById (error 404)", done => {
 
 			testAbstractController.getById({
-					user: data.User[1],
-					params: {
-						_id: data.Test[0]._id
-					}
-				})
-				.then(assert.ifError)
-				.catch(e => {
-					assert.equal(e.code, 404);
-				})
-				.finally(done)
-				.done();
+				user: data.User[1],
+				params: {
+					_id: data.Test[0]._id
+				}
+			})
+			.then(assert.ifError)
+			.catch(e => {
+				assert.equal(e.code, 404);
+			})
+			.finally(done)
+			.done();
 
 		});
 
@@ -175,15 +175,15 @@ suite("Abstract", () => {
 		test("should list", done => {
 
 			testAbstractController.list({
-					user: data.User[0]
-				})
-				.then(test => {
-					log("test", test);
-					assert.equal(test.testabstracts.length, 3);
-				})
-				.catch(assert.ifError)
-				.finally(done)
-				.done();
+				user: data.User[0]
+			})
+			.then(test => {
+				log("test", test);
+				assert.equal(test.testabstracts.length, 3);
+			})
+			.catch(assert.ifError)
+			.finally(done)
+			.done();
 
 		});
 
@@ -198,62 +198,62 @@ suite("Abstract", () => {
 		test("should edit (full data)", done => {
 
 			testAbstractController.edit({
-					user: data.User[0],
-					params: {
-						_id: data.Test[0]._id
-					},
-					body: testObject
-				})
-				.then(test => {
-					log("test", test);
-					assert.equal(test.user.toString(), data.User[0]._id.toString());
-					assert.equal(test.bool, testObject.bool);
-					assert.equal(test.string, testObject.string);
-					assert.equal(test.number, testObject.number);
-				})
-				.catch(assert.ifError)
-				.finally(done)
-				.done();
+				user: data.User[0],
+				params: {
+					_id: data.Test[0]._id
+				},
+				body: testObject
+			})
+			.then(test => {
+				log("test", test);
+				assert.equal(test.user.toString(), data.User[0]._id.toString());
+				assert.equal(test.bool, testObject.bool);
+				assert.equal(test.string, testObject.string);
+				assert.equal(test.number, testObject.number);
+			})
+			.catch(assert.ifError)
+			.finally(done)
+			.done();
 
 		});
 
 		test("should edit (part data)", done => {
 
 			testAbstractController.edit({
-					user: data.User[1],
-					params: {
-						_id: data.Test[1]._id
-					},
-					body: testObject
-				}, ["bool"])
-				.then(test => {
-					log("test", test);
-					assert.equal(test.user.toString(), data.User[1]._id.toString());
-					assert.equal(test.bool, testObject.bool);
-					assert.equal(test.string, data.Test[1].string);
-					assert.equal(test.number, data.Test[1].number);
-				})
-				.catch(assert.ifError)
-				.finally(done)
-				.done();
+				user: data.User[1],
+				params: {
+					_id: data.Test[1]._id
+				},
+				body: testObject
+			}, ["bool"])
+			.then(test => {
+				log("test", test);
+				assert.equal(test.user.toString(), data.User[1]._id.toString());
+				assert.equal(test.bool, testObject.bool);
+				assert.equal(test.string, data.Test[1].string);
+				assert.equal(test.number, data.Test[1].number);
+			})
+			.catch(assert.ifError)
+			.finally(done)
+			.done();
 
 		});
 
 		test("should edit (error 404)", done => {
 
 			testAbstractController.edit({
-					user: data.User[0],
-					params: {
-						_id: data.Test[1]._id
-					},
-					body: testObject
-				})
-				.then(assert.ifError)
-				.catch(e => {
-					assert.equal(e.code, 404);
-				})
-				.finally(done)
-				.done();
+				user: data.User[0],
+				params: {
+					_id: data.Test[1]._id
+				},
+				body: testObject
+			})
+			.then(assert.ifError)
+			.catch(e => {
+				assert.equal(e.code, 404);
+			})
+			.finally(done)
+			.done();
 
 		});
 
@@ -268,38 +268,38 @@ suite("Abstract", () => {
 		test("should delete", done => {
 
 			testAbstractController.delete({
-					user: data.User[0],
-					params: {
-						_id: data.Test[0]._id
-					}
-				})
+				user: data.User[0],
+				params: {
+					_id: data.Test[0]._id
+				}
+			})
+			.then(test => {
+				assert.equal(test.success, true);
+				return testAbstractController.findById(data.Test[0]._id)
 				.then(test => {
-					assert.equal(test.success, true);
-					return testAbstractController.findById(data.Test[0]._id)
-						.then(test => {
-							assert.equal(test, null);
-						});
-				})
-				.catch(assert.ifError)
-				.finally(done)
-				.done();
+					assert.equal(test, null);
+				});
+			})
+			.catch(assert.ifError)
+			.finally(done)
+			.done();
 
 		});
 
 		test("should delete (error 404)", done => {
 
 			testAbstractController.delete({
-					user: data.User[0],
-					params: {
-						_id: data.Test[1]._id
-					}
-				})
-				.then(assert.ifError)
-				.catch(e => {
-					assert.equal(e.code, 404);
-				})
-				.finally(done)
-				.done();
+				user: data.User[0],
+				params: {
+					_id: data.Test[1]._id
+				}
+			})
+			.then(assert.ifError)
+			.catch(e => {
+				assert.equal(e.code, 404);
+			})
+			.finally(done)
+			.done();
 
 		});
 
@@ -308,5 +308,3 @@ suite("Abstract", () => {
 	});
 
 });
-
-

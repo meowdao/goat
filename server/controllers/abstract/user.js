@@ -1,6 +1,6 @@
 "use strict";
 
-import Q from "q";
+import q from "q";
 import _ from "lodash";
 import passport from "passport";
 
@@ -12,7 +12,7 @@ import HashController from "./../hash.js";
 export default class AbstractUserController extends AbstractController {
 
 	login(request, response) {
-		var defer = Q.defer();
+		var defer = q.defer();
 
 		passport.authenticate("local", {badRequestMessage: "missing-credentials"}, function (error, user, info) {
 			defer.makeNodeResolver()(error || info, user);
@@ -28,7 +28,7 @@ export default class AbstractUserController extends AbstractController {
 
 		return this.create(request.body)
 			.tap(user => {
-				return Q.nbind(request.login, request)(user);
+				return q.nbind(request.login, request)(user);
 			})
 			.tap(() => {
 				return this.sendEmailVerification(request);
@@ -40,10 +40,10 @@ export default class AbstractUserController extends AbstractController {
 		return this.findOne(clean)
 			.then(messenger.notFound(this, request.user))
 			.then(user => {
-				let hashController = new HashController();
+				const hashController = new HashController();
 				return hashController.upsert({user: user._id, type: "password"})
 					.then(hash => {
-						let mailController = new MailController();
+						const mailController = new MailController();
 						return mailController.composeMail("user/forgot", {to: user.email}, user, {
 							hash: hash
 						});
@@ -52,7 +52,7 @@ export default class AbstractUserController extends AbstractController {
 	}
 
 	change(request) {
-		let hashController = new HashController();
+		const hashController = new HashController();
 		return hashController.findByIdAndRemove(request.body.hash)
 			.then(messenger.notFound(hashController, null))
 			.then(hash => {
@@ -66,10 +66,10 @@ export default class AbstractUserController extends AbstractController {
 	}
 
 	sendEmailVerification(request) {
-		let hashController = new HashController();
+		const hashController = new HashController();
 		return hashController.create({user: request.user._id})
 			.then(hash => {
-				let mailController = new MailController();
+				const mailController = new MailController();
 				return mailController.composeMail("user/verify", {to: request.user.email}, request.user, {
 					hash: hash
 				});
@@ -77,7 +77,7 @@ export default class AbstractUserController extends AbstractController {
 	}
 
 	verify(request) {
-		let hashController = new HashController();
+		const hashController = new HashController();
 		return hashController.findByIdAndRemove(request.params.hash)
 			.then(hash => {
 				return this.findById(hash.user, {lean: false})

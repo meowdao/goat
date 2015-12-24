@@ -1,7 +1,7 @@
 "use strict";
 
 import React from "react";
-import UserActionCreator from "../../actions/UserActionCreators.js";
+import API from "../../utils/API";
 import {email} from "../../../../../server/utils/constants/misc.js";
 
 
@@ -27,7 +27,10 @@ export default class Forgot extends React.Component {
 
 	onSubmit(e) {
 		e.preventDefault();
-		UserActionCreator.forgot(this.state);
+		API.forgot(this.state)
+			.then(() => {
+				this.props.history.pushState(null, "/user/login");
+			});
 	}
 
 	render() {
@@ -44,7 +47,7 @@ export default class Forgot extends React.Component {
 
 							<div className="col-sm-10">
 								<input type="text" className="form-control" name="email" id="email" defaultValue="" placeholder="me@example.com"
-								       onChange={e => this.setState({email: e.target.value})}/>
+									   onChange={e => this.setState({email: e.target.value})}/>
 							</div>
 						</div>
 

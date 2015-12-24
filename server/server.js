@@ -9,7 +9,6 @@ import WebpackDevServer from "webpack-dev-server";
 
 
 import express from "./configs/express.js";
-import {renderHTML} from "./utils/render";
 
 
 if (process.env.NODE_ENV !== "production") {
@@ -19,8 +18,8 @@ if (process.env.NODE_ENV !== "production") {
 	debug.enable("web:*");
 }
 
-var log = debug("log:server");
-var app = express();
+const log = debug("log:server");
+const app = express();
 
 // http://webpack.github.io/docs/webpack-dev-server.html#combining-with-an-existing-server
 const webpackServer = new WebpackDevServer(webpack(require("./configs/webpack")), {
@@ -43,13 +42,10 @@ const webpackServer = new WebpackDevServer(webpack(require("./configs/webpack"))
 	}
 });
 
-webpackServer.listen(3001, "0.0.0.0", function (error) {
+webpackServer.listen(3001, "0.0.0.0", function(error) {
 	log(error || "Webpack server listening on port 3001");
 });
 
-app.get("/", function (request, response) {
-	response.send(renderHTML());
-});
 
 require("./configs/middleware.js").default(app);
 require("./configs/routes.js").default(app);

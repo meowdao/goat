@@ -2,9 +2,9 @@
 
 import path from "path";
 
-export default function (app) {
+export default function(app) {
 
-	app.get("/api/v1/ping",  (request, response) => {
+	app.get("/api/v1/ping", (request, response) => {
 		response.status(200).json({pong: true});
 	});
 

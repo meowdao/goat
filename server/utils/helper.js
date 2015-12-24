@@ -4,11 +4,11 @@ import debug from "debug";
 import messenger from "../utils/messenger.js";
 import lang from "../utils/lang.js";
 
-let log = debug("log:helper");
+const log = debug("log:helper");
 
 export default {
 
-	simpleJSONWrapper (method) {
+	simpleJSONWrapper(method) {
 		return (request, response, next) => {
 			method(request, response, next)
 				.then(response.json.bind(response))
@@ -19,7 +19,7 @@ export default {
 		};
 	},
 
-	simpleFileWrapper (method) {
+	simpleFileWrapper(method) {
 		return (request, response, next) => {
 			method(request, response, next)
 				.then(result => {
@@ -32,8 +32,8 @@ export default {
 		};
 	},
 
-	/*eslint-disable no-unused-vars */
-	sendError(error, request, response, next){
+	/* eslint-disable no-unused-vars */
+	sendError(error, request, response, next) {
 		log("sendError", error.message, error.stack);
 		if (error.name === "ValidationError") {
 			error = {
@@ -42,7 +42,7 @@ export default {
 			};
 		}
 		if (error.name === "MongoError" && error.code === 11000) {
-			let key = error.message.match(/\$(\w+)\s+/)[1];
+			const key = error.message.match(/\$(\w+)\s+/)[1];
 			error = {
 				code: 400,
 				message: lang.translate("error/mongo/" + key, request.user) || lang.translate("error/mongo/E11000", request.user)
@@ -61,5 +61,5 @@ export default {
 			errors: [].concat(error.message)
 		});
 	}
-	/*eslint-enable no-unused-vars */
+	/* eslint-enable no-unused-vars */
 };

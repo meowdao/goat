@@ -3,6 +3,11 @@
 import React, {PropTypes} from "react";
 
 export default class EML extends React.Component {
+
+	static propTypes = {
+		children: PropTypes.node
+	};
+
 	render() {
 		return (
 			<html>
@@ -14,5 +19,3 @@ export default class EML extends React.Component {
 		);
 	}
 }
-
-

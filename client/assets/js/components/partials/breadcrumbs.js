@@ -15,6 +15,10 @@ export default class Breadcrumbs extends React.Component {
 		routes.forEach(function (route, i, arr) {
 			let name, link;
 
+			if (!route.component){
+				return;
+			}
+
 			name = route.component.displayName || route.name;
 
 			if (!name) {

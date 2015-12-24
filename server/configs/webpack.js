@@ -15,7 +15,7 @@ module.exports = {
 		path: path.join(__dirname, "..", "..", "client", "build"),
 		filename: "bundle.js",
 		sourceMapFilename: "[file].map",
-		//chunkFilename: "[id].js",
+		// chunkFilename: "[id].js",
 		publicPath: "http://localhost:3001/assets/"
 	},
 	resolve: {
@@ -28,7 +28,7 @@ module.exports = {
 		loaders: [
 			{
 				test: /\.json$/,
-				loader: "json"
+				loader: "json-loader"
 			},
 			{
 				test: /\.less/,
@@ -46,9 +46,7 @@ module.exports = {
 		]
 	},
 	plugins: [
-		new webpack.DefinePlugin({
-			"process.env": JSON.stringify(process.env)
-		}),
+		new webpack.NodeEnvironmentPlugin("NODE_ENV", "CRON"),
 		new ExtractTextPlugin("style.css", {
 			allChunks: true
 		}),

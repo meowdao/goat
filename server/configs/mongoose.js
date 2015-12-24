@@ -1,6 +1,6 @@
 "use strict";
 
-import Q from "q";
+import q from "q";
 import fs from "fs";
 import debug from "debug";
 import mongoose from "mongoose";
@@ -8,15 +8,13 @@ import configs from "../configs/config.js";
 import path from "path";
 
 
-export default function () {
+export default function() {
 
 	const config = configs[process.env.NODE_ENV];
+	const log = debug("log:mongoose");
+	const db = mongoose.connection;
 
-	let log = debug("log:mongoose");
-
-	let db = mongoose.connection;
-
-	mongoose.Promise = Q.Promise;
+	mongoose.Promise = q.Promise;
 
 	if (db.readyState) {
 		return mongoose;
@@ -68,4 +66,3 @@ export default function () {
 	return mongoose;
 
 }
-

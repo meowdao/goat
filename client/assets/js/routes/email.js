@@ -8,8 +8,7 @@ import Forgot from "../components/email/forgot.js";
 import Verify from "../components/email/verify.js";
 import Test from "../components/email/test.js";
 
-import Router, { match, RoutingContext, Route } from 'react-router';
-import {renderToString} from "react-dom/server";
+import {Route} from "react-router";
 
 export default (
 	<Route path="/" component={EML}>

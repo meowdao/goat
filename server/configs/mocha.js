@@ -11,22 +11,21 @@ require("./moment.js");
 
 Error.stackTraceLimit = Infinity;
 
-var debug = require("debug");
+const debug = require("debug");
 debug.enable("controller:*");
 debug.enable("model:*");
 debug.enable("test:*");
 debug.enable("log:*");
 
-let bluebird = require("bluebird");
+const bluebird = require("bluebird");
 bluebird.longStackTraces();
 
-let q = require("q");
+const q = require("q");
 q.longStackSupport = true;
 
-let mongoose = require("./mongoose.js").default();
+const mongoose = require("./mongoose.js").default();
 mongoose.set("debug", false);
 
 process.on("uncaughtException", (exception) => {
 	debug("log:mocha")(exception);
 });
-

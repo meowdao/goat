@@ -1,7 +1,7 @@
 "use strict";
 
 import React, {PropTypes} from "react";
-import UserActionCreator from "../../actions/UserActionCreators.js";
+import API from "../../utils/API";
 import {email, password} from "../../../../../server/utils/constants/misc.js";
 import {Link} from "react-router";
 
@@ -27,13 +27,16 @@ export default class Login extends React.Component {
 
 	onSubmit(e) {
 		e.preventDefault();
-		UserActionCreator.login(this.state);
+		API.login(this.state)
+			.then(() => {
+				this.props.history.pushState(null, "/user/profile");
+			});
 	}
 
 	open(link) {
 		return e => {
 			e.preventDefault();
-			let
+			const
 				n = 600,
 				r = 400,
 				i = (window.innerHeight - r) / 2,
@@ -62,8 +65,8 @@ export default class Login extends React.Component {
 
 							<div className="col-sm-10">
 								<input type="text" className="form-control" name="email" id="email"
-									placeholder="me@example.com"
-									onChange={e => this.setState({email: e.target.value})}/>
+									   placeholder="me@example.com"
+									   onChange={e => this.setState({email: e.target.value})}/>
 							</div>
 						</div>
 						<div className="form-group">
@@ -71,8 +74,8 @@ export default class Login extends React.Component {
 
 							<div className="col-sm-10">
 								<input type="password" className="form-control" name="password" id="password"
-									placeholder="******"
-									onChange={e => this.setState({password: e.target.value})}/>
+									   placeholder="******"
+									   onChange={e => this.setState({password: e.target.value})}/>
 							</div>
 						</div>
 

@@ -5,7 +5,7 @@ import MailController from "../controllers/mail.js";
 
 const statuses = MailController.prototype.constructor.statuses;
 
-let Mail = new Schema({
+const Mail = new Schema({
 	to: [String],
 	cc: [String],
 	bcc: [String],
