@@ -1,8 +1,8 @@
 "use strict";
 
 import moment from "moment"; // eslint-disable-line no-unused-vars
-import DateRange from "moment-range"; // eslint-disable-line no-unused-vars
 import tz from "moment-timezone"; // eslint-disable-line no-unused-vars
+import DateRange from "moment-range";
 
 
 DateRange.prototype.contains = function(other, exclusive) {
