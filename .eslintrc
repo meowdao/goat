@@ -25,6 +25,13 @@
 		"padded-blocks": [
 			0,
 			"never"
+		],
+		"no-else-return": [
+			0
+		],
+		"react/jsx-indent-props": [
+			2,
+			"tab"
 		]
 	},
 	"env": {

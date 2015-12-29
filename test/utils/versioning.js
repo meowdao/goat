@@ -13,8 +13,8 @@ const MyModel = new Schema({
 }, {versionKey: false});
 
 MyModel.plugin(mongooseVersion, {
-	collection: "MyVersions",
-	mongoose: mongoose
+	mongoose,
+	collection: "MyVersions"
 });
 
 mongoose.model("My", MyModel);
@@ -39,9 +39,9 @@ suite("versioning plugin", () => {
 	test("should create record", done => {
 
 		myController.create(my)
-			.then(my => {
-				log("my", my);
-				return myVersionsController.count({refId: my._id})
+			.then(myObj => {
+				log("my", myObj);
+				return myVersionsController.count({refId: myObj._id})
 					.then(count => {
 						log("count", count);
 						assert.equal(count, 1);
@@ -49,7 +49,8 @@ suite("versioning plugin", () => {
 			})
 			.catch(e => {
 				log(e);
-				const messages = Object.keys(e.errors).map(key => e.errors[key].message);
+				const messages = Object.keys(e.errors)
+					.map(key => e.errors[key].message);
 				log(messages);
 			})
 			.finally(done)

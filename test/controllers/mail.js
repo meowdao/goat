@@ -7,16 +7,15 @@ import {getControllers} from "../utils.js";
 
 const controllers = getControllers(true);
 
-suite("Mail", function() {
-	this.timeout(10000);
+suite("Mail", () => {
 
-	suite("#sendMail", function() {
-		test("send mail", function(done) {
+	suite("#sendMail", () => {
+		test("send mail", (done) => {
 			controllers.mail.composeMail("test", {to: email}, {}, {
 				user: {
-					email: email,
-					firstName: firstName,
-					lastName: lastName
+					email,
+					firstName,
+					lastName
 				}
 			})
 			.then(mail => {

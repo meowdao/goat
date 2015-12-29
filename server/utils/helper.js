@@ -32,34 +32,26 @@ export default {
 		};
 	},
 
-	/* eslint-disable no-unused-vars */
-	sendError(error, request, response, next) {
+	sendError(err, request, response) {
+		let error = err;
 		log("sendError", error.message, error.stack);
 		if (error.name === "ValidationError") {
-			error = {
-				code: 409,
-				message: Object.keys(error.errors).map(key => error.errors[key].message)
-			};
+			error = messenger._makeError(Object.keys(error.errors).map(key => error.errors[key].message), 409);
 		}
 		if (error.name === "MongoError" && error.code === 11000) {
 			const key = error.message.match(/\$(\w+)\s+/)[1];
-			error = {
-				code: 400,
-				message: lang.translate("error/mongo/" + key, request.user) || lang.translate("error/mongo/E11000", request.user)
-			};
+			error = messenger._makeError(lang.translate("error/mongo/" + key, request.user) || lang.translate("error/mongo/E11000", request.user), 400);
 		}
 		if (!error.code) {
 			if (process.env.NODE_ENV === "production") {
 				error = messenger.makeError("server-error", request.user, 500);
 			} else {
-				error.code = 500;
-				error.message = error.stack;
+				error = messenger._makeError(error.stack, 500);
 			}
 		}
 		response.status(error.code).send({
-			status: error.code,
+			code: error.code,
 			errors: [].concat(error.message)
 		});
 	}
-	/* eslint-enable no-unused-vars */
 };

@@ -8,7 +8,7 @@ import path from "path";
 export default function(app) {
 
 	function createRegExpParameter(re) {
-		return function(request, response, next, val, name) {
+		return (request, response, next, val, name) => {
 			const captures = re.exec(String(val));
 			if (captures) {
 				request.params[name] = captures;

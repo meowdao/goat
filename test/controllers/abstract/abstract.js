@@ -41,16 +41,14 @@ function setUp(data, count) {
 		}])
 		.then(result => {
 			Object.assign(data, result);
-			return testAbstractController.create(new Array(count).fill(1).map(function(n, i) {
-				return {
-					user: data.User[i % 2],
-					bool: true,
-					string: String.fromCharCode(97 + i),
-					number: i
-				};
-			}))
-			.then(result => {
-				data.Test = result;
+			return testAbstractController.create(new Array(count).fill(1).map((n, i) => ({
+				user: data.User[i % 2],
+				bool: true,
+				string: String.fromCharCode(97 + i),
+				number: i
+			})))
+			.then(tests => {
+				data.Test = tests;
 			});
 		})
 		.finally(done)
@@ -273,8 +271,8 @@ suite("Abstract", () => {
 					_id: data.Test[0]._id
 				}
 			})
-			.then(test => {
-				assert.equal(test.success, true);
+			.then(result => {
+				assert.equal(result.success, true);
 				return testAbstractController.findById(data.Test[0]._id)
 				.then(test => {
 					assert.equal(test, null);

@@ -1,12 +1,17 @@
 "use strict";
 
-import React from "react";
+import React, {PropTypes} from "react";
 import configs from "../../../../../server/configs/config.js";
 
 
 const config = configs[process.env.NODE_ENV];
 
 export default class Verification extends React.Component {
+
+	static propTypes = {
+		params: PropTypes.object
+	};
+
 	render() {
 		return (
 			<div>
@@ -14,5 +19,5 @@ export default class Verification extends React.Component {
 			</div>
 		);
 	}
-}
 
+}

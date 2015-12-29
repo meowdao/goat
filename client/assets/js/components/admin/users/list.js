@@ -2,7 +2,6 @@
 
 import React, {PropTypes} from "react";
 import classnames from "classnames";
-import API from "../../../utils/API";
 import UserStore from "../../../stores/UserStore.js";
 
 
@@ -18,20 +17,14 @@ export default class UserList extends React.Component {
 		users: []
 	};
 
-	state = {
-		users: this.props.users
-	};
-
 	constructor(props) {
 		super(props);
 		this.state = this.getStateFromStores();
 	}
 
-	getStateFromStores() {
-		return {
-			users: UserStore.getUsers()
-		};
-	}
+	state = {
+		users: this.props.users
+	};
 
 	componentDidMount() {
 		UserStore.addChangeListener(this._onChange.bind(this));
@@ -41,12 +34,35 @@ export default class UserList extends React.Component {
 		UserStore.removeChangeListener(this._onChange.bind(this));
 	}
 
+	getStateFromStores() {
+		return {
+			users: UserStore.getUsers()
+		};
+	}
+
 	_onChange() {
 		this.setState(this.getStateFromStores());
 	}
-	
-	sync (e) {
+
+	sync() {
 		// sync
+	}
+
+	renderListItem(user) {
+		return (
+			<li key={user._id} className="list-group-item">
+				<button className={classnames("pull-right", "btn", user.isActive ? "btn-success" : "btn-danger")}
+					onClick={() => this.sync(user)} type="button"
+				>
+					{user.isActive ? "Active" : "Inactive"}
+				</button>
+
+				<h4 className="list-group-item-heading">{user.contactName}</h4>
+				Email: {user.email}<br/>
+				Company: {user.companyName}<br/>
+				Phone: {user.phoneNumber}<br/>
+			</li>
+		);
 	}
 
 	render() {
@@ -58,22 +74,6 @@ export default class UserList extends React.Component {
 					</ul>
 				</div>
 			</div>
-		);
-	}
-
-	renderListItem(user) {
-		return (
-			<li key={user._id} className="list-group-item">
-				<button className={classnames("pull-right", "btn", user.isActive ? "btn-success" : "btn-danger")}
-					onClick={() => this.sync(user)} type="button">
-					{user.isActive ? "Active" : "Inactive"}
-				</button>
-
-				<h4 className="list-group-item-heading">{user.contactName}</h4>
-				Email: {user.email}<br/>
-				Company: {user.companyName}<br/>
-				Phone: {user.phoneNumber}<br/>
-			</li>
 		);
 	}
 }

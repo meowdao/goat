@@ -14,11 +14,11 @@ export default function(app) {
 	const config = configs[process.env.NODE_ENV];
 	const log = debug("log:passport");
 
-	passport.serializeUser(function(user, callback) {
+	passport.serializeUser((user, callback) => {
 		callback(null, user._id);
 	});
 
-	passport.deserializeUser(function(id, callback) {
+	passport.deserializeUser((id, callback) => {
 		const userController = new UserController();
 		userController.findById(id, {lean: false})
 		.then(user => {
@@ -31,9 +31,9 @@ export default function(app) {
 	});
 
 	passport.use(new LocalStrategy(config.strategies.local,
-		function(email, password, callback) {
+		(email, password, callback) => {
 			const userController = new UserController();
-			userController.findOne({email: email}, {
+			userController.findOne({email}, {
 				select: "+password",
 				lean: false
 			})
@@ -57,7 +57,7 @@ export default function(app) {
 
 
 	passport.use(new GoogleStrategy(config.strategies.google,
-		function(accessToken, refreshToken, profile, callback) {
+		(accessToken, refreshToken, profile, callback) => {
 			log("google:profile", profile);
 			const userController = new UserController();
 			userController.findOne({"google.id": profile.id}, {lean: false})
@@ -70,8 +70,8 @@ export default function(app) {
 						isEmailVerified: true,
 						google: profile._json
 					})
-					.then(user => {
-						callback(null, user);
+					.then(newUser => {
+						callback(null, newUser);
 					})
 					.catch(error => {
 						callback(error, null);
@@ -89,7 +89,7 @@ export default function(app) {
 	));
 
 	passport.use(new FacebookStrategy(config.strategies.facebook,
-		function(accessToken, refreshToken, profile, callback) {
+		(accessToken, refreshToken, profile, callback) => {
 			log("facebook:profile", profile);
 			const userController = new UserController();
 			userController.findOne({"facebook.id": profile.id}, {lean: false})
@@ -102,8 +102,8 @@ export default function(app) {
 						isEmailVerified: true,
 						facebook: profile._json
 					})
-					.then(user => {
-						callback(null, user);
+					.then(newUser => {
+						callback(null, newUser);
 					})
 					.catch(error => {
 						callback(error, null);

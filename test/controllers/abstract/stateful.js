@@ -70,23 +70,21 @@ function setUp(data, count) {
 				return {
 					dummy: String.fromCharCode(97 + i)
 				};
-			})).then(result => {
-				data.Child = result;
-				return testStatefulController.create(new Array(count).fill(1).map((n, i) => {
-					return {
-						user: data.User[i % 2],
-						child: data.Child[i],
-						testId: utils.getRandomString(8),
-						bool: true,
-						string: String.fromCharCode(97 + i),
-						number: i,
-						status: i === 5 || i === 6 ? statuses.inactive : statuses.active
-					};
-				}))
-				.then(result => {
-					data.Test = result;
+			})).then(children => {
+				data.Child = children;
+				return testStatefulController.create(new Array(count).fill(1).map((n, i) => ({
+					user: data.User[i % 2],
+					child: data.Child[i],
+					testId: utils.getRandomString(8),
+					bool: true,
+					string: String.fromCharCode(97 + i),
+					number: i,
+					status: i === 5 || i === 6 ? statuses.inactive : statuses.active
+				})))
+				.then(tests => {
+					data.Test = tests;
 				});
-			})
+			});
 		})
 		.finally(done)
 		.done();
@@ -322,8 +320,8 @@ suite("Stateful", () => {
 					testId: data.Test[0].testId
 				}
 			})
-			.then(test => {
-				assert.equal(test.success, true);
+			.then(result => {
+				assert.equal(result.success, true);
 				return testStatefulController.findById(data.Test[0]._id)
 				.then(test => {
 					assert.equal(test.status, statuses.inactive);
@@ -424,7 +422,4 @@ suite("Stateful", () => {
 
 	});
 
-
 });
-
-

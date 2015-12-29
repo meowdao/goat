@@ -6,16 +6,22 @@ import {Link} from "react-router";
 
 export default class Breadcrumbs extends React.Component {
 
+	static propTypes = {
+		routes: PropTypes.array.isRequired,
+		excludes: PropTypes.array
+	};
+
 	render() {
 
-		var breadcrumbs = [];
-		var routes = this.props.routes;
-		var excludes = this.props.excludes || [];
+		const breadcrumbs = [];
+		const routes = this.props.routes;
+		const excludes = this.props.excludes || [];
 
-		routes.forEach(function (route, i, arr) {
-			let name, link;
+		routes.forEach((route, i, arr) => {
+			let name;
+			let link;
 
-			if (!route.component){
+			if (!route.component) {
 				return;
 			}
 
@@ -44,4 +50,3 @@ export default class Breadcrumbs extends React.Component {
 		return <ol className="breadcrumb">{breadcrumbs}</ol>;
 	}
 }
-

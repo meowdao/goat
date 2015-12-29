@@ -1,9 +1,13 @@
 "use strict";
 
-import React from "react";
+import React, {PropTypes} from "react";
 
 
 export default class Wrapper extends React.Component {
+
+	static propTypes = {
+		children: PropTypes.element.isRequired
+	};
 
 	render() {
 		return (
@@ -14,4 +18,3 @@ export default class Wrapper extends React.Component {
 	}
 
 }
-

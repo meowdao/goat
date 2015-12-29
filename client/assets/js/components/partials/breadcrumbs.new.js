@@ -7,15 +7,18 @@ import {LinkContainer} from "react-router-bootstrap";
 
 export default class Breadcrumbs extends React.Component {
 
+	static propTypes = {
+		routes: PropTypes.array.isRequired
+	};
+
 	render() {
-		return <Breadcrumb>{this.props.routes.map((item, i, arr) =>
+		return (<Breadcrumb>{this.props.routes.map((item, i) =>
 			<LinkContainer key={i} to={item.path}>
 				<BreadcrumbItem>
 					{item.component.displayName}
 				</BreadcrumbItem>
 			</LinkContainer>
-		)}</Breadcrumb>;
+		)}</Breadcrumb>);
 	}
 
 }
-

@@ -1,7 +1,6 @@
 "use strict";
 
-import React from "react";
-import {RouteHandler} from "react-router";
+import React, {PropTypes} from "react";
 import Title from "../partials/title.js";
 import Messages from "../partials/messages.js";
 import Breadcrumbs from "../partials/breadcrumbs.js";
@@ -9,6 +8,10 @@ import Breadcrumbs from "../partials/breadcrumbs.js";
 export default class User extends React.Component {
 
 	static displayName = "User";
+
+	static propTypes = {
+		children: PropTypes.element.isRequired
+	};
 
 	render() {
 		return (

@@ -32,7 +32,6 @@ const webpackServer = new WebpackDevServer(webpack(require("./configs/webpack"))
 	}]
 });
 
-webpackServer.listen(3001, "0.0.0.0", function(error) {
+webpackServer.listen(3001, "0.0.0.0", (error) => {
 	log(error || "Webpack server listening on port 3001");
 });
-

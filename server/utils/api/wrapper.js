@@ -4,8 +4,8 @@ import q from "q";
 
 export default {
 
-	callback (func) {
-		return function(...args) {
+	callback(func) {
+		return function wrapperCallback(...args) {
 			if (process.env[this.key] === "true") {
 				func.bind(this)(...args);
 			} else {
@@ -16,8 +16,8 @@ export default {
 		};
 	},
 
-	promise (func) {
-		return function(...args) {
+	promise(func) {
+		return function wrapperPromise(...args) {
 			if (process.env[this.key] === "true") {
 				return func.bind(this)(...args);
 			} else {

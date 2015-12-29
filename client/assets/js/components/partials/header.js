@@ -1,6 +1,6 @@
 "use strict";
 
-import React from "react";
+import React, {PropTypes} from "react";
 import {Link} from "react-router";
 import API from "../../utils/API";
 import AdminStore from "../../stores/AdminStore.js";
@@ -8,6 +8,10 @@ import {Navbar, Nav, NavItem, NavDropdown, MenuItem} from "react-bootstrap";
 import {LinkContainer} from "react-router-bootstrap";
 
 export default class Header extends React.Component {
+
+	static propTypes = {
+		history: PropTypes.object
+	};
 
 	constructor(props) {
 		super(props);
@@ -74,7 +78,7 @@ export default class Header extends React.Component {
 	render() {
 		return (
 			<Navbar inverse>
-				<Navbar.Header inverse={true} toggleNavKey={1}>
+				<Navbar.Header inverse toggleNavKey={1}>
 					<Navbar.Brand>
 						<Link to="/" className="navbar-brand">G.O.A.T.</Link>
 					</Navbar.Brand>

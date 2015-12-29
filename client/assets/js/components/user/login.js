@@ -12,12 +12,13 @@ export default class Login extends React.Component {
 
 	static propTypes = {
 		email: PropTypes.string,
-		password: PropTypes.string
+		password: PropTypes.string,
+		history: React.PropTypes.object
 	};
 
 	static defaultProps = {
-		email: email,
-		password: password
+		email,
+		password
 	};
 
 	state = {
@@ -28,20 +29,19 @@ export default class Login extends React.Component {
 	onSubmit(e) {
 		e.preventDefault();
 		API.login(this.state)
-			.then(() => {
-				this.props.history.pushState(null, "/user/profile");
-			});
+		.then(() => {
+			this.props.history.pushState(null, "/user/profile");
+		});
 	}
 
 	open(link) {
 		return e => {
 			e.preventDefault();
-			const
-				n = 600,
-				r = 400,
-				i = (window.innerHeight - r) / 2,
-				s = (window.innerWidth - n) / 2,
-				popup = window.open(link, "authorization", "height=" + r + ",width=" + n + ",top=" + i + ",left=" + s);
+			const n = 600;
+			const r = 400;
+			const i = (window.innerHeight - r) / 2;
+			const s = (window.innerWidth - n) / 2;
+			const popup = window.open(link, "authorization", "height=" + r + ",width=" + n + ",top=" + i + ",left=" + s);
 			if (window.focus) {
 				popup.focus();
 			}
@@ -59,26 +59,24 @@ export default class Login extends React.Component {
 					[<Link to="/user/forgot">Forgot password?</Link>]
 
 					<form className="form-horizontal" onSubmit={this.onSubmit.bind(this)} autoComplete="off">
-
 						<div className="form-group">
 							<label htmlFor="email" className="col-sm-2 control-label">Email</label>
-
 							<div className="col-sm-10">
 								<input type="text" className="form-control" name="email" id="email"
-									   placeholder="me@example.com"
-									   onChange={e => this.setState({email: e.target.value})}/>
+									placeholder="me@example.com"
+									onChange={e => this.setState({email: e.target.value})}
+								/>
 							</div>
 						</div>
 						<div className="form-group">
 							<label htmlFor="password" className="col-sm-2 control-label">Password</label>
-
 							<div className="col-sm-10">
 								<input type="password" className="form-control" name="password" id="password"
-									   placeholder="******"
-									   onChange={e => this.setState({password: e.target.value})}/>
+									placeholder="******"
+									onChange={e => this.setState({password: e.target.value})}
+								/>
 							</div>
 						</div>
-
 						<div className="form-group">
 							<div className="col-sm-offset-2 col-sm-10">
 								<button type="submit" className="btn btn-default">Login</button>
@@ -90,4 +88,3 @@ export default class Login extends React.Component {
 		);
 	}
 }
-

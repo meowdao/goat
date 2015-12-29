@@ -34,8 +34,8 @@ export default class MailController extends AbstractController {
 			.then(html => {
 				this.log("template", html);
 				return this.create(Object.assign({
-					subject: lang.translate("email/subject/" + view, user),
-					html: html
+					html,
+					subject: lang.translate("email/subject/" + view, user)
 				}, address));
 			});
 		});

@@ -5,7 +5,7 @@ import tz from "moment-timezone"; // eslint-disable-line no-unused-vars
 import DateRange from "moment-range";
 
 
-DateRange.prototype.contains = function(other, exclusive) {
+DateRange.prototype.contains = (other, exclusive) => {
 	const start = this.start;
 	const end = this.end;
 

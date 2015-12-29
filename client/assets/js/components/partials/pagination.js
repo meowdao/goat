@@ -4,6 +4,10 @@ import React from "react";
 
 export default class Pagination extends React.Component {
 
+	static propTypes = {
+		pagination: React.PropTypes.object
+	};
+
 	render() {
 		return (
 			<nav className="text-center">
@@ -25,6 +29,4 @@ export default class Pagination extends React.Component {
 			</nav>
 		);
 	}
-
 }
-

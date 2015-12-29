@@ -4,9 +4,13 @@ import React, {PropTypes} from "react";
 
 export default class Title extends React.Component {
 
+	static propTypes = {
+		routes: PropTypes.array.isRequired
+	};
+
 	render() {
 
-		let title = this.props.routes[this.props.routes.length - 1].component.displayName || "Default Title";
+		const title = this.props.routes[this.props.routes.length - 1].component.displayName || "Default Title";
 
 		return (
 			<div className="page-header">
@@ -14,6 +18,4 @@ export default class Title extends React.Component {
 			</div>
 		);
 	}
-
 }
-

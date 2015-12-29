@@ -1,7 +1,7 @@
 "use strict";
 
 import React from "react"; // eslint-disable-line no-unused-vars
-import {Route, IndexRoute, Redirect} from "react-router";
+import {Route, IndexRoute} from "react-router";
 
 import GOAT from "../components/GOAT.js";
 
@@ -44,14 +44,14 @@ export default (
 		</Route>
 		<Route path="error" component={Message}/>
 		<Route path="*" component={Message}
-		       onEnter={() => {
+			onEnter={() => {
 				MessageStore.remove();
 				MessageStore._registerToActions({
 					actionType: ActionTypes.ERROR,
 					messages: ["Page Not Found"]
 				});
 			}}
-		       onLeave={() => {
+			onLeave={() => {
 				MessageStore.remove();
 			}}
 		/>

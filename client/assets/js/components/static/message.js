@@ -23,6 +23,4 @@ export default class Error extends Message {
 			</div>
 		);
 	}
-
 }
-

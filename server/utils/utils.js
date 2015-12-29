@@ -29,9 +29,7 @@ export default {
 				bytes += 8;
 			} else if (typeof value === "object" && objectList.indexOf(value) === -1) {
 				objectList.push(value);
-				for (let i in value) {
-					stack.push(value[i]);
-				}
+				Object.keys(value).forEach(key => stack.push(value[key])); // eslint-disable-line no-loop-func
 			}
 		}
 		return bytes;

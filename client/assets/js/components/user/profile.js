@@ -6,7 +6,7 @@ export default class Profile extends React.Component {
 
 	static displayName = "Profile";
 
-	render () {
+	render() {
 		return (
 			<div className="panel panel-default">
 				<div className="panel-body">

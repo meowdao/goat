@@ -14,25 +14,20 @@ export default {
 		return langusges[user && user.language || this.getDefaultLanguage()];
 	},
 
-	getObject(parts, create, obj) {
+	getObject(parts, obj, create = false) {
 
-		if (typeof parts === "string") {
-			parts = parts.split("/");
+		let p;
+
+		if (!Array.isArray(parts)) {
+			parts = parts.split("/"); // eslint-disable-line no-param-reassign
 		}
-
-		if (typeof create !== "boolean") {
-			obj = create;
-			create = undefined;
-		}
-
-		var p;
 
 		while (obj && parts.length) {
 			p = parts.shift();
 			if (obj[p] === undefined && create) {
 				obj[p] = {};
 			}
-			obj = obj[p];
+			obj = obj[p]; // eslint-disable-line no-param-reassign
 		}
 
 		return obj;

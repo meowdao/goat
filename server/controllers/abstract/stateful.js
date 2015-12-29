@@ -40,9 +40,8 @@ class StatefulController extends AbstractController {
 			if (Object.keys(clean).length) {
 				Object.assign(item, clean);
 				return this.save(item);
-			} else {
-				return item;
 			}
+			return item;
 		});
 	}
 

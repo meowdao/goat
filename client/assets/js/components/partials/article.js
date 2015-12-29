@@ -1,14 +1,16 @@
 "use strict";
 
-import React from "react";
-import {RouteHandler} from "react-router";
+import React, {PropTypes} from "react";
 import Title from "./title.js";
 import Messages from "./messages.js";
 import Breadcrumbs from "./breadcrumbs.js";
-import AdminStore from "../../stores/AdminStore.js";
 
 
 export default class Article extends React.Component {
+
+	static propTypes = {
+		children: PropTypes.element.isRequired
+	};
 
 	render() {
 		return (
@@ -22,4 +24,3 @@ export default class Article extends React.Component {
 	}
 
 }
-

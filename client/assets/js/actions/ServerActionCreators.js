@@ -8,15 +8,15 @@ export default {
 
 	adminLogin(admin) {
 		Dispatcher.dispatch({
-			actionType: ActionTypes.ADMIN_LOGIN,
-			admin: admin
+			admin,
+			actionType: ActionTypes.ADMIN_LOGIN
 		});
 	},
 
 	adminLogout(admin) {
 		Dispatcher.dispatch({
-			actionType: ActionTypes.ADMIN_LOGOUT,
-			admin: admin
+			admin,
+			actionType: ActionTypes.ADMIN_LOGOUT
 		});
 	},
 
@@ -36,8 +36,8 @@ export default {
 
 	updateUser(admin) {
 		Dispatcher.dispatch({
-			actionType: ActionTypes.ADMIN_LOGIN,
-			admin: admin
+			admin,
+			actionType: ActionTypes.ADMIN_LOGIN
 		});
 	}
 

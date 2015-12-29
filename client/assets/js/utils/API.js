@@ -8,9 +8,9 @@ export default {
 
 	login(data) {
 		return $.ajax({
+			data,
 			method: "POST",
-			url: "/user/login",
-			data: data
+			url: "/user/login"
 		})
 		.then(response => {
 			ServerActionCreators.updateUser(response);
@@ -19,9 +19,9 @@ export default {
 
 	logout(data) {
 		return $.ajax({
+			data,
 			method: "GET",
-			url: "/user/logout",
-			data: data
+			url: "/user/logout"
 		})
 		.then(response => {
 			ServerActionCreators.updateUser(response);
@@ -30,49 +30,45 @@ export default {
 
 	register(data) {
 		return $.ajax({
+			data,
 			method: "POST",
-			url: "/user/register",
-			data: data
+			url: "/user/register"
 		})
 		.then(response => {
 			ServerActionCreators.updateUser(response);
-			history.pushState(null, "user/profile");
 		});
 	},
 
 	forgot(data) {
 		return $.ajax({
+			data,
 			method: "POST",
-			url: "/user/forgot",
-			data: data
+			url: "/user/forgot"
 		})
 		.then(response => {
 			ServerActionCreators.updateUser(response);
-			history.pushState(null, "/");
 		});
 	},
 
 	change(data) {
 		return $.ajax({
+			data,
 			method: "POST",
-			url: "/user/change",
-			data: data
+			url: "/user/change"
 		})
 		.then(response => {
 			ServerActionCreators.updateUser(response);
-			history.pushState(null, "/");
 		});
 	},
 
 	sync(data) {
 		return $.ajax({
+			data,
 			method: "GET",
-			url: "/user/sync",
-			data: data
+			url: "/user/sync"
 		})
 		.then(response => {
 			ServerActionCreators.updateUser(response);
-			history.pushState(null, "user/profile");
 		});
 	}
 

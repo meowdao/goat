@@ -2,7 +2,7 @@
 
 import React from "react";
 import API from "../../utils/API";
-import {password} from "../../../../../server/utils/constants/misc.js";
+import {password, confirm} from "../../../../../server/utils/constants/misc.js";
 
 
 export default class Change extends React.Component {
@@ -12,12 +12,14 @@ export default class Change extends React.Component {
 	static propTypes = {
 		password: React.PropTypes.string,
 		confirm: React.PropTypes.string,
-		hash: React.PropTypes.string
+		hash: React.PropTypes.string,
+		history: React.PropTypes.object,
+		routes: React.PropTypes.array.isRequired
 	};
 
 	static defaultProps = {
-		password: password,
-		confirm: password,
+		password,
+		confirm,
 		hash: null
 	};
 
@@ -30,9 +32,9 @@ export default class Change extends React.Component {
 	onSubmit(e) {
 		e.preventDefault();
 		API.change(this.state)
-			.then(() => {
-				this.props.history.pushState(null, "/user/login");
-			});
+		.then(() => {
+			this.props.history.pushState(null, "/user/login");
+		});
 	}
 
 	render() {
@@ -43,25 +45,23 @@ export default class Change extends React.Component {
 				</div>
 				<div className="panel-body">
 					<form className="form-horizontal" onSubmit={this.onSubmit.bind(this)} autoComplete="off">
-						<input type="hidden" name="hash" value={this.props.params.hash}/>
-
+						<input type="hidden" name="hash" value={this.props.hash}/>
 						<div className="form-group">
 							<label htmlFor="name" className="col-sm-2 control-label">Password</label>
-
 							<div className="col-sm-10">
 								<input type="password" className="form-control" name="name" id="password" defaultValue="" placeholder="******"
-									   onChange={e => this.setState({password: e.target.value})}/>
+									onChange={e => this.setState({password: e.target.value})}
+								/>
 							</div>
 						</div>
 						<div className="form-group">
 							<label htmlFor="confirm" className="col-sm-2 control-label">Confirm password</label>
-
 							<div className="col-sm-10">
 								<input type="password" className="form-control" name="confirm" id="confirm" defaultValue="" placeholder="******"
-									   onChange={e => this.setState({confirm: e.target.value})}/>
+									onChange={e => this.setState({confirm: e.target.value})}
+								/>
 							</div>
 						</div>
-
 						<div className="form-group">
 							<div className="col-sm-offset-2 col-sm-10">
 								<button type="submit" className="btn btn-default">Change</button>
@@ -73,4 +73,3 @@ export default class Change extends React.Component {
 		);
 	}
 }
-

@@ -21,14 +21,14 @@ class RichModel {
 
 	enchant(method, params, options) {
 		const query = this.model[method](...params);
-		options = Object.assign({lean: true}, options);
-		Object.keys(options).forEach(method => {
-			if (Array.isArray(options[method]) && method !== "deepPopulate") {
-				options[method].forEach(item => {
-					query[method](item);
+		options = Object.assign({lean: true}, options); // eslint-disable-line no-param-reassign
+		Object.keys(options).forEach(func => {
+			if (Array.isArray(options[func]) && func !== "deepPopulate") {
+				options[func].forEach(item => {
+					query[func](item);
 				});
 			} else {
-				query[method](options[method]);
+				query[func](options[func]);
 			}
 		});
 		return query.exec();
@@ -105,7 +105,7 @@ class RichModel {
 
 	populate(list, path, options) {
 		return this.model.populate(list, [{
-			path: path,
+			path,
 			options: Object.assign({}, options)
 		}]);
 	}
