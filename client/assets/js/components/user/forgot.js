@@ -3,6 +3,7 @@
 import React from "react";
 import {Input, ButtonInput} from "react-bootstrap";
 import API from "../../utils/API";
+import regexp from "../../../../../server/utils/regexp.js";
 import {email} from "../../../../../server/utils/constants/misc.js";
 
 
@@ -45,7 +46,7 @@ export default class Forgot extends React.Component {
 							value={this.state.email}
 							placeholder="me@example.com"
 							label="Email"
-							bsStyle={regexp.email.test(this.state.email) ? "" : "error"}
+							bsStyle={regexp.email.test(this.state.email) ? "success" : "error"}
 							hasFeedback
 							wrapperClassName="col-xs-10"
 							labelClassName="col-sm-2"

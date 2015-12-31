@@ -21,7 +21,7 @@ module.exports = {
 		publicPath: "/assets/"
 	},
 	resolve: {
-		modulesDirectories: ["node_modules", "bower_components"],
+		modulesDirectories: ["node_modules"],
 		alias: {
 			components: path.join(__dirname, "..", "client", "assets", "js", "components")
 		}
@@ -42,8 +42,19 @@ module.exports = {
 			},
 			{
 				test: /\.js$/,
-				loaders: ["react-hot", "babel?optional=runtime"],
-				exclude: [/node_modules/, /bower_components/]
+				loader: "babel",
+				exclude: [/node_modules/],
+				query: {
+					plugins: [
+						["react-transform", {
+							transforms: [{
+								transform: "react-transform-hmr",
+								imports: ["react"],
+								locals: ["module"]
+							}]
+						}]
+					]
+				}
 			}
 		]
 	},
@@ -56,5 +67,6 @@ module.exports = {
 		}),
 		new webpack.optimize.OccurenceOrderPlugin(),
 		new webpack.optimize.DedupePlugin()
+		//new webpack.optimize.UglifyJsPlugin()
 	]
 };
