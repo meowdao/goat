@@ -1,6 +1,7 @@
 "use strict";
 
 import React, {PropTypes} from "react";
+import {Input, ButtonInput} from "react-bootstrap";
 import API from "../../utils/API";
 import {email, password} from "../../../../../server/utils/constants/misc.js";
 import {Link} from "react-router";
@@ -29,9 +30,9 @@ export default class Login extends React.Component {
 	onSubmit(e) {
 		e.preventDefault();
 		API.login(this.state)
-		.then(() => {
-			this.props.history.pushState(null, "/user/profile");
-		});
+			.then(() => {
+				this.props.history.pushState(null, "/user/profile");
+			});
 	}
 
 	open(link) {
@@ -58,30 +59,33 @@ export default class Login extends React.Component {
 
 					[<Link to="/user/forgot">Forgot password?</Link>]
 
-					<form className="form-horizontal" onSubmit={this.onSubmit.bind(this)} autoComplete="off">
-						<div className="form-group">
-							<label htmlFor="email" className="col-sm-2 control-label">Email</label>
-							<div className="col-sm-10">
-								<input type="text" className="form-control" name="email" id="email"
-									placeholder="me@example.com"
-									onChange={e => this.setState({email: e.target.value})}
-								/>
-							</div>
-						</div>
-						<div className="form-group">
-							<label htmlFor="password" className="col-sm-2 control-label">Password</label>
-							<div className="col-sm-10">
-								<input type="password" className="form-control" name="password" id="password"
-									placeholder="******"
-									onChange={e => this.setState({password: e.target.value})}
-								/>
-							</div>
-						</div>
-						<div className="form-group">
-							<div className="col-sm-offset-2 col-sm-10">
-								<button type="submit" className="btn btn-default">Login</button>
-							</div>
-						</div>
+					<form className="form-horizontal" onSubmit={::this.onSubmit} autoComplete="off">
+						<Input
+							type="email"
+							name="email"
+							value={this.state.email}
+							placeholder="me@example.com"
+							label="Email"
+							wrapperClassName="col-xs-10"
+							labelClassName="col-sm-2"
+							onChange={e => this.setState({email: e.target.value})}
+						/>
+						<Input
+							type="password"
+							name="password"
+							value={this.state.password}
+							placeholder="******"
+							label="Password"
+							wrapperClassName="col-xs-10"
+							labelClassName="col-sm-2"
+							onChange={e => this.setState({password: e.target.value})}
+						/>
+						<ButtonInput
+							type="submit"
+							value="Register"
+							wrapperClassName="col-sm-offset-2 col-sm-10"
+							disabled={this.state.disabled}
+						/>
 					</form>
 				</div>
 			</div>

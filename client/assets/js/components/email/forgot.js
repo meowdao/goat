@@ -1,5 +1,6 @@
 "use strict";
 
+import url from "url";
 import React, {PropTypes} from "react";
 import configs from "../../../../../server/configs/config.js";
 
@@ -15,7 +16,7 @@ export default class Forgot extends React.Component {
 	render() {
 		return (
 			<div>
-				<p><a href={config.server.http.url + "/user/change/" + this.props.params.hash.token}>Change your password</a></p>
+				<p><a href={url.format(config.server.self) + "/user/change/" + this.props.params.hash.token}>Change your password</a></p>
 			</div>
 		);
 	}

@@ -1,6 +1,8 @@
 "use strict";
 
 import React from "react";
+import {Input, ButtonInput} from "react-bootstrap";
+import zxcvbn from "zxcvbn";
 import API from "../../utils/API";
 import {password, confirm} from "../../../../../server/utils/constants/misc.js";
 
@@ -12,7 +14,7 @@ export default class Change extends React.Component {
 	static propTypes = {
 		password: React.PropTypes.string,
 		confirm: React.PropTypes.string,
-		hash: React.PropTypes.string,
+		params: React.PropTypes.object,
 		history: React.PropTypes.object,
 		routes: React.PropTypes.array.isRequired
 	};
@@ -20,21 +22,21 @@ export default class Change extends React.Component {
 	static defaultProps = {
 		password,
 		confirm,
-		hash: null
+		token: null
 	};
 
 	state = {
 		password: this.props.password,
 		confirm: this.props.confirm,
-		hash: this.props.hash
+		token: this.props.params.token
 	};
 
 	onSubmit(e) {
 		e.preventDefault();
 		API.change(this.state)
-		.then(() => {
-			this.props.history.pushState(null, "/user/login");
-		});
+			.then(() => {
+				this.props.history.pushState(null, "user/profile");
+			});
 	}
 
 	render() {
@@ -44,29 +46,38 @@ export default class Change extends React.Component {
 					<h3 className="panel-title">Change password</h3>
 				</div>
 				<div className="panel-body">
-					<form className="form-horizontal" onSubmit={this.onSubmit.bind(this)} autoComplete="off">
-						<input type="hidden" name="hash" value={this.props.hash}/>
-						<div className="form-group">
-							<label htmlFor="name" className="col-sm-2 control-label">Password</label>
-							<div className="col-sm-10">
-								<input type="password" className="form-control" name="name" id="password" defaultValue="" placeholder="******"
-									onChange={e => this.setState({password: e.target.value})}
-								/>
-							</div>
-						</div>
-						<div className="form-group">
-							<label htmlFor="confirm" className="col-sm-2 control-label">Confirm password</label>
-							<div className="col-sm-10">
-								<input type="password" className="form-control" name="confirm" id="confirm" defaultValue="" placeholder="******"
-									onChange={e => this.setState({confirm: e.target.value})}
-								/>
-							</div>
-						</div>
-						<div className="form-group">
-							<div className="col-sm-offset-2 col-sm-10">
-								<button type="submit" className="btn btn-default">Change</button>
-							</div>
-						</div>
+					<form className="form-horizontal" onSubmit={::this.onSubmit} autoComplete="off">
+						<input type="hidden" name="hash" value={this.props.params.token}/>
+						<Input
+							type="password"
+							name="password"
+							value={this.state.password}
+							placeholder="******"
+							label="Password"
+							bsStyle={zxcvbn(this.state.password).score >= 1 ? "success" : "error"}
+							hasFeedback
+							wrapperClassName="col-xs-10"
+							labelClassName="col-sm-2"
+							onChange={e => this.setState({password: e.target.value})}
+						/>
+						<Input
+							type="password"
+							name="confirm"
+							value={this.state.confirm}
+							placeholder="******"
+							label="Confirm password"
+							bsStyle={this.state.password === this.state.confirm ? "success" : "error"}
+							hasFeedback
+							wrapperClassName="col-xs-10"
+							labelClassName="col-sm-2"
+							onChange={e => this.setState({confirm: e.target.value})}
+						/>
+						<ButtonInput
+							type="submit"
+							value="Change"
+							wrapperClassName="col-sm-offset-2 col-sm-10"
+							disabled={this.state.disabled}
+						/>
 					</form>
 				</div>
 			</div>

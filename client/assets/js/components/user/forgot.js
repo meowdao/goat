@@ -1,6 +1,7 @@
 "use strict";
 
 import React from "react";
+import {Input, ButtonInput} from "react-bootstrap";
 import API from "../../utils/API";
 import {email} from "../../../../../server/utils/constants/misc.js";
 
@@ -25,9 +26,9 @@ export default class Forgot extends React.Component {
 	onSubmit(e) {
 		e.preventDefault();
 		API.forgot(this.state)
-		.then(() => {
-			this.props.history.pushState(null, "/user/login");
-		});
+			.then(() => {
+				this.props.history.pushState(null, "/user/login");
+			});
 	}
 
 	render() {
@@ -38,20 +39,24 @@ export default class Forgot extends React.Component {
 				</div>
 				<div className="panel-body">
 					<form className="form-horizontal" onSubmit={this.onSubmit.bind(this)} autoComplete="off">
-						<div className="form-group">
-							<label htmlFor="email" className="col-sm-2 control-label">Email</label>
-
-							<div className="col-sm-10">
-								<input type="text" className="form-control" name="email" id="email" defaultValue="" placeholder="me@example.com"
-									onChange={e => this.setState({email: e.target.value})}
-								/>
-							</div>
-						</div>
-						<div className="form-group">
-							<div className="col-sm-offset-2 col-sm-10">
-								<button type="submit" className="btn btn-default">Send email</button>
-							</div>
-						</div>
+						<Input
+							type="email"
+							name="email"
+							value={this.state.email}
+							placeholder="me@example.com"
+							label="Email"
+							bsStyle={regexp.email.test(this.state.email) ? "success" : "error"}
+							hasFeedback
+							wrapperClassName="col-xs-10"
+							labelClassName="col-sm-2"
+							onChange={e => this.setState({email: e.target.value})}
+						/>
+						<ButtonInput
+							type="submit"
+							value="Send email"
+							wrapperClassName="col-sm-offset-2 col-sm-10"
+							disabled={this.state.disabled}
+						/>
 					</form>
 				</div>
 			</div>

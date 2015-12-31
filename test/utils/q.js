@@ -98,4 +98,21 @@ suite("Q", () => {
 
 	});
 
+	test("should throw error 4", done => {
+
+		q({})
+			.tap(() => {
+				throw new Error("X");
+			})
+			.tap(() => {
+				return "Ok!";
+			})
+			.catch(e => {
+				log("catch 1", e);
+			})
+			.finally(done)
+			.done();
+
+	});
+
 });

@@ -40,7 +40,7 @@ export default (
 			<Route path="register" component={Register}/>
 			<Route path="profile" component={Profile}/>
 			<Route path="forgot" component={Forgot}/>
-			<Route path="change/:hash" component={Change}/>
+			<Route path="change/:token" component={Change}/>
 		</Route>
 		<Route path="error" component={Message}/>
 		<Route path="*" component={Message}

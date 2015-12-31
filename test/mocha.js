@@ -7,7 +7,7 @@ process.env.PORT = process.env.PORT || "80";
 require("babel-core/register");
 require("babel-polyfill");
 
-require("./moment.js");
+require("../server/configs/moment.js");
 
 Error.stackTraceLimit = Infinity;
 
@@ -23,7 +23,7 @@ bluebird.longStackTraces();
 const q = require("q");
 q.longStackSupport = true;
 
-const mongoose = require("./mongoose.js").default();
+const mongoose = require("../server/configs/mongoose.js").default();
 mongoose.set("debug", false);
 
 process.on("uncaughtException", (exception) => {

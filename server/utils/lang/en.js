@@ -6,7 +6,6 @@ export default {
 			// SERVER
 			"no-param": "Required parameter not found",
 			"page-not-found": "Page Not Found",
-			"user-not-found": "User Not Found",
 			"invalid-param": "Param is invalid",
 			"access-denied": "Access denied",
 			"method-not-allowed": "Method not allowed",
@@ -25,6 +24,10 @@ export default {
 		"mongo": {
 			"E11000": "Duplicate key error"
 		}
+	},
+	messages: {
+		"password-changed": "Password successfully changed, now you can login with a new password",
+		"instructions-sent": "Instructions were sent to entered email"
 	},
 	email: {
 		subject: {

@@ -2,4 +2,4 @@
 --ui tdd
 --timeout 30000
 --compilers js:babel-core/register
---require server/configs/mocha
+--require test/mocha

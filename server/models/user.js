@@ -4,6 +4,7 @@ import bcrypt from "bcrypt-nodejs";
 import {Schema} from "mongoose";
 import zxcvbn from "zxcvbn";
 import regexp from "../utils/regexp.js";
+// import LAPI from "../utils/api/lookup.js";
 
 const User = new Schema({
 	avatar: {
@@ -23,6 +24,13 @@ const User = new Schema({
 		type: Boolean,
 		default: false
 	},
+
+	/*
+	phoneNumber: {
+		type: String,
+		required: "Phone number is required"
+	},
+	*/
 
 	firstName: {
 		type: String,
@@ -115,6 +123,13 @@ User.pre("save", function(next) {
 	this.updated = new Date();
 	next();
 });
+
+/*
+User.pre("validate", true, function(next, done) {
+	LAPI.checkPhoneNumber(done, this);
+	next();
+});
+*/
 
 User.methods = {
 	verifyPassword(password) {

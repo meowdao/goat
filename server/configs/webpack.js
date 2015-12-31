@@ -48,7 +48,7 @@ module.exports = {
 		]
 	},
 	plugins: [
-		new webpack.NodeEnvironmentPlugin("NODE_ENV", "CRON"),
+		new webpack.NodeEnvironmentPlugin("NODE_ENV", "CRON", "TWILIO_API", "LOOKUP_API"),
 		new webpack.HotModuleReplacementPlugin(),
 		new webpack.NoErrorsPlugin(),
 		new ExtractTextPlugin("style.css", {

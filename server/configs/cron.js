@@ -3,7 +3,7 @@
 import q from "q";
 import schedule from "node-schedule";
 import debug from "debug";
-import MAPI from "../utils/api/nodemailer.js";
+import MAPI from "../utils/api/mailgun.js";
 
 const log = debug("log:cron");
 
@@ -20,8 +20,7 @@ export default function() {
 				return q.allSettled(messages.map(message => {
 					return MAPI.sendMail(message)
 					.then(mail => {
-						// message.status = mailController.constructor.statuses[mail.message === "Queued. Thank you." ? "queued" : "unrecognized"];
-						message.status = mailController.constructor.statuses[mail.message.substring(0, 3) === "250" ? "sent" : "unrecognized"];
+						message.status = mailController.constructor.statuses[mail.message === "Queued. Thank you." ? "queued" : "unrecognized"];
 						if (message.status === mailController.constructor.statuses.unrecognized) {
 							log("WARNING!", mail);
 						}

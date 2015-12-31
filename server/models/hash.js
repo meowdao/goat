@@ -8,6 +8,7 @@ const Hash = new Schema({
 		type: Schema.Types.ObjectId,
 		ref: "User"
 	},
+	type: String,
 	token: {
 		type: String,
 		default: () => utils.getRandomString(20)

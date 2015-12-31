@@ -29,7 +29,7 @@ export default function(app) {
 	app.post("/user/change", helper.simpleJSONWrapper(userController.change.bind(userController)));
 	app.get("/user/logout", userController.logout.bind(userController));
 	app.post("/user/sendEmailVerification", [middleware.requiresLogin()], helper.simpleJSONWrapper(userController.sendEmailVerification.bind(userController)));
-	app.get("/user/verify/:hash", helper.simpleJSONWrapper(userController.verify.bind(userController)));
+	app.get("/user/verify/:token", helper.simpleJSONWrapper(userController.verify.bind(userController)));
 
 	app.get("/auth/facebook",
 		passport.authenticate("facebook", {
