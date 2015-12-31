@@ -45,7 +45,7 @@ export default class Forgot extends React.Component {
 							value={this.state.email}
 							placeholder="me@example.com"
 							label="Email"
-							bsStyle={regexp.email.test(this.state.email) ? "success" : "error"}
+							bsStyle={regexp.email.test(this.state.email) ? "" : "error"}
 							hasFeedback
 							wrapperClassName="col-xs-10"
 							labelClassName="col-sm-2"

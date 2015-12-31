@@ -59,7 +59,7 @@ export default class Register extends React.Component {
 							value={this.state.email}
 							placeholder="me@example.com"
 							label="Email"
-							bsStyle={regexp.email.test(this.state.email) ? "success" : "error"}
+							bsStyle={regexp.email.test(this.state.email) ? "" : "error"}
 							hasFeedback
 							wrapperClassName="col-xs-10"
 							labelClassName="col-sm-2"
@@ -83,7 +83,7 @@ export default class Register extends React.Component {
 							value={this.state.password}
 							placeholder="******"
 							label="Password"
-							bsStyle={zxcvbn(this.state.password).score >= 1 ? "success" : "error"}
+							bsStyle={zxcvbn(this.state.password).score >= 1 ? "" : "error"}
 							hasFeedback
 							wrapperClassName="col-xs-10"
 							labelClassName="col-sm-2"
@@ -95,7 +95,7 @@ export default class Register extends React.Component {
 							value={this.state.confirm}
 							placeholder="******"
 							label="Confirm password"
-							bsStyle={this.state.password === this.state.confirm ? "success" : "error"}
+							bsStyle={this.state.password === this.state.confirm ? "" : "error"}
 							hasFeedback
 							wrapperClassName="col-xs-10"
 							labelClassName="col-sm-2"
