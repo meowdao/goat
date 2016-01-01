@@ -1,6 +1,6 @@
 "use strict";
 
-import React from "react";
+import React, {PropTypes} from "react";
 import {Input, ButtonInput} from "react-bootstrap";
 import API from "../../utils/API";
 import regexp from "../../../../../server/utils/regexp.js";
@@ -12,8 +12,12 @@ export default class Forgot extends React.Component {
 	static displayName = "Password Recovery";
 
 	static propTypes = {
-		email: React.PropTypes.string,
-		history: React.PropTypes.object
+		email: PropTypes.string,
+		history: PropTypes.object
+	};
+
+	static contextTypes = {
+		router: PropTypes.object.isRequired
 	};
 
 	static defaultProps = {
@@ -28,7 +32,7 @@ export default class Forgot extends React.Component {
 		e.preventDefault();
 		API.forgot(this.state)
 			.then(() => {
-				this.props.history.pushState(null, "/user/login");
+				this.context.router.push("/user/login");
 			});
 	}
 

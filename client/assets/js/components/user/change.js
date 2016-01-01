@@ -1,6 +1,6 @@
 "use strict";
 
-import React from "react";
+import React, {PropTypes} from "react";
 import {Input, ButtonInput} from "react-bootstrap";
 import zxcvbn from "zxcvbn";
 import API from "../../utils/API";
@@ -12,11 +12,15 @@ export default class Change extends React.Component {
 	static displayName = "Password Change";
 
 	static propTypes = {
-		password: React.PropTypes.string,
-		confirm: React.PropTypes.string,
-		params: React.PropTypes.object,
-		history: React.PropTypes.object,
-		routes: React.PropTypes.array.isRequired
+		password: PropTypes.string,
+		confirm: PropTypes.string,
+		params: PropTypes.object,
+		history: PropTypes.object,
+		routes: PropTypes.array.isRequired
+	};
+
+	static contextTypes = {
+		router: PropTypes.object.isRequired
 	};
 
 	static defaultProps = {
@@ -35,7 +39,7 @@ export default class Change extends React.Component {
 		e.preventDefault();
 		API.change(this.state)
 			.then(() => {
-				this.props.history.pushState(null, "user/profile");
+				this.context.router.push("user/profile");
 			});
 	}
 

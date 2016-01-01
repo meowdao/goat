@@ -13,6 +13,10 @@ export default class Header extends React.Component {
 		history: PropTypes.object
 	};
 
+	static contextTypes = {
+		router: PropTypes.object.isRequired
+	};
+
 	constructor(props) {
 		super(props);
 		this.state = this.getStateFromStores();
@@ -44,7 +48,7 @@ export default class Header extends React.Component {
 		e.preventDefault();
 		API.logout()
 			.then(() => {
-				this.props.history.pushState(null, "/user/login");
+				this.context.router.push("/user/login");
 			});
 	}
 

@@ -17,6 +17,10 @@ export default class Login extends React.Component {
 		history: React.PropTypes.object
 	};
 
+	static contextTypes = {
+		router: PropTypes.object.isRequired
+	};
+
 	static defaultProps = {
 		email,
 		password
@@ -31,7 +35,7 @@ export default class Login extends React.Component {
 		e.preventDefault();
 		API.login(this.state)
 			.then(() => {
-				this.props.history.pushState(null, "/user/profile");
+				this.context.router.push("/user/profile");
 			});
 	}
 
@@ -82,7 +86,7 @@ export default class Login extends React.Component {
 						/>
 						<ButtonInput
 							type="submit"
-							value="Register"
+							value="Login"
 							wrapperClassName="col-sm-offset-2 col-sm-10"
 							disabled={this.state.disabled}
 						/>

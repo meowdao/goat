@@ -1,7 +1,7 @@
 "use strict";
 
 import q from "q";
-import {match, RoutingContext} from "react-router";
+import {match, RouterContext} from "react-router";
 
 import React from "react"; // eslint-disable-line no-unused-vars
 import ReactDOM from "react-dom/server";
@@ -16,7 +16,7 @@ export function renderEmailToString(view, params) {
 		if (error) {
 			defered.reject(error);
 		} else {
-			defered.resolve(ReactDOM.renderToStaticMarkup(<RoutingContext {...renderProps} params={params}/>));
+			defered.resolve(ReactDOM.renderToStaticMarkup(<RouterContext {...renderProps} params={params}/>));
 		}
 	});
 	return defered.promise;

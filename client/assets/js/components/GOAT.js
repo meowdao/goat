@@ -14,6 +14,10 @@ export default class GOAT extends React.Component {
 		params: PropTypes.object.isRequired
 	};
 
+	static contextTypes = {
+		router: PropTypes.object.isRequired
+	};
+
 	render() {
 		return (
 			<div>
