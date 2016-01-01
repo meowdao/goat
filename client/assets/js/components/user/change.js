@@ -58,7 +58,7 @@ export default class Change extends React.Component {
 							value={this.state.password}
 							placeholder="******"
 							label="Password"
-							bsStyle={zxcvbn(this.state.password).score >= 1 ? "success" : "error"}
+							bsStyle={zxcvbn(this.state.password).score >= 1 ? null : "error"}
 							hasFeedback
 							wrapperClassName="col-xs-10"
 							labelClassName="col-sm-2"
@@ -70,7 +70,7 @@ export default class Change extends React.Component {
 							value={this.state.confirm}
 							placeholder="******"
 							label="Confirm password"
-							bsStyle={this.state.password === this.state.confirm ? "success" : "error"}
+							bsStyle={this.state.password === this.state.confirm ? null : "error"}
 							hasFeedback
 							wrapperClassName="col-xs-10"
 							labelClassName="col-sm-2"
