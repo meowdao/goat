@@ -4,6 +4,7 @@ node_js:
 services:
   - mongodb
 before_install:
+  - cp configs/config.sample.js configs/config.js
   - npm install -g mocha nodemon babel-cli
 install:
   - npm install
