@@ -26,7 +26,7 @@ export default {
 		}
 	},
 	messages: {
-		"password-changed": "Password successfully changed, now you can login with a new password",
+		"password-changed": "Password was successfully changed",
 		"instructions-sent": "Instructions were sent to entered email"
 	},
 	email: {

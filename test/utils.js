@@ -62,36 +62,36 @@ const log = debug("log:helper");
 
 export function createUser() {
 	return controllers.user.create(populate(...arguments, (user, nested, i) =>
-		Object.assign({
-			password,
-			confirm,
-			email,
-			firstName,
-			lastName,
-			companyName: "Company_" + i,
-			domainName: "domain.com",
-			phoneNumber: "1234567890" + i
-		}, user)))
-	.then(users => {
-		// log("users", users);
-		return users;
-	});
+			Object.assign({
+				password,
+				confirm,
+				firstName,
+				lastName,
+				email: email + i,
+				companyName: "Company_" + i,
+				domainName: "domain.com" + i,
+				phoneNumber: "1234567890" + i
+			}, user)))
+		.then(users => {
+			// log("users", users);
+			return users;
+		});
 }
 
 export function cleanUp(done) {
 	return q.all(Object.keys(controllers)
-	.map(name => {
-		if (name === "user") {
-			return controllers[name].find({}, {lean: false})
-			.then(users => q.allSettled(users.map(user => controllers[name].destroy(user))));
-		} else if ("remove" in controllers[name]) {
-			return controllers[name].remove();
-		} else {
-			return q();
-		}
-	}))
-	.finally(done)
-	.done();
+		.map(name => {
+			if (name === "user") {
+				return controllers[name].find({}, {lean: false})
+					.then(users => q.allSettled(users.map(user => controllers[name].destroy(user))));
+			} else if ("remove" in controllers[name]) {
+				return controllers[name].remove();
+			} else {
+				return q();
+			}
+		}))
+		.finally(done)
+		.done();
 }
 
 export function mockInChain(chain) {
@@ -103,20 +103,20 @@ export function mockInChain(chain) {
 		const next = chain.shift();
 		promise = promise.then(() => { // eslint-disable-line no-loop-func
 			return module.exports["create" + next.model](next.requires, next.data || new Array(next.count).fill({}), results)
-			.then(result => {
-				results[next.model] = result;
-				return results;
-			});
+				.then(result => {
+					results[next.model] = result;
+					return results;
+				});
 		});
 	}
 
 	return promise
-	.catch(error => {
-		if (error.name === "ValidationError") {
-			log(Object.keys(error.errors).map(key => error.errors[key].message));
-		}
-		throw error;
-	});
+		.catch(error => {
+			if (error.name === "ValidationError") {
+				log(Object.keys(error.errors).map(key => error.errors[key].message));
+			}
+			throw error;
+		});
 }
 
 export function wrapRequest(data) {

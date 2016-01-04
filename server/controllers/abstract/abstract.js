@@ -14,18 +14,17 @@ class AbstractController extends DebuggableController {
 	}
 
 	getById(request) {
-		return this.findOne({
-			_id: request.params._id,
-			user: request.user._id
-		})
-		.then(messenger.notFound(this, request.user));
+		return this
+			.findOne({
+				_id: request.params._id,
+				user: request.user._id
+			})
+			.then(messenger.notFound(this, request.user));
 	}
 
 	list(request) {
 		return this.find({user: request.user._id})
-		.then(items => {
-			return {[this.displayName + "s"]: items};
-		});
+			.then(items => ({items}));
 	}
 
 	insert(request, fields = []) {
@@ -35,20 +34,22 @@ class AbstractController extends DebuggableController {
 
 	edit(request, fields = []) {
 		const clean = Object.assign({}, fields.length ? _.pick(request.body, fields) : request.body);
-		return this.findOneAndUpdate({
-			_id: request.params._id,
-			user: request.user._id
-		}, clean, {new: true})
-		.then(messenger.notFound(this, request.user));
+		return this
+			.findOneAndUpdate({
+				_id: request.params._id,
+				user: request.user._id
+			}, clean, {new: true})
+			.then(messenger.notFound(this, request.user));
 	}
 
 	delete(request) {
-		return this.findOneAndRemove({
-			user: request.user._id,
-			_id: request.params._id
-		})
-		.then(messenger.notFound(this, request.user))
-		.thenResolve({success: true});
+		return this
+			.findOneAndRemove({
+				user: request.user._id,
+				_id: request.params._id
+			})
+			.then(messenger.notFound(this, request.user))
+			.thenResolve({success: true});
 	}
 
 }

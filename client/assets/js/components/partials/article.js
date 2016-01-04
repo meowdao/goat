@@ -1,16 +1,23 @@
 "use strict";
 
 import React, {PropTypes} from "react";
-import Title from "./title.js";
-import Messages from "./messages.js";
-import Breadcrumbs from "./breadcrumbs.js";
-
+import Title from "../partials/title.js";
+import Messages from "../partials/messages.js";
+import Breadcrumbs from "../partials/breadcrumbs.js";
 
 export default class Article extends React.Component {
 
+	static displayName = "";
+
 	static propTypes = {
-		children: PropTypes.element.isRequired
+		children: PropTypes.element.isRequired,
+		displayName: PropTypes.string
 	};
+
+	constructor() {
+		super(...arguments);
+		this.constructor.displayName = this.props.displayName;
+	}
 
 	render() {
 		return (

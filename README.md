@@ -6,11 +6,13 @@ GOAT
 
 To make the first build run:
 
+copy `configs/config.sample.js` to `configs/config.js`
+
 ```bash
-npm install -g grunt-cli babel-cli nodemon
+npm install -g mocha nodemon babel-cli
 npm install
 
-npm run dev
+npm run start
 ```
 
 To run tests:

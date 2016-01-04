@@ -4,7 +4,7 @@ import marked from "marked";
 import StatefulController from "./abstract/stateful.js";
 
 
-export default class HashController extends StatefulController {
+export default class PageController extends StatefulController {
 
 	static param = "pageId";
 

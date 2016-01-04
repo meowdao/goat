@@ -6,20 +6,6 @@ import {ActionTypes} from "../constants/constants.js";
 
 export default {
 
-	adminLogin(admin) {
-		Dispatcher.dispatch({
-			admin,
-			actionType: ActionTypes.ADMIN_LOGIN
-		});
-	},
-
-	adminLogout(admin) {
-		Dispatcher.dispatch({
-			admin,
-			actionType: ActionTypes.ADMIN_LOGOUT
-		});
-	},
-
 	error(error) {
 		Dispatcher.dispatch({
 			actionType: ActionTypes.ERROR,
@@ -34,10 +20,10 @@ export default {
 		});
 	},
 
-	updateUser(admin) {
+	updateUser(user) {
 		Dispatcher.dispatch({
-			admin,
-			actionType: ActionTypes.ADMIN_LOGIN
+			user,
+			actionType: ActionTypes.UPDATE_USER
 		});
 	}
 

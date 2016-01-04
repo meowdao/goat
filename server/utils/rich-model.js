@@ -97,8 +97,7 @@ class RichModel {
 		// http://mongoosejs.com/docs/api.html#model_Model.update
 		return this.enchant("update", [query, data, Object.assign({
 			strict: true,
-			multi: true,
-			runValidators: true
+			multi: true
 		}, params)], options)
 		.tap(this._log("updated"));
 	}

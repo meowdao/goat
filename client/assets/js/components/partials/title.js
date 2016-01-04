@@ -8,6 +8,10 @@ export default class Title extends React.Component {
 		routes: PropTypes.array.isRequired
 	};
 
+	static contextTypes = {
+		router: PropTypes.object.isRequired
+	};
+
 	render() {
 
 		const title = this.props.routes[this.props.routes.length - 1].component.displayName || "Default Title";

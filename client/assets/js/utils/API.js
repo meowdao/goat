@@ -25,8 +25,8 @@ export default {
 				method: "GET",
 				url: "/user/logout"
 			})
-			.then(response => {
-				ServerActionCreators.updateUser(response);
+			.then(() => {
+				ServerActionCreators.updateUser(null);
 			});
 	},
 
@@ -72,6 +72,28 @@ export default {
 				data,
 				method: "GET",
 				url: "/user/sync"
+			})
+			.then(response => {
+				ServerActionCreators.updateUser(response);
+			});
+	},
+
+	categoryList(data) {
+		return $
+			.ajax({
+				data,
+				method: "GET",
+				url: "/categories"
+			})
+			.then(response => response.items);;
+	},
+
+	categoryNew(data) {
+		return $
+			.ajax({
+				data,
+				method: "POST",
+				url: "/category"
 			})
 			.then(response => {
 				ServerActionCreators.updateUser(response);

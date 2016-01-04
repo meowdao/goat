@@ -17,8 +17,8 @@ debug.enable("model:*");
 debug.enable("test:*");
 debug.enable("log:*");
 
-const bluebird = require("bluebird");
-bluebird.longStackTraces();
+// const bluebird = require("bluebird");
+// bluebird.longStackTraces();
 
 const q = require("q");
 q.longStackSupport = true;

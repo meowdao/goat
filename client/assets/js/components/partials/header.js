@@ -3,7 +3,7 @@
 import React, {PropTypes} from "react";
 import {Link} from "react-router";
 import API from "../../utils/API";
-import AdminStore from "../../stores/AdminStore.js";
+import UserStore from "../../stores/UserStore.js";
 import {Navbar, Nav, NavItem, NavDropdown, MenuItem} from "react-bootstrap";
 import {LinkContainer} from "react-router-bootstrap";
 
@@ -27,16 +27,16 @@ export default class Header extends React.Component {
 	};
 
 	componentDidMount() {
-		AdminStore.addChangeListener(this._onChange.bind(this));
+		UserStore.addChangeListener(this._onChange.bind(this));
 	}
 
 	componentWillUnmount() {
-		AdminStore.removeChangeListener(this._onChange.bind(this));
+		UserStore.removeChangeListener(this._onChange.bind(this));
 	}
 
 	getStateFromStores() {
 		return {
-			user: AdminStore.getCurrent()
+			user: UserStore.getCurrent()
 		};
 	}
 
@@ -88,7 +88,7 @@ export default class Header extends React.Component {
 					</Navbar.Brand>
 				</Navbar.Header>
 				<Navbar.Collapse eventKey={1} href="#">
-					{AdminStore.isLoggedIn() ? this.renderMenu() : this.renderLoginButton()}
+					{UserStore.isLoggedIn() ? this.renderMenu() : this.renderLoginButton()}
 				</Navbar.Collapse>
 			</Navbar>
 		);

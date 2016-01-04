@@ -226,9 +226,9 @@ suite("Stateful", () => {
 			testStatefulController.list({
 				user: data.User[0]
 			})
-			.then(test => {
-				log("test", test);
-				assert.equal(test.teststatefuls.length, 4);
+			.then(list => {
+				log("list", list);
+				assert.equal(list.items.length, 4);
 			})
 			.catch(assert.ifError)
 			.finally(done)
@@ -240,13 +240,13 @@ suite("Stateful", () => {
 
 	});
 
-	suite("#edit", () => {
+	suite("#change", () => {
 
 		suiteSetup(setUp(data, 2));
 
 		test("should edit (full data)", done => {
 
-			testStatefulController.edit({
+			testStatefulController.change({
 				user: data.User[0],
 				params: {
 					testId: data.Test[0].testId
@@ -267,7 +267,7 @@ suite("Stateful", () => {
 
 		test("should edit (part data)", done => {
 
-			testStatefulController.edit({
+			testStatefulController.change({
 				user: data.User[1],
 				params: {
 					testId: data.Test[1].testId
@@ -288,7 +288,7 @@ suite("Stateful", () => {
 
 		test("should edit (error 404)", done => {
 
-			testStatefulController.edit({
+			testStatefulController.change({
 				user: data.User[0],
 				params: {
 					testId: data.Test[1].testId

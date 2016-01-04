@@ -32,7 +32,7 @@ export default class Forgot extends React.Component {
 		e.preventDefault();
 		API.forgot(this.state)
 			.then(() => {
-				this.context.router.push("/user/login");
+				this.context.router.push("error");
 			});
 	}
 

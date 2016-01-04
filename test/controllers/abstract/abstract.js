@@ -175,9 +175,9 @@ suite("Abstract", () => {
 			testAbstractController.list({
 				user: data.User[0]
 			})
-			.then(test => {
-				log("test", test);
-				assert.equal(test.testabstracts.length, 3);
+			.then(list => {
+				log("list", list);
+				assert.equal(list.items.length, 3);
 			})
 			.catch(assert.ifError)
 			.finally(done)

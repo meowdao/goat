@@ -18,58 +18,62 @@ class StatefulController extends AbstractController {
 	}
 
 	list(request) {
-		return this.find({
-			user: request.user._id,
-			status: this.constructor.statuses.active
-		})
-		.then(items => {
-			return {[this.displayName + "s"]: items};
-		});
+		return this
+			.find({
+				user: request.user._id,
+				status: this.constructor.statuses.active
+			})
+			.then(items => ({items}));
 	}
 
 	edit(request) {
-		return this.change(request)
-		.thenResolve({success: true});
+		return this.change(request);
 	}
 
 	change(request, populate = [], fields = []) {
 		return this.check(request, populate)
-		.then(messenger.notActive(this, request.user))
-		.then(item => {
-			const clean = fields.length ? _.pick(request.body, fields) : request.body;
-			if (Object.keys(clean).length) {
-				Object.assign(item, clean);
-				return this.save(item);
-			}
-			return item;
-		});
+			.then(messenger.notActive(this, request.user))
+			.then(item => {
+				const clean = fields.length ? _.pick(request.body, fields) : request.body;
+				if (Object.keys(clean).length) {
+					Object.assign(item, clean);
+					return this.save(item);
+				}
+				return item;
+			});
 	}
 
 	check(request, populate = [], conditions = []) {
-		return this.findOne({[this.constructor.param]: request.params[this.constructor.param] || request.body[this.constructor.param]}, {
-			lean: false,
-			populate: ["user"].concat(populate)
-		})
-		.then(messenger.notFound(this, request.user))
-		.then(messenger.notMine(this, request.user))
-		.then(item => {
-			conditions.forEach(condition => condition.bind(this)(item, request));
-			return item;
-		});
+		return this
+			.findOne({[this.constructor.param]: request.params[this.constructor.param] || request.body[this.constructor.param]}, {
+				lean: false,
+				populate: ["user"].concat(populate)
+			})
+			.then(messenger.notFound(this, request.user))
+			.then(messenger.notMine(this, request.user))
+			.then(this.conditions(request, conditions));
 	}
 
 	deactivate(request, populate = [], conditions = []) {
-		return this.check(request, populate, conditions)
-		.then(messenger.notActive(this, request.user))
-		.then(item => {
-			item.status = this.constructor.statuses.inactive;
-			return this.save(item);
-		});
+		return this.check(request, populate)
+			.then(messenger.notActive(this, request.user))
+			.then(this.conditions(request, conditions))
+			.then(item => {
+				item.status = this.constructor.statuses.inactive;
+				return this.save(item);
+			});
 	}
 
 	delete(request) {
 		return this.deactivate(request)
-		.thenResolve({success: true});
+			.thenResolve({success: true});
+	}
+
+	conditions(request, conditions = []) {
+		return item => {
+			conditions.forEach(condition => condition.bind(this)(item, request));
+			return item;
+		};
 	}
 
 }

@@ -23,13 +23,13 @@ export default function(app) {
 	const userController = new UserController();
 
 	// user routes
-	app.post("/user/login", helper.simpleJSONWrapper(userController.login.bind(userController)));
-	app.post("/user/register", helper.simpleJSONWrapper(userController.register.bind(userController)));
-	app.post("/user/forgot", helper.simpleJSONWrapper(userController.forgot.bind(userController)));
-	app.post("/user/change", helper.simpleJSONWrapper(userController.change.bind(userController)));
-	app.get("/user/logout", userController.logout.bind(userController));
-	app.post("/user/sendEmailVerification", [middleware.requiresLogin()], helper.simpleJSONWrapper(userController.sendEmailVerification.bind(userController)));
-	app.get("/user/verify/:token", helper.simpleJSONWrapper(userController.verify.bind(userController)));
+	app.post("/user/login", helper.simpleJSONWrapper(::userController.login));
+	app.post("/user/register", helper.simpleJSONWrapper(::userController.register));
+	app.post("/user/forgot", helper.simpleJSONWrapper(::userController.forgot));
+	app.post("/user/change", helper.simpleJSONWrapper(::userController.change));
+	app.get("/user/logout", ::userController.logout);
+	app.post("/user/sendEmailVerification", middleware.requiresLogin(), helper.simpleJSONWrapper(::userController.sendEmailVerification));
+	app.get("/user/verify/:token", helper.simpleJSONWrapper(::userController.verify));
 
 	app.get("/auth/facebook",
 		passport.authenticate("facebook", {
@@ -53,6 +53,6 @@ export default function(app) {
 		response.send(tpl);
 	});
 
-	app.get("/user/sync", [middleware.requiresLogin()], helper.simpleJSONWrapper(userController.sync.bind(userController)));
+	app.get("/user/sync", middleware.requiresLogin(), helper.simpleJSONWrapper(::userController.sync));
 
 }

@@ -7,7 +7,7 @@ import Footer from "./partials/footer.js";
 
 export default class GOAT extends React.Component {
 
-	static displayName = "GOAT";
+	static displayName = "G.O.A.T.";
 
 	static propTypes = {
 		children: PropTypes.node,

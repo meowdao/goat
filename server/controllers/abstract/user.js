@@ -1,7 +1,6 @@
 "use strict";
 
 import q from "q";
-import _ from "lodash";
 import passport from "passport";
 import regexp from "../../utils/regexp.js";
 import lang from "../../utils/lang.js";
