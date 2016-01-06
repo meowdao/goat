@@ -5,6 +5,7 @@ import {Schema} from "mongoose";
 import zxcvbn from "zxcvbn";
 import regexp from "../utils/regexp.js";
 // import LAPI from "../utils/api/lookup.js";
+import lang from "../utils/lang/en.js";
 
 const User = new Schema({
 	avatar: {
@@ -18,11 +19,11 @@ const User = new Schema({
 		trim: true,
 		unique: true,
 		required: "Email cannot be blank",
-		match: [regexp.email, "Email is invalid"]
+		match: [regexp.email, lang.error.model.user["email-is-invalid"]]
 	},
 	isEmailVerified: {
 		type: Boolean,
-		default: false
+		default: falseA
 	},
 
 	/*
@@ -34,11 +35,11 @@ const User = new Schema({
 
 	firstName: {
 		type: String,
-		required: "First name cannot be blank"
+		required: lang.error.model.user["first-name-blank"]
 	},
 	lastName: {
 		type: String,
-		required: "Last name cannot be blank"
+		required: lang.error.model.user["last-name-blank"]
 	},
 
 	role: {
@@ -46,29 +47,29 @@ const User = new Schema({
 		default: "user",
 		enum: {
 			values: ["user", "admin"],
-			message: "Unrecognized user role"
+			message: lang.error.model.user["unrec-user-role"]
 		}
 	},
 
 	password: {
 		type: String,
 		select: false,
-		required: "Password cannot be blank",
+		required: lang.error.model.user["password-blank"],
 		validate: [{
 			validator() {
 				return this.isModified("password") ? this.password === this.confirm : true;
 			},
-			msg: "Passwords doesn't much"
+			msg: lang.error.model.user["passwords-match"]
 		}, {
 			validator() {
 				return !!this.password;
 			},
-			msg: "Password cannot be blank"
+			msg: lang.error.model.user["password-blank"]
 		}, {
 			validator() {
 				return zxcvbn(this.password).score >= 1;
 			},
-			msg: "Password is too weak"
+			msg: lang.error.model.user["password-weak"]
 		}]
 	},
 
