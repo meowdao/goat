@@ -5,6 +5,7 @@ import {Schema} from "mongoose";
 import zxcvbn from "zxcvbn";
 import regexp from "../utils/regexp.js";
 // import LAPI from "../utils/api/lookup.js";
+import lang from "../utils/lang/en.js";
 
 const User = new Schema({
 	avatar: {
@@ -17,8 +18,8 @@ const User = new Schema({
 		lowercase: true,
 		trim: true,
 		unique: true,
-		required: "Email cannot be blank",
-		match: [regexp.email, "Email is invalid"]
+		required: lang.error.model.user["email-is-required"],
+		match: [regexp.email, lang.error.model.user["email-is-invalid"]]
 	},
 	isEmailVerified: {
 		type: Boolean,
@@ -34,11 +35,11 @@ const User = new Schema({
 
 	firstName: {
 		type: String,
-		required: "First name cannot be blank"
+		required: lang.error.model.user["first-name-is-required"]
 	},
 	lastName: {
 		type: String,
-		required: "Last name cannot be blank"
+		required: lang.error.model.user["last-name-is-required"]
 	},
 
 	role: {
@@ -46,29 +47,29 @@ const User = new Schema({
 		default: "user",
 		enum: {
 			values: ["user", "admin"],
-			message: "Unrecognized user role"
+			message: lang.error.model.user["unrec-user-role"]
 		}
 	},
 
 	password: {
 		type: String,
 		select: false,
-		required: "Password cannot be blank",
+		required: lang.error.model.user["password-is-required"],
 		validate: [{
 			validator() {
 				return this.isModified("password") ? this.password === this.confirm : true;
 			},
-			msg: "Passwords doesn't much"
+			msg: lang.error.model.user["passwords-match"]
 		}, {
 			validator() {
 				return !!this.password;
 			},
-			msg: "Password cannot be blank"
+			msg: lang.error.model.user["password-is-required"]
 		}, {
 			validator() {
 				return zxcvbn(this.password).score >= 1;
 			},
-			msg: "Password is too weak"
+			msg: lang.error.model.user["password-weak"]
 		}]
 	},
 
