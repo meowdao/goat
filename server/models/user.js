@@ -23,7 +23,7 @@ const User = new Schema({
 	},
 	isEmailVerified: {
 		type: Boolean,
-		default: falseA
+		default: false
 	},
 
 	/*
@@ -35,11 +35,11 @@ const User = new Schema({
 
 	firstName: {
 		type: String,
-		required: lang.error.model.user["first-name-blank"]
+		required: lang.error.model.user["first-name-is-required"]
 	},
 	lastName: {
 		type: String,
-		required: lang.error.model.user["last-name-blank"]
+		required: lang.error.model.user["last-name-is-required"]
 	},
 
 	role: {
@@ -54,7 +54,7 @@ const User = new Schema({
 	password: {
 		type: String,
 		select: false,
-		required: lang.error.model.user["password-blank"],
+		required: lang.error.model.user["password-is-required"],
 		validate: [{
 			validator() {
 				return this.isModified("password") ? this.password === this.confirm : true;
@@ -64,7 +64,7 @@ const User = new Schema({
 			validator() {
 				return !!this.password;
 			},
-			msg: lang.error.model.user["password-blank"]
+			msg: lang.error.model.user["password-is-required"]
 		}, {
 			validator() {
 				return zxcvbn(this.password).score >= 1;

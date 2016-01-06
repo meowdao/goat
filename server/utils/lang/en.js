@@ -21,10 +21,10 @@ export default {
 		"model": {
 			"user": {
 				"email-is-invalid": "Email is invalid",
-				"first-name-blank": "First name cannot be blank",
-				"last-name-blank": "Last name cannot be blank",
+				"first-name-is-required": "First name cannot be blank",
+				"last-name-is-required": "Last name cannot be blank",
 				"unrec-user-role": "Unrecognized user role",
-				"password-blank": "Password cannot be blank",
+				"password-is-required": "Password cannot be blank",
 				"passwords-match": "Passwords doesn't much",
 				"passwords-weak": "Password is too weak"
 
