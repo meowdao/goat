@@ -18,7 +18,7 @@ const User = new Schema({
 		lowercase: true,
 		trim: true,
 		unique: true,
-		required: "Email cannot be blank",
+		required: lang.error.model.user["email-is-required"],
 		match: [regexp.email, lang.error.model.user["email-is-invalid"]]
 	},
 	isEmailVerified: {

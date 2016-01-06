@@ -20,6 +20,7 @@ export default {
 		},
 		"model": {
 			"user": {
+				"email-is-required": "Email cannot be blank",
 				"email-is-invalid": "Email is invalid",
 				"first-name-is-required": "First name cannot be blank",
 				"last-name-is-required": "Last name cannot be blank",
