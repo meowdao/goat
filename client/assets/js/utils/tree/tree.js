@@ -5,7 +5,6 @@ import TreeNode from "./tree-node.js";
 export default class Tree {
 
 	root = new TreeNode(null);
-	current = this.root;
 
 	constructor(data):Tree {
 		const nodes = {};
@@ -22,7 +21,7 @@ export default class Tree {
 		return this;
 	}
 
-	find(_id = null, node = this.current):TreeNode {
+	find(_id = null, node = this.root):TreeNode {
 		if ((node.isRoot() && _id === null) || (!node.isRoot() && _id === node.data._id)) {
 			return node;
 		} else if (node.children.length) {
@@ -30,7 +29,6 @@ export default class Tree {
 			for (let i = 0; result === null && i < node.children.length; i++) {
 				result = this.find(_id, node.children[i]);
 			}
-			this.current = result;
 			return result;
 		}
 		return null;
