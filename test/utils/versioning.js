@@ -1,7 +1,7 @@
 "use strict";
 
 import q from "q";
-import assert from "assert";
+import assert from "power-assert";
 import debug from "debug";
 import mongoose, {Schema} from "mongoose";
 import mongooseVersion from "lackey-mongoose-version";

@@ -1,6 +1,6 @@
 "use strict";
 
-import assert from "assert";
+import assert from "power-assert";
 import moment from "moment";
 import {date} from "../../server/utils/constants/date.js";
 

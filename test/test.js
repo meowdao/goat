@@ -1,14 +1,25 @@
 "use strict";
 
-import assert from "assert";
+import assert from "power-assert";
 
 
 suite("simple suite", () => {
 
-	test("simple test", done => {
+	test("simple test", () => {
 
 		assert.ok(true);
-		done();
+
+		const actualObj = {
+			array: [{value: 42}]
+		};
+
+		const expectedObject = {
+			get value() {
+				return null;
+			}
+		};
+
+		assert.equal(actualObj.array[0].value, expectedObject.value);
 
 	});
 

@@ -2,7 +2,7 @@
 
 import q from "q";
 import debug from "debug";
-import assert from "assert";
+import assert from "power-assert";
 
 const log = debug("test:q");
 

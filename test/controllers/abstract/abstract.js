@@ -2,7 +2,7 @@
 
 import q from "q";
 import debug from "debug";
-import assert from "assert";
+import assert from "power-assert";
 import mongoose, {Schema} from "mongoose";
 import AbstractController from "../../../server/controllers/abstract/abstract.js";
 import {cleanUp, mockInChain} from "../../utils.js";
