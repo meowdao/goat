@@ -18,7 +18,7 @@ module.exports = {
 		filename: "bundle.js",
 		sourceMapFilename: "[file].map",
 		chunkFilename: "[id].js",
-		publicPath: "/assets/"
+		publicPath: "/build/"
 	},
 	resolve: {
 		modulesDirectories: ["node_modules"],
@@ -38,7 +38,7 @@ module.exports = {
 			},
 			{
 				test: /\.(ttf|woff|woff2|eot|svg|gif|png|ico)(\?.+)?$/,
-				loader: "file-loader?name=[sha512:hash:base36:7].[ext]"
+				loader: "file-loader?name=[name].[ext]?[hash]"
 			},
 			{
 				test: /\.js$/,

@@ -9,7 +9,7 @@ const log = debug("log:server");
 
 // http://webpack.github.io/docs/webpack-dev-server.html#combining-with-an-existing-server
 const webpackServer = new WebpackDevServer(webpack(require("./configs/webpack")), {
-	publicPath: "/assets/",
+	publicPath: "/build/",
 	contentBase: "/client/build/",
 	filename: "bundle.js",
 	watchOptions: {
@@ -27,6 +27,9 @@ const webpackServer = new WebpackDevServer(webpack(require("./configs/webpack"))
 		children: false
 	},
 	proxy: [{
+		path: /favicon\.ico/,
+		target: "http://localhost:3001/build/"
+	}, {
 		path: /^(?!.*\.hot-update\.js)(.*)$/,
 		target: "http://localhost:3000/"
 	}]

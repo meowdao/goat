@@ -1,6 +1,7 @@
 "use strict";
 
 import "../css/styles.less";
+import "../img/favicon.ico";
 
 import debug from "debug";
 import React from "react"; // eslint-disable-line no-unused-vars
