@@ -8,9 +8,9 @@ import DebuggableController from "./debuggable.js";
 
 class AbstractController extends DebuggableController {
 
-	constructor(isDebuggable, connection) {
+	constructor(isDebuggable = true, connection) {
 		super(isDebuggable);
-		this.model = new RichModel(this.constructor.name.slice(0, -10), this.isDebuggable, connection);
+		this.model = new RichModel(this.constructor.name.slice(0, -10), isDebuggable, connection);
 	}
 
 	getById(request) {
