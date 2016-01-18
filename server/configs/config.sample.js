@@ -58,6 +58,12 @@ export default {
 				AccountSID: "",
 				AuthToken: "",
 				from: "+15005550006" // https://www.twilio.com/docs/api/rest/test-credentials
+			},
+			twitter: {
+				consumer_key: "L4HqNsDwsUuNis6aTtB9W2QrK", // eslint-disable-line camelcase
+				consumer_secret: "vjfl34COZGEpwUBfLp6dGCDQ6T2dfcR9ajgHbcaMkRrfp5jl9t", // eslint-disable-line camelcase
+				access_token: "4727464692-4AebogQBWn55kGWT4jNPqkH6sunpWfHWDfEHndi", // eslint-disable-line camelcase
+				access_token_secret: "E1uL5tJY7NJtW3YyZYGn1mDXBRSZiHWmVfjixaj5crYhb" // eslint-disable-line camelcase
 			}
 		}
 	},
@@ -118,6 +124,12 @@ export default {
 				AccountSID: "",
 				AuthToken: "",
 				from: ""
+			},
+			twitter: {
+				consumer_key: "L4HqNsDwsUuNis6aTtB9W2QrK", // eslint-disable-line camelcase
+				consumer_secret: "vjfl34COZGEpwUBfLp6dGCDQ6T2dfcR9ajgHbcaMkRrfp5jl9t", // eslint-disable-line camelcase
+				access_token: "4727464692-4AebogQBWn55kGWT4jNPqkH6sunpWfHWDfEHndi", // eslint-disable-line camelcase
+				access_token_secret: "E1uL5tJY7NJtW3YyZYGn1mDXBRSZiHWmVfjixaj5crYhb" // eslint-disable-line camelcase
 			}
 		}
 	}

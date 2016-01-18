@@ -85,7 +85,7 @@ export default {
 				method: "GET",
 				url: "/categories"
 			})
-			.then(response => response.items);;
+			.then(response => response.items);
 	},
 
 	categoryNew(data) {
@@ -97,6 +97,18 @@ export default {
 			})
 			.then(response => {
 				ServerActionCreators.updateUser(response);
+			});
+	},
+
+	searchTwits(data) {
+		return $
+			.ajax({
+				data,
+				method: "GET",
+				url: "/twitter/search"
+			})
+			.then(response => {
+				ServerActionCreators.updateTwits(response);
 			});
 	}
 
