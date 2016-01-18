@@ -9,6 +9,8 @@ import Welcome from "../components/static/welcome.js";
 
 import Article from "../components/partials/article.js";
 
+import TwitSearch from "../components/static/twitsearch.js";
+
 // admin
 import Dashboard from "../components/admin/dashboard.js";
 import UserList from "../components/admin/users/list.js";
@@ -46,6 +48,9 @@ export default (
 			<Route path="user">
 				<Route path="list" component={UserList}/>
 			</Route>
+		</Route>
+		<Route path="twitsearch" component={Article} onEnter={setDisplayName("TwitSearch")}>
+			<IndexRoute component={TwitSearch}/>
 		</Route>
 		<Route path="user" component={Article} onEnter={setDisplayName("User")}>
 			<IndexRedirect to="profile"/>

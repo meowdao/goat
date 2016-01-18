@@ -5,15 +5,15 @@ import Title from "../partials/title.js";
 import TwitterList from "../partials/twitterlist.js";
 import TwitterForm from "../partials/twitterform.js";
 
-export default class Welcome extends React.Component {
+export default class TwitSearch extends React.Component {
 
-	static displayName = "Welcome";
+	static displayName = "Twitter Search";
 
 	render() {
 		return (
 			<div className="container">
-				<Title {...this.props}/>
-				<p>Lorem ipsum!</p>
+				<TwitterForm query="Search" count="5"/>
+				<TwitterList />
 			</div>
 		);
 	}

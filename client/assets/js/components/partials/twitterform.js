@@ -31,7 +31,6 @@ export default class TwitterForm extends React.Component {
 	render() {
 		return (
 			<div className="container">
-				<h4> Twitter Search </h4>
 				<form onSubmit={::this.onSubmit}>
 					<Input
 						type="text"
@@ -39,7 +38,7 @@ export default class TwitterForm extends React.Component {
 						onChange={(e) => this.setState({query: e.target.value})}
 					/>
 					<Input
-						type="text"
+						type="number"
 						defaultValue={this.state.count}
 						onChange={(e) => this.setState({count: e.target.value})}
 					/>

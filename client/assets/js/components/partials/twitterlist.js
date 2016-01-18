@@ -2,6 +2,7 @@
 
 import React, {PropTypes} from "react";
 import TwitterStore from "../../stores/TwitStore.js";
+import {ListGroup, ListGroupItem} from "react-bootstrap";
 
 export default class TwitterList extends React.Component {
 
@@ -44,11 +45,20 @@ export default class TwitterList extends React.Component {
 
 	render() {
 		return (
-			<ul>
-				{this.state.messages.map((message, i) => {
-					return <li key={i}><h5>{message.user.name}:</h5> {message.text}</li>;
-				})}
-			</ul>
+			<div className="container">
+				<ListGroup>
+					{this.state.messages.map((message, i) => {
+						const twitUrl = "https://twitter.com/statuses/" + message.id_str;
+
+						return (
+							<ListGroupItem header={message.user.name} key={i}>
+								<p>{message.text}</p>
+								<a href={twitUrl}>Original Twit</a>
+							</ListGroupItem>
+						);
+					})}
+				</ListGroup>
+			</div>
 		);
 	}
 

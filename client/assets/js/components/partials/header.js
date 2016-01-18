@@ -89,6 +89,11 @@ export default class Header extends React.Component {
 				</Navbar.Header>
 				<Navbar.Collapse eventKey={1} href="#">
 					{UserStore.isLoggedIn() ? this.renderMenu() : this.renderLoginButton()}
+					<Nav navbar pullRight>
+						<LinkContainer to="twitsearch">
+							<NavItem>Search Twits</NavItem>
+						</LinkContainer>
+					</Nav>
 				</Navbar.Collapse>
 			</Navbar>
 		);
