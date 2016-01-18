@@ -1,11 +1,20 @@
 "use strict";
 
 import path from "path";
+import {renderAppToString, renderHTML} from "../utils/render.js";
+import configs from "../configs/config.js";
+
 
 export default function(app) {
 
+	const config = configs[process.env.NODE_ENV];
+
 	app.use((request, response) => {
-		response.sendFile(path.join(__dirname, "../../client/assets/html/index.html"));
+		if (config.rendering === "server") {
+			renderAppToString(request, response);
+		} else { // client
+			response.status(200).send(renderHTML());
+		}
 	});
 
 }

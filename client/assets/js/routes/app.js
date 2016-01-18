@@ -24,6 +24,9 @@ import Change from "../components/user/change.js";
 import CategoryList from "../components/category/list.js";
 import CategoryAdd from "../components/category/add.js";
 
+// page
+import Airport from "../components/page/airport.js";
+
 // error
 import Message from "../components/static/message.js";
 
@@ -57,8 +60,15 @@ export default (
 		</Route>
 		<Route path="category" component={Article} onEnter={setDisplayName("Category")}>
 			<IndexRoute component={CategoryList}/>
-			<Route path="category/new" component={CategoryAdd}/>
-			<Route path="category/:_id" component={CategoryList}/>
+			<Route path="new" component={CategoryAdd}/>
+			<Route path=":_id" component={CategoryList}/>
+		</Route>
+		<Route path="airport" component={Article} onEnter={setDisplayName("Airports")}>
+			<IndexRoute component={Airport} onEnter={props => {props.params.key = 1;}}/>
+			<Route path="schedule" component={Airport} onEnter={props => {props.params.key = 1;}}/>
+			<Route path="flight" component={Airport} onEnter={props => {props.params.key = 1;}}/>
+			<Route path="ticket" component={Airport} onEnter={props => {props.params.key = 1;}}/>
+			<Route path="map" component={Airport} onEnter={props => {props.params.key = 1;}}/>
 		</Route>
 		<Route path="error" component={Message}/>
 		<Route path="*" component={Message}

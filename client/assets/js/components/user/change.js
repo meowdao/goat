@@ -14,9 +14,7 @@ export default class Change extends React.Component {
 	static propTypes = {
 		password: PropTypes.string,
 		confirm: PropTypes.string,
-		params: PropTypes.object,
-		history: PropTypes.object,
-		routes: PropTypes.array.isRequired
+		params: PropTypes.object
 	};
 
 	static contextTypes = {

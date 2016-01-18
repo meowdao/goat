@@ -34,7 +34,7 @@ module.exports = {
 			},
 			{
 				test: /\.less/,
-				loader: process.env.NODE_ENV === "production" ? ExtractTextPlugin.extract("style", "css!less") : "style!css!less"
+				loader: ExtractTextPlugin.extract("style-loader", "css-loader!less-loader")
 			},
 			{
 				test: /\.(ttf|woff|woff2|eot|svg|gif|png|ico)(\?.+)?$/,

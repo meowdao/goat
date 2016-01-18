@@ -6,15 +6,22 @@ import "../img/favicon.ico";
 import debug from "debug";
 import React from "react"; // eslint-disable-line no-unused-vars
 import ReactDOM from "react-dom";
-import {Router, browserHistory} from "react-router";
+import {Provider} from "react-redux";
 
-
+import Router from "./routes/router.js";
 import routes from "./routes/app.js";
+import store from "./stores/store.js";
 import $ from "./utils/jquery.js"; // eslint-disable-line no-unused-vars
+import history from "./utils/history.js";
 
 
 if (process.env.NODE_ENV !== "production") {
 	debug.enable("web:*");
 }
 
-ReactDOM.render(<Router history={browserHistory} routes={routes}/>, document.getElementById("app"));
+ReactDOM.render(
+	<Provider store={store}>
+		<Router history={history} routes={routes} onUpdate={() => window.scrollTo(0, 0)}/>
+	</Provider>,
+	document.getElementById("app")
+);
