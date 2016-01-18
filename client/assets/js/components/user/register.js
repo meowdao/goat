@@ -1,6 +1,8 @@
 "use strict";
 
-import React, {PropTypes} from "react";
+import React, {PropTypes, Component} from "react";
+import {bindActionCreators} from "redux";
+import {connect} from "react-redux";
 import {Input, ButtonInput} from "react-bootstrap";
 import zxcvbn from "zxcvbn";
 import API from "../../utils/API";
@@ -8,7 +10,21 @@ import regexp from "../../../../../server/utils/regexp.js";
 import {email, password, confirm, firstName, lastName/* , phoneNumber*/} from "../../../../../server/utils/constants/misc.js";
 
 
-export default class Register extends React.Component {
+const register = (data) =>
+	dispatch =>
+		API.register(data)
+			.then(responce => {
+				dispatch({
+					type: "USER_LOGIN",
+					user: responce
+				});
+			});
+
+@connect(
+	() => {},
+	dispatch => bindActionCreators({register}, dispatch)
+)
+export default class Register extends Component {
 
 	static displayName = "Register";
 
@@ -19,7 +35,8 @@ export default class Register extends React.Component {
 		confirm: PropTypes.string,
 		firstName: PropTypes.string,
 		lastName: PropTypes.string,
-		history: React.PropTypes.object
+		history: React.PropTypes.object,
+		register: PropTypes.func
 	};
 
 	static contextTypes = {
@@ -46,7 +63,7 @@ export default class Register extends React.Component {
 
 	onSubmit(e) {
 		e.preventDefault();
-		API.register(this.state)
+		this.props.register(this.state)
 			.then(() => {
 				this.context.router.push("/user/profile");
 			});

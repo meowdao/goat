@@ -1,8 +1,8 @@
 "use strict";
 
-import React, {PropTypes} from "react";
+import React, {PropTypes, Component} from "react";
 
-export default class EML extends React.Component {
+export default class EML extends Component {
 
 	static propTypes = {
 		children: PropTypes.node

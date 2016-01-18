@@ -1,6 +1,6 @@
 "use strict";
 
-import assert from "assert";
+import assert from "power-assert";
 import {email, firstName, lastName} from "../../server/utils/constants/misc.js";
 import {getControllers} from "../utils.js";
 

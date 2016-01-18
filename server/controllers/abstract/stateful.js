@@ -30,9 +30,8 @@ class StatefulController extends AbstractController {
 		return this.change(request);
 	}
 
-	change(request, populate = [], fields = []) {
-		return this.check(request, populate)
-			.then(messenger.notActive(this, request.user))
+	change(request, populate = [], conditions = [], fields = []) {
+		return this.check(request, populate, conditions)
 			.then(item => {
 				const clean = fields.length ? _.pick(request.body, fields) : request.body;
 				if (Object.keys(clean).length) {
@@ -56,10 +55,9 @@ class StatefulController extends AbstractController {
 
 	deactivate(request, populate = [], conditions = []) {
 		return this.check(request, populate)
-			.then(messenger.notActive(this, request.user))
-			.then(this.conditions(request, conditions))
+			.then(this.conditions(request, [messenger.isActive(false)].concat(conditions)))
 			.then(item => {
-				item.status = this.constructor.statuses.inactive;
+				item.set("status", this.constructor.statuses.inactive);
 				return this.save(item);
 			});
 	}

@@ -1,8 +1,8 @@
 "use strict";
 
-import React from "react";
+import React, {Component} from "react";
 
-export default class Profile extends React.Component {
+export default class Profile extends Component {
 
 	static displayName = "Profile";
 

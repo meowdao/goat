@@ -1,7 +1,6 @@
 "use strict";
 
 import $ from "jquery";
-import ServerActionCreators from "../actions/ServerActionCreators.js";
 
 
 export default {
@@ -12,9 +11,6 @@ export default {
 				data,
 				method: "POST",
 				url: "/user/login"
-			})
-			.then(response => {
-				ServerActionCreators.updateUser(response);
 			});
 	},
 
@@ -24,9 +20,6 @@ export default {
 				data,
 				method: "GET",
 				url: "/user/logout"
-			})
-			.then(() => {
-				ServerActionCreators.updateUser(null);
 			});
 	},
 
@@ -36,9 +29,6 @@ export default {
 				data,
 				method: "POST",
 				url: "/user/register"
-			})
-			.then(response => {
-				ServerActionCreators.updateUser(response);
 			});
 	},
 
@@ -48,9 +38,6 @@ export default {
 				data,
 				method: "POST",
 				url: "/user/forgot"
-			})
-			.then(response => {
-				ServerActionCreators.message(response.message);
 			});
 	},
 
@@ -60,9 +47,6 @@ export default {
 				data,
 				method: "POST",
 				url: "/user/change"
-			})
-			.then(response => {
-				ServerActionCreators.message(response.message);
 			});
 	},
 
@@ -72,9 +56,6 @@ export default {
 				data,
 				method: "GET",
 				url: "/user/sync"
-			})
-			.then(response => {
-				ServerActionCreators.updateUser(response);
 			});
 	},
 
@@ -94,9 +75,6 @@ export default {
 				data,
 				method: "POST",
 				url: "/category"
-			})
-			.then(response => {
-				ServerActionCreators.updateUser(response);
 			});
 	},
 

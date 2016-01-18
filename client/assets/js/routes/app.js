@@ -26,11 +26,11 @@ import Change from "../components/user/change.js";
 import CategoryList from "../components/category/list.js";
 import CategoryAdd from "../components/category/add.js";
 
+// page
+import Airport from "../components/page/airport.js";
+
 // error
 import Message from "../components/static/message.js";
-
-// import UserStore from "../stores/UserStore.js";
-import MessageStore from "../stores/MessageStore.js";
 
 import {ActionTypes} from "../constants/constants.js";
 
@@ -62,21 +62,17 @@ export default (
 		</Route>
 		<Route path="category" component={Article} onEnter={setDisplayName("Category")}>
 			<IndexRoute component={CategoryList}/>
-			<Route path="category/new" component={CategoryAdd}/>
-			<Route path="category/:_id" component={CategoryList}/>
+			<Route path="new" component={CategoryAdd}/>
+			<Route path=":_id" component={CategoryList}/>
+		</Route>
+		<Route path="airport" component={Article} onEnter={setDisplayName("Airports")}>
+			<IndexRoute component={Airport} onEnter={nextState => {nextState.params.key = 1;}}/>
+			<Route path="schedule" component={Airport} onEnter={nextState => {nextState.params.key = 2;}}/>
+			<Route path="flight" component={Airport} onEnter={nextState => {nextState.params.key = 3;}}/>
+			<Route path="ticket" component={Airport} onEnter={nextState => {nextState.params.key = 4;}}/>
+			<Route path="map" component={Airport} onEnter={nextState => {nextState.params.key = 5;}}/>
 		</Route>
 		<Route path="error" component={Message}/>
-		<Route path="*" component={Message}
-			onEnter={() => {
-				MessageStore.remove();
-				MessageStore._registerToActions({
-					actionType: ActionTypes.ERROR,
-					messages: ["Page Not Found"]
-				});
-			}}
-			onLeave={() => {
-				MessageStore.remove();
-			}}
-		/>
+		<Route path="*" component={Message}/>
 	</Route>
 );

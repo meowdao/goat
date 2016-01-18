@@ -29,12 +29,17 @@
 		"no-else-return": [
 			0
 		],
+		"max-len": [
+			0
+		],
 		"react/jsx-indent-props": [
 			2,
 			"tab"
 		]
 	},
 	"env": {
+		"browser": true,
+		"node": true,
 		"mocha": true
 	}
 }

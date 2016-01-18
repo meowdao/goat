@@ -19,7 +19,7 @@ export default {
 	requiresRole(required, self) {
 		return (request, response, next) => {
 			this.requiresLogin(request, response, () => {
-				if (!_.contains(required, request.user.role) || !(self && request.user._id.toString() === request.params.id)) {
+				if (!_.includes(required, request.user.role) || !(self && request.user._id.toString() === request.params.id)) {
 					return next(messenger.makeError("access-denied", request.user, 403));
 				}
 				return next();

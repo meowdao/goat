@@ -1,11 +1,11 @@
 "use strict";
 
-import React, {PropTypes} from "react";
+import React, {PropTypes, Component} from "react";
 import Header from "./partials/header.js";
 import Footer from "./partials/footer.js";
 
 
-export default class GOAT extends React.Component {
+export default class GOAT extends Component {
 
 	static displayName = "G.O.A.T.";
 

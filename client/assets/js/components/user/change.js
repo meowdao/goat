@@ -1,13 +1,29 @@
 "use strict";
 
-import React, {PropTypes} from "react";
+import React, {PropTypes, Component} from "react";
+import {bindActionCreators} from "redux";
+import {connect} from "react-redux";
 import {Input, ButtonInput} from "react-bootstrap";
 import zxcvbn from "zxcvbn";
 import API from "../../utils/API";
 import {password, confirm} from "../../../../../server/utils/constants/misc.js";
 
 
-export default class Change extends React.Component {
+const change = (data) =>
+	dispatch =>
+		API.change(data)
+			.then(responce => {
+				dispatch({
+					type: "MESSAGE",
+					message: responce.message
+				});
+			});
+
+@connect(
+	() => {},
+	dispatch => bindActionCreators({change}, dispatch)
+)
+export default class Change extends Component {
 
 	static displayName = "Password Change";
 
@@ -15,8 +31,7 @@ export default class Change extends React.Component {
 		password: PropTypes.string,
 		confirm: PropTypes.string,
 		params: PropTypes.object,
-		history: PropTypes.object,
-		routes: PropTypes.array.isRequired
+		change: PropTypes.func
 	};
 
 	static contextTypes = {
@@ -37,7 +52,7 @@ export default class Change extends React.Component {
 
 	onSubmit(e) {
 		e.preventDefault();
-		API.change(this.state)
+		this.props.change(this.state)
 			.then(() => {
 				this.context.router.push("user/profile");
 			});

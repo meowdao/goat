@@ -5,6 +5,8 @@
     "react"
   ],
   "plugins": [
-  	"transform-runtime"
+  	"transform-runtime",
+  	"transform-decorators-legacy",
+  	"babel-plugin-espower"
   ]
 }

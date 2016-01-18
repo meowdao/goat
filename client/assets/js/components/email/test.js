@@ -1,12 +1,12 @@
 "use strict";
 
-import React, {PropTypes} from "react";
+import React, {PropTypes, Component} from "react";
 import configs from "../../../../../server/configs/config.js";
 
 
 const config = configs[process.env.NODE_ENV];
 
-export default class Test extends React.Component {
+export default class Test extends Component {
 
 	static propTypes = {
 		params: PropTypes.object

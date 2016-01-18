@@ -1,18 +1,18 @@
 "use strict";
 
 import debug from "debug";
+import util from "util";
 
 class DebuggableController {
 
 	displayName = "Debuggable";
 
-	isDebuggable = true;
-
-	constructor(isDebuggable = true) {
+	constructor(isDebuggable) {
 		this.displayName = this.constructor.name.slice(0, -10).toLowerCase();
-		this.isDebuggable = isDebuggable;
-		if (this.isDebuggable) {
-			this.log = debug(`controller:${this.displayName}`);
+		if (isDebuggable) {
+			this.log = (...args) =>
+				debug(`controller:${this.displayName}`)(...args.map(arg =>
+					util.inspect(arg, {depth: 10, colors: true})));
 		} else {
 			this.log = () => null;
 		}

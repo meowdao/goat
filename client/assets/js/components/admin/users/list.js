@@ -1,11 +1,16 @@
 "use strict";
 
-import React, {PropTypes} from "react";
+import React, {PropTypes, Component} from "react";
 import classnames from "classnames";
-import UserStore from "../../../stores/UserStore.js";
+import {connect} from "react-redux";
 
 
-export default class UserList extends React.Component {
+@connect(
+	state => ({
+		users: state.users
+	})
+)
+export default class UserList extends Component {
 
 	static displayName = "User List";
 
@@ -16,37 +21,6 @@ export default class UserList extends React.Component {
 	static defaultProps = {
 		users: []
 	};
-
-	constructor(props) {
-		super(props);
-		this.state = this.getStateFromStores();
-	}
-
-	state = {
-		users: this.props.users
-	};
-
-	componentDidMount() {
-		UserStore.addChangeListener(this._onChange.bind(this));
-	}
-
-	componentWillUnmount() {
-		UserStore.removeChangeListener(this._onChange.bind(this));
-	}
-
-	getStateFromStores() {
-		return {
-			users: UserStore.getUsers()
-		};
-	}
-
-	_onChange() {
-		this.setState(this.getStateFromStores());
-	}
-
-	sync() {
-		// sync
-	}
 
 	renderListItem(user) {
 		return (
@@ -70,7 +44,7 @@ export default class UserList extends React.Component {
 			<div className="panel panel-default">
 				<div className="panel-body">
 					<ul className="list-group">
-						{this.state.users.map(this.renderListItem)}
+						{this.props.users.map(this.renderListItem)}
 					</ul>
 				</div>
 			</div>

@@ -2,20 +2,28 @@
 
 import mongoose from "mongoose";
 import debug from "debug";
+import util from "util";
+
 
 class RichModel {
 
 	constructor(displayName, isDebuggable, connection = mongoose) {
 		this.model = connection.model(displayName);
-		this.isDebuggable = isDebuggable;
-		this.log = debug(`model:${displayName}`);
+		if (isDebuggable) {
+			this.log = (...args) =>
+				debug(`model:${displayName}`)(...args.map(arg =>
+					util.inspect(arg, {
+						depth: 10,
+						colors: true
+					})));
+		} else {
+			this.log = () => null;
+		}
 	}
 
 	_log(where) {
 		return (...args) => {
-			if (this.isDebuggable) {
-				this.log(where, ...args);
-			}
+			this.log(where, ...args);
 		};
 	}
 
@@ -42,7 +50,7 @@ class RichModel {
 	 */
 	findById(id, options) {
 		return this.enchant("findById", [id], options)
-		.tap(this._log("found"));
+			.tap(this._log("found"));
 	}
 
 	/**
@@ -53,7 +61,7 @@ class RichModel {
 	 */
 	find(query, options) {
 		return this.enchant("find", [query], options)
-		.tap(this._log("found"));
+			.tap(this._log("found"));
 	}
 
 	/**
@@ -64,7 +72,7 @@ class RichModel {
 	 */
 	findOne(query, options) {
 		return this.enchant("findOne", [query], options)
-		.tap(this._log("found"));
+			.tap(this._log("found"));
 	}
 
 	/**
@@ -76,13 +84,14 @@ class RichModel {
 	 * @returns {Promise}
 	 */
 	upsert(query, data, options, params) {
-		return this.enchant("findOneAndUpdate", [query, data, Object.assign({
-			new: true,
-			upsert: true,
-			runValidators: true,
-			setDefaultsOnInsert: true
-		}, params)], options)
-		.tap(this._log("upserted"));
+		return this
+			.enchant("findOneAndUpdate", [query, data, Object.assign({
+				new: true,
+				upsert: true,
+				runValidators: true,
+				setDefaultsOnInsert: true
+			}, params)], options)
+			.tap(this._log("upserted"));
 	}
 
 	/**
@@ -95,11 +104,12 @@ class RichModel {
 	 */
 	update(query, data, options, params) {
 		// http://mongoosejs.com/docs/api.html#model_Model.update
-		return this.enchant("update", [query, data, Object.assign({
-			strict: true,
-			multi: true
-		}, params)], options)
-		.tap(this._log("updated"));
+		return this
+			.enchant("update", [query, data, Object.assign({
+				strict: true,
+				multi: true
+			}, params)], options)
+			.tap(this._log("updated"));
 	}
 
 	populate(list, path, options) {
@@ -116,7 +126,7 @@ class RichModel {
 	 */
 	search(text) {
 		return this.find({$text: {$search: text}})
-		.tap(this._log("found"));
+			.tap(this._log("found"));
 	}
 
 	/**
@@ -126,7 +136,7 @@ class RichModel {
 	 */
 	save(model) {
 		return model.save()
-		.tap(this._log("saved"));
+			.tap(this._log("saved"));
 	}
 
 	/**
@@ -136,7 +146,7 @@ class RichModel {
 	 */
 	destroy(model) {
 		return model.remove()
-		.tap(this._log("destroyed"));
+			.tap(this._log("destroyed"));
 	}
 
 }
@@ -156,16 +166,16 @@ class RichModel {
 ].forEach(name => {
 	RichModel.prototype[name] = function(...args) {
 		return this.model[name](...args)
-		.then(result => {
-			if (name === "remove") {
-				return result.result;
-			}
-			if (name === "create" && !result) {
-				return [];
-			}
-			return result;
-		})
-		.tap(this._log(`${name}${name[name.length - 1] === "e" ? "d" : "ed"}`));
+			.then(result => {
+				if (name === "remove") {
+					return result.result;
+				}
+				if (name === "create" && !result) {
+					return [];
+				}
+				return result;
+			})
+			.tap(this._log(`${name}${name[name.length - 1] === "e" ? "d" : "ed"}`));
 	};
 });
 

@@ -2,7 +2,7 @@
 
 import q from "q";
 import debug from "debug";
-import assert from "assert";
+import assert from "power-assert";
 import mongoose, {Schema} from "mongoose";
 import utils from "../../../server/utils/utils.js";
 import StatefulController from "../../../server/controllers/abstract/stateful.js";
