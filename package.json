@@ -89,7 +89,7 @@
 		"node": "v5.2.0"
 	},
 	"scripts": {
-		"start": "NODE_ENV=${NODE_ENV:=development} DEBUG=web:* nodemon -w server server/dev.js",
+		"start": "NODE_ENV=${NODE_ENV:=development} TWITTER_API=${TWITTER_API:=true} DEBUG=web:* nodemon -w server server/dev.js",
 		"test": "NODE_ENV=${NODE_ENV:=test} mocha test/controllers/abstract",
 		"build": "NODE_ENV=${NODE_ENV:=development} webpack -c --config server/configs/webpack.js",
 		"lint": "eslint server/* client/assets/js/* test/*"

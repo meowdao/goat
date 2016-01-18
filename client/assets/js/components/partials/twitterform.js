@@ -2,6 +2,7 @@
 
 import React, {PropTypes} from "react";
 import API from "../../utils/API";
+import {Input, ButtonInput} from "react-bootstrap";
 
 export default class TwitterForm extends React.Component {
 
@@ -30,9 +31,21 @@ export default class TwitterForm extends React.Component {
 	render() {
 		return (
 			<form onSubmit={::this.onSubmit}>
-				<input type="text" defaultValue={this.state.query} onChange={(e) => this.setState({query: e.target.value})}/>
-				<input type="text" defaultValue={this.state.count} onChange={(e) => this.setState({count: e.target.value})}/>
-				<input type="submit"/>
+				<Input
+					type="text"
+					defaultValue={this.state.query}
+					onChange={(e) => this.setState({query: e.target.value})}
+				/>
+				<Input
+					type="text"
+					defaultValue={this.state.count}
+					onChange={(e) => this.setState({count: e.target.value})}
+				/>
+				<ButtonInput
+					type="submit"
+					value="Search"
+					bsStyle="info"
+				/>
 			</form>
 		);
 	}
