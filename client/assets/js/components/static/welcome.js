@@ -1,10 +1,10 @@
 "use strict";
 
-import React from "react";
+import React, {Component} from "react";
 import Title from "../partials/title.js";
 
 
-export default class Welcome extends React.Component {
+export default class Welcome extends Component {
 
 	static displayName = "Welcome";
 

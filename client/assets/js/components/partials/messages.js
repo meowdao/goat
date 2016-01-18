@@ -1,51 +1,38 @@
 "use strict";
 
-import React, {PropTypes} from "react";
+import React, {PropTypes, Component} from "react";
+import {connect} from "react-redux";
 import {Alert} from "react-bootstrap";
-import MessageStore from "../../stores/MessageStore.js";
 
-export default class Message extends React.Component {
+@connect(
+	state => ({
+		messages: state.messages
+	})
+)
+export default class Message extends Component {
 
 	static propTypes = {
-		messages: PropTypes.array
+		messages: PropTypes.array,
+		dismiss: PropTypes.func
 	};
 
 	static defaultProps = {
 		messages: []
 	};
 
-	constructor(props) {
-		super(props);
-		this.state = this.getStateFromStores();
-	}
-
-	state = {
-		messages: this.props.messages
-	};
-
-	componentDidMount() {
-		MessageStore.addChangeListener(this._onChange.bind(this));
-	}
-
-	componentWillUnmount() {
-		MessageStore.removeChangeListener(this._onChange.bind(this));
-	}
-
-	getStateFromStores() {
-		return {
-			messages: MessageStore.getMessages()
-		};
-	}
-
-	_onChange() {
-		this.setState(this.getStateFromStores());
-	}
-
 	render() {
 		return (
 			<div>
-				{this.state.messages.map(message =>
-					<Alert key={message.id} dismissAfter={3000} onDismiss={() => { MessageStore.remove(message.id); }} bsStyle={message.type}>
+				{this.props.messages.map(message =>
+					<Alert key={message.id} dismissAfter={3000}
+						onDismiss={() => {
+							this.props.dismiss({
+								type: "MESSAGE_REMOVE",
+								message: message
+							});
+						}}
+						bsStyle={message.type}
+					>
 						{message.text}
 					</Alert>
 				)}

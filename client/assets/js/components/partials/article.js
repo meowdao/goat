@@ -1,22 +1,22 @@
 "use strict";
 
-import React, {PropTypes} from "react";
+import React, {PropTypes, Component} from "react";
 import Title from "../partials/title.js";
 import Messages from "../partials/messages.js";
 import Breadcrumbs from "../partials/breadcrumbs.js";
 
-export default class Article extends React.Component {
+export default class Article extends Component {
 
 	static displayName = "";
 
 	static propTypes = {
 		children: PropTypes.element.isRequired,
-		displayName: PropTypes.string
+		params: PropTypes.object
 	};
 
 	constructor() {
 		super(...arguments);
-		this.constructor.displayName = this.props.displayName;
+		this.constructor.displayName = this.props.params.displayName;
 	}
 
 	render() {

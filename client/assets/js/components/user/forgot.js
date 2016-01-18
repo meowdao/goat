@@ -1,19 +1,36 @@
 "use strict";
 
-import React, {PropTypes} from "react";
+import React, {PropTypes, Component} from "react";
+import {bindActionCreators} from "redux";
+import {connect} from "react-redux";
 import {Input, ButtonInput} from "react-bootstrap";
 import API from "../../utils/API";
 import regexp from "../../../../../server/utils/regexp.js";
 import {email} from "../../../../../server/utils/constants/misc.js";
 
 
-export default class Forgot extends React.Component {
+const forgot = (data) =>
+	dispatch =>
+		API.forgot(data)
+			.then(responce => {
+				dispatch({
+					type: "MESSAGE",
+					message: responce.message
+				});
+			});
+
+@connect(
+	() => {},
+	dispatch => bindActionCreators({forgot}, dispatch)
+)
+export default class Forgot extends Component {
 
 	static displayName = "Password Recovery";
 
 	static propTypes = {
 		email: PropTypes.string,
-		history: PropTypes.object
+		history: PropTypes.object,
+		forgot: PropTypes.func
 	};
 
 	static contextTypes = {
@@ -30,7 +47,7 @@ export default class Forgot extends React.Component {
 
 	onSubmit(e) {
 		e.preventDefault();
-		API.forgot(this.state)
+		this.props.forgot(this.state)
 			.then(() => {
 				this.context.router.push("error");
 			});

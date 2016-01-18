@@ -1,8 +1,8 @@
 "use strict";
 
-import React from "react";
+import React, {Component} from "react";
 
-export default class DeleteDialog extends React.Component {
+export default class DeleteDialog extends Component {
 	render() {
 		return (
 			<div className="modal fade" id="confirmDeletionModal" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

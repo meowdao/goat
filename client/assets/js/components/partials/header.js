@@ -1,52 +1,45 @@
 "use strict";
 
-import React, {PropTypes} from "react";
+import React, {PropTypes, Component} from "react";
+import {bindActionCreators} from "redux";
+import {connect} from "react-redux";
 import {Link} from "react-router";
 import API from "../../utils/API";
-import UserStore from "../../stores/UserStore.js";
 import {Navbar, Nav, NavItem, NavDropdown, MenuItem} from "react-bootstrap";
 import {LinkContainer} from "react-router-bootstrap";
 
-export default class Header extends React.Component {
+
+const logout = (data) =>
+	dispatch =>
+		API.logout(data)
+			.then(responce => {
+				dispatch({
+					type: "USER_LOGOUT",
+					user: responce
+				});
+			});
+
+@connect(
+	state => ({
+		user: state.user
+	}),
+	dispatch => bindActionCreators({logout}, dispatch)
+)
+export default class Header extends Component {
 
 	static propTypes = {
-		history: PropTypes.object
+		history: PropTypes.object,
+		logout: PropTypes.func,
+		user: PropTypes.object
 	};
 
 	static contextTypes = {
 		router: PropTypes.object.isRequired
 	};
 
-	constructor(props) {
-		super(props);
-		this.state = this.getStateFromStores();
-	}
-
-	state = {
-		user: null
-	};
-
-	componentDidMount() {
-		UserStore.addChangeListener(this._onChange.bind(this));
-	}
-
-	componentWillUnmount() {
-		UserStore.removeChangeListener(this._onChange.bind(this));
-	}
-
-	getStateFromStores() {
-		return {
-			user: UserStore.getCurrent()
-		};
-	}
-
-	_onChange() {
-		this.setState(this.getStateFromStores());
-	}
-
 	logout(e) {
 		e.preventDefault();
-		API.logout()
+		this.props.logout()
 			.then(() => {
 				this.context.router.push("/user/login");
 			});
@@ -55,12 +48,12 @@ export default class Header extends React.Component {
 	renderMenu() {
 		return (
 			<Nav navbar pullRight>
-				<NavDropdown title={this.state.user.email} id="dropdown">
+				<NavDropdown title={this.props.user.email} id="dropdown">
 					<LinkContainer to="/admin/dashboard">
 						<MenuItem >Dashboard</MenuItem>
 					</LinkContainer>
 					<MenuItem divider/>
-					<MenuItem onSelect={this.logout.bind(this)}>Logout</MenuItem>
+					<MenuItem onSelect={::this.logout}>Logout</MenuItem>
 				</NavDropdown>
 			</Nav>
 		);
@@ -88,7 +81,7 @@ export default class Header extends React.Component {
 					</Navbar.Brand>
 				</Navbar.Header>
 				<Navbar.Collapse eventKey={1} href="#">
-					{UserStore.isLoggedIn() ? this.renderMenu() : this.renderLoginButton()}
+					{this.props.user ? this.renderMenu() : this.renderLoginButton()}
 				</Navbar.Collapse>
 			</Navbar>
 		);

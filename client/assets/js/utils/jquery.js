@@ -2,7 +2,6 @@
 
 import $ from "jquery";
 import debug from "debug";
-import ServerActionCreators from "../actions/ServerActionCreators.js";
 
 $.noConflict();
 
@@ -30,7 +29,7 @@ $(document)
 	.ajaxError((event, XMLHttpRequest, ajaxOptions, thrownError) => {
 		log(ajaxOptions.method + " " + document.location.protocol + "//" + document.location.host + "/" + ajaxOptions.url + "?" + (ajaxOptions.data || ""));
 		log(thrownError);
-		ServerActionCreators.error(XMLHttpRequest.responseJSON && XMLHttpRequest.responseJSON.errors || thrownError || "Unknown error!");
+		// .error(XMLHttpRequest.responseJSON && XMLHttpRequest.responseJSON.errors || thrownError || "Unknown error!");
 	})
 	.ajaxSuccess((event, XMLHttpRequest, ajaxOptions) => {
 		log(ajaxOptions.method + " " + document.location.protocol + "//" + document.location.host + "/" + ajaxOptions.url + "?" + (ajaxOptions.data || ""));

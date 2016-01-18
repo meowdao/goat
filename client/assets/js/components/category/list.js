@@ -1,11 +1,11 @@
 "use strict";
 
-import React, {PropTypes} from "react";
+import React, {PropTypes, Component} from "react";
 import API from "../../utils/API.js";
 import Tree from "../../utils/tree/tree.js";
 
 
-export default class List extends React.Component {
+export default class List extends Component {
 
 	static displayName = "Categories";
 
@@ -16,10 +16,6 @@ export default class List extends React.Component {
 	static defaultProps = {
 		categories: new Tree([]).find()
 	};
-
-	constructor(props) {
-		super(props);
-	}
 
 	state = {
 		categories: this.props.categories

@@ -1,8 +1,8 @@
 "use strict";
 
-import React, {PropTypes} from "react";
+import React, {PropTypes, Component} from "react";
 
-export default class Title extends React.Component {
+export default class Title extends Component {
 
 	static propTypes = {
 		routes: PropTypes.array.isRequired

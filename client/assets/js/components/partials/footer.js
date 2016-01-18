@@ -1,11 +1,11 @@
 "use strict";
 
-import React from "react";
+import React, {Component} from "react";
 import {Navbar, Nav, NavItem} from "react-bootstrap";
 import {LinkContainer} from "react-router-bootstrap";
 
 
-export default class Footer extends React.Component {
+export default class Footer extends Component {
 	render() {
 		return (
 			<Navbar fixedBottom inverse>

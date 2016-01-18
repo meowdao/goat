@@ -1,10 +1,10 @@
 "use strict";
 
-import React from "react";
+import React, {Component} from "react";
 import {Link} from "react-router";
 
 
-export default class Dashboard extends React.Component {
+export default class Dashboard extends Component {
 
 	static displayName = "Dashboard";
 

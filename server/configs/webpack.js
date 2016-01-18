@@ -46,6 +46,7 @@ module.exports = {
 				exclude: [/node_modules/],
 				query: {
 					plugins: [
+						"transform-decorators-legacy",
 						["react-transform", {
 							transforms: [{
 								transform: "react-transform-hmr",

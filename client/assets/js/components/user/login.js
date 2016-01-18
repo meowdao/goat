@@ -1,20 +1,41 @@
 "use strict";
 
-import React, {PropTypes} from "react";
+import React, {PropTypes, Component} from "react";
+import {bindActionCreators} from "redux";
+import {connect} from "react-redux";
 import {Input, ButtonInput} from "react-bootstrap";
 import API from "../../utils/API";
 import {email, password} from "../../../../../server/utils/constants/misc.js";
 import {Link} from "react-router";
 
 
-export default class Login extends React.Component {
+const login = data =>
+	dispatch =>
+		API.login(data)
+			.then(responce => {
+				dispatch({
+					type: "USER_LOGIN",
+					user: responce
+				});
+			});
+
+
+@connect(
+	state => ({
+		user: state.user
+	}),
+	dispatch => bindActionCreators({login}, dispatch)
+)
+export default class Login extends Component {
 
 	static displayName = "Login";
 
 	static propTypes = {
 		email: PropTypes.string,
 		password: PropTypes.string,
-		history: React.PropTypes.object
+		history: React.PropTypes.object,
+		login: PropTypes.func,
+		user: PropTypes.object
 	};
 
 	static contextTypes = {
@@ -33,7 +54,7 @@ export default class Login extends React.Component {
 
 	onSubmit(e) {
 		e.preventDefault();
-		API.login(this.state)
+		this.props.login(this.state)
 			.then(() => {
 				this.context.router.push("/user/profile");
 			});

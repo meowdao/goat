@@ -1,5 +1,11 @@
 "use strict";
 
-import count from "./count";
+import {combineReducers} from "redux";
+import {routeReducer as routing} from "redux-simple-router";
+import user from "./user.js";
 
-export default {count};
+
+export default combineReducers({
+	user,
+	routing
+});

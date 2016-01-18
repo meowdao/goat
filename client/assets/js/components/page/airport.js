@@ -1,10 +1,10 @@
 "use strict";
 
-import React, {PropTypes} from "react";
+import React, {PropTypes, Component} from "react";
 import {Tabs, Tab} from "react-bootstrap";
 
 
-export default class AirportIndex extends React.Component {
+export default class AirportIndex extends Component {
 
 	static displayName = "Airport";
 
