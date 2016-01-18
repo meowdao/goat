@@ -2,7 +2,7 @@
 
 import React, {PropTypes} from "react";
 import TwitterStore from "../../stores/TwitStore.js";
-import {ListGroup, ListGroupItem} from "react-bootstrap";
+import {Table, ButtonToolbar, Button, ListGroup, ListGroupItem} from "react-bootstrap";
 
 export default class TwitterList extends React.Component {
 
@@ -52,8 +52,18 @@ export default class TwitterList extends React.Component {
 
 						return (
 							<ListGroupItem header={message.user.name} key={i}>
-								<p>{message.text}</p>
-								<a href={twitUrl}>Original Twit</a>
+								<Table striped>
+									<tdbody>
+										<tr>
+											<td><img src={message.user.profile_image_url}/></td>
+											<td>{message.text}</td>
+										</tr>
+									</tdbody>
+								</Table>
+								<ButtonToolbar>
+									<Button bsSize="xsmall" href={twitUrl}>Original Twit</Button>
+								</ButtonToolbar>
+
 							</ListGroupItem>
 						);
 					})}
