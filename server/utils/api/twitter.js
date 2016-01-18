@@ -21,9 +21,6 @@ API.key = "TWITTER_API";
 API.searchTwits = wrapper.promise(function(path, message) {
 	return Q.nfcall(::TwitterClient.get, path, message)
 		.then(res => {
-			res[0].statuses.forEach(function(data) {
-				log("Twit response id:", data.id);
-			});
 			return res[0];
 		})
 		.catch(e => {
