@@ -9,7 +9,7 @@ import wrapper from "./wrapper.js";
 
 const config = configs[process.env.NODE_ENV];
 const log = debug("log:mailgun");
-const client = nodemailer.createTransport(mailgun({auth: config.server.mailgun}));
+//const client = nodemailer.createTransport(mailgun({auth: config.server.mailgun}));
 
 export default function API() {
 

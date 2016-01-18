@@ -25,6 +25,13 @@ export default {
 			user,
 			actionType: ActionTypes.UPDATE_USER
 		});
+	},
+
+	updateTwits(data) {
+		Dispatcher.dispatch({
+			data,
+			actionType: ActionTypes.UPDATE_TWITTER
+		});
 	}
 
 };
