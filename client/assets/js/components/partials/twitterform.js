@@ -32,6 +32,7 @@ export default class TwitterForm extends React.Component {
 		return (
 			<form onSubmit={::this.onSubmit}>
 				<input type="text" defaultValue={this.state.query} onChange={(e) => this.setState({query: e.target.value})}/>
+				<input type="text" defaultValue={this.state.count} onChange={(e) => this.setState({count: e.target.value})}/>
 				<input type="submit"/>
 			</form>
 		);
