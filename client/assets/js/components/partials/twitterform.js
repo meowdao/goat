@@ -2,7 +2,6 @@
 
 import React, {PropTypes} from "react";
 import API from "../../utils/API";
-import TwitterStore from "../../stores/TwitStore.js";
 
 export default class TwitterForm extends React.Component {
 
