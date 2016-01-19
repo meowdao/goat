@@ -57,7 +57,8 @@
 		"redux-simple-router": "2.0.3",
 		"redux-thunk": "1.0.3",
 		"twilio": "3.2.0-edge",
-		"zxcvbn": "4.2.0"
+		"zxcvbn": "4.2.0",
+		"twit": "2.1"
 	},
 	"devDependencies": {
 		"babel-core": "6.4.0",
@@ -98,7 +99,7 @@
 		"node": "v5.2.0"
 	},
 	"scripts": {
-		"start": "NODE_ENV=${NODE_ENV:=development} DEBUG=web:* nodemon -w server server/dev.js",
+		"start": "NODE_ENV=${NODE_ENV:=development} TWITTER_API=${TWITTER_API:=true} DEBUG=web:* nodemon -w server server/dev.js",
 		"build": "NODE_ENV=${NODE_ENV:=development} webpack -c --config server/configs/webpack.js",
 		"lint": "eslint server/* client/assets/js/* test/*",
 		"test": "NODE_ENV=${NODE_ENV:=test} mocha test/controllers/abstract",
