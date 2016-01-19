@@ -1,9 +1,5 @@
 "use strict";
 
-import messenger from "../utils/messenger.js";
-//import lang from "../utils/lang.js";
-//import {renderEmailToString} from "../utils/render";
-
 import DebuggableController from "./abstract/debuggable";
 import TAPI from "../utils/api/twitter";
 

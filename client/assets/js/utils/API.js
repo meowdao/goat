@@ -84,9 +84,6 @@ export default {
 				data,
 				method: "GET",
 				url: "/twitter/search"
-			})
-			.then(response => {
-				ServerActionCreators.updateTwits(response);
 			});
 	}
 

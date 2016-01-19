@@ -1,31 +1,49 @@
 "use strict";
 
 import React, {PropTypes} from "react";
+import {bindActionCreators} from "redux";
+import {connect} from "react-redux";
+import {Input, ButtonInput} from "react-bootstrap";
 import API from "../../utils/API";
-import {Well, Input, ButtonInput} from "react-bootstrap";
+
+const twits = data =>
+	dispatch =>
+		API.searchTwits(data)
+			.then(response => {
+				dispatch({
+					type: "UPDATE_TWITTER",
+					data: response.statuses
+				});
+			});
+
+
+@connect(
+	state => ({}),
+	dispatch => bindActionCreators({twits}, dispatch)
+)
 
 export default class TwitterForm extends React.Component {
 
 	static propTypes = {
 		query: PropTypes.string,
-		count: PropTypes.number
+		count: PropTypes.number,
+		twits: PropTypes.func
 
 	};
 
 	static defaultProps = {
 		query: "string",
-		count: "number"
+		count: 5
 	};
 
 	state = {
-		query: this.props.query,
+		q: this.props.query,
 		count: this.props.count
 	};
 
 	onSubmit(e) {
 		e.preventDefault();
-		API.searchTwits({q: this.state.query, count: this.state.count});
-
+		this.props.twits(this.state);
 	}
 
 	render() {
@@ -34,13 +52,13 @@ export default class TwitterForm extends React.Component {
 				<form onSubmit={::this.onSubmit}>
 					<Input
 						type="text"
-						defaultValue={this.state.query}
-						onChange={(e) => this.setState({query: e.target.value})}
+						defaultValue={this.state.q}
+						onChange={(e) => this.setState({q: e.target.value})}
 					/>
 					<Input
-						type="number"
+						type="text"
 						defaultValue={this.state.count}
-						onChange={(e) => this.setState({count: e.target.value})}
+						onChange={(e) => this.setState({count: ~~e.target.value})}
 					/>
 					<ButtonInput
 						type="submit"
