@@ -21,7 +21,6 @@ API.key = "TWITTER_API";
 API.searchTwits = wrapper.promise(function(path, message) {
 	return Q.nfcall(::TwitterClient.get, path, message)
 		.then(res => {
-			log(res[0]);
 			return res[0];
 		})
 		.catch(e => {
