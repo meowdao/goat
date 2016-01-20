@@ -2,6 +2,7 @@
 
 import "../css/styles.less";
 import "../img/favicon.ico";
+import "./utils/jquery.js";
 
 import debug from "debug";
 import React from "react"; // eslint-disable-line no-unused-vars
@@ -11,7 +12,7 @@ import {Provider} from "react-redux";
 import Router from "./routes/router.js";
 import routes from "./routes/app.js";
 import store from "./utils/store.js";
-import $ from "./utils/jquery.js"; // eslint-disable-line no-unused-vars
+
 import history from "./utils/history.js";
 
 

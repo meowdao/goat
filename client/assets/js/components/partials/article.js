@@ -1,9 +1,9 @@
 "use strict";
 
 import React, {PropTypes, Component} from "react";
-import Title from "../partials/title.js";
-import Messages from "../partials/messages.js";
-import Breadcrumbs from "../partials/breadcrumbs.js";
+import Title from "./title.js";
+import Messages from "./messages.js";
+import Breadcrumbs from "./breadcrumbs.js";
 
 export default class Article extends Component {
 

@@ -5,7 +5,7 @@ import _ from "lodash";
 import fs from "fs";
 import path from "path";
 import debug from "debug";
-import utils from "../server/utils/utils.js";
+import {isType} from "../server/utils/utils.js";
 import {password, confirm, firstName, lastName, email} from "../server/utils/constants/misc.js";
 
 
@@ -22,12 +22,10 @@ export function getControllers(...args) {
 }
 
 export function populate(requires, data, results, makeDefaults) {
-
 	return _.times(data.length, i => {
-
 		const result = {};
 		Object.keys(requires || {}).forEach(model => {
-			if (utils.isType(requires[model], "String")) {
+			if (isType(requires[model], "String")) {
 				if (requires[model] === "o2o") {
 					result[model] = results[model][i];
 				} else if (requires[model] === "m2o") {
@@ -37,15 +35,15 @@ export function populate(requires, data, results, makeDefaults) {
 				} else {
 					result[model] = [];
 				}
-			} else if (utils.isType(requires[model], "Array")) {
-				if (utils.isType(requires[model][i], "Array")) {
+			} else if (isType(requires[model], "Array")) {
+				if (isType(requires[model][i], "Array")) {
 					result[model] = results[model].filter((item, j) => requires[model][i].indexOf(j) !== -1);
-				} else if (utils.isType(requires[model][i], "Number")) {
+				} else if (isType(requires[model][i], "Number")) {
 					result[model] = results[model][requires[model][i]];
 				} else {
 					result[model] = null;
 				}
-			} else if (utils.isType(requires[model], "Function")) {
+			} else if (isType(requires[model], "Function")) {
 				result[model] = results[model].filter(requires[model](model, i));
 			} else {
 				result[model] = [];
@@ -54,7 +52,6 @@ export function populate(requires, data, results, makeDefaults) {
 
 		return makeDefaults(data[i], result, i);
 	});
-
 }
 
 const controllers = getControllers(false);
@@ -95,7 +92,6 @@ export function cleanUp(done) {
 }
 
 export function mockInChain(chain) {
-
 	const results = {};
 	let promise = q(results);
 

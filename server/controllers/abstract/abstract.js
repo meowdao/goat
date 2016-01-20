@@ -2,7 +2,7 @@
 
 import _ from "lodash";
 import RichModel from "./../../utils/rich-model.js";
-import messenger from "./../../utils/messenger.js";
+import {isFound} from "./../../utils/messenger.js";
 
 import DebuggableController from "./debuggable.js";
 
@@ -19,7 +19,7 @@ class AbstractController extends DebuggableController {
 				_id: request.params._id,
 				user: request.user._id
 			})
-			.then(messenger.notFound(this, request.user));
+			.then(isFound(this, request.user));
 	}
 
 	list(request) {
@@ -39,7 +39,7 @@ class AbstractController extends DebuggableController {
 				_id: request.params._id,
 				user: request.user._id
 			}, clean, {new: true})
-			.then(messenger.notFound(this, request.user));
+			.then(isFound(this, request.user));
 	}
 
 	delete(request) {
@@ -48,7 +48,7 @@ class AbstractController extends DebuggableController {
 				user: request.user._id,
 				_id: request.params._id
 			})
-			.then(messenger.notFound(this, request.user))
+			.then(isFound(this, request.user))
 			.thenResolve({success: true});
 	}
 
@@ -76,7 +76,7 @@ class AbstractController extends DebuggableController {
 	"save",
 	"upsert"
 ].forEach(name => {
-	AbstractController.prototype[name] = function(...args) {
+	AbstractController.prototype[name] = function (...args) {
 		return this.model[name](...args);
 	};
 });

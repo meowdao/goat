@@ -2,31 +2,30 @@
 
 import q from "q";
 
-export default {
 
-	callback(func) {
-		return function wrapperCallback(...args) {
-			if (process.env[this.key] === "true") {
-				func.bind(this)(...args);
-			} else {
-				process.nextTick(() => {
-					args[0](); // done
-				});
-			}
-		};
-	},
+function makeError(key) {
+	return new Error(`process.env.${key} != true, method is mocked up!`);
+}
 
-	promise(func) {
-		return function wrapperPromise(...args) {
-			if (process.env[this.key] === "true") {
-				return func.bind(this)(...args);
-			} else {
-				return q({
-					success: false,
-					message: `process.env.${this.key} != true, method is mocked up!`
-				});
-			}
-		};
-	}
+export function callback(fn) {
+	return function (...args) {
+		if (process.env[this.constructor.key] === "true") {
+			fn.bind(this)(...args);
+		} else {
+			process.nextTick(() => {
+				args[0](makeError(this.constructor.key)); // done
+			});
+		}
+	};
+}
 
-};
+export function promise(fn) {
+	return function (...args) {
+		if (process.env[this.constructor.key] === "true") {
+			return fn.bind(this)(...args);
+		} else {
+			return q.reject(makeError(this.constructor.key));
+		}
+	};
+}
+

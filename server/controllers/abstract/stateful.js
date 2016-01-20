@@ -1,7 +1,7 @@
 "use strict";
 
 import _ from "lodash";
-import messenger from "../../utils/messenger.js";
+import {isFound, isMine, isActive} from "../../utils/messenger.js";
 import AbstractController from "./abstract.js";
 
 class StatefulController extends AbstractController {
@@ -48,14 +48,14 @@ class StatefulController extends AbstractController {
 				lean: false,
 				populate: ["user"].concat(populate)
 			})
-			.then(messenger.notFound(this, request.user))
-			.then(messenger.notMine(this, request.user))
+			.then(isFound(this, request.user))
+			.then(isMine(this, request.user))
 			.then(this.conditions(request, conditions));
 	}
 
 	deactivate(request, populate = [], conditions = []) {
 		return this.check(request, populate)
-			.then(this.conditions(request, [messenger.isActive(false)].concat(conditions)))
+			.then(this.conditions(request, [isActive(false)].concat(conditions)))
 			.then(item => {
 				item.set("status", this.constructor.statuses.inactive);
 				return this.save(item);

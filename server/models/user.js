@@ -3,7 +3,7 @@
 import bcrypt from "bcrypt-nodejs";
 import {Schema} from "mongoose";
 import zxcvbn from "zxcvbn";
-import regexp from "../utils/regexp.js";
+import {reEmail} from "../utils/constants/regexp.js";
 // import LAPI from "../utils/api/lookup.js";
 import lang from "../utils/lang/en.js";
 
@@ -19,7 +19,7 @@ const User = new Schema({
 		trim: true,
 		unique: true,
 		required: lang.error.model.user["email-is-required"],
-		match: [regexp.email, lang.error.model.user["email-is-invalid"]]
+		match: [reEmail, lang.error.model.user["email-is-invalid"]]
 	},
 	isEmailVerified: {
 		type: Boolean,
@@ -94,33 +94,33 @@ const User = new Schema({
 }, {versionKey: false});
 
 User.virtual("fullName")
-	.get(function() {
+	.get(function () {
 		return this.firstName + " " + this.lastName;
 	});
 
 User.virtual("confirm")
-	.set(function(password) {
+	.set(function (password) {
 		this._confirm = password;
 	})
-	.get(function() {
+	.get(function () {
 		return this._confirm;
 	});
 
-User.pre("save", function(next) {
+User.pre("save", function (next) {
 	if (this.isModified("password")) {
 		this.password = bcrypt.hashSync(this.password, bcrypt.genSaltSync(5));
 	}
 	next();
 });
 
-User.pre("save", function(next) {
+User.pre("save", function (next) {
 	if (this.isModified("email")) {
 		this.isEmailVerified = false;
 	}
 	next();
 });
 
-User.pre("save", function(next) {
+User.pre("save", function (next) {
 	this.updated = new Date();
 	next();
 });

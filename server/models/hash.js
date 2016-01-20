@@ -1,7 +1,7 @@
 "use strict";
 
 import {Schema} from "mongoose";
-import utils from "../utils/utils.js";
+import {getRandomString} from "../utils/utils.js";
 
 const Hash = new Schema({
 	user: {
@@ -11,7 +11,7 @@ const Hash = new Schema({
 	type: String,
 	token: {
 		type: String,
-		default: () => utils.getRandomString(20)
+		default: () => getRandomString(20)
 	},
 	created: {
 		type: Date,

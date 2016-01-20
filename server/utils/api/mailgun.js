@@ -1,26 +1,24 @@
 "use strict";
 
-import Q from "q";
-import debug from "debug";
+import q from "q";
 import mailgun from "nodemailer-mailgun-transport";
 import nodemailer from "nodemailer";
-import configs from "../../configs/config.js";
-import wrapper from "./wrapper.js";
+import {decorate, override} from "core-decorators";
+import {promise} from "./wrapper.js";
+import DebugableAPI from "./debugable.js";
 
-const config = configs[process.env.NODE_ENV];
-const log = debug("log:mailgun");
-const client = nodemailer.createTransport(mailgun({auth: config.server.mailgun}));
 
-export default function API() {
+export default new class MailgunAPI extends DebugableAPI {
 
-}
+	static key = "MAILGUN_API";
 
-API.key = "MAILGUN_API";
+	@override
+	getClient() {
+		return nodemailer.createTransport(mailgun({auth: this.config}));
+	}
 
-API.sendMail = wrapper.promise(function(message) {
-	return Q.nfcall(client.sendMail.bind(client), Object.assign(message.toObject(), {from: config.server.mailgun.from}))
-		.catch(e => {
-			log(e);
-			throw e;
-		});
-});
+	@decorate(promise)
+	sendMail(message) {
+		return q.nfcall(::this.client.sendMail, Object.assign(message.toObject(), {from: this.config.from}));
+	}
+};

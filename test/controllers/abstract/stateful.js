@@ -4,7 +4,7 @@ import q from "q";
 import debug from "debug";
 import assert from "power-assert";
 import mongoose, {Schema} from "mongoose";
-import utils from "../../../server/utils/utils.js";
+import {getRandomString} from "../../../server/utils/utils.js";
 import StatefulController from "../../../server/controllers/abstract/stateful.js";
 import AbstractController from "../../../server/controllers/abstract/abstract.js";
 import {cleanUp, mockInChain} from "../../utils.js";
@@ -75,7 +75,7 @@ function setUp(data, count) {
 				return testStatefulController.create(new Array(count).fill(1).map((n, i) => ({
 					user: data.User[i % 2],
 					child: data.Child[i],
-					testId: utils.getRandomString(8),
+					testId: getRandomString(8),
 					bool: true,
 					string: String.fromCharCode(97 + i),
 					number: i,

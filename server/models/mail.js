@@ -3,7 +3,7 @@
 import {Schema} from "mongoose";
 import MailController from "../controllers/mail.js";
 
-const statuses = MailController.prototype.constructor.statuses;
+const statuses = MailController.statuses;
 
 const Mail = new Schema({
 	to: [String],

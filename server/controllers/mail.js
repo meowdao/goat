@@ -1,6 +1,6 @@
 "use strict";
 
-import messenger from "../utils/messenger.js";
+import {isFound} from "../utils/messenger.js";
 import lang from "../utils/lang.js";
 import {renderEmailToString} from "../utils/render";
 
@@ -28,7 +28,7 @@ export default class MailController extends AbstractController {
 			user: user._id,
 			type: view
 		})
-		.tap(optout => messenger.notFound(optOutController, user)(!optout))
+		.tap(optout => isFound(optOutController, user)(!optout))
 		.then(() => {
 			return renderEmailToString(view, data)
 			.then(html => {

@@ -1,35 +1,35 @@
 "use strict";
 
 import passport from "passport";
-import helper from "../utils/helper.js";
-import middleware from "../utils/middleware.js";
+import {simpleJSONWrapper} from "../utils/helper.js";
+import {requiresLogin} from "../utils/middleware.js";
 import UserController from "../controllers/user.js";
 
 
 const tpl = `
 <html>
 	<head>
-	    <script>
-	        window.opener.location = "/";
-	        window.close();
-	    </script>
+		<script>
+			setTimeout(function(){
+				window.close();
+			}, 100)
+		</script>
 	</head>
 	<body></body>
 </html>
 `;
 
-export default function(app) {
-
+export default function (app) {
 	const userController = new UserController();
 
 	// user routes
-	app.post("/user/login", helper.simpleJSONWrapper(::userController.login));
-	app.post("/user/register", helper.simpleJSONWrapper(::userController.register));
-	app.post("/user/forgot", helper.simpleJSONWrapper(::userController.forgot));
-	app.post("/user/change", helper.simpleJSONWrapper(::userController.change));
+	app.post("/user/login", simpleJSONWrapper(::userController.login));
+	app.post("/user/register", simpleJSONWrapper(::userController.register));
+	app.post("/user/forgot", simpleJSONWrapper(::userController.forgot));
+	app.post("/user/change", simpleJSONWrapper(::userController.change));
 	app.get("/user/logout", ::userController.logout);
-	app.post("/user/sendEmailVerification", middleware.requiresLogin(), helper.simpleJSONWrapper(::userController.sendEmailVerification));
-	app.get("/user/verify/:token", helper.simpleJSONWrapper(::userController.verify));
+	app.post("/user/sendEmailVerification", requiresLogin, simpleJSONWrapper(::userController.sendEmailVerification));
+	app.get("/user/verify/:token", simpleJSONWrapper(::userController.verify));
 
 	app.get("/auth/facebook",
 		passport.authenticate("facebook", {
@@ -53,6 +53,5 @@ export default function(app) {
 		response.send(tpl);
 	});
 
-	app.get("/user/sync", middleware.requiresLogin(), helper.simpleJSONWrapper(::userController.sync));
-
+	app.get("/user/sync", requiresLogin, simpleJSONWrapper(::userController.sync));
 }

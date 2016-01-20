@@ -1,24 +1,26 @@
 "use strict";
 
-import debug from "debug";
 import twilio from "twilio";
-import configs from "../../configs/config.js";
-import wrapper from "./wrapper.js";
+import {decorate, override} from "core-decorators";
+import {promise} from "./wrapper.js";
+import DebugableAPI from "./debugable.js";
 
-const config = configs[process.env.NODE_ENV];
-const log = debug("log:twilio");
-const client = twilio(config.server.twilio.AccountSID, config.server.twilio.AuthToken);
 
-export default function API() {
+export default new class TwilioAPI extends DebugableAPI {
 
-}
+	static key = "TWILIO_API";
 
-API.key = "TWILIO_API";
+	@override
+	getClient() {
+		return twilio(
+			this.config.AccountSID,
+			this.config.AuthToken
+		);
+	}
 
-API.sendSMS = wrapper.promise(function(message) {
-	return client.messages.create(Object.assign(message.toObject(), {from: config.server.twilio.from}))
-		.catch(e => {
-			log(e);
-			throw e;
-		});
-});
+	// https://www.twilio.com/docs/api/rest/sending-messages
+	@decorate(promise)
+	sendSMS(message) {
+		return this.client.messages.create(Object.assign(message.toObject(), {from: this.config.from}));
+	}
+};

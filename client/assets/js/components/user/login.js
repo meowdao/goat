@@ -19,12 +19,21 @@ const login = data =>
 				});
 			});
 
+const sync = data =>
+	dispatch =>
+		API.sync(data)
+			.then(responce => {
+				dispatch({
+					type: "USER_LOGIN",
+					user: responce
+				});
+			});
 
 @connect(
 	state => ({
 		user: state.user
 	}),
-	dispatch => bindActionCreators({login}, dispatch)
+	dispatch => bindActionCreators({login, sync}, dispatch)
 )
 export default class Login extends Component {
 
@@ -35,6 +44,7 @@ export default class Login extends Component {
 		password: PropTypes.string,
 		history: React.PropTypes.object,
 		login: PropTypes.func,
+		sync: PropTypes.func,
 		user: PropTypes.object
 	};
 
@@ -60,6 +70,13 @@ export default class Login extends Component {
 			});
 	}
 
+	onLogin() {
+		this.props.sync()
+			.then(() => {
+				this.context.router.push("/user/profile");
+			});
+	}
+
 	open(link) {
 		return e => {
 			e.preventDefault();
@@ -71,6 +88,11 @@ export default class Login extends Component {
 			if (window.focus) {
 				popup.focus();
 			}
+			popup.onload = () => {
+				popup.onbeforeunload = () => {
+					this.onLogin();
+				};
+			};
 		};
 	}
 
@@ -79,8 +101,8 @@ export default class Login extends Component {
 			<div className="panel panel-default">
 				<div className="panel-body">
 
-					[<a href="#" onClick={this.open("/auth/google")}>google</a> ,
-					<a href="#" onClick={this.open("/auth/facebook")}>facebook</a>]
+					[<a href="#" onClick={this.open("/auth/google")}>google</a>]
+					[<a href="#" onClick={this.open("/auth/facebook")}>facebook</a>]
 
 					[<Link to="/user/forgot">Forgot password?</Link>]
 

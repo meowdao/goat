@@ -1,14 +1,12 @@
 "use strict";
 
-import helper from "../utils/helper.js";
-import middleware from "../utils/middleware.js";
+import {simpleJSONWrapper} from "../utils/helper.js";
+import {requiresLogin} from "../utils/middleware.js";
 import OptOutController from "../controllers/opt-out.js";
 
 
-export default function(app) {
-
+export default function (app) {
 	const optOutController = new OptOutController();
 
-	app.post("/optout/notifications", middleware.requiresLogin(), helper.simpleJSONWrapper(::optOutController.change));
-
+	app.post("/optout/notifications", requiresLogin, simpleJSONWrapper(::optOutController.change));
 }

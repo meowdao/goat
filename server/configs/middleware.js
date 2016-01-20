@@ -3,7 +3,7 @@
 import messenger from "../utils/messenger.js";
 
 
-export default function(app) {
+export default function (app) {
 
 	app.use((request, response, next) => {
 		response.set("Access-Control-Allow-Origin", "*");

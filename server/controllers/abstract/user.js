@@ -2,7 +2,7 @@
 
 import q from "q";
 import passport from "passport";
-import regexp from "../../utils/regexp.js";
+import regexp from "../../utils/constants/regexp.js";
 import lang from "../../utils/lang.js";
 
 import messenger from "../../utils/messenger.js";

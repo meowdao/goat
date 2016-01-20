@@ -8,7 +8,6 @@ import {getControllers} from "../utils.js";
 const controllers = getControllers(true);
 
 suite("Mail", () => {
-
 	suite("#sendMail", () => {
 		test("send mail", (done) => {
 			controllers.mail.composeMail("test", {to: email}, {}, {
@@ -26,5 +25,4 @@ suite("Mail", () => {
 			.done();
 		});
 	});
-
 });
