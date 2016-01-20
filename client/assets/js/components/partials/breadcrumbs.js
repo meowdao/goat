@@ -13,7 +13,7 @@ export default class Breadcrumbs extends Component {
 
 	render() {
 		return (<Breadcrumb>{this.props.routes.map((item, i) =>
-			<LinkContainer key={i} to={item.path}>
+			<LinkContainer key={i} to={item.path || "/"}>
 				<BreadcrumbItem>
 					{item.component.displayName}
 				</BreadcrumbItem>
