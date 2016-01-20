@@ -14,9 +14,13 @@ import passport from "./passport.js";
 import proxy from "./proxy.js";
 
 
-export default function() {
+export default function () {
 
-	const app = express();
+	let app = express();
+
+	if (process.env.NODE_ENV == "production") {
+		app.use("/build", express.static("./client/build"));
+	}
 
 	app.disable("x-powered-by");
 
