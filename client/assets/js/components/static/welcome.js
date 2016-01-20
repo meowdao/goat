@@ -3,7 +3,6 @@
 import React, {Component} from "react";
 import Title from "../partials/title.js";
 
-
 export default class Welcome extends Component {
 
 	static displayName = "Welcome";
@@ -12,7 +11,6 @@ export default class Welcome extends Component {
 		return (
 			<div className="container">
 				<Title {...this.props}/>
-
 				<p>Lorem ipsum!</p>
 			</div>
 		);

@@ -21,7 +21,7 @@ const register = (data) =>
 			});
 
 @connect(
-	() => {},
+	() => ({}),
 	dispatch => bindActionCreators({register}, dispatch)
 )
 export default class Register extends Component {

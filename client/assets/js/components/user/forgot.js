@@ -20,7 +20,7 @@ const forgot = (data) =>
 			});
 
 @connect(
-	() => {},
+	() => ({}),
 	dispatch => bindActionCreators({forgot}, dispatch)
 )
 export default class Forgot extends Component {

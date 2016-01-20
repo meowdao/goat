@@ -58,6 +58,12 @@ export default {
 				AccountSID: "",
 				AuthToken: "",
 				from: "+15005550006" // https://www.twilio.com/docs/api/rest/test-credentials
+			},
+			twitter: {
+				consumer_key: "", // eslint-disable-line camelcase
+				consumer_secret: "", // eslint-disable-line camelcase
+				access_token: "", // eslint-disable-line camelcase
+				access_token_secret: "" // eslint-disable-line camelcase
 			}
 		}
 	},
@@ -118,6 +124,12 @@ export default {
 				AccountSID: "",
 				AuthToken: "",
 				from: ""
+			},
+			twitter: {
+				consumer_key: "", // eslint-disable-line camelcase
+				consumer_secret: "", // eslint-disable-line camelcase
+				access_token: "", // eslint-disable-line camelcase
+				access_token_secret: "" // eslint-disable-line camelcase
 			}
 		}
 	}

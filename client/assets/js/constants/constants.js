@@ -7,6 +7,8 @@ export const ActionTypes = {
 	UPDATE_USER: "UPDATE_USER",
 
 	ERROR: "ERROR",
-	MESSAGE: "MESSAGE"
+	MESSAGE: "MESSAGE",
+
+	UPDATE_TWITTER: "UPDATE_TWITTER"
 
 };

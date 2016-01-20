@@ -20,7 +20,7 @@ const change = (data) =>
 			});
 
 @connect(
-	() => {},
+	() => ({}),
 	dispatch => bindActionCreators({change}, dispatch)
 )
 export default class Change extends Component {
