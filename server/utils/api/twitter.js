@@ -10,7 +10,7 @@ const config = configs[process.env.NODE_ENV];
 const log = debug("log:twitter");
 
 
-const TwitterClient = new Twitter(config.server.twitter);
+//const TwitterClient = new Twitter(config.server.twitter);
 
 export default function API() {
 
