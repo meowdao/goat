@@ -76,6 +76,15 @@ export default {
 				method: "POST",
 				url: "/category"
 			});
+	},
+
+	searchTwits(data) {
+		return $
+			.ajax({
+				data,
+				method: "GET",
+				url: "/twitter/search"
+			});
 	}
 
 };

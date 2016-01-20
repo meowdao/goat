@@ -82,6 +82,11 @@ export default class Header extends Component {
 				</Navbar.Header>
 				<Navbar.Collapse eventKey={1} href="#">
 					{this.props.user ? this.renderMenu() : this.renderLoginButton()}
+					<Nav navbar pullRight>
+						<LinkContainer to="/twitsearch">
+							<NavItem>Search Twits</NavItem>
+						</LinkContainer>
+					</Nav>
 				</Navbar.Collapse>
 			</Navbar>
 		);
