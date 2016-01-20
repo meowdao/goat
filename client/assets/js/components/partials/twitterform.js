@@ -32,8 +32,8 @@ export default class TwitterForm extends React.Component {
 	};
 
 	static defaultProps = {
-		query: "string",
-		count: 5
+		query: "",
+		count: 0
 	};
 
 	state = {
@@ -52,14 +52,20 @@ export default class TwitterForm extends React.Component {
 				<form onSubmit={::this.onSubmit}>
 					<Input
 						type="text"
+						placeholder="Search query"
 						defaultValue={this.state.q}
 						onChange={(e) => this.setState({q: e.target.value})}
 					/>
-					<Input
-						type="text"
-						defaultValue={this.state.count}
-						onChange={(e) => this.setState({count: ~~e.target.value})}
-					/>
+						<Input
+							type="select"
+							defaultValue="0"
+							onChange={(e) => this.setState({count: ~~e.target.value})}>
+							<option value="0">Number of Twits</option>
+							<option value="5">5</option>
+							<option value="10">10</option>
+							<option value="20">20</option>
+							<option value="30">30</option>
+						</Input>
 					<ButtonInput
 						type="submit"
 						value="Search"
