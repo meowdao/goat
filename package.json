@@ -62,7 +62,6 @@
 	"devDependencies": {
 		"babel-core": "6.4.0",
 		"babel-cli": "6.4.0",
-		"babel-eslint": "5.0.0-beta6",
 		"babel-istanbul": "0.6.0",
 		"babel-loader": "6.2.1",
 		"babel-plugin-espower": "2.1.0",
@@ -78,8 +77,7 @@
 		"css-loader": "0.23.1",
 		"eslint": "1.10.3",
 		"eslint-loader": "1.2.0",
-		"eslint-plugin-react": "3.15.0",
-		"eslint-config-airbnb": "3.1.0",
+		"eslint-config-trejgun": "git://github.com/TrejGun/eslint-config-trejgun.git#6beca5e7537dac1a70d155796f73df2555792495",
 		"extract-text-webpack-plugin": "git://github.com/TrejGun/extract-text-webpack-plugin.git#b08f4998942a564a29a55ec9e97bf719e584845d",
 		"file-loader": "0.8.5",
 		"less": "2.5.3",
