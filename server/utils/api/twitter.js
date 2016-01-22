@@ -10,7 +10,7 @@ import {promise} from "./wrapper.js";
 const config = configs[process.env.NODE_ENV];
 const log = debug("log:twitter");
 
-export default class TwitterAPI {
+export default new class TwitterAPI {
 
 	static key = "TWITTER_API";
 
