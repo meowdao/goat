@@ -13,25 +13,25 @@ import session from "./session.js";
 import passport from "./passport.js";
 import proxy from "./proxy.js";
 
+const app = express();
 
-export default function() {
-
-	const app = express();
-
-	app.disable("x-powered-by");
-
-	app.use(logger("dev")); // "default", "short", "tiny", "dev"
-	app.use(cookieParser("keyboardcat"));
-
-	app.use(bodyParser.json());
-	app.use(bodyParser.urlencoded({
-		extended: true
-	}));
-
-	proxy(app);
-	session(app);
-	passport(app);
-
-	return app;
-
+if (process.env.NODE_ENV == "production") {
+	app.use("/build", express.static("./client/build"));
 }
+
+app.disable("x-powered-by");
+
+app.use(logger("dev")); // "default", "short", "tiny", "dev"
+app.use(cookieParser("keyboardcat"));
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+	extended: true
+}));
+
+proxy(app);
+session(app);
+passport(app);
+
+
+export default app;
