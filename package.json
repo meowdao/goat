@@ -78,7 +78,7 @@
 		"eslint": "1.10.3",
 		"eslint-loader": "1.2.0",
 		"eslint-config-trejgun": "git://github.com/TrejGun/eslint-config-trejgun.git#6beca5e7537dac1a70d155796f73df2555792495",
-		"extract-text-webpack-plugin": "git://github.com/TrejGun/extract-text-webpack-plugin.git#b08f4998942a564a29a55ec9e97bf719e584845d",
+		"extract-text-webpack-plugin": "git://github.com/TrejGun/extract-text-webpack-plugin.git#4c2af8a819b30e1cd6d23e329b7492f808ee6f99",
 		"file-loader": "0.8.5",
 		"less": "2.5.3",
 		"mocha": "2.3.4",
