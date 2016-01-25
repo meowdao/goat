@@ -1,40 +1,5 @@
 {
-	"parser": "babel-eslint",
-	"extends": "airbnb",
-	"rules": {
-		"indent": [
-			2,
-			"tab"
-		],
-		"comma-dangle": [
-			2,
-			"never"
-		],
-		"quotes": [
-			2,
-			"double"
-		],
-		"object-curly-spacing": [
-			2,
-			"never"
-		],
-		"no-else-return": [
-			0
-		],
-		"max-len": [
-			0
-		],
-		"react/jsx-indent-props": [
-			2,
-			"tab"
-		],
-		"react/jsx-no-bind": [
-			0
-		]
-	},
-	"env": {
-		"browser": true,
-		"node": true,
-		"mocha": true
-	}
+	"extends": [
+		"trejgun"
+	]
 }
