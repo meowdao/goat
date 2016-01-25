@@ -11,7 +11,7 @@ export default class TwitSearch extends React.Component {
 	render() {
 		return (
 			<div className="container">
-				<TwitterForm query="Search" count={5}/>
+				<TwitterForm />
 				<TwitterList />
 			</div>
 		);
