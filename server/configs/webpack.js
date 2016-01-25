@@ -2,21 +2,20 @@
 
 process.env.NODE_ENV = process.env.NODE_ENV || "development";
 
-var path = require("path");
-var webpack = require("webpack");
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
+const path = require("path");
+const webpack = require("webpack");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
-module.exports = {
-	devtool: "source-map",
+//const prod = process.env.NODE_ENV === 'production';
+
+const config = {
 	entry: [
-		"webpack-dev-server/client?http://localhost:3001",
-		"webpack/hot/dev-server",
-		"./client/assets/js/main"
+		'./client/assets/js/main'
 	],
 	output: {
 		path: path.join(__dirname, "..", "..", "client", "build"),
 		filename: "bundle.js",
-		sourceMapFilename: "[file].map",
+		sourceMapFilename : "[file].map",
 		chunkFilename: "[id].js",
 		publicPath: "/build/"
 	},
@@ -46,14 +45,7 @@ module.exports = {
 				exclude: [/node_modules/],
 				query: {
 					plugins: [
-						"transform-decorators-legacy",
-						["react-transform", {
-							transforms: [{
-								transform: "react-transform-hmr",
-								imports: ["react"],
-								locals: ["module"]
-							}]
-						}]
+						"transform-decorators-legacy"
 					]
 				}
 			}
@@ -61,13 +53,41 @@ module.exports = {
 	},
 	plugins: [
 		new webpack.NodeEnvironmentPlugin("NODE_ENV", "CRON", "TWILIO_API", "LOOKUP_API"),
-		new webpack.HotModuleReplacementPlugin(),
 		new webpack.NoErrorsPlugin(),
 		new ExtractTextPlugin("style.css", {
 			allChunks: true
 		}),
 		new webpack.optimize.OccurenceOrderPlugin(),
 		new webpack.optimize.DedupePlugin()
-		//new webpack.optimize.UglifyJsPlugin()
 	]
 };
+
+if (process.env.NODE_ENV == "production") {
+
+	config.devtool = 'source-map';
+
+	config.plugins.unshift(
+		new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}})
+	);
+
+} else {
+	config.devtool = "eval";
+
+	config.entry.unshift(
+		'webpack-hot-middleware/client'
+	);
+
+	config.plugins.push(new webpack.HotModuleReplacementPlugin());
+
+	//JS LOADER BABEL
+	config.module.loaders[3].query.plugins.push(["react-transform", {
+		transforms: [{
+			transform: "react-transform-hmr",
+			imports: ["react"],
+			locals: ["module"]
+		}]
+	}])
+}
+
+module.exports = config;
+
