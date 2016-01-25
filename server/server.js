@@ -4,10 +4,11 @@ process.env.NODE_ENV = process.env.NODE_ENV || "development";
 process.env.PORT = process.env.PORT || 3000;
 
 import debug from "debug";
-import app from "./configs/express.js";
+import express from "./configs/express.js";
 import webpack from "webpack";
 
 const log = debug("log:server");
+const app = express();
 
 debug.enable("log:*");
 debug.enable("controller:*");

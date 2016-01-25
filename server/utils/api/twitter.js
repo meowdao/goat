@@ -2,20 +2,20 @@
 
 import Q from "q";
 import debug from "debug";
-import configs from "../../configs/config.js";
 import Twitter from "twit";
-import {decorate} from "core-decorators";
+import {decorate, override} from "core-decorators";
 import {promise} from "./wrapper.js";
+import DebugableAPI from "./debugable.js";
 
-const config = configs[process.env.NODE_ENV];
 const log = debug("log:twitter");
 
-export default new class TwitterAPI {
+export default new class TwitterAPI extends DebugableAPI {
 
 	static key = "TWITTER_API";
 
-	constructor() {
-		this.client = new Twitter(config.server.twitter);
+	@override
+	getClient() {
+		return new Twitter(this.config);
 	}
 
 	@decorate(promise)
