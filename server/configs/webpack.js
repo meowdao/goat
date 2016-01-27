@@ -71,7 +71,7 @@ if (process.env.NODE_ENV == "production") {
 	);
 
 } else {
-	config.devtool = "eval";
+	config.devtool = "source-map"; // ExtractTextPlugin hmr doesn't work with eval
 
 	config.entry.unshift(
 		'webpack-hot-middleware/client'
