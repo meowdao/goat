@@ -1,7 +1,7 @@
 "use strict";
 
 import fs from "fs";
-import messenger from "../utils/messenger.js";
+import {makeError} from "../utils/messenger.js";
 import path from "path";
 
 
@@ -14,7 +14,7 @@ export default function(app) {
 				request.params[name] = captures;
 				next();
 			} else {
-				next(messenger.makeError("invalid-param", request.user));
+				next(makeError("invalid-param", request.user));
 			}
 		};
 	}

@@ -7,7 +7,7 @@ import debug from "debug";
 import mongoose from "mongoose";
 import configs from "../server/configs/config.js";
 
-import CategoryModel from "../server/models/category.js";
+import CategoryModel from "../server/models/main/category.js";
 import CategoryController from "../server/controllers/category.js";
 
 debug.enable("db-setup:*");

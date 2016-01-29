@@ -7,23 +7,23 @@ import debug from "debug";
 import express from "./configs/express.js";
 import webpack from "webpack";
 
+debug.enable("log:*");
+if (process.env.GOAT_DEBUG === "true") {
+	debug.enable("controller:*");
+	debug.enable("model:*");
+	debug.enable("server:*");
+}
+
 const log = debug("log:server");
 const app = express();
 
-debug.enable("log:*");
-debug.enable("controller:*");
-debug.enable("model:*");
-debug.enable("server:*");
-
 if (process.env.NODE_ENV !== "production") {
-
 	const config = require("./configs/webpack");
 	const compiler = webpack(config);
 	const webpackdev = require("./configs/webpack.dev");
 
-	app.use(require('webpack-dev-middleware')(compiler, webpackdev));
-	app.use(require('webpack-hot-middleware')(compiler));
-
+	app.use(require("webpack-dev-middleware")(compiler, webpackdev));
+	app.use(require("webpack-hot-middleware")(compiler));
 }
 
 

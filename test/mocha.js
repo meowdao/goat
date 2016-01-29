@@ -1,13 +1,9 @@
 "use strict";
 
 process.env.NODE_ENV = process.env.NODE_ENV || "test";
-process.env.HOST = process.env.HOST || "localhost";
-process.env.PORT = process.env.PORT || "80";
 
 require("babel-core/register");
 require("babel-polyfill");
-
-require("../server/configs/moment.js");
 
 Error.stackTraceLimit = Infinity;
 
@@ -23,7 +19,7 @@ debug.enable("log:*");
 const q = require("q");
 q.longStackSupport = true;
 
-const mongoose = require("../server/configs/mongoose.js").default();
+const mongoose = require("mongoose");
 mongoose.set("debug", false);
 
 process.on("uncaughtException", (exception) => {

@@ -2,10 +2,10 @@
 
 import q from "q";
 import passport from "passport";
-import regexp from "../../utils/constants/regexp.js";
-import lang from "../../utils/lang.js";
+import {reEmail} from "../../utils/constants/regexp.js";
+import {translate} from "../../utils/lang.js";
 
-import messenger from "../../utils/messenger.js";
+import {makeError, checkModel} from "../../utils/messenger.js";
 import AbstractController from "./abstract.js";
 import MailController from "./../mail.js";
 import HashController from "./../hash.js";
@@ -21,7 +21,7 @@ export default class AbstractUserController extends AbstractController {
 
 		return defer.promise
 			.catch(error => {
-				throw messenger.makeError(error.message, request.user, 401);
+				throw makeError(error.message, request.user, 401);
 			});
 	}
 
@@ -33,7 +33,7 @@ export default class AbstractUserController extends AbstractController {
 
 	forgot(request) {
 		return this.findOne({email: request.body.email})
-			.tap(messenger.notFound(this, null))
+			.tap(checkModel().bind(this))
 			.tap(user => {
 				const hashController = new HashController();
 				return hashController
@@ -50,7 +50,7 @@ export default class AbstractUserController extends AbstractController {
 			})
 			.then(user => ({
 				success: true,
-				message: lang.translate("messages/instructions-sent", user)
+				message: translate("messages/instructions-sent", user)
 			}));
 	}
 
@@ -61,7 +61,7 @@ export default class AbstractUserController extends AbstractController {
 				token: request.body.token,
 				type: HashController.types.password
 			})
-			.then(messenger.notFound(hashController, null))
+			.then(checkModel().bind(hashController))
 			.then(hash => {
 				return this.findById(hash.user, {lean: false})
 					.then(user => {
@@ -71,7 +71,7 @@ export default class AbstractUserController extends AbstractController {
 			})
 			.then(user => ({
 				success: true,
-				message: lang.translate("messages/password-changed", user)
+				message: translate("messages/password-changed", user)
 			}));
 	}
 
@@ -107,7 +107,7 @@ export default class AbstractUserController extends AbstractController {
 				type: HashController.types.email,
 				token: request.params.token
 			})
-			.then(messenger.notFound(hashController))
+			.then(checkModel().bind(hashController))
 			.then(hash => {
 				return this.findByIdAndUpdate(hash.user, {isEmailVerified: true});
 			})
@@ -119,7 +119,7 @@ export default class AbstractUserController extends AbstractController {
 			.then(count => {
 				return {
 					unique: !count,
-					valid: regexp.email.test(request.params.email)
+					valid: reEmail.test(request.params.email)
 				};
 			});
 	}
@@ -129,7 +129,7 @@ export default class AbstractUserController extends AbstractController {
 			.then(count => {
 				return {
 					unique: !count,
-					valid: regexp.email.test(request.params.email)
+					valid: reEmail.test(request.params.email)
 				};
 			});
 	}

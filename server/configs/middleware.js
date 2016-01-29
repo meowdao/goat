@@ -1,10 +1,9 @@
 "use strict";
 
-import messenger from "../utils/messenger.js";
+import {makeError} from "../utils/messenger.js";
 
 
 export default function (app) {
-
 	app.use((request, response, next) => {
 		response.set("Access-Control-Allow-Origin", "*");
 		response.set("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE");
@@ -21,9 +20,8 @@ export default function (app) {
 
 	app.use((request, response, next) => {
 		if (request.method === "POST" && !request.get("Origin")) {
-			return next(messenger.makeError("no-origin", request.user));
+			return next(makeError("no-origin", request.user));
 		}
 		next();
 	});
-
 }

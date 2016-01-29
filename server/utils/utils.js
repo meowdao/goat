@@ -6,10 +6,6 @@ export function isType(variable, type) {
 	return Object.prototype.toString.call(variable) === "[object " + type + "]";
 }
 
-export function getType(variable) {
-	return Object.prototype.toString.call(variable).match(/\s([^\]]+)/)[1];
-}
-
 export function getRandomString(length = 64, type = 3) {
 	const chars = [
 		"0123456789",

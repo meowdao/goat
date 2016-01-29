@@ -1,7 +1,7 @@
 "use strict";
 
 import {isFound} from "../utils/messenger.js";
-import lang from "../utils/lang.js";
+import {translate} from "../utils/lang.js";
 import {renderEmailToString} from "../utils/render";
 
 import AbstractController from "./abstract/abstract.js";
@@ -35,7 +35,7 @@ export default class MailController extends AbstractController {
 				this.log("template", html);
 				return this.create(Object.assign({
 					html,
-					subject: lang.translate("email/subject/" + view, user)
+					subject: translate("email/subject/" + view, user)
 				}, address));
 			});
 		});

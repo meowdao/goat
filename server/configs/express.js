@@ -1,24 +1,18 @@
 "use strict";
 
 import express from "express";
-
-// middleware
 import logger from "morgan";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
-
-
-// configs
 import session from "./session.js";
 import passport from "./passport.js";
 import proxy from "./proxy.js";
 
 
 export default function () {
+	const app = express();
 
-	let app = express();
-
-	if (process.env.NODE_ENV == "production") {
+	if (process.env.NODE_ENV === "production") {
 		app.use("/build", express.static("./client/build"));
 	}
 
@@ -26,16 +20,14 @@ export default function () {
 
 	app.use(logger("dev")); // "default", "short", "tiny", "dev"
 	app.use(cookieParser("keyboardcat"));
-
 	app.use(bodyParser.json());
 	app.use(bodyParser.urlencoded({
 		extended: true
 	}));
 
-	proxy(app);
 	session(app);
 	passport(app);
+	proxy(app);
 
 	return app;
-
 }

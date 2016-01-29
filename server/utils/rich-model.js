@@ -5,7 +5,7 @@ import debug from "debug";
 import util from "util";
 
 
-class RichModel {
+export default class RichModel {
 
 	constructor(displayName, isDebuggable, connection = mongoose) {
 		this.model = connection.model(displayName);
@@ -164,7 +164,7 @@ class RichModel {
 	"findOneAndRemove",
 	"findOneAndUpdate"
 ].forEach(name => {
-	RichModel.prototype[name] = function(...args) {
+	RichModel.prototype[name] = function (...args) {
 		return this.model[name](...args)
 			.then(result => {
 				if (name === "remove") {
@@ -178,5 +178,3 @@ class RichModel {
 			.tap(this._log(`${name}${name[name.length - 1] === "e" ? "d" : "ed"}`));
 	};
 });
-
-export default RichModel;

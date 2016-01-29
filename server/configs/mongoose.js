@@ -2,67 +2,72 @@
 
 import q from "q";
 import fs from "fs";
+import path from "path";
 import debug from "debug";
 import mongoose from "mongoose";
-import configs from "../configs/config.js";
-import path from "path";
+import configs from "../configs/config";
 
 
-export default function() {
+mongoose.Promise = q.Promise;
+const connections = {};
 
-	const config = configs[process.env.NODE_ENV];
+function toTitleCase(str) {
+	return str.split(".")[0].replace(/(^|-)(\w)/g, (all, $1, $2) => {
+		return $2.toUpperCase();
+	});
+}
+
+export default function () {
 	const log = debug("log:mongoose");
-	const db = mongoose.connection;
 
-	mongoose.Promise = q.Promise;
+	Object.keys(configs[process.env.NODE_ENV].mongo).forEach(name => {
+		const config = configs[process.env.NODE_ENV].mongo[name];
 
-	if (db.readyState) {
-		return mongoose;
-	}
+		if (connections[name] && connections[name].readyState) {
+			return;
+		}
 
-	db.on("close", () => {
-		log("connection closed");
-	});
-	db.on("connected", () => {
-		log("MongoDB connected!");
-	});
-	db.on("connecting", () => {
-		log("connecting to MongoDB @ " + config.mongo.url);
-	});
-	db.on("disconnected", () => {
-		log("MongoDB disconnected!");
-		mongoose.connect(config.mongo.url, config.mongo.options);
-	});
-	db.on("disconnecting", () => {
-		log("disconnecting from MongoDB...");
-	});
-	db.on("error", error => {
-		log("Error in MongoDb connection");
-		log(error);
-		mongoose.disconnect();
-	});
-	db.once("fullsetup", () => {
-		log("All nodes are connected.");
-	});
-	db.once("open", () => {
-		log("Connected to mongo server.");
-	});
-	db.on("reconnected", () => {
-		log("MongoDB reconnected!");
-	});
+		let db = mongoose.createConnection();
 
-	mongoose.connect(config.mongo.url, config.mongo.options);
-
-	function toTitleCase(str) {
-		return str.split(".")[0].replace(/(^|-)(\w)/g, (all, $1, $2) => {
-			return $2.toUpperCase();
+		db.on("close", () => {
+			log("connection closed");
 		});
-	}
+		db.on("connected", () => {
+			log("MongoDB connected!");
+		});
+		db.on("connecting", () => {
+			log("connecting to MongoDB @ " + config.url);
+		});
+		db.on("disconnected", () => {
+			log("MongoDB disconnected!");
+			db = db.open(configs.url, configs.options);
+		});
+		db.on("disconnecting", () => {
+			log("disconnecting from MongoDB...");
+		});
+		db.on("error", error => {
+			log("Error in MongoDb connection");
+			log(error);
+			db.close();
+		});
+		db.once("fullsetup", () => {
+			log("All nodes are connected.");
+		});
+		db.once("open", () => {
+			log("Connected to mongo server.");
+		});
+		db.on("reconnected", () => {
+			log("MongoDB reconnected!");
+		});
 
-	fs.readdirSync(path.join(__dirname, "../models")).forEach(file => {
-		mongoose.model(toTitleCase(file), require(path.join(__dirname, "../models", file)).default);
+		db.open(config.url, config.options);
+
+		fs.readdirSync(path.join(__dirname, "../models", name)).forEach(file => {
+			db.model(toTitleCase(file), require(path.join(__dirname, "../models", name, file)).default);
+		});
+
+		connections[name] = db;
 	});
 
-	return mongoose;
-
+	return connections;
 }

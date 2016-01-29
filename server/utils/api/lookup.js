@@ -2,7 +2,7 @@
 
 import q from "q";
 import Twilio from "twilio";
-import lang from "../lang.js";
+import {translate} from "../lang.js";
 import {decorate, override} from "core-decorators";
 import {callback} from "./wrapper.js";
 import DebugableAPI from "./debugable.js";
@@ -23,7 +23,7 @@ export default new class TwilioAPI extends DebugableAPI {
 	@decorate(callback)
 	checkPhoneNumber(done, user) {
 		if (!(user && user.phoneNumber)) {
-			user.invalidate("phoneNumber", lang.translate("error/server/twilio-phone-number-required", user), user.phoneNumber);
+			user.invalidate("phoneNumber", translate("error/server/twilio-phone-number-required", user), user.phoneNumber);
 			done();
 			return q();
 		}
@@ -35,7 +35,7 @@ export default new class TwilioAPI extends DebugableAPI {
 			})
 			.catch(e => {
 				this.log("phone validation failed", e);
-				user.invalidate("phoneNumber", lang.translate("error/server/twilio-phone-number-invalid", user), user.phoneNumber);
+				user.invalidate("phoneNumber", translate("error/server/twilio-phone-number-invalid", user), user.phoneNumber);
 				done();
 			});
 	}

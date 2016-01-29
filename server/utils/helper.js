@@ -2,43 +2,56 @@
 
 import debug from "debug";
 import {makeError} from "../utils/messenger.js";
-import lang from "../utils/lang.js";
+import {translate} from "../utils/lang.js";
 
-const log = debug("log:helper");
+const log = debug("utils:response");
+
+function _send(request, response) {
+	return (error) => {
+		response.status(error.status).send({
+			status: error.status,
+			errors: [].concat(error.message)
+		});
+	};
+}
 
 export function sendError(error, request, response, next) {
 	log("sendError", error);
+	void next; // eslint
+	const send = _send(request, response);
 	if (error.name === "ValidationError") {
-		error = {
+		return send({
 			status: 409,
 			message: Object.keys(error.errors).map(key => error.errors[key].message)
-		};
+		});
 	}
 	if (error.name === "MongoError" && error.code === 11000) {
 		const key = error.message.match(/\$(\S+)/)[1];
-		error = {
+		return send({
 			status: 400,
-			message: lang.translate("error/mongo/" + key, request.user) || lang.translate("error/mongo/E11000", request.user)
-		};
+			message: translate("error/mongo/" + key, request.user) || translate("error/mongo/E11000", request.user)
+		});
 	}
 	if (error.type === "StripeCardError" || error.type === "StripeInvalidRequest") {
-		error.status = 400;
+		return send({
+			status: 400,
+			message: error.message
+		});
 	}
 	if (!error.status) {
 		if (process.env.NODE_ENV === "production") {
-			error = makeError("server-error", request.user, 500);
+			return send(makeError("server-error", request.user, 500));
 		} else {
-			error.status = 500;
-			error.message = error.stack;
+			return send({
+				status: 500,
+				message: error.stack
+			});
 		}
 	}
-	response.status(error.status).send({
-		status: error.status,
-		errors: [].concat(error.message)
-	});
+	return send(error);
 }
 
-export function simpleJSONWrapper(method) {
+export function wrapJSON(method) {
 	return (request, response, next) => {
 		method(request, response, next)
 			.then(result => {
@@ -55,7 +68,7 @@ export function simpleJSONWrapper(method) {
 	};
 }
 
-export function simpleFileWrapper(method) {
+export function wrapFile(method) {
 	return (request, response, next) => {
 		method(request, response, next)
 			.then(result => {

@@ -2,14 +2,18 @@
 
 import _ from "lodash";
 import RichModel from "./../../utils/rich-model.js";
-import {isFound} from "./../../utils/messenger.js";
+import {checkModel} from "./../../utils/messenger.js";
 
 import DebuggableController from "./debuggable.js";
 
 class AbstractController extends DebuggableController {
 
+	static realm = "main";
+
 	constructor(isDebuggable = true, connection) {
 		super(isDebuggable);
+		// TODO strange babel bug
+		connection = connection || require("../../configs/mongoose").default()[this.constructor.realm];
 		this.model = new RichModel(this.constructor.name.slice(0, -10), isDebuggable, connection);
 	}
 
@@ -19,7 +23,7 @@ class AbstractController extends DebuggableController {
 				_id: request.params._id,
 				user: request.user._id
 			})
-			.then(isFound(this, request.user));
+			.then(checkModel(request.user).bind(this));
 	}
 
 	list(request) {
@@ -39,7 +43,7 @@ class AbstractController extends DebuggableController {
 				_id: request.params._id,
 				user: request.user._id
 			}, clean, {new: true})
-			.then(isFound(this, request.user));
+			.then(checkModel(request.user).bind(this));
 	}
 
 	delete(request) {
@@ -48,7 +52,7 @@ class AbstractController extends DebuggableController {
 				user: request.user._id,
 				_id: request.params._id
 			})
-			.then(isFound(this, request.user))
+			.then(checkModel(request.user).bind(this))
 			.thenResolve({success: true});
 	}
 

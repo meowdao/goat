@@ -1,40 +1,36 @@
 "use strict";
 
-const langusges = {
-	en: require("../utils/lang/en").default
+const languages = {
+	en: require("./lang/en")
 };
 
-export default {
 
-	getDefaultLanguage() {
-		return "en";
-	},
+export function getAvailableLanguages() {
+	return ["en"];
+}
 
-	getLanguage(user) {
-		return langusges[user && user.language || this.getDefaultLanguage()];
-	},
+export function getDefaultLanguage() {
+	return "en";
+}
 
-	getObject(parts, obj, create = false) {
+export function getLanguage(user) {
+	return languages[user && user.language || getDefaultLanguage()];
+}
 
-		let p;
+export function getObject(path, obj) {
+	const paths = path.split("/");
+	let current = obj;
 
-		if (!Array.isArray(parts)) {
-			parts = parts.split("/"); // eslint-disable-line no-param-reassign
+	for (let i = 0; i < paths.length; ++i) {
+		if (current[paths[i]] === void 0) {
+			return void 0;
+		} else {
+			current = current[paths[i]];
 		}
-
-		while (obj && parts.length) {
-			p = parts.shift();
-			if (obj[p] === undefined && create) {
-				obj[p] = {};
-			}
-			obj = obj[p]; // eslint-disable-line no-param-reassign
-		}
-
-		return obj;
-	},
-
-	translate(key, user) {
-		return this.getObject(key, this.getLanguage(user));
 	}
+	return current;
+}
 
-};
+export function translate(path, user) {
+	return getObject(path, getLanguage(user));
+}

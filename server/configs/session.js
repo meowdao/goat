@@ -6,14 +6,11 @@ import mongoose from "../configs/mongoose.js";
 import configs from "../configs/config.js";
 
 
-const config = configs[process.env.NODE_ENV];
-
-export default function(app) {
-
-	const mongoClient = mongoose();
+export default function (app) {
+	const config = configs[process.env.NODE_ENV];
+	const connection = mongoose();
 
 	app.use(session(Object.assign({}, config.session, {
-		store: new (connectMongo(session))({mongooseConnection: mongoClient.connection})
+		store: new (connectMongo(session))({mongooseConnection: connection.main})
 	})));
-
 }

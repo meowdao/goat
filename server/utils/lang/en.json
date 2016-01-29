@@ -1,9 +1,6 @@
-"use strict";
-
-export default {
+{
 	"error": {
 		"server": {
-			// SERVER
 			"no-param": "Required parameter not found",
 			"page-not-found": "Page Not Found",
 			"invalid-param": "Param is invalid",
@@ -13,10 +10,6 @@ export default {
 			"missing-credentials": "Missing credentials",
 			"incorrect-password": "Incorrect password.",
 			"incorrect-name": "Incorrect username."
-
-			// USER
-
-			// API
 		},
 		"model": {
 			"user": {
@@ -28,22 +21,21 @@ export default {
 				"password-is-required": "Password cannot be blank",
 				"passwords-match": "Passwords doesn't much",
 				"passwords-weak": "Password is too weak"
-
 			}
 		},
 		"mongo": {
 			"E11000": "Duplicate key error"
 		}
 	},
-	messages: {
+	"messages": {
 		"password-changed": "Password successfully changed, now you can login with a new password",
 		"instructions-sent": "Instructions were sent to entered email"
 	},
-	email: {
-		subject: {
+	"email": {
+		"subject": {
 			"/test": "Test",
 			"/user/remind": "G.O.A.T Password Reset Instructions",
 			"/user/verify": "G.O.A.T Email Verification"
 		}
 	}
-};
+}

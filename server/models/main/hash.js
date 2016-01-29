@@ -1,7 +1,7 @@
 "use strict";
 
 import {Schema} from "mongoose";
-import {getRandomString} from "../utils/utils.js";
+import {getRandomString} from "../../utils/utils.js";
 
 const Hash = new Schema({
 	user: {

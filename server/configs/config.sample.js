@@ -3,11 +3,13 @@
 export default {
 	test: {
 		mongo: {
-			url: "mongodb://localhost/goat_test",
-			options: {
-				server: {
-					socketOptions: {
-						keepalive: 1
+			main: {
+				url: "mongodb://localhost/goat_test",
+				options: {
+					server: {
+						socketOptions: {
+							keepalive: 1
+						}
 					}
 				}
 			}
@@ -69,11 +71,13 @@ export default {
 	},
 	development: {
 		mongo: {
-			url: "mongodb://localhost/goat_dev",
-			options: {
-				server: {
-					socketOptions: {
-						keepalive: 1
+			main: {
+				url: "mongodb://localhost/goat_dev",
+				options: {
+					server: {
+						socketOptions: {
+							keepalive: 1
+						}
 					}
 				}
 			}

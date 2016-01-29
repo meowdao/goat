@@ -1,7 +1,7 @@
 "use strict";
 
 import passport from "passport";
-import {simpleJSONWrapper} from "../utils/helper.js";
+import {wrapJSON} from "../utils/helper.js";
 import {requiresLogin} from "../utils/middleware.js";
 import UserController from "../controllers/user.js";
 
@@ -23,13 +23,13 @@ export default function (app) {
 	const userController = new UserController();
 
 	// user routes
-	app.post("/user/login", simpleJSONWrapper(::userController.login));
-	app.post("/user/register", simpleJSONWrapper(::userController.register));
-	app.post("/user/forgot", simpleJSONWrapper(::userController.forgot));
-	app.post("/user/change", simpleJSONWrapper(::userController.change));
+	app.post("/user/login", wrapJSON(::userController.login));
+	app.post("/user/register", wrapJSON(::userController.register));
+	app.post("/user/forgot", wrapJSON(::userController.forgot));
+	app.post("/user/change", wrapJSON(::userController.change));
 	app.get("/user/logout", ::userController.logout);
-	app.post("/user/sendEmailVerification", requiresLogin, simpleJSONWrapper(::userController.sendEmailVerification));
-	app.get("/user/verify/:token", simpleJSONWrapper(::userController.verify));
+	app.post("/user/sendEmailVerification", requiresLogin, wrapJSON(::userController.sendEmailVerification));
+	app.get("/user/verify/:token", wrapJSON(::userController.verify));
 
 	app.get("/auth/facebook",
 		passport.authenticate("facebook", {
@@ -53,5 +53,5 @@ export default function (app) {
 		response.send(tpl);
 	});
 
-	app.get("/user/sync", requiresLogin, simpleJSONWrapper(::userController.sync));
+	app.get("/user/sync", requiresLogin, wrapJSON(::userController.sync));
 }

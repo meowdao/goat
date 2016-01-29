@@ -1,12 +1,10 @@
 "use strict";
 
-import path from "path";
 import {renderAppToString, renderHTML} from "../utils/render.js";
 import configs from "../configs/config.js";
 
 
-export default function(app) {
-
+export default function (app) {
 	const config = configs[process.env.NODE_ENV];
 
 	app.use((request, response) => {
@@ -16,5 +14,4 @@ export default function(app) {
 			response.status(200).send(renderHTML());
 		}
 	});
-
 }
