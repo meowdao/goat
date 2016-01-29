@@ -16,8 +16,7 @@ function hmr(store) {
 	}
 }
 
-export default function(initialState) {
-
+export default function configureStore(initialState) {
 	// Sync dispatched route actions to the history
 	const reduxRouterMiddleware = syncHistory(history);
 	const middleware = [];
