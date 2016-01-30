@@ -8,6 +8,7 @@ import GOAT from "../components/GOAT.js";
 import Welcome from "../components/static/welcome.js";
 
 import Article from "../components/partials/article.js";
+import Empty from "../components/partials/empty.js";
 
 import TwitSearch from "../components/static/twitsearch.js";
 
@@ -45,7 +46,7 @@ export default (
 		<IndexRoute component={Welcome}/>
 		<Route path="admin" component={Article} onEnter={setDisplayName("Admin")}>
 			<IndexRoute component={Dashboard}/>
-			<Route path="user">
+			<Route path="user" component={Empty}>
 				<Route path="list" component={UserList}/>
 			</Route>
 		</Route>

@@ -6,9 +6,8 @@ import {connect} from "react-redux";
 import {Input, ButtonInput} from "react-bootstrap";
 import zxcvbn from "zxcvbn";
 import API from "../../utils/API";
-import regexp from "../../../../../server/utils/constants/regexp.js";
+import {reEmail} from "../../../../../server/utils/constants/regexp.js";
 import {email, password, confirm, firstName, lastName/* , phoneNumber*/} from "../../../../../server/utils/constants/misc.js";
-
 
 const register = (data) =>
 	dispatch =>
@@ -80,7 +79,7 @@ export default class Register extends Component {
 							value={this.state.email}
 							placeholder="me@example.com"
 							label="Email"
-							bsStyle={regexp.email.test(this.state.email) ? null : "error"}
+							bsStyle={reEmail.test(this.state.email) ? null : "error"}
 							hasFeedback
 							wrapperClassName="col-xs-10"
 							labelClassName="col-sm-2"

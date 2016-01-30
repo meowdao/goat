@@ -24,11 +24,14 @@ export default class TwitterList extends React.Component {
 	renderItem(item, i) {
 		return (
 			<div key={i}>
-				<h5><a href={"https://twitter.com/statuses/" + item.id_str}>{moment(item.created_at).format("YYYY-MMM-DD HH:mm")}</a> - {item.user.name}</h5>
+				<h5><a
+					href={"https://twitter.com/statuses/" + item.id_str}>{moment(item.created_at).format("YYYY-MMM-DD HH:mm")}</a>
+					- {item.user.name}</h5>
 				<Table responsive>
 					<tdbody>
 						<tr>
-							<td><a href={"https://twitter.com/" + item.user.screen_name}><img src={item.user.profile_image_url}/></a></td>
+							<td><a href={"https://twitter.com/" + item.user.screen_name}><img
+								src={item.user.profile_image_url}/></a></td>
 							<td>{item.text}</td>
 						</tr>
 					</tdbody>

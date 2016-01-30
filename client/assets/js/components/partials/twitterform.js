@@ -51,12 +51,15 @@ export default class TwitterForm extends React.Component {
 			<div className="container">
 				<form onSubmit={::this.onSubmit}>
 					<Input
+						id="twit-search"
+						autoFocus="true"
 						type="text"
 						placeholder="Search query"
 						defaultValue={this.state.q}
 						onChange={(e) => this.setState({q: e.target.value})}
 					/>
 						<Input
+							id="twit-count"
 							type="select"
 							defaultValue="0"
 							onChange={(e) => this.setState({count: ~~e.target.value})}>

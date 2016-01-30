@@ -10,4 +10,8 @@ export default class UserController extends AbstractUserController {
 		return q(request.user);
 	}
 
+	getUsers() {
+		return this.find();
+	}
+
 }
