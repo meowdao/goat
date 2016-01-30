@@ -7,7 +7,7 @@ import {date} from "./constants/date.js";
 function _makeError(text, code = 500) {
 	const error = new Error();
 	error.message = text;
-	error.status = code;
+	error.code = code;
 	return error;
 }
 
@@ -41,7 +41,7 @@ export function checkUser(user) {
 
 export function checkActive(isAllowed = false) {
 	return function checkActiveInner(model, request) {
-		const isAdmin = !request.user.apiKeys[0].public;
+		const isAdmin = request.user.role === "admin";
 		const isActive = model.status === this.constructor.statuses.active;
 		if (!isActive && !(isAllowed && isAdmin)) {
 			throw _makeError(getText(this.displayName, "not-active", request.user, "Is Not Active"), 400);
@@ -53,7 +53,7 @@ export function checkActive(isAllowed = false) {
 
 export function checkPast(isAllowed = false, field = "startTime") {
 	return function checkPastInner(model, request) {
-		const isAdmin = !request.user.apiKeys[0].public;
+		const isAdmin = request.user.role === "admin";
 		const isPast = model[field] <= date; // <= for tests
 		if (isPast && !(isAllowed && isAdmin)) {
 			throw makeError("event-has-passed", request.user);
