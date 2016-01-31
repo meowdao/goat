@@ -6,12 +6,9 @@ GOAT
 
 To make the first build run:
 
-copy `configs/config.sample.js` to `configs/config.js`
-
 ```bash
-npm install -g mocha nodemon babel-cli
+cp ./configs/config.sample.js ./configs/config.js
 npm install
-
 npm run start
 ```
 
