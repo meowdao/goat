@@ -44,7 +44,11 @@ export default class TwitterList extends React.Component {
 		console.log(this.props);
 		return (
 			<div className="container">
+				<div className="row">
+					<div className="col-sm-7">
 				{this.props.twits.map(this.renderItem)}
+						</div>
+					</div>
 			</div>
 		);
 	}

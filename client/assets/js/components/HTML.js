@@ -20,6 +20,7 @@ export default class HTML extends React.Component {
 			</head>
 			<body>
 				<div id="app" {...this.props}></div>
+				<script dangerouslySetInnerHTML={{__html: `window.__INITIAL_STATE__ = ${JSON.stringify({user: {firstName: "Trej", lastName: "Gun", email: "trejgun@gmail.com"}})}`}}></script>
 				<script src="/build/bundle.js" type="text/javascript"></script>
 			</body>
 			</html>
