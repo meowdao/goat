@@ -20,10 +20,34 @@ export default class AbstractUserController extends AbstractController {
 		})(request, response);
 
 		return defer.promise
+			.tap(user => {
+				this.sessionChange(request, user);
+			})
 			.catch(error => {
 				throw makeError(error.message, request.user, 401);
 			});
 	}
+
+// change the session for users who logged in
+	sessionChange(request, user) {
+		request.logIn(user, function (error) {
+			if (error) {
+				throw error;
+			}
+		});
+		const temp = request.session.passport;
+		request.session.regenerate(function (error) {
+			if (error) {
+				throw error;
+			}
+			request.session.passport = temp;
+			request.session.save(function (error) {
+				if (error) {
+					throw error;
+				}
+			});
+		});
+	};
 
 	register(request) {
 		return this.create(request.body)
