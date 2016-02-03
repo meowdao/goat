@@ -26,3 +26,16 @@ export function getRandomString(length = 64, type = 3) {
 export function tpl(template, data) {
 	return template.replace(/(\$\{([^\{\}]+)\})/g, ($0, $1, $2) => $2 in data ? data[$2] : "");
 }
+
+export function setRegExp(clean, query, fields) {
+	fields.forEach(name => {
+		if (query[name]) {
+			Object.assign(clean, {
+				[name]: {
+					$regex: "^" + escapeStringRegexp(query[name]) + "$",
+					$options: "i"
+				}
+			});
+		}
+	});
+}
