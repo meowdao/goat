@@ -9,7 +9,7 @@ import Welcome from "../components/static/welcome.js";
 
 import Article from "../components/partials/article.js";
 
-import TwitSearch from "../components/static/twitsearch.js";
+import TwitSearch from "../components/twitter/twitsearch.js";
 
 // admin
 import Dashboard from "../components/admin/dashboard.js";
