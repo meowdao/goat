@@ -1,8 +1,8 @@
 "use strict";
 
 import React from "react";
-import TwitterList from "../partials/twitterlist.js";
-import TwitterForm from "../partials/twitterform.js";
+import TwitterList from "./twitterlist.js";
+import TwitterForm from "./twitterform.js";
 
 export default class TwitSearch extends React.Component {
 

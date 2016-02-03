@@ -50,12 +50,17 @@ export default class TwitterForm extends React.Component {
 		return (
 			<div className="container">
 				<form onSubmit={::this.onSubmit}>
+					<div className="row">
+						<div className="col-sm-4">
 					<Input
+						autoFocus="true"
 						type="text"
 						placeholder="Search query"
 						defaultValue={this.state.q}
 						onChange={(e) => this.setState({q: e.target.value})}
 					/>
+							</div>
+						<div className="col-sm-2">
 						<Input
 							type="select"
 							defaultValue="0"
@@ -66,11 +71,13 @@ export default class TwitterForm extends React.Component {
 							<option value="20">20</option>
 							<option value="30">30</option>
 						</Input>
+							</div>
 					<ButtonInput
 						type="submit"
 						value="Search"
 						bsStyle="info"
 					/>
+						</div>
 				</form>
 			</div>
 
