@@ -14,7 +14,7 @@ import TwitSearch from "../components/static/twitsearch.js";
 
 // admin
 import Dashboard from "../components/admin/dashboard.js";
-import UserList from "../components/admin/users/list.js";
+import UserSearch from "../components/admin/list.js";
 
 // user
 import Login from "../components/user/login.js";
@@ -47,7 +47,7 @@ export default (
 		<Route path="admin" component={Article} onEnter={setDisplayName("Admin")}>
 			<IndexRoute component={Dashboard}/>
 			<Route path="user" component={Empty}>
-				<Route path="list" component={UserList}/>
+				<Route path="list" component={UserSearch}/>
 			</Route>
 		</Route>
 		<Route path="twitsearch" component={Article} onEnter={setDisplayName("TwitSearch")}>

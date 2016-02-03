@@ -7,7 +7,7 @@ import Breadcrumbs from "./breadcrumbs.js";
 
 export default class Empty extends Component {
 
-	static displayName = "";
+	static displayName = "Components";
 
 	render() {
 		return (

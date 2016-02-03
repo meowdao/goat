@@ -54,4 +54,5 @@ export default function (app) {
 	});
 
 	app.get("/user/sync", requiresLogin, wrapJSON(::userController.sync));
+	app.get("/admin/users", wrapJSON(::userController.getUsers));
 }
