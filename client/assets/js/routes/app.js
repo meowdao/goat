@@ -8,12 +8,13 @@ import GOAT from "../components/GOAT.js";
 import Welcome from "../components/static/welcome.js";
 
 import Article from "../components/partials/article.js";
+import Empty from "../components/partials/empty.js";
 
 import TwitSearch from "../components/twitter/twitsearch.js";
 
 // admin
 import Dashboard from "../components/admin/dashboard.js";
-import UserList from "../components/admin/users/list.js";
+import UserSearch from "../components/admin/userlist.js";
 
 // user
 import Login from "../components/user/login.js";
@@ -32,8 +33,6 @@ import Airport from "../components/page/airport.js";
 // error
 import Message from "../components/static/message.js";
 
-import {ActionTypes} from "../constants/constants.js";
-
 function setDisplayName(displayName) {
 	return (nextState) => {
 		nextState.params.displayName = displayName;
@@ -45,8 +44,8 @@ export default (
 		<IndexRoute component={Welcome}/>
 		<Route path="admin" component={Article} onEnter={setDisplayName("Admin")}>
 			<IndexRoute component={Dashboard}/>
-			<Route path="user">
-				<Route path="list" component={UserList}/>
+			<Route path="user" component={Empty}>
+				<Route path="list" component={UserSearch}/>
 			</Route>
 		</Route>
 		<Route path="twitsearch" component={Article} onEnter={setDisplayName("TwitSearch")}>
