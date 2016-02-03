@@ -85,6 +85,15 @@ export default {
 				method: "GET",
 				url: "/twitter/search"
 			});
+	},
+
+	searchUsers(data) {
+		return $
+			.ajax({
+				data,
+				method: "GET",
+				url: "/admin/users"
+			});
 	}
 
 };
