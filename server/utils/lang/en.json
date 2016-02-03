@@ -9,7 +9,8 @@
 			"server-error": "An error has occurred.",
 			"missing-credentials": "Missing credentials",
 			"incorrect-password": "Incorrect password.",
-			"incorrect-name": "Incorrect username."
+			"incorrect-name": "Incorrect username.",
+		  	"verify-email": "Your email is not verified"
 		},
 		"model": {
 			"user": {

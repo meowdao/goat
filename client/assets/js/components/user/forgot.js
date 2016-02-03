@@ -5,7 +5,7 @@ import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import {Input, ButtonInput} from "react-bootstrap";
 import API from "../../utils/API";
-import regexp from "../../../../../server/utils/constants/regexp.js";
+import {reEmail} from "../../../../../server/utils/constants/regexp.js";
 import {email} from "../../../../../server/utils/constants/misc.js";
 
 
@@ -67,7 +67,7 @@ export default class Forgot extends Component {
 							value={this.state.email}
 							placeholder="me@example.com"
 							label="Email"
-							bsStyle={regexp.email.test(this.state.email) ? null : "error"}
+							bsStyle={reEmail.test(this.state.email) ? null : "error"}
 							hasFeedback
 							wrapperClassName="col-xs-10"
 							labelClassName="col-sm-2"

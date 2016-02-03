@@ -16,13 +16,34 @@ export default class AbstractUserController extends AbstractController {
 		const defer = q.defer();
 
 		passport.authenticate("local", {badRequestMessage: "missing-credentials"}, (error, user, info) => {
-			defer.makeNodeResolver()(error || info, user);
+			defer.makeNodeResolver()(error || info ? makeError(info.message, request.user, 401) : null, user);
 		})(request, response);
 
 		return defer.promise
-			.catch(error => {
-				throw makeError(error.message, request.user, 401);
+			.tap(user => {
+				return this.sessionChange(request, user);
 			});
+	}
+
+// change the session for users who logged in
+	sessionChange(request, user) {
+		const defer = q.defer();
+		request.logIn(user, error => {
+			if (error) {
+				defer.makeNodeResolver()(error);
+			}
+			const temp = request.session.passport;
+			request.session.regenerate(error => {
+				if (error) {
+					defer.makeNodeResolver()(error);
+				}
+				request.session.passport = temp;
+				request.session.save(error => {
+					defer.makeNodeResolver()(error);
+				});
+			});
+		});
+		return defer.promise;
 	}
 
 	register(request) {
@@ -136,7 +157,7 @@ export default class AbstractUserController extends AbstractController {
 
 	logout(request, response) {
 		request.logout();
-		request.session.logout = true;
+		request.session.destroy();
 		response.clearCookie();
 		response.status(204).send("");
 	}
