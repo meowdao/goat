@@ -25,6 +25,10 @@ const User = new Schema({
 		type: Boolean,
 		default: false
 	},
+	isActive: {
+		type: Boolean,
+		default: false
+	},
 
 	/*
 	phoneNumber: {
