@@ -7,10 +7,10 @@ import {Strategy as FacebookStrategy} from "passport-facebook";
 import {OAuth2Strategy as GoogleStrategy} from "passport-google-oauth";
 import configs from "./config.js";
 import UserController from "../controllers/user.js";
+import {makeError} from "../utils/messenger.js";
 
 
-export default function(app) {
-
+export default function (app) {
 	const config = configs[process.env.NODE_ENV];
 	const log = debug("log:passport");
 
@@ -38,19 +38,26 @@ export default function(app) {
 					select: "+password",
 					lean: false
 				})
-				.then(user => {
-					if (user) {
-						if (user.verifyPassword(password)) {
-							callback(null, user);
-						} else {
-							callback(null, false, {message: "incorrect-password"});
-						}
-					} else {
-						callback(null, false, {message: "incorrect-name"});
+				.tap(user => {
+					if (!user) {
+						throw makeError("incorrect-name", user, 401);
 					}
 				})
+				.tap(user => {
+					if (!user.verifyPassword(password)) {
+						throw makeError("incorrect-password", user, 401);
+					}
+				})
+				.tap(user => {
+					if (!user.isEmailVerified) {
+						throw makeError("verify-email", user, 401);
+					}
+				})
+				.tap(user => {
+						callback(null, user);
+				})
 				.catch(error => {
-					callback(error, null);
+					callback(error);
 				})
 				.done();
 		}
@@ -128,5 +135,4 @@ export default function(app) {
 
 	app.use(passport.initialize());
 	app.use(passport.session());
-
 }
