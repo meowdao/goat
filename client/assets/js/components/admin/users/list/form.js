@@ -4,8 +4,8 @@ import React, {PropTypes} from "react";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import {Input, ButtonInput, Pagination} from "react-bootstrap";
-import API from "../../../utils/API";
-import {UPDATE_USER_LIST} from "../../../constants/constants";
+import API from "../../../../utils/API";
+import {UPDATE_USER_LIST} from "../../../../constants/constants";
 
 const getUsers = data =>
 	dispatch =>

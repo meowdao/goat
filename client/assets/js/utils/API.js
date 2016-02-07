@@ -101,7 +101,7 @@ export default {
 			.ajax({
 				data,
 				method: "PUT",
-				url: "/admin/usersupdate/" + data._id
+				url: "/admin/user/" + data._id
 			});
 	}
 

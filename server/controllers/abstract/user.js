@@ -1,47 +1,51 @@
 "use strict";
 
 import q from "q";
+import _ from "lodash";
 import passport from "passport";
 import {reEmail} from "../../utils/constants/regexp.js";
 import {translate} from "../../utils/lang.js";
 
 import {makeError, checkModel} from "../../utils/messenger.js";
 import AbstractController from "./abstract.js";
-import MailController from "./../mail.js";
-import HashController from "./../hash.js";
+import MailController from "../mail.js";
+import HashController from "../hash.js";
 
 export default class AbstractUserController extends AbstractController {
 
 	login(request, response) {
 		const defer = q.defer();
-
 		passport.authenticate("local", {badRequestMessage: "missing-credentials"}, (error, user, info) => {
-			defer.makeNodeResolver()(error || info ? makeError(info.message, request.user, 401) : null, user);
+			defer.makeNodeResolver()(error || info && makeError(info.message, request.user, 401), user);
 		})(request, response);
 
 		return defer.promise
-			.tap(user => {
+			.then(user => {
 				return this.sessionChange(request, user);
+			})
+			.catch(error => {
+				this.logout(request, response).done();
+				throw error;
 			});
 	}
 
-// change the session for users who logged in
+	// change the session for users who logged in
 	sessionChange(request, user) {
 		const defer = q.defer();
-		request.logIn(user, error => {
-			if (error) {
-				defer.makeNodeResolver()(error);
+		request.logIn(user, error1 => {
+			if (error1) {
+				defer.makeNodeResolver()(error1);
 				return;
 			}
 			const temp = request.session.passport;
-			request.session.regenerate(error => {
-				if (error) {
-					defer.makeNodeResolver()(error);
+			request.session.regenerate(error2 => {
+				if (error2) {
+					defer.makeNodeResolver()(error2);
 					return;
 				}
 				request.session.passport = temp;
-				request.session.save(error => {
-					defer.makeNodeResolver()(error);
+				request.session.save(error3 => {
+					defer.makeNodeResolver()(error3, user);
 				});
 			});
 		});
@@ -115,12 +119,21 @@ export default class AbstractUserController extends AbstractController {
 	}
 
 	editPassword(request) {
-		request.user.password = request.body.password;
-		request.user.confirm = request.body.confirm;
-
+		const query = request.body;
+		const clean = _.pick(query, ["password", "confirm"]);
+		Object.assign(request.user, clean);
 		return this.save(request.user)
 			.then(user => q.nbind(request.login, request)(user))
 			.thenResolve({success: true});
+	}
+
+	editEmail(request) {
+		const clean = _.pick(request.body, ["email"]);
+		Object.assign(request.user, clean);
+		return this.save(request.user)
+			.then(() => {
+				return this.sendEmailVerification(request);
+			});
 	}
 
 	verify(request) {
@@ -147,20 +160,10 @@ export default class AbstractUserController extends AbstractController {
 			});
 	}
 
-	checkPhoneNumber(request) {
-		return this.count({email: request.params.email})
-			.then(count => {
-				return {
-					unique: !count,
-					valid: reEmail.test(request.params.email)
-				};
-			});
-	}
-
 	logout(request, response) {
 		request.logout();
 		request.session.destroy();
 		response.clearCookie();
-		response.status(204).send("");
+		return q({success: true});
 	}
 }

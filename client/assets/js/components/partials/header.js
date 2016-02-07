@@ -7,14 +7,14 @@ import {Link} from "react-router";
 import API from "../../utils/API";
 import {Navbar, Nav, NavItem, NavDropdown, MenuItem} from "react-bootstrap";
 import {LinkContainer} from "react-router-bootstrap";
-
+import {USER_LOGOUT} from "../../constants/constants";
 
 const logout = (data) =>
 	dispatch =>
 		API.logout(data)
 			.then(responce => {
 				dispatch({
-					type: "USER_LOGOUT",
+					type: USER_LOGOUT,
 					user: responce
 				});
 			});

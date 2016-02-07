@@ -54,11 +54,9 @@ export default function (app) {
 					}
 				})
 				.tap(user => {
-						callback(null, user);
+					callback(null, user);
 				})
-				.catch(error => {
-					callback(error);
-				})
+				.catch(callback)
 				.done();
 		}
 	));
@@ -71,7 +69,7 @@ export default function (app) {
 				userController.findOne({"google.id": profile.id}, {lean: false})
 					.then(user => {
 						if (!user) {
-							userController
+							return userController
 								.create({
 									firstName: profile.name.givenName,
 									lastName: profile.name.familyName,
@@ -90,9 +88,7 @@ export default function (app) {
 							callback(null, user);
 						}
 					})
-					.catch(error => {
-						callback(error, null);
-					})
+					.catch(callback)
 					.done();
 			}
 		));
@@ -106,7 +102,7 @@ export default function (app) {
 				userController.findOne({"facebook.id": profile.id}, {lean: false})
 					.then(user => {
 						if (!user) {
-							userController
+							return userController
 								.create({
 									firstName: profile.name.givenName,
 									lastName: profile.name.familyName,
@@ -125,9 +121,7 @@ export default function (app) {
 							callback(null, user);
 						}
 					})
-					.catch(error => {
-						callback(error, null);
-					})
+					.catch(callback)
 					.done();
 			}
 		));

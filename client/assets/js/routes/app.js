@@ -14,7 +14,7 @@ import TwitSearch from "../components/twitter/twitsearch.js";
 
 // admin
 import Dashboard from "../components/admin/dashboard.js";
-import UserSearch from "../components/admin/userlist.js";
+import UserSearch from "../components/admin/users/list.js";
 
 // user
 import Login from "../components/user/login.js";

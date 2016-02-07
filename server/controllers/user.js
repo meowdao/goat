@@ -11,25 +11,29 @@ export default class UserController extends AbstractUserController {
 		return q(request.user);
 	}
 
-	getUsers(request) {
+	list(request) {
 		const query = request.query;
+		const {skip, limit} = query;
 		const clean = {};
-		const skip = !request.query.skip ? 0 : request.query.skip;
-		const limit = !request.query.limit ? 0 : request.query.limit;
 		setRegExp(clean, query, ["email"]);
-		return q.all([this.find(clean, {skip, limit}), this.count(clean)])
-			.spread((list, count) => ({
-				list, count
-			}));
+		return q.all([
+				this.find(clean, {skip, limit}),
+				this.count(clean)
+			])
+			.spread((list, count) => ({list, count}));
 	}
 
-	updateUsers(request) {
+	change(request) {
 		const query = request.body;
-		const clean = _.pick(query, ["isActive", "isEmailVerified", "firstName", "lastName", "role"]);
-		return this.findByIdAndUpdate(request.params, clean, {new: true})
-				.tap((user) => {
-					console.log("User updated: " + user);
-					return user;
-				});
-		}
+		const clean = _.pick(query, ["isActive", "firstName", "lastName"]);
+		return this.findByIdAndUpdate(request.params._id, clean, {runValidators: true, new: true});
+	}
+
+	edit(request) {
+		const query = request.body;
+		const clean = _.pick(query, ["firstName", "lastName"]);
+		Object.assign(request.user, clean);
+		return this.save(request.user);
+	}
+
 }

@@ -5,8 +5,7 @@ import {makeError} from "../utils/messenger.js";
 import path from "path";
 
 
-export default function(app) {
-
+export default function (app) {
 	function createRegExpParameter(re) {
 		return (request, response, next, val, name) => {
 			const captures = re.exec(String(val));
@@ -24,5 +23,4 @@ export default function(app) {
 	fs.readdirSync(path.join(__dirname, "../routes")).forEach(file => {
 		require(path.join(__dirname, "../routes", file)).default(app);
 	});
-
 }

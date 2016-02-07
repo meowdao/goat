@@ -2,6 +2,7 @@
 
 import $ from "jquery";
 import debug from "debug";
+import {MESSAGE_ADD} from "../constants/constants";
 
 export default function configureJquery(store) {
 	const log = debug("web:jquery");
@@ -31,7 +32,7 @@ export default function configureJquery(store) {
 			log(ajaxOptions.method + " " + document.location.protocol + "//" + document.location.host + "/" + ajaxOptions.url + "?" + (ajaxOptions.data || ""));
 			log(thrownError);
 			store.dispatch({
-				type: "MESSAGE_ADD",
+				type: MESSAGE_ADD,
 				message: {
 					text: XMLHttpRequest.responseJSON && XMLHttpRequest.responseJSON.errors || thrownError || "Unknown error!",
 					type: "danger"

@@ -8,13 +8,14 @@ import zxcvbn from "zxcvbn";
 import API from "../../utils/API";
 import {reEmail} from "../../../../../server/utils/constants/regexp.js";
 import {email, password, confirm, firstName, lastName/* , phoneNumber*/} from "../../../../../server/utils/constants/misc.js";
+import {USER_LOGIN} from "../../constants/constants";
 
 const register = (data) =>
 	dispatch =>
 		API.register(data)
 			.then(responce => {
 				dispatch({
-					type: "USER_LOGIN",
+					type: USER_LOGIN,
 					user: responce
 				});
 			});

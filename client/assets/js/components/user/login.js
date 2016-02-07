@@ -7,6 +7,7 @@ import {Input, ButtonInput} from "react-bootstrap";
 import API from "../../utils/API";
 import {email, password} from "../../../../../server/utils/constants/misc.js";
 import {Link} from "react-router";
+import {USER_LOGIN} from "../../constants/constants";
 
 
 const login = data =>
@@ -14,7 +15,7 @@ const login = data =>
 		API.login(data)
 			.then(responce => {
 				dispatch({
-					type: "USER_LOGIN",
+					type: USER_LOGIN,
 					user: responce
 				});
 			});
@@ -24,7 +25,7 @@ const sync = data =>
 		API.sync(data)
 			.then(responce => {
 				dispatch({
-					type: "USER_LOGIN",
+					type: USER_LOGIN,
 					user: responce
 				});
 			});

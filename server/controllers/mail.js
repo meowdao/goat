@@ -5,7 +5,7 @@ import {translate} from "../utils/lang.js";
 import {renderEmailToString} from "../utils/render";
 
 import AbstractController from "./abstract/abstract.js";
-import OptOutController from "../controllers/opt-out.js";
+import OptOutController from "./opt-out.js";
 
 
 export default class MailController extends AbstractController {

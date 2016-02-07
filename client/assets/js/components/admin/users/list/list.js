@@ -3,10 +3,10 @@
 import React, {PropTypes, Component} from "react";
 import classnames from "classnames";
 import {connect} from "react-redux";
-import API from "../../../utils/API";
+import API from "../../../../utils/API";
 import {bindActionCreators} from "redux";
 import {Button} from "react-bootstrap";
-import {UPDATE_USER} from "../../../constants/constants";
+import {UPDATE_USER} from "../../../../constants/constants";
 
 const userUpdate = data =>
 	dispatch =>
@@ -61,12 +61,12 @@ export default class UserList extends Component {
 		return (
 			<li key={user._id} className="list-group-item">
 				<Button className="pull-right" bsStyle={user.isEmailVerified ? "success" : "danger"}
-				        onClick={() => this.isEmailVerifiedChange(user)} bsSize="small"
+					onClick={() => this.isEmailVerifiedChange(user)} bsSize="small"
 				>
 					{user.isEmailVerified ? "Verified" : "Not verified"}
 				</Button>
 				<Button className="pull-right" bsStyle={user.isActive ? "success" : "danger"}
-				        onClick={() => this.isActiveChange(user)} bsSize="small"
+					onClick={() => this.isActiveChange(user)} bsSize="small"
 				>
 					{user.isActive ? "Active" : "Not active"}
 				</Button>

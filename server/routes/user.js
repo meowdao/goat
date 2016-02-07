@@ -27,7 +27,7 @@ export default function (app) {
 	app.post("/user/register", wrapJSON(::userController.register));
 	app.post("/user/forgot", wrapJSON(::userController.forgot));
 	app.post("/user/change", wrapJSON(::userController.change));
-	app.get("/user/logout", ::userController.logout);
+	app.get("/user/logout", wrapJSON(::userController.logout));
 	app.post("/user/sendEmailVerification", requiresLogin, wrapJSON(::userController.sendEmailVerification));
 	app.get("/user/verify/:token", wrapJSON(::userController.verify));
 

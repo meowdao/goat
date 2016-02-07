@@ -38,5 +38,3 @@ app.listen(process.env.PORT, () => {
 process.on("uncaughtException", (exception) => {
 	log(exception);
 });
-
-
