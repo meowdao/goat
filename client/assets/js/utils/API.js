@@ -92,7 +92,7 @@ export default {
 			.ajax({
 				data,
 				method: "GET",
-				url: "/admin/users"
+				url: "/users"
 			});
 	},
 
@@ -101,7 +101,7 @@ export default {
 			.ajax({
 				data,
 				method: "PUT",
-				url: "/admin/user/" + data._id
+				url: "/user/" + data._id
 			});
 	}
 

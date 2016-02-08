@@ -13,7 +13,8 @@ export function requiresLogin(request, response, next) {
 export function requiresRole(required, self) {
 	return (request, response, next) => {
 		requiresLogin(request, response, () => {
-			if (!_.includes(required, request.user.role) || !(self && request.user._id.toString() === request.params.id)) {
+			console.log(_.includes(required, request.user.role));
+			if (!_.includes(required, request.user.role)) {
 				return next(makeError("access-denied", request.user, 403));
 			}
 			return next();
@@ -42,4 +43,5 @@ export function validatePagination(request, response, next) {
 			next(makeError("invalid-param", request.user));
 		}
 	}
+	next();
 }
