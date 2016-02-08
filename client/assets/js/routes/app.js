@@ -15,6 +15,7 @@ import TwitSearch from "../components/twitter/twitsearch";
 // admin
 import Dashboard from "../components/admin/dashboard";
 import UserSearch from "../components/admin/users/list";
+import AuthenticatedComponent from "../components/partials/protected";
 
 // user
 import Login from "../components/user/login";
@@ -40,28 +41,44 @@ function setDisplayName(displayName) {
 	};
 }
 
+function requireRoles(roles) {
+	return (nextState) => {
+		nextState.params.roles = roles;
+	};
+}
+
 export default (
 	<Route path="/" component={GOAT}>
 		<IndexRoute component={Welcome}/>
-		<Route path="admin" component={Article} onEnter={setDisplayName("Admin")}>
+		<Route path="admin" component={AuthenticatedComponent} onEnter={requireRoles(["admin"])}>
 			<IndexRoute component={Dashboard}/>
 			<Route path="user" component={Empty}>
 				<Route path="list" component={UserSearch}/>
-				<Route path="edit/:_id" component={UserEdit}/>
 			</Route>
 		</Route>
 		<Route path="twitsearch" component={Article} onEnter={setDisplayName("TwitSearch")}>
 			<IndexRoute component={TwitSearch}/>
 		</Route>
-		<Route path="user" component={Article} onEnter={setDisplayName("User")}>
+
+		<Route path="user" component={AuthenticatedComponent} onEnter={requireRoles(["admin", "user"])}>
 			<IndexRedirect to="profile"/>
 			<Route path="edit" component={UserEdit}/>
-			<Route path="login" component={Login}/>
-			<Route path="register" component={Register}/>
 			<Route path="profile" component={Profile}/>
-			<Route path="forgot" component={Forgot}/>
-			<Route path="change/:token" component={Change}/>
 		</Route>
+
+		<Route path="login" component={Article} onEnter={setDisplayName("User login")}>
+			<IndexRoute component={Login}/>
+		</Route>
+		<Route path="register" component={Article} onEnter={setDisplayName("User register")}>
+			<IndexRoute component={Register}/>
+		</Route>
+		<Route path="forgot" component={Article} onEnter={setDisplayName("Forgot")}>
+			<IndexRoute component={Forgot}/>
+		</Route>
+		<Route path="change/:token" component={Article} onEnter={setDisplayName("Change")}>
+			<IndexRoute component={Change}/>
+		</Route>
+
 		<Route path="category" component={Article} onEnter={setDisplayName("Category")}>
 			<IndexRoute component={CategoryList}/>
 			<Route path="new" component={CategoryAdd}/>

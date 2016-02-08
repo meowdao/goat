@@ -41,7 +41,7 @@ export default class Header extends Component {
 		e.preventDefault();
 		this.props.logout()
 			.then(() => {
-				this.context.router.push("/user/login");
+				this.context.router.push("/login");
 			});
 	}
 
@@ -62,10 +62,10 @@ export default class Header extends Component {
 	renderLoginButton() {
 		return (
 			<Nav navbar pullRight>
-				<LinkContainer to="/user/login">
+				<LinkContainer to="/login">
 					<NavItem>Login</NavItem>
 				</LinkContainer>
-				<LinkContainer to="/user/register">
+				<LinkContainer to="/register">
 					<NavItem>Register</NavItem>
 				</LinkContainer>
 			</Nav>
@@ -85,6 +85,11 @@ export default class Header extends Component {
 					<Nav navbar pullRight>
 						<LinkContainer to="/twitsearch">
 							<NavItem>Search Twits</NavItem>
+						</LinkContainer>
+					</Nav>
+					<Nav navbar pullRight>
+						<LinkContainer to="/admin">
+							<NavItem>Admin</NavItem>
 						</LinkContainer>
 					</Nav>
 				</Navbar.Collapse>

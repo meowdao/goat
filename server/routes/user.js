@@ -23,19 +23,19 @@ export default function (app) {
 	const userController = new UserController();
 
 	// user routes
-	app.post("/user/login", wrapJSON(::userController.login));
-	app.post("/user/register", wrapJSON(::userController.register));
-	app.post("/user/forgot", wrapJSON(::userController.forgot));
-	app.post("/user/change", wrapJSON(::userController.change));
-	app.get("/user/logout", wrapJSON(::userController.logout));
-	app.post("/user/sendEmailVerification", requiresLogin, wrapJSON(::userController.sendEmailVerification));
-	app.get("/user/verify/:token", wrapJSON(::userController.verify));
+	app.post("/login", wrapJSON(::userController.login));
+	app.post("/register", wrapJSON(::userController.register));
+	app.post("/forgot", wrapJSON(::userController.forgot));
+	app.post("/change", wrapJSON(::userController.change));
+	app.get("/logout", wrapJSON(::userController.logout));
+	app.post("/sendEmailVerification", requiresLogin, wrapJSON(::userController.sendEmailVerification));
+	app.get("/verify/:token", wrapJSON(::userController.verify));
 
 	app.get("/auth/facebook",
 		passport.authenticate("facebook", {
 			display: "popup",
 			scope: ["email"],
-			failureRedirect: "/user/login"
+			failureRedirect: "/login"
 		}));
 	app.get("/auth/facebook/callback", passport.authenticate("facebook"), (request, response) => {
 		response.send(tpl);
@@ -43,7 +43,7 @@ export default function (app) {
 
 	app.get("/auth/google",
 		passport.authenticate("google", {
-			failureRedirect: "/user/login",
+			failureRedirect: "/login",
 			scope: [
 				"https://www.googleapis.com/auth/userinfo.profile",
 				"https://www.googleapis.com/auth/userinfo.email"

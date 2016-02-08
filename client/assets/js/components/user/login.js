@@ -46,7 +46,8 @@ export default class Login extends Component {
 		history: React.PropTypes.object,
 		login: PropTypes.func,
 		sync: PropTypes.func,
-		user: PropTypes.object
+		user: PropTypes.object,
+		location: PropTypes.object
 	};
 
 	static contextTypes = {
@@ -67,7 +68,11 @@ export default class Login extends Component {
 		e.preventDefault();
 		this.props.login(this.state)
 			.then(() => {
-				this.context.router.push("/user/profile");
+				if (this.props.location.pathname !== "/login") {
+					this.context.router.push(this.props.location);
+				} else {
+					this.context.router.push("/user/profile");
+				}
 			});
 	}
 

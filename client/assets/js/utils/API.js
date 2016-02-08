@@ -10,7 +10,7 @@ export default {
 			.ajax({
 				data,
 				method: "POST",
-				url: "/user/login"
+				url: "/login"
 			});
 	},
 
@@ -19,7 +19,7 @@ export default {
 			.ajax({
 				data,
 				method: "GET",
-				url: "/user/logout"
+				url: "/logout"
 			});
 	},
 
@@ -28,7 +28,7 @@ export default {
 			.ajax({
 				data,
 				method: "POST",
-				url: "/user/register"
+				url: "/register"
 			});
 	},
 
@@ -37,7 +37,7 @@ export default {
 			.ajax({
 				data,
 				method: "POST",
-				url: "/user/forgot"
+				url: "/forgot"
 			});
 	},
 
@@ -46,7 +46,7 @@ export default {
 			.ajax({
 				data,
 				method: "POST",
-				url: "/user/change"
+				url: "/change"
 			});
 	},
 
