@@ -1,8 +1,11 @@
 {
-    "ignore": [
-        ".idea"
-    ],
-    "execMap": {
-        "js": "babel-node"
-    }
+  "ignore": [
+	".idea"
+  ],
+  "watch": [
+	"server/"
+  ],
+  "execMap": {
+	"js": "babel-node"
+  }
 }

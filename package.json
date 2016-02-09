@@ -100,7 +100,7 @@
     "node": "v5.3.0"
   },
   "scripts": {
-    "start": "NODE_ENV=${NODE_ENV:=development} TWITTER_API=${TWITTER_API:=true} DEBUG=web:* babel-node server/server.js",
+    "start": "NODE_ENV=${NODE_ENV:=development} TWITTER_API=${TWITTER_API:=true} DEBUG=web:* nodemon server/server.js",
     "prod": "NODE_ENV=${NODE_ENV:=production} babel-node server/server.js",
     "build": "webpack -c --config server/configs/webpack.js",
     "lint": "eslint server/* client/assets/js/* test/*",
