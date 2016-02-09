@@ -54,6 +54,7 @@ export default function (app) {
 					}
 				})
 				.tap(user => {
+					user.set("password", void 0);
 					callback(null, user);
 				})
 				.catch(callback)

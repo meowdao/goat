@@ -24,9 +24,13 @@ export default class UserController extends AbstractUserController {
 	}
 
 	change(request) {
-		const query = request.body;
-		const clean = _.pick(query, ["isActive", "firstName", "lastName"]);
-		return this.findByIdAndUpdate(request.params._id, clean, {runValidators: true, new: true});
+		return this.findById(request.params._id, {lean: false})
+			.then(user => {
+				const query = request.body;
+				const clean = _.pick(query, ["firstName", "lastName", "email", "isActive", "role", "password", "confirm"]);
+				Object.assign(user, clean);
+				return this.save(user);
+			});
 	}
 
 	edit(request) {

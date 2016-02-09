@@ -22,6 +22,7 @@ import Register from "../components/user/register.js";
 import Profile from "../components/user/profile.js";
 import Forgot from "../components/user/forgot.js";
 import Change from "../components/user/change.js";
+import UserEdit from "../components/user/edit.js";
 
 // category
 import CategoryList from "../components/category/list.js";
@@ -46,6 +47,7 @@ export default (
 			<IndexRoute component={Dashboard}/>
 			<Route path="user" component={Empty}>
 				<Route path="list" component={UserSearch}/>
+				<Route path="edit/:_id" component={UserEdit}/>
 			</Route>
 		</Route>
 		<Route path="twitsearch" component={Article} onEnter={setDisplayName("TwitSearch")}>
@@ -53,6 +55,7 @@ export default (
 		</Route>
 		<Route path="user" component={Article} onEnter={setDisplayName("User")}>
 			<IndexRedirect to="profile"/>
+			<Route path="edit" component={UserEdit}/>
 			<Route path="login" component={Login}/>
 			<Route path="register" component={Register}/>
 			<Route path="profile" component={Profile}/>

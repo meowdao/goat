@@ -13,7 +13,6 @@ export function requiresLogin(request, response, next) {
 export function requiresRole(required, self) {
 	return (request, response, next) => {
 		requiresLogin(request, response, () => {
-			console.log(_.includes(required, request.user.role));
 			if (!_.includes(required, request.user.role)) {
 				return next(makeError("access-denied", request.user, 403));
 			}
