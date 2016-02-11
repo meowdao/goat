@@ -33,7 +33,7 @@ export function setRegExp(clean, query, fields) {
 		if (query[name]) {
 			Object.assign(clean, {
 				[name]: {
-					$regex: "^" + escapeStringRegexp(query[name]) + "$",
+					$regex: "^" + escapeStringRegexp(query[name]),
 					$options: "i"
 				}
 			});

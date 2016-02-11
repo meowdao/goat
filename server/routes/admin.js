@@ -11,7 +11,9 @@ export default function (app) {
 		.get(requiresRole(["admin"]), validatePagination, wrapJSON(::userController.list))
 		.all(methodNotAllowed);
 
-	app.route("/user/:_id")
-		.put(requiresRole(["admin"]), wrapJSON(::userController.change))
-		.all(methodNotAllowed);
+	app.put("/user/:_id", wrapJSON(::userController.change));
+
+	//app.route("/user/:_id")
+	//	.put(requiresRole(["admin"]), wrapJSON(::userController.change))
+	//	.all(methodNotAllowed);
 }
