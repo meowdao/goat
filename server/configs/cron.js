@@ -3,7 +3,7 @@
 import q from "q";
 import schedule from "node-schedule";
 import debug from "debug";
-import MAPI from "../utils/api/mailgun.js";
+import MAPI from "../utils/api/mailgun";
 
 const log = debug("log:cron");
 
@@ -13,7 +13,7 @@ export default function () {
 	}
 
 	schedule.scheduleJob("*/5 * * * *", () => {
-		const mailController = new (require("../controllers/mail.js"));
+		const mailController = new (require("../controllers/mail"));
 		return mailController.find({
 				status: mailController.constructor.statuses.new
 			}, {lean: false})

@@ -6,7 +6,7 @@ import {connect} from "react-redux";
 import {Input, ButtonInput} from "react-bootstrap";
 import zxcvbn from "zxcvbn";
 import API from "../../utils/API";
-import {password, confirm} from "../../../../../server/utils/constants/misc.js";
+import {password, confirm} from "../../../../../server/utils/constants/misc";
 
 
 const change = (data) =>

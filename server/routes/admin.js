@@ -1,8 +1,8 @@
 "use strict";
 
-import {wrapJSON} from "../utils/helper.js";
-import {methodNotAllowed, requiresRole, validatePagination} from "../utils/middleware.js";
-import UserController from "../controllers/user.js";
+import {wrapJSON} from "../utils/helper";
+import {methodNotAllowed, requiresRole, validatePagination} from "../utils/middleware";
+import UserController from "../controllers/user";
 
 export default function (app) {
 	const userController = new UserController();

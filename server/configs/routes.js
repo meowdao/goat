@@ -1,7 +1,7 @@
 "use strict";
 
 import fs from "fs";
-import {makeError} from "../utils/messenger.js";
+import {makeError} from "../utils/messenger";
 import path from "path";
 
 

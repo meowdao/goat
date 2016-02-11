@@ -2,7 +2,7 @@
 
 import debug from "debug";
 import util from "util";
-import configs from "../../configs/config.js";
+import configs from "../../configs/config";
 
 const config = configs[process.env.NODE_ENV];
 

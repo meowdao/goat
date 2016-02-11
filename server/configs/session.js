@@ -2,8 +2,8 @@
 
 import session from "express-session";
 import connectMongo from "connect-mongo";
-import mongoose from "../configs/mongoose.js";
-import configs from "../configs/config.js";
+import mongoose from "../configs/mongoose";
+import configs from "../configs/config";
 
 
 export default function (app) {

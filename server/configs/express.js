@@ -4,9 +4,9 @@ import express from "express";
 import logger from "morgan";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
-import session from "./session.js";
-import passport from "./passport.js";
-import proxy from "./proxy.js";
+import session from "./session";
+import passport from "./passport";
+import proxy from "./proxy";
 
 
 export default function () {

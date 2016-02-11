@@ -1,8 +1,8 @@
 "use strict";
 
 import React from "react";
-import TwitterList from "./twitterlist.js";
-import TwitterForm from "./twitterform.js";
+import TwitterList from "./twitterlist";
+import TwitterForm from "./twitterform";
 
 export default class TwitSearch extends React.Component {
 
@@ -10,7 +10,7 @@ export default class TwitSearch extends React.Component {
 
 	render() {
 		return (
-			<div className="container">
+			<div>
 				<TwitterForm />
 				<TwitterList />
 			</div>

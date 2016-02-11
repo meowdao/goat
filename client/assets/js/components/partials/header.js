@@ -49,7 +49,7 @@ export default class Header extends Component {
 		return (
 			<Nav navbar pullRight>
 				<NavDropdown title={this.props.user.email} id="dropdown">
-					<LinkContainer to="/admin/dashboard">
+					<LinkContainer to="/admin">
 						<MenuItem >Dashboard</MenuItem>
 					</LinkContainer>
 					<MenuItem divider/>

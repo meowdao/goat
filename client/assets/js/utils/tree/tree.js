@@ -1,6 +1,6 @@
 "use strict";
 
-import TreeNode from "./tree-node.js";
+import TreeNode from "./tree-node";
 
 export default class Tree {
 

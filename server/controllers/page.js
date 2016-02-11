@@ -1,6 +1,6 @@
 "use strict";
 
-import StatefulController from "./abstract/stateful.js";
+import StatefulController from "./abstract/stateful";
 
 
 export default class PageController extends StatefulController {

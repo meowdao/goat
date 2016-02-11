@@ -4,7 +4,7 @@ process.env.NODE_ENV = process.env.NODE_ENV || "development";
 process.env.PORT = process.env.PORT || 3000;
 
 import debug from "debug";
-import express from "./configs/express.js";
+import express from "./configs/express";
 import webpack from "webpack";
 
 debug.enable("log:*");
@@ -27,9 +27,9 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 
-require("./configs/middleware.js").default(app);
-require("./configs/routes.js").default(app);
-require("./configs/static.js").default(app);
+require("./configs/middleware").default(app);
+require("./configs/routes").default(app);
+require("./configs/static").default(app);
 
 app.listen(process.env.PORT, () => {
 	log("Express server listening on port " + process.env.PORT);

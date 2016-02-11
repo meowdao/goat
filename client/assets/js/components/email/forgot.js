@@ -2,7 +2,7 @@
 
 import url from "url";
 import React, {PropTypes, Component} from "react";
-import configs from "../../../../../server/configs/config.js";
+import configs from "../../../../../server/configs/config";
 
 
 const config = configs[process.env.NODE_ENV];

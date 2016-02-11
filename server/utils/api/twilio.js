@@ -2,8 +2,8 @@
 
 import twilio from "twilio";
 import {decorate, override} from "core-decorators";
-import {promise} from "./wrapper.js";
-import DebugableAPI from "./debugable.js";
+import {promise} from "./wrapper";
+import DebugableAPI from "./debugable";
 
 
 export default new class TwilioAPI extends DebugableAPI {

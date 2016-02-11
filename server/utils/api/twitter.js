@@ -4,8 +4,8 @@ import Q from "q";
 import debug from "debug";
 import Twitter from "twit";
 import {decorate, override} from "core-decorators";
-import {promise} from "./wrapper.js";
-import DebugableAPI from "./debugable.js";
+import {promise} from "./wrapper";
+import DebugableAPI from "./debugable";
 
 const log = debug("log:twitter");
 

@@ -8,12 +8,12 @@ import React from "react"; // eslint-disable-line no-unused-vars
 import ReactDOM from "react-dom";
 import {Provider} from "react-redux";
 
-import Router from "./routes/router.js";
-import routes from "./routes/app.js";
+import {Router} from "react-router";
+import routes from "./routes/app";
 import configureStore from "./utils/store";
 import configureJquery from "./utils/jquery";
 
-import history from "./utils/history.js";
+import history from "./utils/history";
 
 
 if (process.env.NODE_ENV !== "production") {

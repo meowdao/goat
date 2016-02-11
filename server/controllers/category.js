@@ -1,7 +1,7 @@
 "use strict";
 
 import _ from "lodash";
-import StatefulController from "./abstract/stateful.js";
+import StatefulController from "./abstract/stateful";
 
 
 export default class CategoryController extends StatefulController {

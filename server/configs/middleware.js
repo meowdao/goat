@@ -1,6 +1,6 @@
 "use strict";
 
-import {makeError} from "../utils/messenger.js";
+import {makeError} from "../utils/messenger";
 
 
 export default function (app) {

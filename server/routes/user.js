@@ -1,9 +1,9 @@
 "use strict";
 
 import passport from "passport";
-import {wrapJSON} from "../utils/helper.js";
-import {requiresLogin} from "../utils/middleware.js";
-import UserController from "../controllers/user.js";
+import {wrapJSON} from "../utils/helper";
+import {requiresLogin} from "../utils/middleware";
+import UserController from "../controllers/user";
 
 
 const tpl = `

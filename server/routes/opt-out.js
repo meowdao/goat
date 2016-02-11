@@ -1,8 +1,8 @@
 "use strict";
 
-import {wrapJSON} from "../utils/helper.js";
-import {requiresLogin} from "../utils/middleware.js";
-import OptOutController from "../controllers/opt-out.js";
+import {wrapJSON} from "../utils/helper";
+import {requiresLogin} from "../utils/middleware";
+import OptOutController from "../controllers/opt-out";
 
 
 export default function (app) {

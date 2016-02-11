@@ -1,9 +1,9 @@
 "use strict";
 
 import React, {PropTypes, Component} from "react";
-import Title from "./title.js";
-import Messages from "./messages.js";
-import Breadcrumbs from "./breadcrumbs.js";
+import Title from "./title";
+import Messages from "./messages";
+import Breadcrumbs from "./breadcrumbs";
 
 export default class Empty extends Component {
 

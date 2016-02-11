@@ -1,11 +1,11 @@
 "use strict";
 
-import {checkModel} from "../utils/messenger.js";
-import {translate} from "../utils/lang.js";
+import {checkModel} from "../utils/messenger";
+import {translate} from "../utils/lang";
 import {renderEmailToString} from "../utils/render";
 
-import AbstractController from "./abstract/abstract.js";
-import OptOutController from "./opt-out.js";
+import AbstractController from "./abstract/abstract";
+import OptOutController from "./opt-out";
 
 
 export default class MailController extends AbstractController {

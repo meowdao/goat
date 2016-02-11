@@ -3,13 +3,13 @@
 import q from "q";
 import _ from "lodash";
 import passport from "passport";
-import {reEmail} from "../../utils/constants/regexp.js";
-import {translate} from "../../utils/lang.js";
+import {reEmail} from "../../utils/constants/regexp";
+import {translate} from "../../utils/lang";
 
-import {makeError, checkModel} from "../../utils/messenger.js";
-import AbstractController from "./abstract.js";
-import MailController from "../mail.js";
-import HashController from "../hash.js";
+import {makeError, checkModel} from "../../utils/messenger";
+import AbstractController from "./abstract";
+import MailController from "../mail";
+import HashController from "../hash";
 
 export default class AbstractUserController extends AbstractController {
 

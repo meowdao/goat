@@ -1,6 +1,6 @@
 "use strict";
 
-import TreeUtils from "./tree-utils.js";
+import TreeUtils from "./tree-utils";
 
 export default class TreeNode {
 	data = {};

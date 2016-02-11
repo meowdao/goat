@@ -2,11 +2,11 @@
 
 import React from "react"; // eslint-disable-line no-unused-vars
 
-import EML from "../components/EML.js";
-import Wrapper from "../components/email/wrapper.js";
-import Forgot from "../components/email/forgot.js";
-import Verify from "../components/email/verify.js";
-import Test from "../components/email/test.js";
+import EML from "../components/EML";
+import Wrapper from "../components/email/wrapper";
+import Forgot from "../components/email/forgot";
+import Verify from "../components/email/verify";
+import Test from "../components/email/test";
 
 import {Route} from "react-router";
 

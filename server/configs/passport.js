@@ -5,9 +5,9 @@ import passport from "passport";
 import {Strategy as LocalStrategy} from "passport-local";
 import {Strategy as FacebookStrategy} from "passport-facebook";
 import {OAuth2Strategy as GoogleStrategy} from "passport-google-oauth";
-import configs from "./config.js";
-import UserController from "../controllers/user.js";
-import {makeError} from "../utils/messenger.js";
+import configs from "./config";
+import UserController from "../controllers/user";
+import {makeError} from "../utils/messenger";
 
 
 export default function (app) {

@@ -25,20 +25,22 @@ export default class TwitterList extends React.Component {
 		return (
 			<div key={i}>
 				<h5>
-					<a href={"https://twitter.com/statuses/" + item.id_str}>{moment(item.created_at).format("YYYY-MMM-DD HH:mm")}</a>
-					<span>- {item.user.name}</span>
+					<a href={"https://twitter.com/statuses/" + item.id_str}>
+						{moment(new Date(item.created_at)).format("YYYY-MM-DD HH:mm")}
+					</a>
+					<span> - {item.user.name}</span>
 				</h5>
 				<Table responsive>
-					<tdbody>
-						<tr>
-							<td>
-								<a href={"https://twitter.com/" + item.user.screen_name}>
-									<img src={item.user.profile_image_url}/>
-								</a>
-							</td>
-							<td>{item.text}</td>
-						</tr>
-					</tdbody>
+					<tbody>
+					<tr>
+						<td>
+							<a href={"https://twitter.com/" + item.user.screen_name}>
+								<img src={item.user.profile_image_url}/>
+							</a>
+						</td>
+						<td>{item.text}</td>
+					</tr>
+					</tbody>
 				</Table>
 			</div>
 		);
@@ -46,12 +48,10 @@ export default class TwitterList extends React.Component {
 
 	render() {
 		return (
-			<div className="container">
-				<div className="row">
-					<div className="col-sm-7">
-				{this.props.twits.map(this.renderItem)}
-						</div>
-					</div>
+			<div className="row">
+				<div className="col-sm-7">
+					{this.props.twits.map(this.renderItem)}
+				</div>
 			</div>
 		);
 	}

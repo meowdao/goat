@@ -1,8 +1,8 @@
 "use strict";
 
-import {wrapJSON} from "../utils/helper.js";
-import {requiresRole, methodNotAllowed} from "../utils/middleware.js";
-import CategoryController from "../controllers/category.js";
+import {wrapJSON} from "../utils/helper";
+import {requiresRole, methodNotAllowed} from "../utils/middleware";
+import CategoryController from "../controllers/category";
 
 
 export default function (app) {

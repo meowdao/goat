@@ -2,10 +2,10 @@
 
 import q from "q";
 import Twilio from "twilio";
-import {translate} from "../lang.js";
+import {translate} from "../lang";
 import {decorate, override} from "core-decorators";
-import {callback} from "./wrapper.js";
-import DebugableAPI from "./debugable.js";
+import {callback} from "./wrapper";
+import DebugableAPI from "./debugable";
 
 
 export default new class TwilioAPI extends DebugableAPI {

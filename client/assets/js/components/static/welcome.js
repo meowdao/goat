@@ -1,7 +1,7 @@
 "use strict";
 
 import React, {Component} from "react";
-import Title from "../partials/title.js";
+import Title from "../partials/title";
 
 export default class Welcome extends Component {
 

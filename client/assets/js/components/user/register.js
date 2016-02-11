@@ -6,8 +6,8 @@ import {connect} from "react-redux";
 import {Input, ButtonInput} from "react-bootstrap";
 import zxcvbn from "zxcvbn";
 import API from "../../utils/API";
-import {reEmail} from "../../../../../server/utils/constants/regexp.js";
-import {email, password, confirm, firstName, lastName/* , phoneNumber*/} from "../../../../../server/utils/constants/misc.js";
+import {reEmail} from "../../../../../server/utils/constants/regexp";
+import {email, password, confirm, firstName, lastName/* , phoneNumber*/} from "../../../../../server/utils/constants/misc";
 import {USER_LOGIN} from "../../constants/constants";
 
 const register = (data) =>

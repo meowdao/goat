@@ -1,8 +1,8 @@
 "use strict";
 
 import debug from "debug";
-import {makeError} from "../utils/messenger.js";
-import {translate} from "../utils/lang.js";
+import {makeError} from "../utils/messenger";
+import {translate} from "../utils/lang";
 
 const log = debug("utils:response");
 

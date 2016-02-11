@@ -1,7 +1,7 @@
 "use strict";
 
-import {wrapJSON} from "../utils/helper.js";
-import TwitterController from "../controllers/twitter.js";
+import {wrapJSON} from "../utils/helper";
+import TwitterController from "../controllers/twitter";
 
 
 export default function (app) {

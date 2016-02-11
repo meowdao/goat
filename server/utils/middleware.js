@@ -1,7 +1,7 @@
 "use strict";
 
 import _ from "lodash";
-import {makeError} from "../utils/messenger.js";
+import {makeError} from "../utils/messenger";
 
 export function requiresLogin(request, response, next) {
 	if (!request.user) { // isAuthenticated()

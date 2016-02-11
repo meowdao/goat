@@ -3,36 +3,36 @@
 import React from "react"; // eslint-disable-line no-unused-vars
 import {Route, IndexRoute, IndexRedirect} from "react-router";
 
-import GOAT from "../components/GOAT.js";
+import GOAT from "../components/GOAT";
 
-import Welcome from "../components/static/welcome.js";
+import Welcome from "../components/static/welcome";
 
-import Article from "../components/partials/article.js";
-import Empty from "../components/partials/empty.js";
+import Article from "../components/partials/article";
+import Empty from "../components/partials/empty";
 
-import TwitSearch from "../components/twitter/twitsearch.js";
+import TwitSearch from "../components/twitter/twitsearch";
 
 // admin
-import Dashboard from "../components/admin/dashboard.js";
-import UserSearch from "../components/admin/users/list.js";
+import Dashboard from "../components/admin/dashboard";
+import UserSearch from "../components/admin/users/list";
 
 // user
-import Login from "../components/user/login.js";
-import Register from "../components/user/register.js";
-import Profile from "../components/user/profile.js";
-import Forgot from "../components/user/forgot.js";
-import Change from "../components/user/change.js";
-import UserEdit from "../components/user/edit.js";
+import Login from "../components/user/login";
+import Register from "../components/user/register";
+import Profile from "../components/user/profile";
+import Forgot from "../components/user/forgot";
+import Change from "../components/user/change";
+import UserEdit from "../components/user/edit";
 
 // category
-import CategoryList from "../components/category/list.js";
-import CategoryAdd from "../components/category/add.js";
+import CategoryList from "../components/category/list";
+import CategoryAdd from "../components/category/add";
 
 // page
-import Airport from "../components/page/airport.js";
+import Airport from "../components/page/airport";
 
 // error
-import Message from "../components/static/message.js";
+import Message from "../components/static/message";
 
 function setDisplayName(displayName) {
 	return (nextState) => {

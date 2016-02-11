@@ -3,8 +3,8 @@
 import bcrypt from "bcrypt-nodejs";
 import {Schema} from "mongoose";
 import zxcvbn from "zxcvbn";
-import {reEmail} from "../../utils/constants/regexp.js";
-// import LAPI from "../utils/api/lookup.js";
+import {reEmail} from "../../utils/constants/regexp";
+// import LAPI from "../utils/api/lookup";
 import lang from "../../utils/lang/en";
 
 const User = new Schema({

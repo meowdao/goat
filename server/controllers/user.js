@@ -2,7 +2,7 @@
 
 import q from "q";
 import _ from "lodash";
-import AbstractUserController from "./abstract/user.js";
+import AbstractUserController from "./abstract/user";
 import {setRegExp} from "../utils/utils";
 
 export default class UserController extends AbstractUserController {

@@ -2,7 +2,7 @@
 
 import _ from "lodash";
 
-import AbstractController from "./abstract/abstract.js";
+import AbstractController from "./abstract/abstract";
 
 export default class OptOutController extends AbstractController {
 

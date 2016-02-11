@@ -1,7 +1,7 @@
 "use strict";
 
 import {Schema} from "mongoose";
-import MailController from "../../controllers/mail.js";
+import MailController from "../../controllers/mail";
 
 const statuses = MailController.statuses;
 

@@ -1,8 +1,8 @@
 "use strict";
 
 import assert from "power-assert";
-import {email, firstName, lastName} from "../../server/utils/constants/misc.js";
-import {getControllers} from "../utils.js";
+import {email, firstName, lastName} from "../../server/utils/constants/misc";
+import {getControllers} from "../controllers";
 
 
 const controllers = getControllers(true);

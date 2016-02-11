@@ -2,8 +2,8 @@
 
 import React from "react";
 import {connect} from "react-redux";
-import Title from "../partials/title.js";
-import Message from "../partials/messages.js";
+import Title from "../partials/title";
+import Message from "../partials/messages";
 
 
 @connect(

@@ -1,7 +1,7 @@
 "use strict";
 
-import {translate} from "./lang.js";
-import {date} from "./constants/date.js";
+import {translate} from "./lang";
+import {date} from "./constants/date";
 
 
 function _makeError(text, code = 500) {

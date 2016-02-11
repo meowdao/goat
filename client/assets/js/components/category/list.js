@@ -1,8 +1,8 @@
 "use strict";
 
 import React, {PropTypes, Component} from "react";
-import API from "../../utils/API.js";
-import Tree from "../../utils/tree/tree.js";
+import API from "../../utils/API";
+import Tree from "../../utils/tree/tree";
 
 
 export default class List extends Component {

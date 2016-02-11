@@ -4,8 +4,8 @@ import q from "q";
 import mailgun from "nodemailer-mailgun-transport";
 import nodemailer from "nodemailer";
 import {decorate, override} from "core-decorators";
-import {promise} from "./wrapper.js";
-import DebugableAPI from "./debugable.js";
+import {promise} from "./wrapper";
+import DebugableAPI from "./debugable";
 
 
 export default new class MailgunAPI extends DebugableAPI {
