@@ -2,7 +2,7 @@
 
 process.env.NODE_ENV = process.env.NODE_ENV || "development";
 
-import Q from "q";
+import q from "q";
 import debug from "debug";
 import mongoose from "mongoose";
 import configs from "../server/configs/config.js";
@@ -13,10 +13,10 @@ import CategoryController from "../server/controllers/category.js";
 debug.enable("db-setup:*");
 const log = debug("db-setup:category");
 
-mongoose.Promise = Q.Promise;
+mongoose.Promise = q.Promise;
 
-const connection = mongoose.createConnection(configs[process.env.NODE_ENV].mongo.url, configs[process.env.NODE_ENV].mongo.options, () => {
-	log(`connected ${configs[process.env.NODE_ENV].mongo.url}`);
+const connection = mongoose.createConnection(configs[process.env.NODE_ENV].mongo.main.url, configs[process.env.NODE_ENV].mongo.main.options, () => {
+	log(`connected ${configs[process.env.NODE_ENV].mongo.main.url}`);
 });
 
 connection.model("Category", CategoryModel);
