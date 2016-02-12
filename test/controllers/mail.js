@@ -7,10 +7,10 @@ import {getControllers} from "../controllers";
 
 const controllers = getControllers(true);
 
-suite("Mail", () => {
-	suite("#sendMail", () => {
-		test("send mail", (done) => {
-			controllers.mail.composeMail("test", {to: email}, {}, {
+describe("Mail", () => {
+	describe("#sendMail", () => {
+		it("send mail", () => {
+			return controllers.mail.composeMail("test", {to: email}, {}, {
 				user: {
 					email,
 					firstName,
@@ -19,10 +19,7 @@ suite("Mail", () => {
 			})
 			.then(mail => {
 				assert.deepEqual(Array.prototype.slice.call(mail.to), [email]); // SchemaArray
-			})
-			.catch(assert.ifError)
-			.finally(done)
-			.done();
+			});
 		});
 	});
 });

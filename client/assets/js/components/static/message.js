@@ -20,7 +20,6 @@ export default class Error extends Message {
 	};
 
 	render() {
-
 		return (
 			<div className="container">
 

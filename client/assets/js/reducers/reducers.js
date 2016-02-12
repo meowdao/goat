@@ -6,12 +6,14 @@ import user from "./user";
 import messages from "./messages";
 import twits from "./twitter";
 import users from "./users";
+import hash from "./hash";
 
 
 export default combineReducers({
-	routing,
-	user,
-	twits,
+	hash,
 	messages,
+	routing,
+	twits,
+	user,
 	users
 });

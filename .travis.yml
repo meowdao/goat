@@ -1,6 +1,7 @@
 language: node_js
 node_js:
-  - "5.2"
+  - "4"
+  - "5"
 services:
   - mongodb
 before_install:
@@ -9,7 +10,8 @@ install:
   - npm install
 script:
   - npm run build
-  - npm run test
+  - npm run db
+  - npm run travis
 
 
 

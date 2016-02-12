@@ -1,6 +1,6 @@
 "use strict";
 
-import {password, confirm, firstName, lastName, email} from "../server/utils/constants/misc.js";
+import {password, confirm, firstName, lastName} from "../server/utils/constants/misc.js";
 import {getRandomString} from "../server/utils/utils";
 import {populate} from "./populate";
 

@@ -1,8 +1,14 @@
 "use strict";
 
-import React from "react";
+import React, {PropTypes} from "react";
 
 export default class HTML extends React.Component {
+
+	static propTypes = {
+		initialMarkup: PropTypes.string,
+		initialState: PropTypes.object
+	};
+
 	render() {
 		return (
 			<html>

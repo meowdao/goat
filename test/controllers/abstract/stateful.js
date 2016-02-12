@@ -101,7 +101,7 @@ function teapot() {
 	throw error;
 }
 
-suite("Stateful", () => {
+describe("Stateful", () => {
 	const data = {};
 
 	const testObject = {
@@ -110,10 +110,10 @@ suite("Stateful", () => {
 		number: 42
 	};
 
-	suite("#getById", () => {
-		suiteSetup(setUp(data, 2));
+	describe("#getById", () => {
+		before(setUp(data, 2));
 
-		test("should getById (obj)", () => {
+		it("should getById (obj)", () => {
 			return testStatefulController.getById({
 					user: data.User[0],
 					params: {
@@ -129,7 +129,7 @@ suite("Stateful", () => {
 				});
 		});
 
-		test("should getById (error 403)", () => {
+		it("should getById (error 403)", () => {
 			return testStatefulController.getById({
 					user: data.User[1],
 					params: {
@@ -142,7 +142,7 @@ suite("Stateful", () => {
 				});
 		});
 
-		test("should check (error 403)", () => {
+		it("should check (error 403)", () => {
 			return testStatefulController.check({
 					user: data.User[1],
 					params: {
@@ -155,7 +155,7 @@ suite("Stateful", () => {
 				});
 		});
 
-		test("should check", () => {
+		it("should check", () => {
 			return testStatefulController.check({
 					user: data.User[0],
 					params: {
@@ -168,7 +168,7 @@ suite("Stateful", () => {
 				});
 		});
 
-		test("should check (error 418)", () => {
+		it("should check (error 418)", () => {
 			return testStatefulController.check({
 					user: data.User[1],
 					params: {
@@ -181,13 +181,13 @@ suite("Stateful", () => {
 				});
 		});
 
-		suiteTeardown(tearDown());
+		after(tearDown());
 	});
 
-	suite("#list", () => {
-		suiteSetup(setUp(data, 10));
+	describe("#list", () => {
+		before(setUp(data, 10));
 
-		test("should list", () => {
+		it("should list", () => {
 			testStatefulController.list({
 					user: data.User[0]
 				})
@@ -197,13 +197,13 @@ suite("Stateful", () => {
 				});
 		});
 
-		suiteTeardown(tearDown());
+		after(tearDown());
 	});
 
-	suite("#change", () => {
-		suiteSetup(setUp(data, 2));
+	describe("#change", () => {
+		before(setUp(data, 2));
 
-		test("should edit (full data)", () => {
+		it("should edit (full data)", () => {
 			return testStatefulController.change({
 					user: data.User[0],
 					params: {
@@ -219,7 +219,7 @@ suite("Stateful", () => {
 				});
 		});
 
-		test("should edit (part data)", () => {
+		it("should edit (part data)", () => {
 			return testStatefulController.change({
 					user: data.User[1],
 					params: {
@@ -235,7 +235,7 @@ suite("Stateful", () => {
 				});
 		});
 
-		test("should edit (error 404)", () => {
+		it("should edit (error 404)", () => {
 			return testStatefulController.change({
 					user: data.User[0],
 					params: {
@@ -249,13 +249,13 @@ suite("Stateful", () => {
 				});
 		});
 
-		suiteTeardown(tearDown());
+		after(tearDown());
 	});
 
-	suite("#delete", () => {
-		suiteSetup(setUp(data, 6));
+	describe("#delete", () => {
+		before(setUp(data, 6));
 
-		test("should delete", () => {
+		it("should delete", () => {
 			return testStatefulController.delete({
 					user: data.User[0],
 					params: {
@@ -271,7 +271,7 @@ suite("Stateful", () => {
 				});
 		});
 
-		test("should delete (error 403)", () => {
+		it("should delete (error 403)", () => {
 			return testStatefulController.delete({
 					user: data.User[1],
 					params: {
@@ -284,7 +284,7 @@ suite("Stateful", () => {
 				});
 		});
 
-		test("should delete (error 400)", () => {
+		it("should delete (error 400)", () => {
 			return testStatefulController.delete({
 					user: data.User[1],
 					params: {
@@ -297,7 +297,7 @@ suite("Stateful", () => {
 				});
 		});
 
-		test("should deactivate (error 400)", () => {
+		it("should deactivate (error 400)", () => {
 			return testStatefulController.deactivate({
 					user: data.User[1],
 					params: {
@@ -310,7 +310,7 @@ suite("Stateful", () => {
 				});
 		});
 
-		test("should deactivate (error 403)", () => {
+		it("should deactivate (error 403)", () => {
 			return testStatefulController.deactivate({
 					user: data.User[0],
 					params: {
@@ -323,7 +323,7 @@ suite("Stateful", () => {
 				});
 		});
 
-		test("should deactivate (error 418)", () => {
+		it("should deactivate (error 418)", () => {
 			return testStatefulController.deactivate({
 					user: data.User[0],
 					params: {
@@ -336,6 +336,6 @@ suite("Stateful", () => {
 				});
 		});
 
-		suiteTeardown(tearDown());
+		after(tearDown());
 	});
 });

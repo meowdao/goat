@@ -2,6 +2,7 @@
 
 export default {
 	test: {
+		rendering: "server",
 		mongo: {
 			main: {
 				url: "mongodb://localhost/goat_test",
@@ -70,6 +71,7 @@ export default {
 		}
 	},
 	development: {
+		rendering: "server",
 		mongo: {
 			main: {
 				url: "mongodb://localhost/goat_dev",

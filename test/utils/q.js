@@ -6,25 +6,19 @@ import assert from "power-assert";
 
 const log = debug("test:q");
 
-suite("Q", () => {
-
-	test("should throw error", done => {
-
-		q()
+describe("q", () => {
+	it("should throw error", () => {
+		return q.resolve(true)
 			.then(() => {
 				throw new Error("ERROR");
 			})
 			.catch(error => {
 				assert.ok(error);
-			})
-			.finally(done)
-			.done();
-
+			});
 	});
 
-	test("should throw error 2", done => {
-
-		q()
+	it("should throw error 2", () => {
+		return q(true)
 			.then(() => {
 				throw new Error("ERROR");
 			})
@@ -34,50 +28,35 @@ suite("Q", () => {
 			.catch(error => {
 				log(error);
 				assert.ok(error);
-			})
-			.finally(done)
-			.done();
-
+			});
 	});
 
-	test("should throw error 3", done => {
-
+	it("should throw error 3", () => {
 		const deferred = q.defer();
-
 		deferred.makeNodeResolver()(null, true);
-
-		deferred.promise
+		return deferred.promise
 			.then(() => {
 				throw new Error("ERROR");
 			})
 			.catch(error => {
 				log(error);
 				assert.ok(error);
-			})
-			.finally(done)
-			.done();
-
+			});
 	});
 
-	test("should use destructive assignment", done => {
-
-		q({
+	it("should use destructive assignment", () => {
+		return q({
 			a: 1,
 			b: 2
 		})
 			.then(({a, b}) => {
 				log("a", a);
 				log("b", b);
-			})
-			.catch(assert.ifError)
-			.finally(done)
-			.done();
-
+			});
 	});
 
-	test("should rollback", done => {
-
-		q({})
+	it("should rollback", () => {
+		return q({})
 			.then(o => {
 				log("then 1", o);
 				throw new Error("X");
@@ -92,27 +71,6 @@ suite("Q", () => {
 			})
 			.catch(e => {
 				log("catch 2", e);
-			})
-			.finally(done)
-			.done();
-
+			});
 	});
-
-	test("should throw error 4", done => {
-
-		q({})
-			.tap(() => {
-				throw new Error("X");
-			})
-			.tap(() => {
-				return "Ok!";
-			})
-			.catch(e => {
-				log("catch 1", e);
-			})
-			.finally(done)
-			.done();
-
-	});
-
 });

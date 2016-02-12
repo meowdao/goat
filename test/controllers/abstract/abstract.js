@@ -58,7 +58,7 @@ function tearDown() {
 		.then(() => cleanUp());
 }
 
-suite("Abstract", () => {
+describe("Abstract", () => {
 	const data = {};
 
 	const testObject = {
@@ -67,9 +67,9 @@ suite("Abstract", () => {
 		number: 42
 	};
 
-	suite("#insert", () => {
-		suiteSetup(setUp(data, 0));
-		test("should insert (full data)", () => {
+	describe("#insert", () => {
+		before(setUp(data, 0));
+		it("should insert (full data)", () => {
 			return testAbstractController.insert({
 					user: data.User[0],
 					body: testObject
@@ -83,7 +83,7 @@ suite("Abstract", () => {
 				});
 		});
 
-		test("should insert (part data)", () => {
+		it("should insert (part data)", () => {
 			return testAbstractController.insert({
 					user: data.User[0],
 					body: testObject
@@ -97,12 +97,12 @@ suite("Abstract", () => {
 				});
 		});
 
-		suiteTeardown(tearDown());
+		after(tearDown());
 	});
 
-	suite("#getById", () => {
-		suiteSetup(setUp(data, 2));
-		test("should getById (obj)", () => {
+	describe("#getById", () => {
+		before(setUp(data, 2));
+		it("should getById (obj)", () => {
 			return testAbstractController.getById({
 					user: data.User[0],
 					params: {
@@ -117,7 +117,7 @@ suite("Abstract", () => {
 				});
 		});
 
-		test("should getById (error 404)", () => {
+		it("should getById (error 404)", () => {
 			return testAbstractController.getById({
 					user: data.User[1],
 					params: {
@@ -130,12 +130,12 @@ suite("Abstract", () => {
 				});
 		});
 
-		suiteTeardown(tearDown());
+		after(tearDown());
 	});
 
-	suite("#list", () => {
-		suiteSetup(setUp(data, 5));
-		test("should list", () => {
+	describe("#list", () => {
+		before(setUp(data, 5));
+		it("should list", () => {
 			return testAbstractController.list({
 					user: data.User[0]
 				})
@@ -145,13 +145,13 @@ suite("Abstract", () => {
 				});
 		});
 
-		suiteTeardown(tearDown());
+		after(tearDown());
 	});
 
-	suite("#edit", () => {
-		suiteSetup(setUp(data, 2));
+	describe("#edit", () => {
+		before(setUp(data, 2));
 
-		test("should edit (full data)", () => {
+		it("should edit (full data)", () => {
 			return testAbstractController.edit({
 					user: data.User[0],
 					params: {
@@ -168,7 +168,7 @@ suite("Abstract", () => {
 				});
 		});
 
-		test("should edit (part data)", () => {
+		it("should edit (part data)", () => {
 			return testAbstractController.edit({
 					user: data.User[1],
 					params: {
@@ -185,7 +185,7 @@ suite("Abstract", () => {
 				});
 		});
 
-		test("should edit (error 404)", () => {
+		it("should edit (error 404)", () => {
 			return testAbstractController.edit({
 					user: data.User[0],
 					params: {
@@ -199,13 +199,13 @@ suite("Abstract", () => {
 				});
 		});
 
-		suiteTeardown(tearDown());
+		after(tearDown());
 	});
 
-	suite("#delete", () => {
-		suiteSetup(setUp(data, 2));
+	describe("#delete", () => {
+		before(setUp(data, 2));
 
-		test("should delete", () => {
+		it("should delete", () => {
 			return testAbstractController.delete({
 					user: data.User[0],
 					params: {
@@ -221,7 +221,7 @@ suite("Abstract", () => {
 				});
 		});
 
-		test("should delete (error 404)", () => {
+		it("should delete (error 404)", () => {
 			return testAbstractController.delete({
 					user: data.User[0],
 					params: {
@@ -234,6 +234,6 @@ suite("Abstract", () => {
 				});
 		});
 
-		suiteTeardown(tearDown());
+		after(tearDown());
 	});
 });

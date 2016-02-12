@@ -30,15 +30,14 @@ const myVersionsController = new MyVersionsController();
 
 const log = debug("test:versioning");
 
-suite("versioning plugin", () => {
+describe("versioning plugin", () => {
 
 	const my = {
 		string: "qwerty"
 	};
 
-	test("should create record", done => {
-
-		myController.create(my)
+	it("should create record", () => {
+		return myController.create(my)
 			.then(myObj => {
 				log("my", myObj);
 				return myVersionsController.count({refId: myObj._id})
@@ -52,15 +51,11 @@ suite("versioning plugin", () => {
 				const messages = Object.keys(e.errors)
 					.map(key => e.errors[key].message);
 				log(messages);
-			})
-			.finally(done)
-			.done();
-
+			});
 	});
 
-	test("should not update record with findOneAndUpdate", done => {
-
-		myController.create(my)
+	it("should not update record with findOneAndUpdate", () => {
+		return myController.create(my)
 			.then(createdmy => {
 				log("my:created", createdmy);
 				return myController.findByIdAndUpdate(createdmy._id, {string: "asdfgh"}, {new: true})
@@ -73,18 +68,14 @@ suite("versioning plugin", () => {
 							});
 					});
 			})
-			.catch(assert.ifError)
-			.finally(done)
-			.done();
-
+			.catch(assert.ifError);
 	});
 
-	test("should update record after setting same value", done => {
-
-		myController.create(my)
+	it("should update record after setting same value", () => {
+		return myController.create(my)
 			.then(createdmy => {
 				log("my:created", createdmy);
-				createdmy.status = "active";
+				createdmy.set("status", "active");
 				return myController.save(createdmy)
 					.then(newmy => {
 						log("my:updated", newmy);
@@ -95,18 +86,14 @@ suite("versioning plugin", () => {
 							});
 					});
 			})
-			.catch(assert.ifError)
-			.finally(done)
-			.done();
-
+			.catch(assert.ifError);
 	});
 
-	test("should update record after setting new value", done => {
-
-		myController.create(my)
+	it("should update record after setting new value", () => {
+		return myController.create(my)
 			.then(createdmy => {
 				log("my:created", createdmy);
-				createdmy.string = "zxcvbn";
+				createdmy.set("string", "zxcvbn");
 				return myController.save(createdmy)
 					.then(newmy => {
 						log("my:updated", newmy);
@@ -117,19 +104,13 @@ suite("versioning plugin", () => {
 							});
 					});
 			})
-			.catch(assert.ifError)
-			.finally(done)
-			.done();
-
+			.catch(assert.ifError);
 	});
 
-	suiteTeardown(done => {
-		q.all([
+	after(() => {
+		return q.all([
 			myController.remove(),
 			myVersionsController.remove()
-		])
-			.finally(done)
-			.done();
+		]);
 	});
-
 });

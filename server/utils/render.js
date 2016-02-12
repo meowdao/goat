@@ -52,4 +52,3 @@ export function renderEmailToString(view, data) {
 	});
 	return defered.promise;
 }
-

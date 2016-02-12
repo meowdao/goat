@@ -103,6 +103,7 @@
     "build": "webpack -c --config server/configs/webpack.js",
     "lint": "eslint server/* client/assets/js/* test/*",
     "test": "NODE_ENV=${NODE_ENV:=test} mocha",
+    "travis": "NODE_ENV=${NODE_ENV:=test} mocha test/controllers/abstract",
     "coverage": "NODE_ENV=test babel-node node_modules/.bin/babel-istanbul cover --report text --report html node_modules/.bin/_mocha test/controllers/abstract"
   }
 }
