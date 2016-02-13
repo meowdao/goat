@@ -31,7 +31,6 @@ const myVersionsController = new MyVersionsController();
 const log = debug("test:versioning");
 
 describe("versioning plugin", () => {
-
 	const my = {
 		string: "qwerty"
 	};

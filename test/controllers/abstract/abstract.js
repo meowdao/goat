@@ -139,9 +139,9 @@ describe("Abstract", () => {
 			return testAbstractController.list({
 					user: data.User[0]
 				})
-				.then(list => {
-					log("list", list);
-					assert.equal(list.items.length, 3);
+				.then(result => {
+					log("result", result);
+					assert.equal(result.list.length, 3);
 				});
 		});
 

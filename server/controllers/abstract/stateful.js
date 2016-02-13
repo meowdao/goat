@@ -4,7 +4,7 @@ import _ from "lodash";
 import {checkModel, checkUser, checkActive} from "../../utils/messenger";
 import AbstractController from "./abstract";
 
-class StatefulController extends AbstractController {
+export default class StatefulController extends AbstractController {
 
 	static param = "_id";
 
@@ -18,12 +18,11 @@ class StatefulController extends AbstractController {
 	}
 
 	list(request) {
-		return this
-			.find({
-				user: request.user._id,
+		return this.find({
+				[this.constructor.realm]: request.user._id,
 				status: this.constructor.statuses.active
 			})
-			.then(items => ({items}));
+			.then(list => ({list}));
 	}
 
 	edit(request) {
@@ -37,16 +36,16 @@ class StatefulController extends AbstractController {
 				if (Object.keys(clean).length) {
 					Object.assign(item, clean);
 					return this.save(item);
+				} else {
+					return item;
 				}
-				return item;
 			});
 	}
 
 	check(request, populate = [], conditions = []) {
-		return this
-			.findOne({[this.constructor.param]: request.params[this.constructor.param] || request.body[this.constructor.param]}, {
+		return this.findOne({[this.constructor.param]: request.params[this.constructor.param] || request.body[this.constructor.param]}, {
 				lean: false,
-				populate: ["user"].concat(populate)
+				populate: [this.constructor.realm].concat(populate)
 			})
 			.then(this.conditions(request, [checkModel(request.user), checkUser(request.user)].concat(conditions)));
 	}
@@ -73,5 +72,3 @@ class StatefulController extends AbstractController {
 	}
 
 }
-
-export default StatefulController;

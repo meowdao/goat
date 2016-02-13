@@ -2,9 +2,6 @@
 
 process.env.NODE_ENV = process.env.NODE_ENV || "test";
 
-require("babel-core/register");
-require("babel-polyfill");
-
 Error.stackTraceLimit = Infinity;
 
 const debug = require("debug");

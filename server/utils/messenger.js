@@ -12,7 +12,7 @@ function _makeError(text, code = 500) {
 }
 
 function getText(displayName, key, user, fallback) {
-	return translate(`error/server/${displayName}-${key}`, user) || `${displayName.charAt(0).toUpperCase() + displayName.slice(1)} ${fallback}`;
+	return translate(`error/server/${displayName.toLowerCase()}-${key}`, user) || `${displayName} ${fallback}`;
 }
 
 export function makeError(key, user, code = 400) {
@@ -22,7 +22,7 @@ export function makeError(key, user, code = 400) {
 export function checkModel(user) {
 	return function checkModelInner(model) {
 		if (!model) {
-			throw _makeError(getText(this.displayName, "not-found", user, "Not Found"), 404);
+			throw _makeError(getText(this.constructor.displayName, "not-found", user, "Not Found"), 404);
 		} else {
 			return model;
 		}
@@ -44,7 +44,7 @@ export function checkActive(isAllowed = false) {
 		const isAdmin = request.user.role === "admin";
 		const isActive = model.status === this.constructor.statuses.active;
 		if (!isActive && !(isAllowed && isAdmin)) {
-			throw _makeError(getText(this.displayName, "not-active", request.user, "Is Not Active"), 400);
+			throw _makeError(getText(this.constructor.displayName, "not-active", request.user, "Is Not Active"), 400);
 		} else {
 			return model;
 		}

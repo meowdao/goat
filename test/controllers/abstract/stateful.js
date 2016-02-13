@@ -188,12 +188,12 @@ describe("Stateful", () => {
 		before(setUp(data, 10));
 
 		it("should list", () => {
-			testStatefulController.list({
+			return testStatefulController.list({
 					user: data.User[0]
 				})
-				.then(list => {
-					log("list", list);
-					assert.equal(list.items.length, 4);
+				.then(result => {
+					log("result", result);
+					assert.equal(result.list.length, 4);
 				});
 		});
 

@@ -65,7 +65,6 @@
   "devDependencies": {
     "babel-cli": "6.5.1",
     "babel-core": "6.5.1",
-    "babel-istanbul": "0.6.0",
     "babel-loader": "6.2.2",
     "babel-plugin-espower": "2.1.1",
     "babel-plugin-react-transform": "2.0.0",
@@ -83,6 +82,7 @@
     "eslint-config-trejgun": "git://github.com/TrejGun/eslint-config-trejgun.git#6beca5e7537dac1a70d155796f73df2555792495",
     "extract-text-webpack-plugin": "git://github.com/TrejGun/extract-text-webpack-plugin.git#4c2af8a819b30e1cd6d23e329b7492f808ee6f99",
     "file-loader": "0.8.5",
+    "istanbul": "^1.0.0-alpha",
     "less": "2.6.0",
     "less-loader": "2.2.2",
     "mocha": "2.4.5",
@@ -100,11 +100,11 @@
   "scripts": {
     "build": "webpack -c --config server/configs/webpack.js",
     "db": "NODE_ENV=${NODE_ENV:=test} babel-node tools/db-category.js",
-    "coverage": "NODE_ENV=test babel-node node_modules/.bin/babel-istanbul cover --report text --report html node_modules/.bin/_mocha test/controllers/abstract",
+    "coverage": "NODE_ENV=${NODE_ENV:=test} babel-node node_modules/istanbul/lib/cli cover --report text --report html node_modules/.bin/_mocha test/controllers/abstract",
     "lint": "eslint server/* client/assets/js/* test/*",
     "prod": "NODE_ENV=${NODE_ENV:=production} babel-node server/server.js",
     "start": "NODE_ENV=${NODE_ENV:=development} TWITTER_API=${TWITTER_API:=true} DEBUG=web:* nodemon server/server.js",
-    "test": "NODE_ENV=${NODE_ENV:=test} mocha",
-    "travis": "NODE_ENV=${NODE_ENV:=test} mocha test/controllers/abstract"
+    "test": "NODE_ENV=${NODE_ENV:=test} babel-node node_modules/.bin/_mocha",
+    "travis": "NODE_ENV=${NODE_ENV:=test} babel-node node_modules/istanbul/lib/cli cover --report text node_modules/.bin/_mocha test/controllers/abstract"
   }
 }

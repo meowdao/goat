@@ -4,9 +4,7 @@ import assert from "power-assert";
 
 
 suite("simple suite", () => {
-
 	test("simple test", () => {
-
 		assert.ok(true);
 
 		const actualObj = {
@@ -20,7 +18,5 @@ suite("simple suite", () => {
 		};
 
 		assert.equal(actualObj.array[0].value, expectedObject.value);
-
 	});
-
 });

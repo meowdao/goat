@@ -12,10 +12,8 @@ export default class RichModel {
 		if (isDebuggable) {
 			this.log = (...args) =>
 				debug(`model:${displayName}`)(...args.map(arg =>
-					util.inspect(arg, {
-						depth: 10,
-						colors: true
-					})));
+					util.inspect(arg, {depth: 10, colors: true})
+				));
 		} else {
 			this.log = () => null;
 		}
@@ -84,8 +82,7 @@ export default class RichModel {
 	 * @returns {Promise}
 	 */
 	upsert(query, data, options, params) {
-		return this
-			.enchant("findOneAndUpdate", [query, data, Object.assign({
+		return this.enchant("findOneAndUpdate", [query, data, Object.assign({
 				new: true,
 				upsert: true,
 				runValidators: true,
@@ -104,8 +101,7 @@ export default class RichModel {
 	 */
 	update(query, data, options, params) {
 		// http://mongoosejs.com/docs/api.html#model_Model.update
-		return this
-			.enchant("update", [query, data, Object.assign({
+		return this.enchant("update", [query, data, Object.assign({
 				strict: true,
 				multi: true
 			}, params)], options)

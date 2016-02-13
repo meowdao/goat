@@ -8,9 +8,9 @@ import configs from "../configs/config";
 
 export default function (app) {
 	const config = configs[process.env.NODE_ENV];
-	const connection = mongoose();
+	const connection = mongoose(config);
 
 	app.use(session(Object.assign({}, config.session, {
-		store: new (connectMongo(session))({mongooseConnection: connection.main})
+		store: new (connectMongo(session))({mongooseConnection: connection.user})
 	})));
 }

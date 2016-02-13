@@ -2,9 +2,10 @@
 
 export default {
 	test: {
+		realm: "user",
 		rendering: "server",
 		mongo: {
-			main: {
+			user: {
 				url: "mongodb://localhost/goat_test",
 				options: {
 					server: {
@@ -71,9 +72,10 @@ export default {
 		}
 	},
 	development: {
+		realm: "user",
 		rendering: "server",
 		mongo: {
-			main: {
+			user: {
 				url: "mongodb://localhost/goat_dev",
 				options: {
 					server: {

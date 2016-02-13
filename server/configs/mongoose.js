@@ -5,7 +5,6 @@ import fs from "fs";
 import path from "path";
 import debug from "debug";
 import mongoose from "mongoose";
-import configs from "../configs/config";
 
 
 mongoose.Promise = q.Promise;
@@ -17,12 +16,10 @@ function toTitleCase(str) {
 	});
 }
 
-export default function () {
+export default function (config) {
 	const log = debug("log:mongoose");
 
-	Object.keys(configs[process.env.NODE_ENV].mongo).forEach(name => {
-		const config = configs[process.env.NODE_ENV].mongo[name];
-
+	Object.keys(config.mongo).forEach(name => {
 		if (connections[name] && connections[name].readyState) {
 			return;
 		}
@@ -36,11 +33,11 @@ export default function () {
 			log("MongoDB connected!");
 		});
 		db.on("connecting", () => {
-			log("connecting to MongoDB @ " + config.url);
+			log("connecting to MongoDB @ " + config.mongo[name].url);
 		});
 		db.on("disconnected", () => {
 			log("MongoDB disconnected!");
-			db = db.open(configs.url, configs.options);
+			db = db.open(config.mongo[name].url, config.mongo[name].options);
 		});
 		db.on("disconnecting", () => {
 			log("disconnecting from MongoDB...");
@@ -60,7 +57,7 @@ export default function () {
 			log("MongoDB reconnected!");
 		});
 
-		db.open(config.url, config.options);
+		db.open(config.mongo[name].url, config.mongo[name].options);
 
 		fs.readdirSync(path.join(__dirname, "../models", name)).forEach(file => {
 			db.model(toTitleCase(file), require(path.join(__dirname, "../models", name, file)).default);

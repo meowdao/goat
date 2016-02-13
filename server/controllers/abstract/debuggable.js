@@ -5,14 +5,15 @@ import util from "util";
 
 export default class DebuggableController {
 
-	displayName = "Debuggable";
+	static displayName;
 
 	constructor(isDebuggable) {
-		this.displayName = this.constructor.name.slice(0, -10).toLowerCase();
+		this.constructor.displayName = this.constructor.name.slice(0, -10);
 		if (isDebuggable) {
 			this.log = (...args) =>
-				debug(`controller:${this.displayName}`)(...args.map(arg =>
-					util.inspect(arg, {depth: 10, colors: true})));
+				debug(`controller:${this.constructor.displayName}`)(...args.map(arg =>
+					util.inspect(arg, {depth: 10, colors: true})
+				));
 		} else {
 			this.log = () => null;
 		}

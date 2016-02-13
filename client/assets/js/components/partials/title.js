@@ -13,7 +13,6 @@ export default class Title extends Component {
 	};
 
 	render() {
-
 		const title = this.props.routes[this.props.routes.length - 1].component.displayName || "Default Title";
 
 		return (
