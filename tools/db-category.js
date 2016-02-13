@@ -15,8 +15,8 @@ const log = debug("db-setup:category");
 
 mongoose.Promise = q.Promise;
 
-const connection = mongoose.createConnection(configs[process.env.NODE_ENV].mongo.main.url, configs[process.env.NODE_ENV].mongo.main.options, () => {
-	log(`connected ${configs[process.env.NODE_ENV].mongo.main.url}`);
+const connection = mongoose.createConnection(configs[process.env.NODE_ENV].mongo.user.url, configs[process.env.NODE_ENV].mongo.user.options, () => {
+	log(`connected ${configs[process.env.NODE_ENV].mongo.user.url}`);
 });
 
 connection.model("Category", CategoryModel);
