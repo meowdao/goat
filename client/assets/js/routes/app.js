@@ -53,6 +53,7 @@ export default (
 		<Route path="admin" component={AuthenticatedComponent} onEnter={requireRoles(["admin"])}>
 			<IndexRoute component={Dashboard}/>
 			<Route path="user" component={Empty}>
+				<Route path="edit/:_id" component={UserEdit}/>
 				<Route path="list" component={UserSearch}/>
 			</Route>
 		</Route>
