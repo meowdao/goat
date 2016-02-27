@@ -48,7 +48,7 @@ export default class UserEdit extends Component {
 		lastName: "",
 		email: "",
 		isActive: false,
-		role: "user"
+		role: ""
 	};
 
 	state = {
@@ -76,7 +76,7 @@ export default class UserEdit extends Component {
 						<form className="form-horizontal" onSubmit={::this.onSubmit}>
 							<Input
 								type="text"
-								id="firstName"
+								name="firstName"
 								label="First Name"
 								labelClassName="col-xs-2"
 								wrapperClassName="col-xs-5"
@@ -85,7 +85,7 @@ export default class UserEdit extends Component {
 							/>
 							<Input
 								type="text"
-								id="lastName"
+								name="lastName"
 								label="Last Name"
 								labelClassName="col-xs-2"
 								wrapperClassName="col-xs-5"
@@ -94,7 +94,7 @@ export default class UserEdit extends Component {
 							/>
 							<Input
 								type="email"
-								id="email"
+								name="email"
 								label="Email"
 								labelClassName="col-xs-2"
 								wrapperClassName="col-xs-5"
@@ -129,11 +129,11 @@ export default class UserEdit extends Component {
 
 							<Input
 								type="select"
-								id="isActive"
+								name="isActive"
 								label="Status"
 								labelClassName="col-xs-2"
 								wrapperClassName="col-xs-5"
-								value={this.state.isActive ? "Active" : "Not Active"}
+								defaultValue={this.state.isActive ? "true" : "false"}
 								onChange={(e) => this.setState({isActive: e.target.value})}
 							>
 								<option value={true}>Active</option>
@@ -142,11 +142,11 @@ export default class UserEdit extends Component {
 
 							<Input
 								type="select"
-								id="role"
+								name="role"
 								label="User role"
 								labelClassName="col-xs-2"
 								wrapperClassName="col-xs-5"
-								value={this.state.role === "admin" ? "Admin" : "User"}
+								defaultValue={this.state.role === "admin" ? "admin" : "user"}
 								onChange={(e) => this.setState({role: e.target.value})}
 							>
 								<option value="admin">Admin</option>
