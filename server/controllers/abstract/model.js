@@ -53,36 +53,36 @@ export default class RichModel {
 
 	/**
 	 *
-	 * @param query {Object}
+	 * @param conditions {Object}
 	 * @param options {Object} (select, sort, populate)
 	 * @returns {Promise}
 	 */
-	find(query, options) {
-		return this.enchant("find", [query], options)
+	find(conditions, options) {
+		return this.enchant("find", [conditions], options)
 			.tap(this._log("found"));
 	}
 
 	/**
 	 *
-	 * @param query {Object}
+	 * @param conditions {Object}
 	 * @param options {Object} (select, sort, populate)
 	 * @returns {Promise}
 	 */
-	findOne(query, options) {
-		return this.enchant("findOne", [query], options)
+	findOne(conditions, options) {
+		return this.enchant("findOne", [conditions], options)
 			.tap(this._log("found"));
 	}
 
 	/**
 	 *
-	 * @param query {Object}
+	 * @param conditions {Object}
 	 * @param data {Object}
 	 * @param options {Object} (select, sort, populate)
 	 * @param params {Object} (new, upsert, runValidators, setDefaultsOnInsert)
 	 * @returns {Promise}
 	 */
-	upsert(query, data, options, params) {
-		return this.enchant("findOneAndUpdate", [query, data, Object.assign({
+	upsert(conditions, data, options, params) {
+		return this.enchant("findOneAndUpdate", [conditions, data, Object.assign({
 				new: true,
 				upsert: true,
 				runValidators: true,
@@ -93,15 +93,15 @@ export default class RichModel {
 
 	/**
 	 *
-	 * @param query {Object}
+	 * @param conditions {Object}
 	 * @param data {Object}
 	 * @param options {Object} (setOptions)
 	 * @param params {Object} (safe, upsert, multi, strict, overwrite)
 	 * @returns {Promise}
 	 */
-	update(query, data, options, params) {
+	update(conditions, data, options, params) {
 		// http://mongoosejs.com/docs/api.html#model_Model.update
-		return this.enchant("update", [query, data, Object.assign({
+		return this.enchant("update", [conditions, data, Object.assign({
 				strict: true,
 				multi: true
 			}, params)], options)

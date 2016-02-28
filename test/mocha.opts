@@ -1,4 +1,4 @@
--R spec
---ui tdd
---timeout 30000
+--reporter spec
 --require test/mocha
+--timeout 30000
+--ui tdd
