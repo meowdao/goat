@@ -172,7 +172,7 @@ export default class UserList extends Component {
 				<div className="row">
 					<div className="col-sm-8">
 						<h4 className="list-group-item-heading">
-							<Link to={"/user/edit/" + user._id}>
+							<Link to={"/admin/user/edit/" + user._id}>
 								{`${user.firstName} ${user.lastName}`}
 							</Link>
 						</h4>
