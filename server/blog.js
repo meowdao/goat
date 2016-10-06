@@ -23,16 +23,16 @@ proxy(app);
 login(app);
 
 if (process.env.NODE_ENV !== "production") {
-	const config = require("./configs/webpack");
+	const config = require(`./configs/webpack.${process.env.APP}`);
 	const compiler = webpack(config);
-	const webpackdev = require("./configs/webpack.dev");
+	const webpackdev = require(`./configs/webpack.${process.env.APP}.dev`);
 
 	app.use(require("webpack-dev-middleware")(compiler, webpackdev));
 	app.use(require("webpack-hot-middleware")(compiler));
 }
 
 
-["cors", "pre", "json", "main", "login", "csrf", "private", "static"].forEach(name => {
+["cors", "pre", "json", "main", "csrf", "public", "private", "static"].forEach(name => {
 	require(`./routes/${name}.js`).default(app, __dirname, "/api/");
 });
 

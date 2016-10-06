@@ -105,60 +105,10 @@ export default class Login extends Component {
 			<div className="panel panel-default">
 				<div className="panel-body">
 
-					[<a href="#" onClick={this.open("/auth/google")}>google</a>]
-					[<a href="#" onClick={this.open("/auth/facebook")}>facebook</a>]
-					[<a href="#" onClick={this.open("/auth/goat")}>goat</a>]
+					[<a href="#" onClick={this.open("/api/auth/google")}>google</a>]
+					[<a href="#" onClick={this.open("/api/auth/facebook")}>facebook</a>]
+					[<a href="#" onClick={this.open("/api/auth/goat")}>goat</a>]
 
-					[<Link to="/user/forgot">Forgot password?</Link>]
-
-					<br/>
-
-					<form className="form-horizontal" onSubmit={::this.onSubmit} autoComplete="off">
-						<FormGroup
-							controlId="formHorizontalEmail"
-							// validationState={this.getValidationState()}
-						>
-							<Col componentClass={ControlLabel} sm={2}>
-								Email
-							</Col>
-							<Col sm={10}>
-								<FormControl
-									type="email"
-									name="email"
-									value={this.state.email}
-									placeholder="me@example.com"
-									onChange={e => this.setState({email: e.target.value})}
-								/>
-							</Col>
-						</FormGroup>
-						<FormGroup
-							controlId="formHorizontalPassword"
-							// validationState={this.getValidationState()}
-						>
-							<Col componentClass={ControlLabel} sm={2}>
-								Password
-							</Col>
-							<Col sm={10}>
-								<FormControl
-									type="password"
-									name="password"
-									value={this.state.password}
-									placeholder="******"
-									onChange={e => this.setState({password: e.target.value})}
-								/>
-							</Col>
-						</FormGroup>
-						<FormGroup>
-							<Col smOffset={2} sm={10}>
-								<Button
-									type="submit"
-									disabled={this.state.disabled}
-								>
-									Login
-								</Button>
-							</Col>
-						</FormGroup>
-					</form>
 				</div>
 			</div>
 		);

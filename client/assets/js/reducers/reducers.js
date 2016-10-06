@@ -4,6 +4,7 @@ import user from "./user";
 import messages from "./messages";
 import twits from "./twitter";
 import users from "./users";
+import oauth2 from "./oauth2";
 import hash from "./hash";
 
 
@@ -12,6 +13,7 @@ export default combineReducers({
 	messages,
 	routing,
 	twits,
+	oauth2,
 	user,
 	users
 });

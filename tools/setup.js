@@ -36,7 +36,7 @@ cleanUp()
 				clientId: "goat-test-server",
 				clientSecret: "01123581321345589144233377610",
 				redirectURIs: [
-					"http://localhost:9000/auth/goat/callback"
+					"http://localhost:9000/api/auth/goat/callback"
 				]
 			})
 		])

@@ -1,7 +1,6 @@
 import passport from "passport";
-import {Router} from "express";
-import {makeError, processValidationError} from "../utils/error";
-import {methodNotAllowed} from "./utils";
+import {makeError, processValidationError} from "../../../utils/error";
+import {methodNotAllowed} from "../../utils";
 
 
 function successHtml() {
@@ -40,9 +39,7 @@ function errorHtml(message) {
 	`;
 }
 
-export default function (app, dirname, prefix) {
-	const router = Router(); // eslint-disable-line new-cap
-
+export default function (router) {
 	router.route("/auth/facebook")
 		.get(passport.authenticate("facebook", {
 			display: "popup",
@@ -62,10 +59,7 @@ export default function (app, dirname, prefix) {
 		.all(methodNotAllowed);
 
 	router.route("/auth/goat")
-		.get((req, res, next) => {
-				next();
-			},
-			passport.authenticate("goat", {
+		.get(passport.authenticate("goat", {
 				failureRedirect: "/login",
 				scope: [] // TODO check me
 			}))
@@ -100,9 +94,7 @@ export default function (app, dirname, prefix) {
 		.get((request, response) => {
 			request.logout();
 			response.clearCookie();
-			response.redirect("/login");
+			response.send({success: true});
 		})
 		.all(methodNotAllowed);
-
-	app.use(prefix, router);
 }

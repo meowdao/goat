@@ -1,9 +1,9 @@
-const config = require("./webpack");
+const config = require("./webpack.blog");
 
 module.exports = {
 	publicPath: config.output.publicPath,
 	contentBase: "/client/build/",
-	filename: "bundle.js",
+	filename: "bundle.blog.js",
 	watchOptions: {
 		aggregateTimeout: 0
 	},

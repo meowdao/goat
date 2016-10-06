@@ -32,8 +32,9 @@ export default class Message extends Component {
 	render() {
 		return (
 			<div>
-				{this.props.messages.map(message =>
+				{this.props.messages.map((message, i) =>
 					<Alert
+						key={i}
 						onDismiss={() => {
 							this.props.dismiss(message);
 						}}

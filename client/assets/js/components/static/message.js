@@ -24,7 +24,7 @@ export default class Error extends Message {
 				<Title {...this.props}/>
 
 				<p>
-					@{JSON.stringify(this.props.messages)}@
+					@{JSON.stringify(this.props)}@
 				</p>
 
 				{this.props.messages.map((message, i) =>

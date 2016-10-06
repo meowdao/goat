@@ -7,16 +7,7 @@ import ClientController from "../../../controllers/user/client";
 
 export default function (router) {
 	router.route("/login")
-		.get((request, response) => {
-			response.render("login");
-		})
 		.post(passport.authenticate("local", {successReturnToOrRedirect: "/", failureRedirect: "/error"}));
-
-
-	router.route("/error")
-		.get((request, response) => {
-			response.render("login");
-		});
 
 	router.route("/logout")
 		.get((request, response) => {
@@ -57,14 +48,7 @@ export default function (router) {
 						callback(null, client, redirectURI);
 					})
 					.catch(callback);
-			}),
-			(request, response) => {
-				response.render("dialog", {
-					transaction: request.oauth2.transactionID,
-					user: request.user,
-					client: request.oauth2.client
-				});
-			});
+			}));
 
 	// user decision endpoint
 	//

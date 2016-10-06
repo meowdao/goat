@@ -56,7 +56,7 @@ export default {
 			abl: {
 				clientID: "goat-test-server",
 				clientSecret: "01123581321345589144233377610",
-				callbackURL: "http://localhost:9000/auth/goat/callback",
+				callbackURL: "http://localhost:9000/api/auth/goat/callback",
 				authorizationURL: "http://localhost:3000/dialog/authorize",
 				tokenURL: "http://localhost:3000/oauth/token",
 				profileURL: "http://localhost:3000/api/userinfo"

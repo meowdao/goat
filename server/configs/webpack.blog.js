@@ -8,11 +8,11 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 const config = {
 	entry: [
-		"./client/assets/js/main"
+		"./client/assets/js/blog"
 	],
 	output: {
 		path: path.join(__dirname, "..", "..", "client", "build"),
-		filename: "bundle.js",
+		filename: "bundle.blog.js",
 		sourceMapFilename: "[file].map",
 		chunkFilename: "[id].js",
 		publicPath: "/build/"

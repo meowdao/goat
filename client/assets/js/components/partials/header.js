@@ -36,6 +36,13 @@ export default class Header extends Component {
 		router: PropTypes.object.isRequired
 	};
 
+	logout() {
+		this.props.logout()
+			.then(() => {
+				this.context.router.push("/login");
+			});
+	}
+
 	renderMenu() {
 		return (
 			<Nav navbar pullRight>
@@ -44,7 +51,7 @@ export default class Header extends Component {
 						<MenuItem >Dashboard</MenuItem>
 					</LinkContainer>
 					<MenuItem divider/>
-					<LinkContainer to="/logout">
+					<LinkContainer onSelect={::this.logout} to="#">
 						<MenuItem>Logout</MenuItem>
 					</LinkContainer>
 				</NavDropdown>
