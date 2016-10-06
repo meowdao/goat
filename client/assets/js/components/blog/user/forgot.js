@@ -2,9 +2,9 @@ import React, {PropTypes, Component} from "react";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import {Input, ButtonInput} from "react-bootstrap";
-import API from "../../utils/API";
-import {reEmail} from "../../../../../server/utils/constants/regexp";
-import {email} from "../../../../../server/utils/constants/misc";
+import API from "../../../utils/API";
+import {reEmail} from "../../../../../../server/utils/constants/regexp";
+import {email} from "../../../../../../server/utils/constants/misc";
 
 
 const forgot = (data) =>

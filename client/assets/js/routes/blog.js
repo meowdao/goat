@@ -1,34 +1,33 @@
 import React from "react"; // eslint-disable-line no-unused-vars
 import {Route, IndexRoute, IndexRedirect} from "react-router";
-import GOAT from "../components/GOAT";
-import Welcome from "../components/static/welcome";
-import Article from "../components/partials/article";
-import Empty from "../components/partials/empty";
-import TwitSearch from "../components/twitter/twitsearch";
-import Dashboard from "../components/admin/dashboard";
-import UserList from "../components/admin/users/list";
-import AuthenticatedComponent from "../components/partials/protected";
-import Login from "../components/user/login";
-import Register from "../components/user/register";
-import Profile from "../components/user/profile";
-import Forgot from "../components/user/forgot";
-import Change from "../components/user/change";
-import UserEdit from "../components/user/edit";
-import CategoryList from "../components/category/list";
-import CategoryAdd from "../components/category/add";
-import Airport from "../components/page/airport";
-import Message from "../components/static/message";
+import GOAT from "../components/blog/layout";
+import Welcome from "../components/blog/static/welcome";
+import Article from "../components/blog/partials/article";
+import Empty from "../components/blog/partials/empty";
+import TwitSearch from "../components/blog/twitter/twitsearch";
+import Dashboard from "../components/blog/admin/dashboard";
+import UserList from "../components/blog/admin/users/list";
+import AuthenticatedComponent from "../components/blog/partials/protected";
+import Login from "../components/blog/user/login";
+import Register from "../components/blog/user/register";
+import Profile from "../components/blog/user/profile";
+import Forgot from "../components/blog/user/forgot";
+import Change from "../components/blog/user/change";
+import UserEdit from "../components/blog/user/edit";
+import CategoryList from "../components/blog/category/list";
+import CategoryAdd from "../components/blog/category/add";
+import Message from "../components/blog/static/message";
 
 
 function setDisplayName(displayName) {
 	return (nextState) => {
-		nextState.params.displayName = displayName;
+		Object.assign(nextState.params, {displayName});
 	};
 }
 
 function requireRoles(roles) {
 	return (nextState) => {
-		nextState.params.roles = roles;
+		Object.assign(nextState.params, {roles});
 	};
 }
 
@@ -70,14 +69,10 @@ export default (
 			<Route path="new" component={CategoryAdd}/>
 			<Route path=":_id" component={CategoryList}/>
 		</Route>
-		<Route path="airport" component={Article} onEnter={setDisplayName("Airports")}>
-			<IndexRoute component={Airport} onEnter={nextState => {nextState.params.key = 1;}}/>
-			<Route path="schedule" component={Airport} onEnter={nextState => {nextState.params.key = 2;}}/>
-			<Route path="flight" component={Airport} onEnter={nextState => {nextState.params.key = 3;}}/>
-			<Route path="ticket" component={Airport} onEnter={nextState => {nextState.params.key = 4;}}/>
-			<Route path="map" component={Airport} onEnter={nextState => {nextState.params.key = 5;}}/>
-		</Route>
+
 		<Route path="error" component={Message}/>
+		<Route path="contacts" component={Welcome}/>
+		<Route path="terms" component={Welcome}/>
 		<Route path="*" component={Message}/>
 	</Route>
 );

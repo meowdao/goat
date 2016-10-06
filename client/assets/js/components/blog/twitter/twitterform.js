@@ -2,8 +2,8 @@ import React, {PropTypes} from "react";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import {Col, FormGroup, ControlLabel, FormControl, Button} from "react-bootstrap";
-import API from "../../utils/API";
-import {UPDATE_TWITTER_LIST} from "../../constants/constants";
+import API from "../../../utils/API";
+import {UPDATE_TWITTER_LIST} from "../../../constants/constants";
 
 
 const twits = data =>

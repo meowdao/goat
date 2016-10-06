@@ -45,7 +45,7 @@ export default class Decision extends Component {
 							</Button>
 						</Col>
 					</FormGroup>
-					[<a href="/logout">Logout </a>]
+					[<a href="/logout">Logout</a>]
 				</form>
 			</div>
 		);

@@ -6,17 +6,28 @@ GOAT
 
 To make the first build run:
 
+install
 ```bash
 cp ./configs/config.sample.js ./configs/config.js
 npm install
-npm run start
 ```
 
-To run tests:
+run 
+```bash
+npm run start:pm2
+```
+
+test
 ```bash
 npm run test test/test.js
 ```
+
 or
 ```bash
 NODE_ENV=test mocha test/test.js
+```
+
+eslint
+```bash
+npm run lint
 ```

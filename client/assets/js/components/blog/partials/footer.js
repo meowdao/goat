@@ -8,16 +8,16 @@ export default class Footer extends Component {
 		return (
 			<Navbar fixedBottom inverse>
 				<Nav navbar>
-					<LinkContainer to="dummy">
+					<LinkContainer to="contacts">
 						<NavItem>Contact us</NavItem>
 					</LinkContainer>
-					<LinkContainer to="dummy">
+					<LinkContainer to="terms">
 						<NavItem>Terms and conditions</NavItem>
 					</LinkContainer>
 				</Nav>
 
 				<p className="navbar-text navbar-right">
-					&copy; CTAPbIu_MABP
+					<a href="https://github.com/TrejGun">&copy; CTAPbIu_MABP</a>
 				</p>
 			</Navbar>
 		);

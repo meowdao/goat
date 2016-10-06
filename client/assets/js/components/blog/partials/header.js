@@ -2,10 +2,10 @@ import React, {PropTypes, Component} from "react";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import {Link} from "react-router";
-import API from "../../utils/API";
+import API from "../../../utils/API";
 import {Navbar, Nav, NavItem, NavDropdown, MenuItem} from "react-bootstrap";
 import {LinkContainer} from "react-router-bootstrap";
-import {USER_LOGOUT} from "../../constants/constants";
+import {USER_LOGOUT} from "../../../constants/constants";
 
 
 const logout = (data) =>

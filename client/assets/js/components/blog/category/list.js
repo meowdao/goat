@@ -1,6 +1,6 @@
 import React, {PropTypes, Component} from "react";
-import API from "../../utils/API";
-import Tree from "../../utils/tree/tree";
+import API from "../../../utils/API";
+import Tree from "../../../utils/tree/tree";
 
 
 export default class List extends Component {

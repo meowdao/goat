@@ -35,9 +35,6 @@ export function renderAppToString(request, response) {
 		} else if (redirectLocation) {
 			response.redirect(302, redirectLocation.pathname + redirectLocation.search);
 		} else if (renderProps) {
-			console.log("renderAppToString")
-			console.log("request.user", request.user)
-			console.log("request.oauth2", request.oauth2)
 			const store = configureStore({user: request.user, oauth2: request.oauth2});
 			const initialMarkup = render(renderToString, renderProps, store);
 			response.status(200).send(renderHTML({initialMarkup, initialState: store.getState()}));

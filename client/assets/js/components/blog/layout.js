@@ -3,7 +3,7 @@ import Header from "./partials/header";
 import Footer from "./partials/footer";
 
 
-export default class GOAT extends Component {
+export default class Layout extends Component {
 
 	static displayName = "G.O.A.T.";
 

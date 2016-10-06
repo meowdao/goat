@@ -1,84 +1,95 @@
 import React, {PropTypes, Component} from "react";
-import {bindActionCreators} from "redux";
-import {connect} from "react-redux";
 import {Col, FormGroup, ControlLabel, FormControl, Button} from "react-bootstrap";
+
+import {connect} from "react-redux";
+import {bindActionCreators} from "redux";
+import API from "../../../utils/API";
+import {UPDATE_USER} from "../../../constants/constants";
 import zxcvbn from "zxcvbn";
-import API from "../../utils/API";
-import {reEmail} from "../../../../../server/utils/constants/regexp";
-import {
-	email,
-	password,
-	confirm,
-	fullName/* , phoneNumber*/
-} from "../../../../../server/utils/constants/misc";
-import {USER_LOGIN} from "../../constants/constants";
+import {reEmail} from "../../../../../../server/utils/constants/regexp";
 
 
-const register = (data) =>
+const userUpdate = data =>
 	dispatch =>
-		API.register(data)
-			.then(responce => {
+		API.updateUsers(data)
+			.then(response => {
 				dispatch({
-					type: USER_LOGIN,
-					user: responce
+					type: UPDATE_USER,
+					data: response
 				});
 			});
 
 @connect(
-	() => ({}),
-	dispatch => bindActionCreators({register}, dispatch)
+	state => ({
+		users: state.users.usersData,
+		userProfile: state.user
+	}),
+	dispatch => bindActionCreators({userUpdate}, dispatch)
 )
-export default class Register extends Component {
+export default class UserEdit extends Component {
 
-	static displayName = "Register";
+	static displayName = "User Edit";
 
 	static propTypes = {
-		email: PropTypes.string,
-		// phoneNumber: PropTypes.string,
-		password: PropTypes.string,
-		confirm: PropTypes.string,
+		users: PropTypes.array,
+		userProfile: PropTypes.object,
+		params: PropTypes.object,
+		userUpdate: PropTypes.func,
 		fullName: PropTypes.string,
-		history: React.PropTypes.object,
-		register: PropTypes.func
-	};
-
-	static contextTypes = {
-		router: PropTypes.object.isRequired
+		email: PropTypes.string,
+		status: PropTypes.string,
+		role: PropTypes.string,
+		password: PropTypes.string,
+		confirm: PropTypes.string
 	};
 
 	static defaultProps = {
-		email,
-		// phoneNumber
-		password,
-		confirm,
-		fullName
+		users: [],
+		userProfile: {},
+		fullName: "",
+		email: "",
+		status: "inactive",
+		role: "",
+		password: "",
+		confirm: ""
 	};
 
 	state = {
+		fullName: this.props.lastName,
 		email: this.props.email,
-		// phoneNumber: this.props.phoneNumber,
+		status: this.props.status,
+		role: this.props.role,
 		password: this.props.password,
-		confirm: this.props.confirm,
-		fullName: this.props.lastName
+		confirm: this.props.confirm
 	};
+
+	componentWillMount() {
+		this.setState(this.props.params._id ? this.props.users.find(user => user._id === this.props.params._id) : this.props.userProfile);
+	}
 
 	onSubmit(e) {
 		e.preventDefault();
-		this.props.register(this.state)
-			.then(() => {
-				this.context.router.push("/user/profile");
-			});
+		this.props.userUpdate(this.state);
 	}
 
 	validateEmail() {
+		if (!this.state.email) {
+			return null;
+		}
 		return reEmail.test(this.state.email) ? "success" : "error";
 	}
 
 	validatePassword() {
+		if (!this.state.password) {
+			return null;
+		}
 		return zxcvbn(this.state.password).score >= 1 ? "success" : "error";
 	}
 
 	validateConfirm() {
+		if (!this.state.confirm) {
+			return null;
+		}
 		return this.state.password === this.state.confirm ? "success" : "error";
 	}
 
@@ -86,7 +97,8 @@ export default class Register extends Component {
 		return (
 			<div className="panel panel-default">
 				<div className="panel-body">
-					<form className="form-horizontal" onSubmit={::this.onSubmit} autoComplete="off">
+					<h3>Profile:</h3>
+					<form className="form-horizontal" onSubmit={::this.onSubmit}>
 						<FormGroup
 							controlId="formHorizontalFirstName"
 						>
@@ -120,6 +132,7 @@ export default class Register extends Component {
 								/>
 							</Col>
 						</FormGroup>
+
 						<FormGroup
 							controlId="formHorizontalPassword"
 							validationState={this.validatePassword()}
@@ -154,12 +167,50 @@ export default class Register extends Component {
 								/>
 							</Col>
 						</FormGroup>
+						<FormGroup
+							controlId="formHorizontalConfirm"
+							validationState={this.validateConfirm()}
+						>
+							<Col componentClass={ControlLabel} sm={2}>
+								Status
+							</Col>
+							<Col sm={2}>
+								<FormControl
+									componentClass="select"
+									placeholder="Status"
+									defaultValue={this.state.status === "active" ? "true" : "false"}
+									onChange={(e) => this.setState({status: e.target.value})}
+								>
+									<option value="active">Active</option>
+									<option value="inactive">Suspended</option>
+								</FormControl>
+							</Col>
+						</FormGroup>
+						<FormGroup
+							controlId="formHorizontalConfirm"
+							validationState={this.validateConfirm()}
+						>
+							<Col componentClass={ControlLabel} sm={2}>
+								Role
+							</Col>
+							<Col sm={2}>
+								<FormControl
+									componentClass="select"
+									placeholder="User role"
+									defaultValue={this.state.role === "admin" ? "admin" : "user"}
+									onChange={(e) => this.setState({role: e.target.value})}
+								>
+									<option value="admin">Admin</option>
+									<option value="user">User</option>
+								</FormControl>
+							</Col>
+						</FormGroup>
 						<FormGroup>
 							<Col smOffset={2} sm={10}>
 								<Button
 									type="submit"
 								>
-									Register
+									Edit
 								</Button>
 							</Col>
 						</FormGroup>

@@ -1,13 +1,12 @@
 import React, {PropTypes, Component} from "react";
 import {connect} from "react-redux";
-import API from "../../../utils/API";
+import API from "../../../../utils/API";
 import {bindActionCreators} from "redux";
 import {Col, FormGroup, FormControl, Button, ListGroup, ListGroupItem, Pagination} from "react-bootstrap";
 import {Link} from "react-router";
-import {LinkContainer} from "react-router-bootstrap";
 
 // import {Link} from "react-router";
-import {UPDATE_USER, UPDATE_USER_LIST} from "../../../constants/constants";
+import {UPDATE_USER, UPDATE_USER_LIST} from "../../../../constants/constants";
 
 
 const userUpdate = data =>

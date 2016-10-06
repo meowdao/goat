@@ -3,8 +3,8 @@ import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import {Input, ButtonInput} from "react-bootstrap";
 import zxcvbn from "zxcvbn";
-import API from "../../utils/API";
-import {password, confirm} from "../../../../../server/utils/constants/misc";
+import API from "../../../utils/API";
+import {password, confirm} from "../../../../../../server/utils/constants/misc";
 
 
 const change = (data) =>
