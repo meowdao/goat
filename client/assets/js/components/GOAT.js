@@ -1,5 +1,3 @@
-"use strict";
-
 import React, {PropTypes, Component} from "react";
 import Header from "./partials/header";
 import Footer from "./partials/footer";

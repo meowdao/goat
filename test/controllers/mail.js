@@ -1,25 +1,23 @@
-"use strict";
-
 import assert from "power-assert";
-import {email, firstName, lastName} from "../../server/utils/constants/misc";
-import {getControllers} from "../controllers";
+import {email, fullName} from "../../server/utils/constants/misc";
 
+import MailController from "../../server/controllers/mail/mail";
 
-const controllers = getControllers(true);
 
 describe("Mail", () => {
+	const mailController = new MailController(true);
+
 	describe("#sendMail", () => {
-		it("send mail", () => {
-			return controllers.mail.composeMail("test", {to: email}, {}, {
+		it("send mail", () =>
+			mailController.compose("test", {to: email}, {}, {
 				user: {
 					email,
-					firstName,
-					lastName
+					fullName
 				}
 			})
-			.then(mail => {
-				assert.deepEqual(Array.prototype.slice.call(mail.to), [email]); // SchemaArray
-			});
-		});
+				.then(mail => {
+					assert.deepEqual(Array.prototype.slice.call(mail.to), [email]); // SchemaArray
+				})
+		);
 	});
 });

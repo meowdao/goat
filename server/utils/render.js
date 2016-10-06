@@ -1,19 +1,18 @@
-"use strict";
-
 import q from "q";
 import {Provider} from "react-redux";
 import {match, RouterContext} from "react-router";
 import {renderToStaticMarkup, renderToString} from "react-dom/server";
 import React from "react"; // eslint-disable-line no-unused-vars
-import ReactDOM from "react-dom/server";
 import HTML from "../../client/assets/js/components/HTML";
+import configs from "../configs/config";
+
 
 import appRoutes from "../../client/assets/js/routes/app";
 import emailRoutes from "../../client/assets/js/routes/email";
 import configureStore from "../../client/assets/js/utils/store";
 
 export function renderHTML(params) {
-	const html = ReactDOM.renderToStaticMarkup(<HTML {...params}/>);
+	const html = renderToStaticMarkup(<HTML {...params} />);
 	return `<!doctype html>\n${html}`;
 }
 
@@ -43,7 +42,7 @@ export function renderAppToString(request, response) {
 
 export function renderEmailToString(view, data) {
 	const defered = q.defer();
-	match({routes: emailRoutes, location: "/" + view}, (error, redirectLocation, renderProps) => {
+	match({routes: emailRoutes, location: `/${view}`}, (error, redirectLocation, renderProps) => {
 		if (error) {
 			defered.reject(error);
 		} else {
@@ -51,4 +50,13 @@ export function renderEmailToString(view, data) {
 		}
 	});
 	return defered.promise;
+}
+
+export function renderPage(request, response) {
+	const config = configs[process.env.NODE_ENV];
+	if (config.rendering === "server") {
+		renderAppToString(request, response);
+	} else { // client
+		response.status(200).send(renderHTML());
+	}
 }

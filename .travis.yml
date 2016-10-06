@@ -1,17 +1,29 @@
 language: node_js
 node_js:
-  - "4"
-  - "5"
+  - "6"
 services:
   - mongodb
+  - redis-server
 before_install:
-  - cp ./server/configs/config.sample.js ./server/configs/config.js
+  - cp source/configs/config.sample.js source/configs/config.js
 install:
   - npm install
+before_script:
+  - npm run manual tools/setup
 script:
-  - npm run build
-  - npm run db
   - npm run travis
-
-
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+      - mongodb-3.2-precise
+    packages:
+      - g++-4.8
+      - mongodb-org-server
+env:
+  matrix:
+    - CXX=g++-4.8
+  global:
+    - NPM_CONFIG_PROGRESS=false
+    - NODE_ENV=test
 

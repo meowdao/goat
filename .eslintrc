@@ -1,5 +1,12 @@
 {
 	"extends": [
 		"trejgun"
-	]
+	],
+  "rules": {
+    "react/jsx-indent": [
+      2,
+      "tab"
+    ],
+    "react/jsx-space-before-closing": 0
+  }
 }

@@ -1,11 +1,12 @@
 {
   "ignore": [
-	".idea"
+    ".idea"
   ],
   "watch": [
-	"server/"
+    "server/",
+    "client/"
   ],
   "execMap": {
-	"js": "babel-node"
+    "js": "babel-node"
   }
 }

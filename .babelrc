@@ -1,12 +1,3 @@
 {
-  "presets": [
-    "es2015",
-    "stage-0",
-    "react"
-  ],
-  "plugins": [
-  	"transform-runtime",
-  	"transform-decorators-legacy",
-  	"babel-plugin-espower"
-  ]
+  "extends": "babel-config-trejgun/es2015/server-client-test.json"
 }

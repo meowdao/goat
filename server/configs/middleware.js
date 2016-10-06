@@ -1,5 +1,3 @@
-"use strict";
-
 import {makeError} from "../utils/messenger";
 
 
@@ -13,14 +11,16 @@ export default function (app) {
 
 	app.use((request, response, next) => {
 		if (request.method === "OPTIONS") {
-			return response.status(204).send("");
+			response.status(204).send("");
+			return;
 		}
 		next();
 	});
 
 	app.use((request, response, next) => {
 		if (request.method === "POST" && !request.get("Origin")) {
-			return next(makeError("no-origin", request.user));
+			next(makeError("no-origin", request.user));
+			return;
 		}
 		next();
 	});

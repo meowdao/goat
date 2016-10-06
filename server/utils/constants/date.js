@@ -1,6 +1,3 @@
-"use strict";
-
-
 export const timeZone = "Europe/Zurich";
 export const date = new Date();
 

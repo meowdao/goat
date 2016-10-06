@@ -1,11 +1,7 @@
-"use strict";
-
 import $ from "jquery";
-import debug from "debug";
 import {MESSAGE_ADD} from "../constants/constants";
 
 export default function configureJquery(store) {
-	const log = debug("web:jquery");
 
 	$.noConflict();
 
@@ -24,13 +20,17 @@ export default function configureJquery(store) {
 		}
 	});
 
+	$.ajaxPrefilter(options => {
+		options.url = `/api/${options.url}`;
+	});
+
 	$(document)
 		.ajaxStart(() => {
 			$(document).css({cursor: "wait"});
 		})
 		.ajaxError((event, XMLHttpRequest, ajaxOptions, thrownError) => {
-			log(ajaxOptions.method + " " + document.location.protocol + "//" + document.location.host + "/" + ajaxOptions.url + "?" + (ajaxOptions.data || ""));
-			log(thrownError);
+			console.info(`${ajaxOptions.method} ${document.location.protocol}//${document.location.host}/${ajaxOptions.url}${ajaxOptions.data ? `?${ajaxOptions.data}` : ""}`);
+			console.error(thrownError);
 			store.dispatch({
 				type: MESSAGE_ADD,
 				message: {
@@ -40,7 +40,7 @@ export default function configureJquery(store) {
 			});
 		})
 		.ajaxSuccess((event, XMLHttpRequest, ajaxOptions) => {
-			log(ajaxOptions.method + " " + document.location.protocol + "//" + document.location.host + "/" + ajaxOptions.url + "?" + (ajaxOptions.data || ""));
+			console.info(`${ajaxOptions.method} ${document.location.protocol}//${document.location.host}/${ajaxOptions.url}${ajaxOptions.data ? `?${ajaxOptions.data}` : ""}`);
 		})
 		.ajaxComplete(() => {
 			$(document).css({cursor: "auto"});

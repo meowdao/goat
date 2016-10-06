@@ -1,0 +1,11 @@
+<form action="/dialog/authorize/decision" method="post">
+    <p class="title3">Hi {{user.fullName}}!</p>
+    <p><b>{{client.name}}</b> <span>is requesting access to your account.</span></p>
+    <p class="title2">Do you approve? </p>
+    <input name="transaction_id" type="hidden" value="{{transaction}}"/>
+    <div class="md-input-container submit">
+        <input type="submit" value="Allow" id="allow" class="left"/>
+        <input type="submit" value="Deny" name="cancel" id="deny" class="right"/>
+    </div>
+    <p class="bottom-link"> <a href="/logout">Logout </a></p>
+</form>

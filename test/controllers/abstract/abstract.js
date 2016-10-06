@@ -1,13 +1,10 @@
-"use strict";
-
 import q from "q";
-import debug from "debug";
+import winston from "winston";
 import assert from "power-assert";
 import mongoose, {Schema} from "mongoose";
 import AbstractController from "../../../server/controllers/abstract/abstract";
 import {cleanUp, mockInChain} from "../../flow";
 
-const log = debug("test:AbstractController");
 
 class TestAbstractController extends AbstractController {
 }
@@ -75,7 +72,7 @@ describe("Abstract", () => {
 					body: testObject
 				})
 				.then(test => {
-					log("test", test);
+					winston.debug("test", test);
 					assert.equal(test.user.toString(), data.User[0]._id.toString());
 					assert.equal(test.bool, testObject.bool);
 					assert.equal(test.string, testObject.string);
@@ -89,7 +86,7 @@ describe("Abstract", () => {
 					body: testObject
 				}, ["bool"])
 				.then(test => {
-					log("test", test);
+					winston.debug("test", test);
 					assert.equal(test.user.toString(), data.User[0]._id.toString());
 					assert.equal(test.bool, testObject.bool);
 					assert.equal(test.string, void (0));
@@ -110,7 +107,7 @@ describe("Abstract", () => {
 					}
 				})
 				.then(test => {
-					log("test", test);
+					winston.debug("test", test);
 					assert.equal(test.bool, data.Test[0].bool);
 					assert.equal(test.string, data.Test[0].string);
 					assert.equal(test.number, data.Test[0].number);
@@ -140,7 +137,7 @@ describe("Abstract", () => {
 					user: data.User[0]
 				})
 				.then(result => {
-					log("result", result);
+					winston.debug("result", result);
 					assert.equal(result.list.length, 3);
 				});
 		});
@@ -160,7 +157,7 @@ describe("Abstract", () => {
 					body: testObject
 				})
 				.then(test => {
-					log("test", test);
+					winston.debug("test", test);
 					assert.equal(test.user.toString(), data.User[0]._id.toString());
 					assert.equal(test.bool, testObject.bool);
 					assert.equal(test.string, testObject.string);
@@ -177,7 +174,7 @@ describe("Abstract", () => {
 					body: testObject
 				}, ["bool"])
 				.then(test => {
-					log("test", test);
+					winston.debug("test", test);
 					assert.equal(test.user.toString(), data.User[1]._id.toString());
 					assert.equal(test.bool, testObject.bool);
 					assert.equal(test.string, data.Test[1].string);

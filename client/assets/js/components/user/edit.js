@@ -1,12 +1,13 @@
-"use strict";
-
 import React, {PropTypes, Component} from "react";
-import {Input, ButtonInput} from "react-bootstrap";
+import {Col, FormGroup, ControlLabel, FormControl, Button} from "react-bootstrap";
+
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import API from "../../utils/API";
 import {UPDATE_USER} from "../../constants/constants";
 import zxcvbn from "zxcvbn";
+import {reEmail} from "../../../../../server/utils/constants/regexp";
+
 
 const userUpdate = data =>
 	dispatch =>
@@ -34,29 +35,32 @@ export default class UserEdit extends Component {
 		userProfile: PropTypes.object,
 		params: PropTypes.object,
 		userUpdate: PropTypes.func,
-		firstName: PropTypes.string,
-		lastName: PropTypes.string,
+		fullName: PropTypes.string,
 		email: PropTypes.string,
-		isActive: PropTypes.bool,
-		role: PropTypes.string
+		status: PropTypes.string,
+		role: PropTypes.string,
+		password: PropTypes.string,
+		confirm: PropTypes.string
 	};
 
 	static defaultProps = {
 		users: [],
 		userProfile: {},
-		firstName: "",
-		lastName: "",
+		fullName: "",
 		email: "",
-		isActive: false,
-		role: ""
+		status: "inactive",
+		role: "",
+		password: "",
+		confirm: ""
 	};
 
 	state = {
-		firstName: this.props.firstName,
-		lastName: this.props.lastName,
+		fullName: this.props.lastName,
 		email: this.props.email,
-		isActive: this.props.isActive,
-		role: this.props.role
+		status: this.props.status,
+		role: this.props.role,
+		password: this.props.password,
+		confirm: this.props.confirm
 	};
 
 	componentWillMount() {
@@ -68,98 +72,149 @@ export default class UserEdit extends Component {
 		this.props.userUpdate(this.state);
 	}
 
+	validateEmail() {
+		if (!this.state.email) {
+			return null;
+		}
+		return reEmail.test(this.state.email) ? "success" : "error";
+	}
+
+	validatePassword() {
+		if (!this.state.password) {
+			return null;
+		}
+		return zxcvbn(this.state.password).score >= 1 ? "success" : "error";
+	}
+
+	validateConfirm() {
+		if (!this.state.confirm) {
+			return null;
+		}
+		return this.state.password === this.state.confirm ? "success" : "error";
+	}
+
 	render() {
 		return (
 			<div className="panel panel-default">
 				<div className="panel-body">
 					<h3>Profile:</h3>
-						<form className="form-horizontal" onSubmit={::this.onSubmit}>
-							<Input
-								type="text"
-								name="firstName"
-								label="First Name"
-								labelClassName="col-xs-2"
-								wrapperClassName="col-xs-5"
-								value={this.state.firstName}
-								onChange={(e) => this.setState({firstName: e.target.value})}
-							/>
-							<Input
-								type="text"
-								name="lastName"
-								label="Last Name"
-								labelClassName="col-xs-2"
-								wrapperClassName="col-xs-5"
-								value={this.state.lastName}
-								onChange={(e) => this.setState({lastName: e.target.value})}
-							/>
-							<Input
-								type="email"
-								name="email"
-								label="Email"
-								labelClassName="col-xs-2"
-								wrapperClassName="col-xs-5"
-								value={this.state.email}
-								onChange={(e) => this.setState({email: e.target.value})}
-							/>
+					<form className="form-horizontal" onSubmit={::this.onSubmit}>
+						<FormGroup
+							controlId="formHorizontalFirstName"
+						>
+							<Col componentClass={ControlLabel} sm={2}>
+								First name
+							</Col>
+							<Col sm={10}>
+								<FormControl
+									type="text"
+									name="fullName"
+									value={this.state.fullName}
+									placeholder="Gordon Freeman"
+									onChange={e => this.setState({fullName: e.target.value})}
+								/>
+							</Col>
+						</FormGroup>
+						<FormGroup
+							controlId="formHorizontalEmail"
+							validationState={this.validateEmail()}
+						>
+							<Col componentClass={ControlLabel} sm={2}>
+								Email
+							</Col>
+							<Col sm={10}>
+								<FormControl
+									type="email"
+									name="email"
+									value={this.state.email}
+									placeholder="me@example.com"
+									onChange={e => this.setState({email: e.target.value})}
+								/>
+							</Col>
+						</FormGroup>
 
-							<Input
-								type="password"
-								name="password"
-								value={this.state.password}
-								placeholder="******"
-								label="Password"
-								bsStyle={!this.state.password || zxcvbn(this.state.password).score >= 1 ? null : "error"}
-								hasFeedback
-								labelClassName="col-xs-2"
-								wrapperClassName="col-xs-5"
-								onChange={e => this.setState({password: e.target.value})}
-							/>
-							<Input
-								type="password"
-								name="confirm"
-								value={this.state.confirm}
-								placeholder="******"
-								label="Confirm password"
-								bsStyle={!this.state.confirm || this.state.password === this.state.confirm ? null : "error"}
-								hasFeedback
-								labelClassName="col-xs-2"
-								wrapperClassName="col-xs-5"
-								onChange={e => this.setState({confirm: e.target.value})}
-							/>
-
-							<Input
-								type="select"
-								name="isActive"
-								label="Status"
-								labelClassName="col-xs-2"
-								wrapperClassName="col-xs-5"
-								defaultValue={this.state.isActive ? "true" : "false"}
-								onChange={(e) => this.setState({isActive: e.target.value})}
-							>
-								<option value={true}>Active</option>
-								<option value={false}>Not active</option>
-							</Input>
-
-							<Input
-								type="select"
-								name="role"
-								label="User role"
-								labelClassName="col-xs-2"
-								wrapperClassName="col-xs-5"
-								defaultValue={this.state.role === "admin" ? "admin" : "user"}
-								onChange={(e) => this.setState({role: e.target.value})}
-							>
-								<option value="admin">Admin</option>
-								<option value="user">User</option>
-							</Input>
-
-							<ButtonInput
-								type="submit"
-								value="Save"
-								bsStyle="info"
-								wrapperClassName="col-xs-offset-2 col-xs-10"
-							/>
-						</form>
+						<FormGroup
+							controlId="formHorizontalPassword"
+							validationState={this.validatePassword()}
+						>
+							<Col componentClass={ControlLabel} sm={2}>
+								Password
+							</Col>
+							<Col sm={10}>
+								<FormControl
+									type="password"
+									name="password"
+									value={this.state.password}
+									placeholder="******"
+									onChange={e => this.setState({password: e.target.value})}
+								/>
+							</Col>
+						</FormGroup>
+						<FormGroup
+							controlId="formHorizontalConfirm"
+							validationState={this.validateConfirm()}
+						>
+							<Col componentClass={ControlLabel} sm={2}>
+								Confirm password
+							</Col>
+							<Col sm={10}>
+								<FormControl
+									type="password"
+									name="confirm"
+									value={this.state.confirm}
+									placeholder="******"
+									onChange={e => this.setState({confirm: e.target.value})}
+								/>
+							</Col>
+						</FormGroup>
+						<FormGroup
+							controlId="formHorizontalConfirm"
+							validationState={this.validateConfirm()}
+						>
+							<Col componentClass={ControlLabel} sm={2}>
+								Status
+							</Col>
+							<Col sm={2}>
+								<FormControl
+									componentClass="select"
+									placeholder="Status"
+									defaultValue={this.state.status === "active" ? "true" : "false"}
+									onChange={(e) => this.setState({status: e.target.value})}
+								>
+									<option value="active">Active</option>
+									<option value="inactive">Suspended</option>
+								</FormControl>
+							</Col>
+						</FormGroup>
+						<FormGroup
+							controlId="formHorizontalConfirm"
+							validationState={this.validateConfirm()}
+						>
+							<Col componentClass={ControlLabel} sm={2}>
+								Role
+							</Col>
+							<Col sm={2}>
+								<FormControl
+									componentClass="select"
+									placeholder="User role"
+									defaultValue={this.state.role === "admin" ? "admin" : "user"}
+									onChange={(e) => this.setState({role: e.target.value})}
+								>
+									<option value="admin">Admin</option>
+									<option value="user">User</option>
+								</FormControl>
+							</Col>
+						</FormGroup>
+						<FormGroup>
+							<Col smOffset={2} sm={10}>
+								<Button
+									type="submit"
+								>
+									Edit
+								</Button>
+							</Col>
+						</FormGroup>
+					</form>
 				</div>
 			</div>
 		);

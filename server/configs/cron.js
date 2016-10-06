@@ -1,38 +1,35 @@
-"use strict";
-
 import q from "q";
 import schedule from "node-schedule";
-import debug from "debug";
 import MAPI from "../utils/api/mailgun";
 
-const log = debug("log:cron");
+import winston from "winston";
 
 export default function () {
 	if (process.env.CRON !== "true") {
-		log("process.env.CRON != true - no processes scheduled");
+		winston.info("process.env.CRON != true - no processes scheduled");
 	}
 
 	schedule.scheduleJob("*/5 * * * *", () => {
 		const mailController = new (require("../controllers/mail"));
 		return mailController.find({
-				status: mailController.constructor.statuses.new
-			}, {lean: false})
-			.then(messages => {
-				return q.allSettled(messages.map(message => {
-					return MAPI.sendMail(message)
+			status: mailController.constructor.statuses.new
+		}, {lean: false})
+			.then(messages =>
+				q.allSettled(messages.map(message =>
+					MAPI.sendMail(message)
 						.then(mail => {
 							message.set("status", mailController.constructor.statuses[mail.message === "Queued. Thank you." ? "queued" : "unrecognized"]);
 							if (message.status === mailController.constructor.statuses.unrecognized) {
-								log("WARNING!", mail);
+								winston.error("WARNING!", mail);
 							}
 						})
 						.catch(e => {
-							log(e);
+							winston.error(e);
 							message.set("status", mailController.constructor.statuses.failed);
 						})
-						.finally(() => mailController.save(message));
-				}));
-			})
+						.finally(() => mailController.save(message))
+				))
+			)
 			.done();
 	});
 }

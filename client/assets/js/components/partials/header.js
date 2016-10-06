@@ -1,5 +1,3 @@
-"use strict";
-
 import React, {PropTypes, Component} from "react";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
@@ -8,6 +6,7 @@ import API from "../../utils/API";
 import {Navbar, Nav, NavItem, NavDropdown, MenuItem} from "react-bootstrap";
 import {LinkContainer} from "react-router-bootstrap";
 import {USER_LOGOUT} from "../../constants/constants";
+
 
 const logout = (data) =>
 	dispatch =>
@@ -37,14 +36,6 @@ export default class Header extends Component {
 		router: PropTypes.object.isRequired
 	};
 
-	logout(e) {
-		e.preventDefault();
-		this.props.logout()
-			.then(() => {
-				this.context.router.push("/login");
-			});
-	}
-
 	renderMenu() {
 		return (
 			<Nav navbar pullRight>
@@ -53,7 +44,9 @@ export default class Header extends Component {
 						<MenuItem >Dashboard</MenuItem>
 					</LinkContainer>
 					<MenuItem divider/>
-					<MenuItem onSelect={::this.logout}>Logout</MenuItem>
+					<LinkContainer to="/logout">
+						<MenuItem>Logout</MenuItem>
+					</LinkContainer>
 				</NavDropdown>
 			</Nav>
 		);
@@ -75,12 +68,12 @@ export default class Header extends Component {
 	render() {
 		return (
 			<Navbar inverse>
-				<Navbar.Header inverse toggleNavKey={1}>
+				<Navbar.Header>
 					<Navbar.Brand>
 						<Link to="/" className="navbar-brand">G.O.A.T.</Link>
 					</Navbar.Brand>
 				</Navbar.Header>
-				<Navbar.Collapse eventKey={1} href="#">
+				<Navbar.Collapse href="#">
 					{this.props.user ? this.renderMenu() : this.renderLoginButton()}
 					<Nav navbar pullRight>
 						<LinkContainer to="/twitsearch">

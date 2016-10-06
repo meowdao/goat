@@ -1,10 +1,9 @@
-"use strict";
-
 import React, {PropTypes, Component} from "react";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import {Alert} from "react-bootstrap";
 import {MESSAGE_REMOVE} from "../../constants/constants";
+
 
 const dismiss = message =>
 	dispatch =>
@@ -33,8 +32,8 @@ export default class Message extends Component {
 	render() {
 		return (
 			<div>
-				{this.props.messages.map((message, i) =>
-					<Alert key={i} dismissAfter={3000}
+				{this.props.messages.map(message =>
+					<Alert
 						onDismiss={() => {
 							this.props.dismiss(message);
 						}}

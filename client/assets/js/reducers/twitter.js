@@ -1,5 +1,3 @@
-"use strict";
-
 import {UPDATE_TWITTER_LIST} from "../constants/constants";
 
 const messages = [];

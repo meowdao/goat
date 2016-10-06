@@ -1,31 +1,15 @@
-"use strict";
-
 process.env.NODE_ENV = process.env.NODE_ENV || "development";
 
-import q from "q";
-import debug from "debug";
-import mongoose from "mongoose";
-import configs from "../server/configs/config.js";
+import winston from "winston";
+import {processValidationError} from "../source/utils/helper";
 
-import CategoryModel from "../server/models/user/category.js";
-import CategoryController from "../server/controllers/category.js";
+import CategoryController from "../source/controllers/blog/category.js";
 
-debug.enable("db-setup:*");
-const log = debug("db-setup:category");
 
-mongoose.Promise = q.Promise;
-
-const connection = mongoose.createConnection(configs[process.env.NODE_ENV].mongo.user.url, configs[process.env.NODE_ENV].mongo.user.options, () => {
-	log(`connected ${configs[process.env.NODE_ENV].mongo.user.url}`);
-});
-
-connection.model("Category", CategoryModel);
-
-const categoryController = new CategoryController(false, connection);
-
+const categoryController = new CategoryController();
 categoryController.model.remove()
 	.then(result => {
-		log("removed:", result);
+		winston.debug("removed:", result);
 
 		return categoryController
 			.create([{
@@ -117,26 +101,23 @@ categoryController.model.remove()
 								categoryId: "bmw_7",
 								parent: category2[4]._id
 							}])
-							.then(category3 => {
-								return [].concat(category1, category2, category3);
-							});
+							.then(category3 => ([...category1, ...category2, ...category3]));
 					});
 			});
 	})
 	.then(result => {
-		log("OK");
-		log(result.length);
+		winston.info("OK");
+		winston.debug(result.length);
 	})
 	.catch(e => {
-		log("FAIL");
+		winston.info("FAIL");
 		if (e.name === "ValidationError") {
-			const categorys = Object.keys(e.errors).map(key => e.errors[key].category);
-			log(categorys);
+			winston.debug(processValidationError(e));
 		} else {
-			log(e);
+			winston.debug(e);
 		}
 	})
 	.done(() => {
-		log("DONE");
+		winston.info("DONE");
 		process.exit(0);
 	});

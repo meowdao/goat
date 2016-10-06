@@ -1,2 +1,3 @@
+build
 test/mocha.opts
-server/configs/webpack.js
+source/configs/webpack.js

@@ -1,5 +1,3 @@
-"use strict";
-
 import {USER_LOGIN, USER_LOGOUT} from "../constants/constants";
 
 const user = null;

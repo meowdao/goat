@@ -1,11 +1,10 @@
-"use strict";
-
 import React, {PropTypes} from "react";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
-import {Input, ButtonInput} from "react-bootstrap";
+import {Col, FormGroup, ControlLabel, FormControl, Button} from "react-bootstrap";
 import API from "../../utils/API";
 import {UPDATE_TWITTER_LIST} from "../../constants/constants";
+
 
 const twits = data =>
 	dispatch =>
@@ -33,7 +32,7 @@ export default class TwitterForm extends React.Component {
 	};
 
 	static defaultProps = {
-		query: "",
+		query: "whats up?",
 		count: 0
 	};
 
@@ -47,39 +46,50 @@ export default class TwitterForm extends React.Component {
 		this.props.twits(this.state);
 	}
 
+	getValidationState() {
+		return this.state.q ? "success" : "error";
+	}
+
 	render() {
 		return (
 			<div className="container">
 				<form onSubmit={::this.onSubmit}>
-					<div className="row">
-						<div className="col-sm-4">
-							<Input
+					<FormGroup
+						controlId="formHorizontalEmail"
+						validationState={this.getValidationState()}
+					>
+						<Col componentClass={ControlLabel} sm={4}>
+							<FormControl
 								autoFocus="true"
 								type="text"
 								placeholder="Search query"
 								defaultValue={this.state.q}
 								onChange={(e) => this.setState({q: e.target.value})}
 							/>
-						</div>
-						<div className="col-sm-2">
-							<Input
-								type="select"
-								defaultValue="0"
-								onChange={(e) => this.setState({count: ~~e.target.value})}
-							>
-								<option value="0">Number of Twits</option>
-								<option value="5">5</option>
-								<option value="10">10</option>
-								<option value="20">20</option>
-								<option value="30">30</option>
-							</Input>
-						</div>
-						<ButtonInput
-							type="submit"
-							value="Search"
+						</Col>
+					</FormGroup>
+					<Col sm={2}>
+						<FormControl
+							componentClass="select"
+							placeholder="Number of Twits"
+							defaultValue="0"
+							onChange={(e) => this.setState({count: ~~e.target.value})}
+						>
+							<option value="0">Number of Twits</option>
+							<option value="5">5</option>
+							<option value="10">10</option>
+							<option value="20">20</option>
+							<option value="30">30</option>
+						</FormControl>
+					</Col>
+					<Col sm={2}>
+						<Button
 							bsStyle="info"
-						/>
-					</div>
+							type="submit"
+						>
+							Search
+						</Button>
+					</Col>
 				</form>
 			</div>
 

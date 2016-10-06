@@ -1,7 +1,6 @@
-"use strict";
-
 import _ from "lodash";
 import {UPDATE_USER_LIST, UPDATE_USER} from "../constants/constants";
+
 
 const users = {
 	usersData: [],

@@ -1,9 +1,8 @@
-"use strict";
-
 import React, {PropTypes} from "react";
 import {connect} from "react-redux";
 import {Table} from "react-bootstrap";
-import moment from "moment";
+import moment from "moment-config-trejgun";
+
 
 @connect(
 	state => ({
@@ -25,7 +24,7 @@ export default class TwitterList extends React.Component {
 		return (
 			<div key={i}>
 				<h5>
-					<a href={"https://twitter.com/statuses/" + item.id_str}>
+					<a href={`https://twitter.com/statuses/${item.id_str}`}>
 						{moment(new Date(item.created_at)).format("YYYY-MM-DD HH:mm")}
 					</a>
 					<span> - {item.user.name}</span>
@@ -34,7 +33,7 @@ export default class TwitterList extends React.Component {
 					<tbody>
 					<tr>
 						<td>
-							<a href={"https://twitter.com/" + item.user.screen_name}>
+							<a href={`https://twitter.com/${item.user.screen_name}`}>
 								<img src={item.user.profile_image_url}/>
 							</a>
 						</td>

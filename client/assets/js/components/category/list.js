@@ -1,5 +1,3 @@
-"use strict";
-
 import React, {PropTypes, Component} from "react";
 import API from "../../utils/API";
 import Tree from "../../utils/tree/tree";

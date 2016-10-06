@@ -1,5 +1,3 @@
-"use strict";
-
 import TreeUtils from "./tree-utils";
 
 export default class TreeNode {
@@ -11,23 +9,23 @@ export default class TreeNode {
 		this.data = node;
 	}
 
-	sort(sort = TreeUtils.sortByOrder):void {
+	sort(sort = TreeUtils.sortByOrder) {
 		this.children.sort(sort);
 		this.children.forEach(e => e.sort(sort));
 		return this;
 	}
 
-	setParent(parent):void {
+	setParent(parent) {
 		this.parent = parent;
 		this.parent.children.push(this);
 		return this;
 	}
 
-	isRoot():Boolean {
+	isRoot() {
 		return this.data === null;
 	}
 
-	breadcrumbs(array = []):Array {
+	breadcrumbs(array = []) {
 		let node = this;
 		do { // eslint-disable-line no-cond-assign
 			if (!node.isRoot()) {

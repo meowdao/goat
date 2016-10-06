@@ -1,5 +1,3 @@
-"use strict";
-
 /* global google:true */
 
 import React, {PropTypes, Component} from "react";

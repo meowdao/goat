@@ -1,6 +1,5 @@
-"use strict";
-
 import {MESSAGE_ADD, MESSAGE_REMOVE} from "../constants/constants";
+
 
 const messages = [];
 

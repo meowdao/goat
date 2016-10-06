@@ -1,5 +1,3 @@
-"use strict";
-
 import React from "react";
 import {connect} from "react-redux";
 import Title from "../partials/title";
@@ -24,6 +22,10 @@ export default class Error extends Message {
 			<div className="container">
 
 				<Title {...this.props}/>
+
+				<p>
+					@{JSON.stringify(this.props.messages)}@
+				</p>
 
 				{this.props.messages.map((message, i) =>
 					<p key={i}>

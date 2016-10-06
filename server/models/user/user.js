@@ -1,11 +1,15 @@
-"use strict";
-
 import bcrypt from "bcrypt-nodejs";
 import {Schema} from "mongoose";
 import zxcvbn from "zxcvbn";
 import {reEmail} from "../../utils/constants/regexp";
-// import LAPI from "../utils/api/lookup";
-import lang from "../../utils/lang/en";
+import email from "../plugins/email";
+import phoneNumber from "../plugins/phoneNumber";
+import langModel from "../../lang/en/model";
+
+import UserController from "../../controllers/user/user";
+
+
+const statuses = UserController.statuses;
 
 const User = new Schema({
 	avatar: {
@@ -18,32 +22,23 @@ const User = new Schema({
 		lowercase: true,
 		trim: true,
 		unique: true,
-		required: lang.error.model.user["email-is-required"],
-		match: [reEmail, lang.error.model.user["email-is-invalid"]]
+		required: langModel["email-is-required"],
+		match: [reEmail, langModel["email-is-invalid"]]
 	},
 	isEmailVerified: {
 		type: Boolean,
 		default: false
 	},
-	isActive: {
-		type: Boolean,
-		default: false
+
+	fullName: {
+		type: String,
+		required: langModel["full-name-is-required"]
 	},
 
-	/*
-	phoneNumber: {
+	status: {
 		type: String,
-		required: "Phone number is required"
-	},
-	*/
-
-	firstName: {
-		type: String,
-		required: lang.error.model.user["first-name-is-required"]
-	},
-	lastName: {
-		type: String,
-		required: lang.error.model.user["last-name-is-required"]
+		enum: Object.keys(statuses).map(key => statuses[key]),
+		default: statuses.inactive
 	},
 
 	role: {
@@ -51,39 +46,30 @@ const User = new Schema({
 		default: "user",
 		enum: {
 			values: ["user", "admin"],
-			message: lang.error.model.user["unrec-user-role"]
+			message: langModel["unrec-user-role"]
 		}
 	},
 
 	password: {
 		type: String,
 		select: false,
-		required: lang.error.model.user["password-is-required"],
+		required: langModel["password-is-required"],
 		validate: [{
 			validator() {
 				return this.isModified("password") ? this.password === this.confirm : true;
 			},
-			msg: lang.error.model.user["passwords-match"]
+			msg: langModel["passwords-match"]
 		}, {
 			validator() {
 				return !!this.password;
 			},
-			msg: lang.error.model.user["password-is-required"]
+			msg: langModel["password-is-required"]
 		}, {
 			validator() {
 				return zxcvbn(this.password).score >= 1;
 			},
-			msg: lang.error.model.user["password-weak"]
+			msg: langModel["password-weak"]
 		}]
-	},
-
-	created: {
-		type: Date,
-		default: Date.now
-	},
-	updated: {
-		type: Date,
-		default: Date.now
 	},
 
 	facebook: {
@@ -93,39 +79,40 @@ const User = new Schema({
 	google: {
 		type: Schema.Types.Mixed,
 		select: false
+	},
+	goat: {
+		type: Schema.Types.Mixed,
+		select: false
 	}
 
-}, {versionKey: false});
+}, {
+	timestamps: true,
+	versionKey: false
+});
 
-User.virtual("fullName")
-	.get(function () {
-		return this.firstName + " " + this.lastName;
-	});
+User.plugin(email, {prefix: "user", unique: true});
+// User.plugin(phoneNumber, {prefix: "user"});
 
-User.virtual("confirm")
-	.set(function (password) {
-		this._confirm = password;
+User
+	.virtual("confirm")
+	.set(function setConfirm(confirm) {
+		this._confirm = confirm;
 	})
-	.get(function () {
+	.get(function getConfirm() {
 		return this._confirm;
 	});
 
-User.pre("save", function (next) {
+User.pre("save", function preSavePassword(next) {
 	if (this.isModified("password")) {
 		this.password = bcrypt.hashSync(this.password, bcrypt.genSaltSync(5));
 	}
 	next();
 });
 
-User.pre("save", function (next) {
-	if (this.isModified("email")) {
+User.pre("save", function preSaveEmail(next) {
+	if (this.isModified("email") && !this.isModified("isEmailVerified")) {
 		this.isEmailVerified = false;
 	}
-	next();
-});
-
-User.pre("save", function (next) {
-	this.updated = new Date();
 	next();
 });
 
@@ -136,10 +123,8 @@ User.pre("validate", true, function(next, done) {
 });
 */
 
-User.methods = {
-	verifyPassword(password) {
-		return bcrypt.compareSync(password, this.password);
-	}
+User.methods.verifyPassword = function verifyPassword(password) {
+	return bcrypt.compareSync(password, this.password);
 };
 
 User.index({
@@ -147,9 +132,7 @@ User.index({
 }, {
 	name: "search",
 	weights: {
-		firstName: 1,
-		lastName: 1,
-		companyName: 1
+		fullName: 1
 	}
 });
 

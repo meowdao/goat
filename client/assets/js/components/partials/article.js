@@ -1,9 +1,8 @@
-"use strict";
-
 import React, {PropTypes, Component} from "react";
 import Title from "./title";
 import Messages from "./messages";
 import Breadcrumbs from "./breadcrumbs";
+
 
 export default class Article extends Component {
 

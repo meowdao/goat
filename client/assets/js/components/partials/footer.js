@@ -1,5 +1,3 @@
-"use strict";
-
 import React, {Component} from "react";
 import {Navbar, Nav, NavItem} from "react-bootstrap";
 import {LinkContainer} from "react-router-bootstrap";

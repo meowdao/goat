@@ -1,0 +1,21 @@
+{
+  "apps": [
+    {
+      "name": "Blog - GOAT",
+      "script": "build/server/blog.js",
+      "env": {}
+    },
+    {
+      "name": "User - GOAT",
+      "script": "build/server/user.js",
+      "env": {}
+    },
+    {
+      "name": "CRON mail",
+      "script": "build/server/jobs/mail.js",
+      "cron_restart": "*/1 * * * *",
+      "exec_mode": "cluster",
+      "env": {}
+    }
+  ]
+}

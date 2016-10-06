@@ -1,0 +1,23 @@
+{
+  "login": "Login is required to access this resource",
+  "IP": "IP is not in a white list",
+  "access-denied": "Access denied",
+  "no-origin": "Origin should be set",
+  "page-not-found": "Page Not Found",
+  "method-not-allowed": "Method not allowed",
+  "not-acceptable": "Request not acceptable",
+  "content-type": "Unexpected content type, only JSON is accepted",
+  "error": "An error has occurred.  Please contact Adventure Bucket List customer support if this error persists.",
+  "service-unavailable": "Service unavailable",
+
+  "param-is-required": "Required parameter (${name}) not found",
+  "param-is-invalid": "Parameter (${name}) is invalid",
+
+  "unrecognized-currency": "Can't determine currency",
+
+  "user-is-not-verified": "Please verify your email",
+  "user-incorrect-name": "Incorrect username or password.",
+  "user-incorrect-password": "Incorrect username or password.",
+  "user-incorrect-name-or-password": "Incorrect username or password.",
+  "user-profile-not-found": "Profile not found"
+}

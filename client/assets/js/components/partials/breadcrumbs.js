@@ -1,5 +1,3 @@
-"use strict";
-
 import React, {PropTypes, Component} from "react";
 import {Breadcrumb, BreadcrumbItem} from "react-bootstrap";
 import {LinkContainer} from "react-router-bootstrap";

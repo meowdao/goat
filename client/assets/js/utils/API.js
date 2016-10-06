@@ -1,7 +1,4 @@
-"use strict";
-
 import $ from "jquery";
-
 
 export default {
 
@@ -10,7 +7,7 @@ export default {
 			.ajax({
 				data,
 				method: "POST",
-				url: "/login"
+				url: "login"
 			});
 	},
 
@@ -19,7 +16,7 @@ export default {
 			.ajax({
 				data,
 				method: "GET",
-				url: "/logout"
+				url: "logout"
 			});
 	},
 
@@ -28,7 +25,7 @@ export default {
 			.ajax({
 				data,
 				method: "POST",
-				url: "/register"
+				url: "register"
 			});
 	},
 
@@ -37,7 +34,7 @@ export default {
 			.ajax({
 				data,
 				method: "POST",
-				url: "/forgot"
+				url: "forgot"
 			});
 	},
 
@@ -46,7 +43,7 @@ export default {
 			.ajax({
 				data,
 				method: "POST",
-				url: "/change"
+				url: "change"
 			});
 	},
 
@@ -55,7 +52,7 @@ export default {
 			.ajax({
 				data,
 				method: "GET",
-				url: "/user/sync"
+				url: "user/sync"
 			});
 	},
 
@@ -64,7 +61,7 @@ export default {
 			.ajax({
 				data,
 				method: "GET",
-				url: "/categories"
+				url: "categories"
 			})
 			.then(response => response.items);
 	},
@@ -74,7 +71,7 @@ export default {
 			.ajax({
 				data,
 				method: "POST",
-				url: "/category"
+				url: "category"
 			});
 	},
 
@@ -83,7 +80,7 @@ export default {
 			.ajax({
 				data,
 				method: "GET",
-				url: "/twitter/search"
+				url: "twitter/search"
 			});
 	},
 
@@ -92,7 +89,7 @@ export default {
 			.ajax({
 				data,
 				method: "GET",
-				url: "/users"
+				url: "users"
 			});
 	},
 
@@ -101,7 +98,7 @@ export default {
 			.ajax({
 				data,
 				method: "PUT",
-				url: "/user/" + data._id
+				url: `user/${data._id}`
 			});
 	}
 

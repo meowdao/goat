@@ -1,26 +1,25 @@
-"use strict";
-
 process.env.NODE_ENV = process.env.NODE_ENV || "development";
 
 const path = require("path");
 const webpack = require("webpack");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
-//const prod = process.env.NODE_ENV === 'production';
+// const prod = process.env.NODE_ENV === "production";
 
 const config = {
 	entry: [
-		'./client/assets/js/main'
+		"./client/assets/js/main"
 	],
 	output: {
 		path: path.join(__dirname, "..", "..", "client", "build"),
 		filename: "bundle.js",
-		sourceMapFilename : "[file].map",
+		sourceMapFilename: "[file].map",
 		chunkFilename: "[id].js",
 		publicPath: "/build/"
 	},
 	resolve: {
 		modulesDirectories: ["node_modules"],
+		extensions: ["", ".json", ".jsx", ".js"],
 		alias: {
 			components: path.join(__dirname, "..", "client", "assets", "js", "components")
 		}
@@ -29,11 +28,14 @@ const config = {
 		loaders: [
 			{
 				test: /\.json$/,
-				loader: "json"
+				loader: "json-loader"
 			},
 			{
 				test: /\.less/,
-				loader: ExtractTextPlugin.extract("style-loader", "css-loader!less-loader")
+				loader: ExtractTextPlugin.extract({
+					fallbackLoader: "style-loader",
+					loader: "css-loader!less-loader"
+				})
 			},
 			{
 				test: /\.(ttf|woff|woff2|eot|svg|gif|png|ico)(\?.+)?$/,
@@ -41,7 +43,7 @@ const config = {
 			},
 			{
 				test: /\.js$/,
-				loader: "babel",
+				loader: "babel-loader",
 				exclude: [/node_modules/],
 				query: {
 					plugins: [
@@ -54,39 +56,33 @@ const config = {
 	plugins: [
 		new webpack.NodeEnvironmentPlugin("NODE_ENV", "CRON", "TWILIO_API", "LOOKUP_API"),
 		new webpack.NoErrorsPlugin(),
-		new ExtractTextPlugin("style.css", {
-			allChunks: true
-		}),
-		new webpack.optimize.OccurenceOrderPlugin(),
+		new ExtractTextPlugin("style.css"),
 		new webpack.optimize.DedupePlugin()
 	]
 };
 
-if (process.env.NODE_ENV == "production") {
-
-	config.devtool = 'source-map';
-
+if (process.env.NODE_ENV === "production") {
+	config.devtool = "source-map";
 	config.plugins.unshift(
 		new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}})
 	);
-
 } else {
 	config.devtool = "source-map"; // ExtractTextPlugin hmr doesn't work with eval
 
 	config.entry.unshift(
-		'webpack-hot-middleware/client'
+		"webpack-hot-middleware/client"
 	);
 
 	config.plugins.push(new webpack.HotModuleReplacementPlugin());
 
-	//JS LOADER BABEL
+	// JS LOADER BABEL
 	config.module.loaders[3].query.plugins.push(["react-transform", {
 		transforms: [{
 			transform: "react-transform-hmr",
 			imports: ["react"],
 			locals: ["module"]
 		}]
-	}])
+	}]);
 }
 
 module.exports = config;

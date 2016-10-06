@@ -1,5 +1,3 @@
-"use strict";
-
 export const reMongoId = /^[0-9a-f]{24}$/;
 export const reEventId = /^[0-9a-z]{26}$/;
 export const reEventInstanceId = /^[0-9a-z]{26}_[0-9]{8}T[0-9]{6}Z$/;

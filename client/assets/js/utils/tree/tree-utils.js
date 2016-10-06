@@ -1,5 +1,3 @@
-"use strict";
-
 export default class TreeUtils {
 	static sortByOrder(a, b) {
 		if (a.data.order === b.data.order) {

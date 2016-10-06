@@ -1,12 +1,10 @@
-"use strict";
-
 import TreeNode from "./tree-node";
 
 export default class Tree {
 
 	root = new TreeNode(null);
 
-	constructor(data):Tree {
+	constructor(data) {
 		const nodes = {};
 
 		data.forEach(item => {
@@ -21,7 +19,7 @@ export default class Tree {
 		return this;
 	}
 
-	find(_id = null, node = this.root):TreeNode {
+	find(_id = null, node = this.root) {
 		if ((node.isRoot() && _id === null) || (!node.isRoot() && _id === node.data._id)) {
 			return node;
 		} else if (node.children.length) {

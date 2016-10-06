@@ -1,39 +1,24 @@
-"use strict";
-
 import React from "react"; // eslint-disable-line no-unused-vars
 import {Route, IndexRoute, IndexRedirect} from "react-router";
-
 import GOAT from "../components/GOAT";
-
 import Welcome from "../components/static/welcome";
-
 import Article from "../components/partials/article";
 import Empty from "../components/partials/empty";
-
 import TwitSearch from "../components/twitter/twitsearch";
-
-// admin
 import Dashboard from "../components/admin/dashboard";
-import UserSearch from "../components/admin/users/list";
+import UserList from "../components/admin/users/list";
 import AuthenticatedComponent from "../components/partials/protected";
-
-// user
 import Login from "../components/user/login";
 import Register from "../components/user/register";
 import Profile from "../components/user/profile";
 import Forgot from "../components/user/forgot";
 import Change from "../components/user/change";
 import UserEdit from "../components/user/edit";
-
-// category
 import CategoryList from "../components/category/list";
 import CategoryAdd from "../components/category/add";
-
-// page
 import Airport from "../components/page/airport";
-
-// error
 import Message from "../components/static/message";
+
 
 function setDisplayName(displayName) {
 	return (nextState) => {
@@ -54,7 +39,7 @@ export default (
 			<IndexRoute component={Dashboard}/>
 			<Route path="user" component={Empty}>
 				<Route path="edit/:_id" component={UserEdit}/>
-				<Route path="list" component={UserSearch}/>
+				<Route path="list" component={UserList}/>
 			</Route>
 		</Route>
 		<Route path="twitsearch" component={Article} onEnter={setDisplayName("TwitSearch")}>

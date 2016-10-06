@@ -1,15 +1,12 @@
-"use strict";
-
 import q from "q";
-import debug from "debug";
+import winston from "winston";
 import assert from "power-assert";
 import mongoose, {Schema} from "mongoose";
-import {getRandomString} from "../../../server/utils/utils";
-import StatefulController from "../../../server/controllers/abstract/stateful";
-import AbstractController from "../../../server/controllers/abstract/abstract";
-import {cleanUp, mockInChain} from "../../flow";
+import {getRandomString} from "../../utils/misc";
+import StatefulController from "../../controllers/abstract/stateful";
+import AbstractController from "../../controllers/abstract/abstract";
+import {cleanUp, mockInChain} from "../../test-utils/flow";
 
-const log = debug("test:model");
 
 class TestStatefulController extends StatefulController {
 	static param = "testId";
@@ -121,7 +118,7 @@ describe("Stateful", () => {
 					}
 				})
 				.then(test => {
-					log("test", test);
+					winston.debug("test", test);
 					assert.equal(test.bool, data.Test[0].bool);
 					assert.equal(test.string, data.Test[0].string);
 					assert.equal(test.number, data.Test[0].number);
@@ -163,7 +160,7 @@ describe("Stateful", () => {
 					}
 				}, ["child"])
 				.then(test => {
-					log("test", test);
+					winston.debug("test", test);
 					assert.equal(test.child.dummy, data.Child[0].dummy);
 				});
 		});
@@ -192,7 +189,7 @@ describe("Stateful", () => {
 					user: data.User[0]
 				})
 				.then(result => {
-					log("result", result);
+					winston.debug("result", result);
 					assert.equal(result.list.length, 4);
 				});
 		});
@@ -212,7 +209,7 @@ describe("Stateful", () => {
 					body: testObject
 				})
 				.then(test => {
-					log("test", test);
+					winston.debug("test", test);
 					assert.equal(test.bool, testObject.bool);
 					assert.equal(test.string, testObject.string);
 					assert.equal(test.number, testObject.number);
@@ -228,7 +225,7 @@ describe("Stateful", () => {
 					body: testObject
 				}, [], [], ["bool"])
 				.then(test => {
-					log("test", test);
+					winston.debug("test", test);
 					assert.equal(test.bool, testObject.bool);
 					assert.equal(test.string, data.Test[1].string);
 					assert.equal(test.number, data.Test[1].number);

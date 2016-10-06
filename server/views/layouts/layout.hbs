@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ABL OAUTH</title>
+    <style>
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: Helvetica, Arial, Sans-Serif;
+            padding-top: 100px;
+            background-color: #424242;
+            text-align: center
+        }
+
+        body > .login-container {
+            background: white;
+            display: inline-block;
+            min-width: 400px;
+            min-height: 300px;
+            border-radius: 20px;
+            position: relative
+        }
+
+        body > .login-container form {
+            padding: 20px 0px
+        }
+
+        body > .login-container form > .title2 {
+            font-size: 20px
+        }
+
+        body > .login-container form > .title3 {
+            color: #444242;
+            font-size: 23px
+        }
+
+        body > .login-container form > .bottom-link {
+            margin-top: 30px
+        }
+
+        body > .login-container form > .bottom-link a {
+            color: gray
+        }
+
+        body > .login-container form > .bottom-link a:hover {
+            color: black
+        }
+
+        body > .login-container form > .md-input-container {
+            display: inline-block;
+            width: 75%;
+            text-align: left
+        }
+
+        body > .login-container form > .md-input-container.submit {
+            text-align: center
+        }
+
+        body > .login-container form > .md-input-container > .errors {
+            min-height: 20px
+        }
+
+        body > .login-container form > .md-input-container > label {
+            display: block;
+            font-size: 12px;
+            color: gray;
+            font-weight: bold
+        }
+
+        body > .login-container form > .md-input-container > input {
+            width: 100%;
+            height: 30px;
+            border: none;
+            border-bottom: 1px solid gray;
+            display: block;
+            font-size: 16px
+        }
+
+        body > .login-container form > .md-input-container > input[type=submit] {
+            background-color: #64B5F6;
+            cursor: pointer;
+            width: 160px;
+            text-align: center;
+            color: white;
+            height: 40px;
+            line-height: 40px;
+            vertical-align: middle;
+            border-radius: 5px;
+            display: inline-block
+        }
+
+        body > .login-container form > .md-input-container > input[type=submit]:hover {
+            background-color: #50a1e2
+        }
+
+        body > .login-container form > .md-input-container > input[type=submit].left {
+            border-radius: 5px 0px 0px 5px;
+            background-color: #4ab74a
+        }
+
+        body > .login-container form > .md-input-container > input[type=submit].left:hover {
+            background-color: #36a336
+        }
+
+        body > .login-container form > .md-input-container > input[type=submit].right {
+            border-radius: 0px 5px 5px 0px;
+            background-color: red;
+            width: 100px
+        }
+
+        body > .login-container form > .md-input-container > input[type=submit].right:hover {
+            background-color: #eb0000
+        }
+
+        body > .login-container > .header {
+            border-bottom: 1px solid #CCC;
+            padding: 60px 20px 20px 0px
+        }
+
+        body > .login-container > .header > .title1 {
+            color: #70ACFB;
+            font-size: 30px
+        }
+
+        body > .login-container > .header > .title2 {
+            color: gray;
+            font-size: 18px
+        }
+
+        body > .login-container > .logo-container {
+            position: absolute;
+            width: 100%;
+            height: 100px;
+            top: -50px;
+            left: 0
+        }
+
+        body > .login-container > .logo-container .logo {
+            margin: 0 auto;
+            background-image: url(https://staging.adventurebucketlist.com/images/mainLogo_small.png);
+            width: 100px;
+            height: 100px;
+            background-size: 100px 100px;
+            border-radius: 100px
+        }
+    </style>
+</head>
+<body>
+<div class="login-container">
+    <div class="logo-container">
+        <div class="logo"></div>
+    </div>
+    <div class="header">
+        <div class="title1">Adventure Bucket List</div>
+        <div class="title2">Your Gateway to Travel Activities</div>
+    </div>
+    {{{body}}}
+</div>
+<script></script>
+</body>
+</html>

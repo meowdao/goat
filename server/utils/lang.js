@@ -1,12 +1,21 @@
-"use strict";
+import fs from "fs";
+import path from "path";
 
-const languages = {
-	en: require("./lang/en")
-};
+const bundle = "../lang";
 
+const languages = {};
+
+if (!getAvailableLanguages().length) {
+	fs.readdirSync(path.join(__dirname, bundle)).forEach(lang => {
+		languages[lang] = {};
+		fs.readdirSync(path.join(__dirname, bundle, lang)).forEach(file => {
+			languages[lang][file.slice(0, -5)] = require(path.join(__dirname, bundle, lang, file));
+		});
+	});
+}
 
 export function getAvailableLanguages() {
-	return ["en"];
+	return Object.keys(languages);
 }
 
 export function getDefaultLanguage() {
@@ -14,16 +23,16 @@ export function getDefaultLanguage() {
 }
 
 export function getLanguage(user) {
-	return languages[user && user.language || getDefaultLanguage()];
+	return languages[user && user.lang || getDefaultLanguage()];
 }
 
-export function getObject(path, obj) {
-	const paths = path.split("/");
+export function getObject(path, obj = {}, delimiter = ".") {
+	const paths = path.split(delimiter);
 	let current = obj;
 
 	for (let i = 0; i < paths.length; ++i) {
 		if (current[paths[i]] === void 0) {
-			return void 0;
+			return path;
 		} else {
 			current = current[paths[i]];
 		}
@@ -34,3 +43,4 @@ export function getObject(path, obj) {
 export function translate(path, user) {
 	return getObject(path, getLanguage(user));
 }
+

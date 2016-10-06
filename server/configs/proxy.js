@@ -1,8 +1,3 @@
-"use strict";
-
-
-export default function(app) {
-
+export default function (app) {
 	app.enable("trust proxy");
-
 }
