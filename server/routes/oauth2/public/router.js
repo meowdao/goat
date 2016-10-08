@@ -3,6 +3,7 @@ import login from "connect-ensure-login";
 import server from "../../../utils/oauth2";
 
 import ClientController from "../../../controllers/user/client";
+import AuthorizationCodeController from "../../../controllers/user/authorization-code";
 
 
 export default function (router) {
@@ -48,7 +49,24 @@ export default function (router) {
 						callback(null, client, redirectURI);
 					})
 					.catch(callback);
-			}));
+			}, (client, user, callback) => {
+				const authorizationCodeController = new AuthorizationCodeController();
+				authorizationCodeController.find({
+					clientId: client.clientId,
+					userId: user._id
+				})
+					.then(authCode => {
+						callback(null, !!authCode);
+					})
+					.catch(callback);
+			}),
+			(request, response) => {
+				response.render("dialog", {
+					transaction: request.oauth2.transactionID,
+					user: request.user,
+					client: request.oauth2.client
+				});
+			});
 
 	// user decision endpoint
 	//

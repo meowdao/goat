@@ -53,7 +53,7 @@ export default {
 				clientSecret: "",
 				callbackURL: "http://localhost:3000/auth/google/callback"
 			},
-			abl: {
+			goat: {
 				clientID: "goat-test-server",
 				clientSecret: "01123581321345589144233377610",
 				callbackURL: "http://localhost:9000/api/auth/goat/callback",

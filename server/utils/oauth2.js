@@ -22,9 +22,9 @@ const server = oauth2orize.createServer();
 // simple matter of serializing the client"s ID, and deserializing by finding
 // the client by ID from the database.
 
-server.serializeClient((client, done) => {
-	return done(null, client._id);
-});
+server.serializeClient((client, done) =>
+	done(null, client._id)
+);
 
 server.deserializeClient((_id, callback) => {
 	const clientController = new ClientController();
@@ -74,14 +74,14 @@ server.grant(oauth2orize.grant.code((client, redirectURI, user, ares, callback) 
 
 server.exchange(oauth2orize.exchange.code((client, code, redirectURI, callback) => {
 	const authorizationCodeController = new AuthorizationCodeController();
-	authorizationCodeController.findOneAndRemove({code})
+	authorizationCodeController.findOne({code})
 		.tap(authCode => {
 			if (!authCode) {
 				throw new Error("auth code not found");
 			}
 		})
 		.tap(authCode => {
-			if (client.id !== authCode.clientID) {
+			if (client.clientId !== authCode.clientId) {
 				throw new Error("client id don't match");
 			}
 		})
