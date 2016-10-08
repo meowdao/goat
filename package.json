@@ -40,7 +40,7 @@
     "lodash": "4.16.3",
     "moment-config-trejgun": "git://github.com/TrejGun/moment-config-trejgun.git#v0.0.6",
     "mongoose": "4.6.3",
-    "mongoose": "git://github.com/TrejGun/mongoose.git#7ca43f70c5870d82e3090b82382c944ee1d73add",
+    "mongoose": "git://github.com/TrejGun/mongoose.git#2e952c1b591e419fecb6783907d331aad1332113",
     "morgan": "1.7.0",
     "nodemailer": "2.3.2",
     "nodemailer-mailgun-transport": "1.2.2",
