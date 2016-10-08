@@ -4,3 +4,5 @@ export const confirm = password;
 export const fullName = "Trej Gun";
 export const phoneNumber = "+62 (812) 3919-8760";
 export const goatId = "ffffffffffffffffffffffff";
+export const country = "United States";
+export const countryCode = "US";

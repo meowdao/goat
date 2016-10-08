@@ -12,9 +12,9 @@ function _send(request, response) {
 }
 
 export function sendError(error, request, response, next) {
-	if (process.env.NODE_ENV !== "test") {
+	//if (process.env.NODE_ENV !== "test") {
 		winston.error(error);
-	}
+	//}
 	void next; // eslint
 	const send = _send(request, response);
 	if (error.name === "ValidationError") {
@@ -60,7 +60,7 @@ export function wrapJSON(method) {
 				if (Array.isArray(result)) {
 					return response.json({list: result.map(item => item.toJSON())});
 				}
-				return response.json(result.toJSON());
+				return response.json("toJSON" in result ? result.toJSON() : result);
 			})
 			.catch(error => sendError(error, request, response))
 			.done();

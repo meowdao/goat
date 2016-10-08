@@ -7,8 +7,9 @@ services:
 before_install:
   - cp server/configs/config.sample.js server/configs/config.js
 install:
-  - npm install
+  - npm i
 before_script:
+  - npm run manual tools/db-category
   - npm run manual tools/setup
 script:
   - npm run travis

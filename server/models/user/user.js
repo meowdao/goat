@@ -3,7 +3,7 @@ import {Schema} from "mongoose";
 import zxcvbn from "zxcvbn";
 import {reEmail} from "../../utils/constants/regexp";
 import email from "../plugins/email";
-import phoneNumber from "../plugins/phoneNumber";
+// import phoneNumber from "../plugins/phoneNumber";
 import langModel from "../../lang/en/model";
 
 import UserController from "../../controllers/user/user";

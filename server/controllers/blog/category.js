@@ -1,4 +1,5 @@
-import _ from "lodash";
+import {pick} from "lodash";
+import {paginate} from "../../utils/response";
 import StatefulController from "../abstract/stateful";
 
 
@@ -8,13 +9,12 @@ export default class CategoryController extends StatefulController {
 
 	static param = "categoryId";
 
-	list() {
-		return this.find()
-			.then(items => ({items}));
+	list(request, response) {
+		return paginate(request, response, this);
 	}
 
 	insert(request) {
-		const clean = _.pick(request.body, ["title", "categoryId", "parent", "order"]);
+		const clean = pick(request.body, ["title", "categoryId", "parent", "order"]);
 		return this.create(clean);
 	}
 

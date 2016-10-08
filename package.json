@@ -39,7 +39,8 @@
     "lackey-mongoose-version": "1.0.2",
     "lodash": "4.16.3",
     "moment-config-trejgun": "git://github.com/TrejGun/moment-config-trejgun.git#v0.0.6",
-    "mongoose": "4.6.0",
+    "mongoose": "4.6.3",
+    "mongoose": "git://github.com/TrejGun/mongoose.git#7ca43f70c5870d82e3090b82382c944ee1d73add",
     "morgan": "1.7.0",
     "nodemailer": "2.3.2",
     "nodemailer-mailgun-transport": "1.2.2",
@@ -112,7 +113,7 @@
     "stop": "pm2 stop --watch all; pm2 delete all;",
     "test": "NODE_ENV=${NODE_ENV:=test} ABL_DEBUG=${ABL_DEBUG:=info} babel-node node_modules/.bin/_mocha",
     "manual": "NODE_ENV=${NODE_ENV:=test} ABL_DEBUG=${ABL_DEBUG:=info} node_modules/.bin/babel-node",
-    "coverage": "NODE_ENV=${NODE_ENV:=test} node_modules/.bin/babel-node node_modules/istanbul/lib/cli cover node_modules/.bin/_mocha test/routes/* test/connect test/utils test/controllers/*",
-    "travis": "babel-node node_modules/istanbul/lib/cli cover node_modules/.bin/_mocha test/routes/* test/connect test/utils test/controllers/*"
+    "coverage": "NODE_ENV=${NODE_ENV:=test} node_modules/.bin/babel-node node_modules/istanbul/lib/cli cover node_modules/.bin/_mocha test/routes/*",
+    "travis": "babel-node node_modules/istanbul/lib/cli cover node_modules/.bin/_mocha test/routes/*"
   }
 }

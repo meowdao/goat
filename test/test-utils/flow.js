@@ -41,6 +41,6 @@ export function cleanUp(models = []) {
 }
 
 export function tearDown() {
-	return cleanUp(["Amenity", "Bed", "MailLayout", "MailTemplate", "Room", "SmsTemplate"]);
+	return cleanUp(["Category", "MailLayout", "MailTemplate", "SmsTemplate"]);
 }
 

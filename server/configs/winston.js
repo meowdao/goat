@@ -4,11 +4,11 @@ import winston from "winston";
 winston.remove(winston.transports.Console);
 
 function formatter(obj) {
-	return (obj instanceof Error) ? `${obj.stack}` : util.inspect(obj, {depth: 10, colors: true});
+	return (obj instanceof Error) ? `\n${obj.stack}` : (Object.keys(obj).length && `\n${util.inspect(obj, {depth: 10, colors: true})}` || "");
 }
 
 winston.transports.Console.prototype.log = function log(level, msg, meta, callback) {
-	const output = `${level.toUpperCase()} ${msg}${Object.keys(meta).length ? `\n${formatter(meta)}` : ""}`;
+	const output = `${level.toUpperCase()} ${msg}${formatter(meta)}`;
 
 	if (this.stderrLevels[level]) {
 		process.stderr.write(output + this.eol);
@@ -21,4 +21,4 @@ winston.transports.Console.prototype.log = function log(level, msg, meta, callba
 };
 
 winston.setLevels(winston.config.syslog.levels);
-winston.add(winston.transports.Console, {level: process.env.GOAT_DEBUG});
+winston.add(winston.transports.Console, {level: process.env.ABL_DEBUG});

@@ -1,9 +1,9 @@
 process.env.NODE_ENV = process.env.NODE_ENV || "development";
 
 import winston from "winston";
-import {processValidationError} from "../source/utils/helper";
+import {processValidationError} from "../server/utils/error";
 
-import CategoryController from "../source/controllers/blog/category.js";
+import CategoryController from "../server/controllers/blog/category.js";
 
 
 const categoryController = new CategoryController();

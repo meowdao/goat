@@ -3,7 +3,7 @@ import winston from "winston";
 import assert from "power-assert";
 import mongoose, {Schema} from "mongoose";
 import AbstractController from "../../../server/controllers/abstract/abstract";
-import {cleanUp, mockInChain} from "../../flow";
+import {cleanUp, mockInChain} from "../../test-utils/flow";
 
 
 class TestAbstractController extends AbstractController {
