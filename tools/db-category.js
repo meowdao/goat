@@ -7,7 +7,7 @@ import CategoryController from "../server/controllers/blog/category.js";
 
 
 const categoryController = new CategoryController();
-categoryController.model.remove()
+categoryController.remove()
 	.then(result => {
 		winston.debug("removed:", result);
 

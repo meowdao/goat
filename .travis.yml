@@ -9,8 +9,8 @@ before_install:
 install:
   - npm i
 before_script:
-  - npm run manual tools/db-category
   - npm run manual tools/setup
+  - npm run manual tools/db-category
 script:
   - npm run travis
 addons:
