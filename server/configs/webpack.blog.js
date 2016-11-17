@@ -18,14 +18,14 @@ const config = {
 		publicPath: "/build/"
 	},
 	resolve: {
-		modulesDirectories: ["node_modules"],
-		extensions: ["", ".json", ".jsx", ".js"],
+		// modulesDirectories: ["node_modules"],
+		extensions: [".json", ".jsx", ".js"],
 		alias: {
 			components: path.join(__dirname, "..", "client", "assets", "js", "components")
 		}
 	},
 	module: {
-		loaders: [
+		rules: [
 			{
 				test: /\.json$/,
 				loader: "json-loader"
@@ -76,7 +76,7 @@ if (process.env.NODE_ENV === "production") {
 	config.plugins.push(new webpack.HotModuleReplacementPlugin());
 
 	// JS LOADER BABEL
-	config.module.loaders[3].query.plugins.push(["react-transform", {
+	config.module.rules[3].query.plugins.push(["react-transform", {
 		transforms: [{
 			transform: "react-transform-hmr",
 			imports: ["react"],

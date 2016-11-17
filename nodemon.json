@@ -3,8 +3,7 @@
     ".idea"
   ],
   "watch": [
-    "server/",
-    "client/"
+    "server"
   ],
   "execMap": {
     "js": "babel-node"
