@@ -1,0 +1,108 @@
+{
+  "components": {
+    "switchLanguage": "Switch Language",
+    "menu": {
+      "dashboard": "Dashboard",
+      "profile": "Profile",
+      "organization": "Company",
+      "logout": "Logout",
+      "login": "Login",
+      "market": "Market",
+      "office": "Office"
+    },
+    "language": {
+      "id": "Indonesian",
+      "en": "English",
+      "ru": "Russian"
+    },
+    "buttons": {
+      "save": "Save",
+      "create": "Create",
+      "search": "Search",
+      "ok": "Ok",
+      "cancel": "Cancel",
+      "calc": "Calc!",
+      "allow": "Allow",
+      "deny": "Deny",
+      "login": "Login",
+      "logout": "Logout",
+      "change": "Change",
+      "send": "Send",
+      "forgot": "Forgot password?",
+      "signup": "Signup"
+    },
+    "breadcrumbs": {
+      "dashboard": "Dashboard",
+      "settings": "Settings",
+      "view": "View"
+    },
+    "title": {
+      "settings": {
+        "list": "Settings"
+      }
+    }
+  },
+  "models": {
+    "email": {
+      "required": "Email can not be blank",
+      "invalid": "Email is invalid",
+      "duplicate": "This email already in use"
+    },
+    "fullName": {
+      "required": "Name is required"
+    },
+    "password": {
+      "mismatch": "Password doesn't match",
+      "required": "Password is required",
+      "weak": "Password is too weak"
+    }
+  },
+  "forms": {
+    "exchange": "Stock Exchange",
+    "market": "Market",
+    "email": "Email",
+    "password": "Password",
+    "value": "Value",
+    "confirm": "Confirm password",
+    "fullName": "Full name",
+    "language": "Language"
+  },
+  "errors": {
+    "method-not-allowed": "Method not allowed",
+    "page-not-found": "Page Not Found",
+    "invalid-param": "Invalid param `{name}`, {reason}",
+    "required-param": "Required param `{name}` missing",
+    "vehicle-not-active": "Vehicle is not active",
+    "booking-not-found": "Booking Not Found",
+    "wrong-initial-status": "Wrong initial status",
+    "access-denied": "Access denied",
+    "not-found": "`{name}` not found ",
+    "token-expired": "Token has expired. You can request new one",
+    "token-expired-link": "here",
+    "login": "You are not logged in"
+  },
+  "message": {
+    "registration-successful": "Registration successful. Please check your email for further instructions.",
+    "forgot-successful": "Message with instructions was sent to your email.",
+    "change-successful": "Password was successfully changed. Now you can log in using your new password.",
+    "email-successful": "Email was successfully changed. Verification link was sent to your new email address.",
+    "resend-successful": "Email with verification link was re-sent to your new email address.",
+    "verification-successful": "Email was successfully verified.",
+    "invalid-param-id": "Invalid parameter ID"
+  },
+  "alert": {
+    "user-incorrect-name-or-password": "Incorrect user name or password",
+    "user-not-active": "User is not active, please contact site administration",
+    "email-not-verified": "You have to verify your email address before start using site",
+    "change-email": "You will be unable to use website before verifying your new email",
+    "permissions": "You don't have enough permissions to perform this action"
+  },
+  "email": {
+    "types": {
+      "verification": "Verification email",
+      "missing": "New vehicle requested",
+      "welcome": "Welcome",
+      "forgot": "Forgot password?"
+    }
+  }
+}

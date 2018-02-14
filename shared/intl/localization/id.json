@@ -1,0 +1,32 @@
+{
+  "components": {
+    "switchLanguage": "Switch Language",
+    "menu": {
+      "dashboard": "Dashboard",
+      "profile": "Profile",
+      "organization": "Company",
+      "logout": "Logout",
+      "login": "Login"
+    },
+    "lang": {
+      "id": "Indonesian",
+      "en": "English",
+      "ru": "Russian"
+    }
+  },
+  "email": {
+    "types": {
+      "bookingCancelledByCustomer": "Booking was cancelled by customer",
+      "bookingRevokedByCustomer": "Booking was revoked by customer",
+      "newBookingForRenter": "New booking",
+      "bookingAcceptedByRenter": "Booking was accepted by renter",
+      "bookingCancelledByRenter": "Booking was cancelled by renter",
+      "bookingRejectedByRenter": "Booking was rejected by renter",
+      "newBookingForCustomer": "New Booking",
+      "verification": "Verification email",
+      "missing": "New vehicle requested",
+      "welcome": "Welcome",
+      "forgot": "Forgot password?"
+    }
+  }
+}

@@ -1,4 +1,5 @@
 --reporter spec
---require test/mocha
+--require test-utils/mocha
 --timeout 30000
 --ui tdd
+--recursive

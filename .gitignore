@@ -1,14 +1,21 @@
 #project
-server/configs/config.js
-test.js
-dmydry
-build
+/server/shared/configs/config.js
+/server/shared/configs/config.production.js
+/server/shared/configs/mongo.js
+/ecosystem.production.json
+/ecosystem.staging.json
+/test.js
+/build
 
 # IDEA
-.idea
+/.idea
 
 # Mac
 .DS_Store
 
 # NODE
-node_modules
+/node_modules
+
+# Tests
+/coverage
+/.nyc_output

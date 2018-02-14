@@ -1,0 +1,14 @@
+{
+  "map": true,
+  "plugins": {
+    "cssnano": {
+      "autoprefixer" : {
+        "add": true,
+        "browsers": [
+          "last 2 versions"
+        ]
+      },
+      "zindex": false
+    }
+  }
+}

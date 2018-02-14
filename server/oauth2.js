@@ -1,41 +1,40 @@
-process.env.NODE_ENV = process.env.NODE_ENV || "development";
-process.env.PORT = process.env.PORT || 3000;
-process.env.APP = "oauth2";
-
-// HACK
-import "core-js/fn/object/values";
+import "./shared/configs/winston";
+import "./shared/auth/oauth";
 
 import winston from "winston";
-import "./configs/winston";
-import express from "./utils/express";
-import cookieParser from "cookie-parser";
-import session from "./auth/session";
-import login from "./auth/oauth";
-import webpack from "webpack";
+import app from "./shared/configs/express";
 
-const app = express();
-app.use(cookieParser());
+import session from "./shared/auth/session";
+import passport from "./shared/auth/passport";
+import cors from "./shared/routes/cors";
+import pre from "./shared/routes/pre";
+import main from "./shared/routes/main";
+import publicAPI from "./shared/routes/public";
+import privateAPI from "./shared/routes/private";
+import notFound from "./shared/routes/404";
+import authorize from "./shared/routes/authorize";
+import {sendError} from "./shared/utils/wrapper";
+import fe from "./shared/routes/fe";
 
-session(app);
-login(app);
 
-if (process.env.NODE_ENV !== "production") {
-	const config = require(`./configs/webpack.${process.env.APP}`);
-	const compiler = webpack(config);
-	const webpackdev = require(`./configs/webpack.${process.env.APP}.dev`);
+app.use(session);
+app.use(passport);
+app.use(cors);
+app.use(pre);
+app.use(main);
+app.use(publicAPI);
+app.use(privateAPI);
+app.use(notFound);
+app.use(sendError);
+app.use(authorize);
+app.use(fe);
 
-	app.use(require("webpack-dev-middleware")(compiler, webpackdev));
-	app.use(require("webpack-hot-middleware")(compiler));
-}
-
-["cors", "pre", "main", "public", "private", "static"].forEach(name => {
-	require(`./routes/${name}.js`).default(app, __dirname, "/");
-});
 
 const listener = app.listen(process.env.PORT, () => {
 	winston.info(`Express server listening on port ${listener.address().port}`);
 });
 
+process.on("unhandledRejection", winston.error);
 process.on("uncaughtException", winston.error);
 
 export default app;

@@ -1,3 +1,37 @@
 {
-  "extends": "babel-config-trejgun/es2015/server-client-test.json"
+  "plugins": [
+    "lodash",
+    "@babel/proposal-decorators",
+    "@babel/proposal-class-properties",
+    "@babel/proposal-function-bind",
+    "@babel/proposal-object-rest-spread",
+    [
+      "transform-require-ignore",
+      {
+        "extensions": [
+          ".less",
+          ".sass"
+        ]
+      }
+    ]
+  ],
+  "presets": [
+    "@babel/react",
+    [
+      "@babel/env",
+      {
+        "targets": {
+          "node": "current"
+        }
+      }
+    ]
+  ],
+  "env": {
+    "test": {
+      "plugins": [
+        "espower",
+        "istanbul"
+      ]
+    }
+  }
 }

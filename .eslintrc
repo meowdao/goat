@@ -1,12 +1,92 @@
 {
-	"extends": [
-		"trejgun"
-	],
+  "parser": "babel-eslint",
+  "extends": [
+    "standard",
+    "plugin:react/recommended"
+  ],
+  "env": {
+    "mocha": true,
+    "browser": true
+  },
+  "plugins": [
+    "mocha",
+    "react"
+  ],
   "rules": {
-    "react/jsx-indent": [
+    "no-multiple-empty-lines": [
+      "error",
+      {
+        "max": 2,
+        "maxEOF": 1
+      }
+    ],
+    "space-in-parens": [
+      "error",
+      "never"
+    ],
+    "space-before-blocks": [
+      "error",
+      "always"
+    ],
+    "space-before-function-paren": [
+      "error",
+      "never"
+    ],
+    "semi": [
       2,
+      "always"
+    ],
+    "arrow-parens": [
+      2,
+      "as-needed"
+    ],
+    "import/no-extraneous-dependencies": [
+      0
+    ],
+    "no-tabs": [
+      0
+    ],
+    "comma-dangle": [
+      2,
+      "never"
+    ],
+    "indent": [
+      0,
       "tab"
     ],
-    "react/jsx-space-before-closing": 0
+    "quotes": [
+      2,
+      "double"
+    ],
+    "object-curly-spacing": [
+      2,
+      "never"
+    ],
+    "camelcase": [
+      2,
+      {
+        "properties": "always"
+      }
+    ],
+    "react/require-default-props": [
+      0
+    ],
+    "react/jsx-space-before-closing": [
+      0
+    ],
+    "react/jsx-tag-spacing": [
+      2
+    ],
+    "react/jsx-sort-props": [
+      "off",
+      {
+        "ignoreCase": true,
+        "callbacksLast": false,
+        "shorthandFirst": false
+      }
+    ],
+    "no-console": "warn",
+    "mocha/no-exclusive-tests": "warn",
+    "mocha/no-skipped-tests": "warn"
   }
 }

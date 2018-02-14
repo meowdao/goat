@@ -1,0 +1,350 @@
+{
+  "components": {
+    "switchLanguage": "Языки",
+    "menu": {
+      "dashboard": "Панель управления",
+      "profile": "Профиль",
+      "organization": "Компания",
+      "logout": "Выйти",
+      "login": "Войти",
+      "market": "Биржа"
+    },
+    "language": {
+      "id": "Индонезийский",
+      "en": "Английский",
+      "ru": "Русский"
+    },
+    "title": {
+      "profile": {
+        "subscriptions": "Управление подписками",
+        "read": "Просмотр профиля",
+        "update": "Редактирование профиля"
+      },
+      "user": {
+        "subscriptions": "Управление подписками",
+        "read": "Просмотр пользователя",
+        "update": "Редактирование пользователя",
+        "list": "Список пользователей"
+      },
+      "booking": {
+        "create": "Забронировать",
+        "read": "Детали бронирования",
+        "update": "Редактировать бронь",
+        "list": "Список бронирований"
+      },
+      "vehicle": {
+        "list": "Гараж",
+        "read": "Просмотр транспортного средства",
+        "update": "Редактирование транспортного средства",
+        "create": "Создать новое транспортное средство",
+        "calendar": "Календарь"
+      },
+      "company": {
+        "create": "Создать новую компанию",
+        "read": "Просмотр компании",
+        "update": "Редактировать компанию",
+        "settings": "Настройки"
+      },
+      "policies": {
+        "return": "Политика возврата ТС",
+        "island": "Политика выезда за пределы острова",
+        "delivery": "Политика доставки ТС"
+      },
+      "statistics": {
+        "overview": "Обзор"
+      },
+      "post": {
+        "create": "Создать запись"
+      }
+    },
+    "tabs": {
+      "profile": {
+        "subscriptions": "Подписки",
+        "general": "Общее"
+      },
+      "user": {
+        "subscriptions": "Подписки",
+        "general": "Общее"
+      },
+      "company": {
+        "settings": "Настройки",
+        "general": "Общее",
+        "policies": "Политики",
+        "return": "Политика возврата ТС",
+        "island": "Политика выезда за пределы острова",
+        "delivery": "Политика доставки ТС"
+      },
+      "vehicle": {
+        "details": "Детали",
+        "calendar": "Салендарь",
+        "policies": "Политики",
+        "return": "Политика возврата ТС",
+        "island": "Политика выезда за пределы острова",
+        "delivery": "Политика доставки ТС"
+      },
+      "input": {
+        "editor": "Редактор",
+        "preview": "Просмотр"
+      }
+    },
+    "image": {
+      "vehicle": "Фото",
+      "taxnservice": "Налоговая накладная",
+      "bluebook": "Тех. паспорт",
+      "organization": "Логотип Компании",
+      "license": "Права",
+      "user": "Аватарка"
+    },
+    "breadcrumbs": {
+      "posts": "Статьи",
+      "home": "Главная",
+      "users": "Пользователи",
+      "dashboard": "Панель управления",
+      "vehicles": "Гараж",
+      "bookings": "Бронирование",
+      "company": "Компания",
+      "statistics": "Статистика",
+      "profile": "Профиль",
+      "create": "Создание",
+      "batch": "Создание нескольких тс",
+      "edit": "Редактирование",
+      "view": "Просмотр",
+      "me": "Я",
+      "message": "Сообщение",
+      "disclaimer": "Отказ от ответственности",
+      "contacts": "Контакты",
+      "privacy-policy": "Политика безопасности",
+      "policies": "Политики",
+      "terms-of-service": "Условия использования"
+    },
+    "vehicle": {
+      "fuel": {
+        "petrol": "Бензин",
+        "diesel": "Дизель",
+        "electric": "Электричество"
+      },
+      "availability": {
+        "true": "Доступен сейчас!",
+        "false": "Недоступен"
+      },
+      "type": {
+        "car": "Машина",
+        "bike": "Мотоцикл"
+      }
+    },
+    "delivery": {
+      "true": "Да",
+      "false": "Нет"
+    },
+    "license": {
+      "scooter": "A",
+      "bike": "A",
+      "car": "B",
+      "bus": "D",
+      "truck": "C"
+    },
+    "buttons": {
+      "save": "Сохранить",
+      "create": "Создать",
+      "search": "Поиск",
+      "ok": "Подтвердить",
+      "cancel": "Отменить",
+      "book": "Заказать сейчас",
+      "allow": "Разрешить",
+      "deny": "Запретить",
+      "login": "Войти",
+      "logout": "Выйти",
+      "change": "Изменить",
+      "send": "Послать",
+      "forgot": "Забыли пароль?",
+      "signup": "Зарегистрироваться"
+    },
+    "settings": {
+      "docs": "Я хочу загружать документы на ТС"
+    }
+  },
+  "forms": {
+    "address": "Адрес",
+    "allowed": "Allowed",
+    "brand": "Марка",
+    "bookingId": "Бронь #",
+    "checkOutTime": "Время сдачи",
+    "cc": "см3",
+    "companyName": "Название компании",
+    "count": "Количество",
+    "country": "Страна",
+    "confirm": "Пароль еще раз",
+    "date": "Дата",
+    "delivery": "Доставка",
+    "discount": "Скидка",
+    "domainName": "адрес сайта",
+    "description": "Описание",
+    "email": "Почта",
+    "fuel": "Топливо",
+    "fullName": "Полное имя",
+    "language": "Язык",
+    "license": "Права",
+    "model": "Модель",
+    "notes": "Заметки",
+    "range": "Даты",
+    "price": "Цена",
+    "pricePerHour": "Цена за час",
+    "pricePerDay": "Цена за день",
+    "pricePerMonth": "Цена за месяц",
+    "password": "Пароль",
+    "phoneNumber": "Номер телефона",
+    "plate": "Номер",
+    "postId": "Slug",
+    "policies": "Политики",
+    "status": "Статус",
+    "type": "Тип",
+    "title": "Заголовок",
+    "variant": "Модификация",
+    "vehicle": "Транспортное средство",
+    "year": "Год",
+    "renter": "Орендодатель"
+  },
+  "models": {
+    "brand": {
+      "required": "Brand is required"
+    },
+    "cc": {
+      "required": "CC is required"
+    },
+    "checkOutTime": {
+      "invalid": "Check out time is invalid"
+    },
+    "color": {
+      "invalid": "Color is not a HEX string"
+    },
+    "companyName": {
+      "required": "Company name is required",
+      "minlength": "Company name is too short",
+      "maxlength": "Company name is too long"
+    },
+    "country": {
+      "invalid": "Country is invalid"
+    },
+    "domainName": {
+      "minlength": "Company domain is too short",
+      "maxlength": "Company domain is too long"
+    },
+    "email": {
+      "required": "Email can not be blank",
+      "invalid": "Email is invalid",
+      "duplicate": "This email already in use"
+    },
+    "end": {
+      "required": "End date is required",
+      "invalid": "End date is invalid",
+      "before-start": "End date is before start date is invalid"
+    },
+    "fullName": {
+      "required": "Name is required"
+    },
+    "fuel": {
+      "invalid": "Fuel is invalid"
+    },
+    "model": {
+      "required": "Model is required"
+    },
+    "plate": {
+      "required": "Plate is required",
+      "invalid": "Plate is invalid"
+    },
+    "pricePerHour": {
+      "min": "Price pre hour should be greater than zero"
+    },
+    "pricePerDay": {
+      "min": "Price pre day should be greater than zero"
+    },
+    "pricePerMonth": {
+      "min": "Price pre month should be greater than zero"
+    },
+    "password": {
+      "mismatch": "Password doesn't match",
+      "required": "Password is required",
+      "weak": "Password is too weak"
+    },
+    "range": {
+      "invalid": "Range is invalid",
+      "not-available": "Range is not available"
+    },
+    "start": {
+      "required": "Start date is required",
+      "invalid": "Start date is invalid",
+      "passed": "Start date has passed"
+    },
+    "timeZone": {
+      "invalid": "Time zone is invalid",
+      "required": "Time zone is required"
+    },
+    "year": {
+      "required": "Year is required",
+      "max": "Year is greater than current",
+      "min": "Year is less than 1900"
+    }
+  },
+  "dialogs": {
+    "confirmation": "Пожалуйста подтвердите",
+    "vehicles-delete": "Вы собираетесь удалить транспортное средство {vehicleId}",
+    "bookings-delete": "Вы собираетесь отметить бронирование {bookingId}",
+    "vehicle-missing": "Транспортного средства нет в списке? Пожалкйста расскажите нам про свой байк как можно больше и мы его добавим"
+  },
+  "errors": {
+    "method-not-allowed": "Что-то не так с вашим запросом",
+    "hash-not-found": "Ссылка для подтверждения устарела",
+    "page-not-found": "Страница не найдена",
+    "invalid-param": "Неправильный параметр `{name}`",
+    "required-param": "Обязательный параметр `{name}` отсутствует",
+    "vehicle-not-active": "Транспортное средство удалено",
+    "booking-not-found": "Бронирование не найдено",
+    "wrong-initial-status": "Неправильный начальный статус"
+  },
+  "statistics": {
+    "panels": {
+      "title": {
+        "overview": "Обзор"
+      },
+      "labels": {
+        "vehicles": "Странспортные средства",
+        "bookings": "Бронирования"
+      }
+    }
+  },
+  "email": {
+    "types": {
+      "bookingCancelledByCustomer": "Бронирование было отменено орендатором",
+      "bookingRevokedByCustomer": "Заявка на бронирование была отозвана орендатором",
+      "newBookingForRenter": "Новое бронирование",
+      "bookingAcceptedByRenter": "Заявка на бронирование была подтверждена орендодателем",
+      "bookingCancelledByRenter": "Бронирование было отменено орендодателем",
+      "bookingRejectedByRenter": "Заявка на бронирование была отклонена орендодателем",
+      "newBookingForCustomer": "Новое ьронирование",
+      "verification": "Подтверждение почтового адреса",
+      "missing": "Запрос на добавление нового ТС",
+      "welcome": "Добро пожаловать",
+      "forgot": "Забыли пароль?"
+    }
+  },
+  "message": {
+    "registration-successful": "Регистрация прошла успешно, пожалуйста проверьте свою почту для получения дольнейших инструкций.",
+    "forgot-successful": "Сообшение с инструкциями было отослано на указанный почтовый адрес.",
+    "change-successful": "Пароль был успешно изменен. Теперь вы можете зайти используя новый пароль.",
+    "email-successful": "Почтовый адрес был успешно изменен, пожалуйста проверьте свою почту для получения дольнейших инструкций.",
+    "verification-successful": "Почтовый адрес был успешно подтвержден.",
+    "booking-successful": "Заявка на бронирование успещно добавлена в базу. Вы получите уведомление когда орендодатель изменит ее статус.",
+    "missing-successful": "Сообшение успешно отправлено.",
+    "booking-not-editable": "Это бронирование на может быть отредактировано",
+    "bookind-successfully-accepted": "Заявка на бронирование успешно одобрена",
+    "bookind-successfully-rejected": "Заявка на бронирование успешно отклонена",
+    "range-not-available": "Эти даты недоступны",
+    "invalid-param-id": "Неправильный параметр ID"
+  },
+  "alert": {
+    "user-incorrect-name-or-password": "Неправильное имя или пароль",
+    "user-not-active": "Прльзователь не активен, обратитесь к администратору сайта",
+    "user-not-verified": "Вы должны подтвердить адрес электронной почты прежде чем пользоваться сайтом",
+    "change-email": "Вы не сможете использовать сайт, до тех пор пока не подтвердите новый адрес электронноый почты"
+  }
+}

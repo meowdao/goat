@@ -1,0 +1,38 @@
+.gly-spin {
+	animation: spin 2s infinite linear;
+}
+
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(359deg);
+	}
+}
+
+.gly-rotate-90 {
+	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+	transform: rotate(90deg);
+}
+
+.gly-rotate-180 {
+	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
+	transform: rotate(180deg);
+}
+
+.gly-rotate-270 {
+	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+	transform: rotate(270deg);
+}
+
+.gly-flip-horizontal {
+	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1);
+	transform: scale(-1, 1);
+}
+
+.gly-flip-vertical {
+	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1);
+	transform: scale(1, -1);
+}

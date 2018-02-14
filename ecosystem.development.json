@@ -1,0 +1,57 @@
+{
+  "apps": [
+    {
+      "name": "Office",
+      "watch": ["server", "shared"],
+      "cwd":"/Users/trejgun/projects/goat",
+      "script": "server/office.js",
+      "exec_interpreter": "node_modules/.bin/babel-node",
+      "exec_mode": "fork",
+      "env": {
+        "NODE_ENV": "development",
+        "MODULE": "office",
+        "PORT": "9000",
+        "S3": "true"
+      }
+    },
+    {
+      "name": "OAuth2",
+      "watch": ["server", "shared"],
+      "cwd":"/Users/trejgun/projects/goat",
+      "script": "server/oauth2.js",
+      "exec_interpreter": "node_modules/.bin/babel-node",
+      "exec_mode": "fork",
+      "env": {
+        "NODE_ENV": "development",
+        "MODULE": "oauth2",
+        "PORT": "3000"
+      }
+    },
+    {
+      "name": "CDN",
+      "watch": ["server", "shared"],
+      "cwd":"/Users/trejgun/projects/goat",
+      "script": "server/cdn.js",
+      "exec_interpreter": "node_modules/.bin/babel-node",
+      "exec_mode": "fork",
+      "env": {
+        "NODE_ENV": "development",
+        "MODULE": "cdn",
+        "PORT": "5000"
+      }
+    },
+    {
+      "name": "Mail",
+      "watch": ["server", "shared"],
+      "cwd":"/Users/trejgun/projects/goat",
+      "script": "server/mail.js",
+      "exec_interpreter": "node_modules/.bin/babel-node",
+      "exec_mode": "fork",
+      "env": {
+        "NODE_ENV": "development",
+        "MODULE": "mail",
+        "PORT": "4000"
+      }
+    }
+  ]
+}

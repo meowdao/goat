@@ -1,19 +1,21 @@
-import q from "q";
+import bluebird from "bluebird";
 import winston from "winston";
 import assert from "power-assert";
-import mongoose, {Schema} from "mongoose";
-import AbstractController from "../../../server/controllers/abstract/abstract";
-import {cleanUp, mockInChain} from "../../test-utils/flow";
+import {Schema} from "mongoose";
+import {setUp, tearDown} from "../../../test-utils/flow";
+import AbstractController from "../../../server/shared/controllers/abstract";
+import {getConnections} from "../../../server/shared/utils/mongoose";
 
 
 class TestAbstractController extends AbstractController {
+	static realm = "oauth2";
 }
 
 const TestAbstractSchema = new Schema({
-	user: {
+	organizations: [{
 		type: Schema.Types.ObjectId,
-		ref: "User"
-	},
+		ref: "Organization"
+	}],
 	bool: {
 		type: Boolean
 	},
@@ -25,212 +27,155 @@ const TestAbstractSchema = new Schema({
 	}
 });
 
-mongoose.model("TestAbstract", TestAbstractSchema);
+const connections = getConnections();
+
+connections.oauth2.model("TestAbstract", TestAbstractSchema);
 
 const testAbstractController = new TestAbstractController();
 
-function setUp(data, count) {
-	return () => mockInChain([{
+function mySetUp(data, count) {
+	return () => setUp([{
+		model: "Organization",
+		count: 2
+	}, {
 		model: "User",
+		requires: {
+			Organization: "o2o"
+		},
 		count: 2
 	}])
 		.then(result => {
 			Object.assign(data, result);
 			return testAbstractController.create(new Array(count).fill(1).map((n, i) => ({
-					user: data.User[i % 2],
-					bool: true,
-					string: String.fromCharCode(97 + i),
-					number: i
-				})))
+				organizations: data.Organization[i % 2],
+				bool: true,
+				string: String.fromCharCode(97 + i),
+				number: i
+			})))
 				.then(tests => {
-					data.Test = tests;
+					Object.assign(data, {Test: tests});
 				});
 		});
 }
 
-function tearDown() {
-	return () => q.all([
-			testAbstractController.remove()
-		])
-		.then(() => cleanUp());
+function myTearDown() {
+	return () => bluebird.all([
+		testAbstractController.remove(),
+		tearDown()
+	]);
 }
 
 describe("Abstract", () => {
 	const data = {};
-
 	const testObject = {
 		bool: false,
 		string: "z",
 		number: 42
 	};
 
-	describe("#insert", () => {
-		before(setUp(data, 0));
-		it("should insert (full data)", () => {
-			return testAbstractController.insert({
-					user: data.User[0],
-					body: testObject
-				})
-				.then(test => {
-					winston.debug("test", test);
-					assert.equal(test.user.toString(), data.User[0]._id.toString());
-					assert.equal(test.bool, testObject.bool);
-					assert.equal(test.string, testObject.string);
-					assert.equal(test.number, testObject.number);
-				});
-		});
+	describe("#getByUId", () => {
+		before(mySetUp(data, 2));
 
-		it("should insert (part data)", () => {
-			return testAbstractController.insert({
-					user: data.User[0],
-					body: testObject
-				}, ["bool"])
+		it("should getByUId", () =>
+			testAbstractController.getByUId({
+				user: data.User[0],
+				params: {
+					_id: data.Test[0]._id
+				}
+			})
 				.then(test => {
-					winston.debug("test", test);
-					assert.equal(test.user.toString(), data.User[0]._id.toString());
-					assert.equal(test.bool, testObject.bool);
-					assert.equal(test.string, void (0));
-					assert.equal(test.number, void (0));
-				});
-		});
-
-		after(tearDown());
-	});
-
-	describe("#getById", () => {
-		before(setUp(data, 2));
-		it("should getById (obj)", () => {
-			return testAbstractController.getById({
-					user: data.User[0],
-					params: {
-						_id: data.Test[0]._id
-					}
-				})
-				.then(test => {
-					winston.debug("test", test);
+					winston.info("test", test);
 					assert.equal(test.bool, data.Test[0].bool);
 					assert.equal(test.string, data.Test[0].string);
 					assert.equal(test.number, data.Test[0].number);
-				});
-		});
+				})
+		);
 
-		it("should getById (error 404)", () => {
-			return testAbstractController.getById({
-					user: data.User[1],
-					params: {
-						_id: data.Test[0]._id
-					}
+		it("should getByUId (error 404)", () =>
+			testAbstractController.getByUId({
+				user: data.User[1],
+				params: {
+					_id: data.Test[0]._id
+				}
+			})
+				.catch(e => {
+					assert.equal(e.status, 404);
 				})
 				.then(assert.ifError)
-				.catch(e => {
-					assert.equal(e.code, 404);
-				});
-		});
+		);
 
-		after(tearDown());
+		after(myTearDown());
 	});
 
-	describe("#list", () => {
-		before(setUp(data, 5));
-		it("should list", () => {
-			return testAbstractController.list({
-					user: data.User[0]
-				})
-				.then(result => {
-					winston.debug("result", result);
-					assert.equal(result.list.length, 3);
-				});
-		});
+	describe("#change", () => {
+		before(mySetUp(data, 2));
 
-		after(tearDown());
-	});
-
-	describe("#edit", () => {
-		before(setUp(data, 2));
-
-		it("should edit (full data)", () => {
-			return testAbstractController.edit({
-					user: data.User[0],
-					params: {
-						_id: data.Test[0]._id
-					},
-					body: testObject
-				})
+		it("should change", () =>
+			testAbstractController.change({
+				user: data.User[1],
+				params: {
+					_id: data.Test[1]._id
+				},
+				body: testObject
+			}, [], [], ["bool"])
 				.then(test => {
 					winston.debug("test", test);
-					assert.equal(test.user.toString(), data.User[0]._id.toString());
-					assert.equal(test.bool, testObject.bool);
-					assert.equal(test.string, testObject.string);
-					assert.equal(test.number, testObject.number);
-				});
-		});
-
-		it("should edit (part data)", () => {
-			return testAbstractController.edit({
-					user: data.User[1],
-					params: {
-						_id: data.Test[1]._id
-					},
-					body: testObject
-				}, ["bool"])
-				.then(test => {
-					winston.debug("test", test);
-					assert.equal(test.user.toString(), data.User[1]._id.toString());
+					assert.equal(test.organizations[0].toString(), data.Organization[1]._id.toString());
 					assert.equal(test.bool, testObject.bool);
 					assert.equal(test.string, data.Test[1].string);
 					assert.equal(test.number, data.Test[1].number);
-				});
-		});
-
-		it("should edit (error 404)", () => {
-			return testAbstractController.edit({
-					user: data.User[0],
-					params: {
-						_id: data.Test[1]._id
-					},
-					body: testObject
 				})
+		);
+
+		it("should throw (error 404)", () =>
+			testAbstractController.change({
+				user: data.User[0],
+				params: {
+					_id: data.Test[1]._id
+				},
+				body: testObject
+			})
 				.then(assert.ifError)
 				.catch(e => {
-					assert.equal(e.code, 404);
-				});
-		});
+					assert.equal(e.status, 404);
+				})
+		);
 
-		after(tearDown());
+		after(myTearDown());
 	});
 
-	describe("#delete", () => {
-		before(setUp(data, 2));
+	describe("#deactivate", () => {
+		before(mySetUp(data, 2));
 
-		it("should delete", () => {
-			return testAbstractController.delete({
-					user: data.User[0],
-					params: {
-						_id: data.Test[0]._id
-					}
-				})
+		it("should delete", () =>
+			testAbstractController.deactivate({
+				user: data.User[0],
+				params: {
+					_id: data.Test[0]._id
+				}
+			})
 				.then(result => {
-					assert.equal(result.success, true);
+					assert.equal(result._id.toString(), data.Test[0]._id.toString());
 					return testAbstractController.findById(data.Test[0]._id)
 						.then(test => {
 							assert.equal(test, null);
 						});
-				});
-		});
-
-		it("should delete (error 404)", () => {
-			return testAbstractController.delete({
-					user: data.User[0],
-					params: {
-						_id: data.Test[1]._id
-					}
 				})
+		);
+
+		it("should delete (error 404)", () =>
+			testAbstractController.deactivate({
+				user: data.User[0],
+				params: {
+					_id: data.Test[1]._id
+				}
+			})
 				.then(assert.ifError)
 				.catch(e => {
-					assert.equal(e.code, 404);
-				});
-		});
+					assert.equal(e.status, 404);
+				})
+		);
 
-		after(tearDown());
+		after(myTearDown());
 	});
 });
