@@ -1,7 +1,6 @@
 import {localization} from "../../../shared/intl/setup";
+import {SWITCH_LANGUAGE} from "../../../shared/constants/actions";
 
-// Export Constants
-export const SWITCH_LANGUAGE = "SWITCH_LANGUAGE";
 
 export function switchLanguage(newLang) {
 	return {
